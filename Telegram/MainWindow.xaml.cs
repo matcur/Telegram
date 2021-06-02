@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace Telegram
 {
@@ -22,7 +23,40 @@ namespace Telegram
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();;
+        }
+
+        private void OnDragMove(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ToggleState(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                Normalize();
+            else
+                Maximize();
+        }
+
+        private void Minimize(object sender = null, RoutedEventArgs e = null)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Maximize(object sender = null, RoutedEventArgs e = null)
+        {
+            WindowState = WindowState.Maximized;
+        }
+
+        private void Normalize(object sender = null, RoutedEventArgs e = null)
+        {
+            WindowState = WindowState.Normal;
         }
     }
 }

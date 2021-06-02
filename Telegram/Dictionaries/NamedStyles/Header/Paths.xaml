@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Telegram.Dictionaries.NamedStyles.Header">
+    <Style x:Key="HeaderPathStyle" TargetType="Path">
+        <Setter Property="Stroke" Value="#52616d"/>
+        <Setter Property="StrokeThickness" Value="2"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button,AncestorLevel=1}, Path=IsMouseOver}" Value="True" >
+                <Setter Property="Stroke" Value="#fff" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

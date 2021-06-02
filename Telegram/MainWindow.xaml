@@ -5,8 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Telegram"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="1"/>
+    </WindowChrome.WindowChrome>
+    <Grid Background="#000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Height="20"
+            WindowChrome.IsHitTestVisibleInChrome="True">
+            <Grid
+                Height="20"
+                MouseDown="OnDragMove"
+                Background="#1F2936">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Horizontal">
+                    <Button
+                        Style="{StaticResource HeaderBtnStyle}"
+                        Click="Minimize">
+                        <Path Style="{StaticResource HeaderPathStyle}">
+                            <Path.Data>
+                                <LineGeometry
+                                    StartPoint="8 13"
+                                    EndPoint="18 13"/>
+                            </Path.Data>
+                        </Path>
+                    </Button>
+                    <Button
+                        Style="{StaticResource HeaderBtnStyle}"
+                        Click="ToggleState">
+                        <Path Style="{StaticResource HeaderPathStyle}">
+                            <Path.Data>
+                                <RectangleGeometry
+                                        Rect="9 6 8 7"/>
+                            </Path.Data>
+                        </Path>
+                    </Button>
+                    <Button
+                        Style="{StaticResource HeaderCloseBtnStyle}"
+                        Click="Close">
+                        <Canvas>
+                            <Path 
+                                Canvas.Left="8"
+                                Canvas.Top="6"
+                                Style="{StaticResource HeaderPathStyle}">
+                                <Path.Data>
+                                    <GeometryGroup>
+                                        <LineGeometry 
+                                            StartPoint="0 0"
+                                            EndPoint="7 7"/>
+                                        <LineGeometry 
+                                            StartPoint="7 0"
+                                            EndPoint="0 7"/>
+                                    </GeometryGroup>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>
