@@ -16,7 +16,6 @@
     <Grid Background="#000">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="auto" MinHeight="180"/>
             <RowDefinition Height="*" MinHeight="180"/>
         </Grid.RowDefinitions>
         <StackPanel
@@ -75,55 +74,8 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <Border Grid.Row="1">
-            <Border.Background>
-                <ImageBrush ImageSource="Resources/Images/start.png"/>
-            </Border.Background>
-        </Border>
-        <Grid 
-            Grid.Row="2"
-            Background="{StaticResource StartFrameBackground}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-
-            <StackPanel
-                Grid.Row="1" Grid.Column="1">
-                <TextBlock 
-                    Foreground="White"
-                    FontSize="22"
-                    TextAlignment="Center"
-                    Text="Telegram Desktop"/>
-                <TextBlock 
-                    Foreground="#578ac1"
-                    FontSize="16"
-                    Padding="0 10 0 0"
-                    TextAlignment="Center"
-                    Text="Welcome to the official Telegram Desktop app"/>
-                <TextBlock 
-                    Foreground="#578ac1"
-                    FontSize="16"
-                    TextAlignment="Center"
-                    Text="It's fast and secure"/>
-                <Border
-                    Margin="0 40 0 0"
-                    Padding="60 15"
-                    HorizontalAlignment="Center"
-                    Background="#3476AB"
-                    CornerRadius="5">
-                    <TextBlock
-                        Foreground="White"
-                        FontSize="20"
-                        Text="START MESSAGING"/>
-                </Border>
-            </StackPanel>
-        </Grid>
+        <Frame 
+            Grid.Row="1"
+            Source="Pages/Start.xaml"/>
     </Grid>
 </Window>
