@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Telegram.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="600"
-      Title="Start">
+      Title="Start"
+      ShowsNavigationUI="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" MinHeight="180"/>
@@ -19,7 +20,7 @@
         </Border>
         <Grid 
             Grid.Row="1"
-            Background="{StaticResource StartFrameBackground}">
+            Background="{StaticResource MainBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="auto"/>
@@ -49,13 +50,13 @@
                     FontSize="16"
                     TextAlignment="Center"
                     Text="It's fast and secure"/>
-                <Border
-                    Style="{StaticResource StartMessagingBorderStyle}">
-                    <TextBlock
-                        Foreground="White"
-                        FontSize="20"
-                        Text="START MESSAGING"/>
-                </Border>
+                <Button
+                    Style="{StaticResource PrimaryBtnStyle}"
+                    Click="GoToLogin">
+                    <Button.Content>
+                        <TextBlock Text="START MESSAGING"/>
+                    </Button.Content>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

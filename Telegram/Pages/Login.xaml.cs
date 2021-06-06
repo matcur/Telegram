@@ -17,21 +17,21 @@ using Telegram.Core;
 namespace Telegram.Pages
 {
     /// <summary>
-    /// Interaction logic for Start.xaml
+    /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Start : Page
+    public partial class Login : Page
     {
-        private  Navigation navigation;
+        private Navigation navigation;
 
-        public Start()
+        public Login()
         {
             InitializeComponent();
             Loaded += delegate { navigation = new Navigation(this); };
         }
 
-        private void GoToLogin(object sender, RoutedEventArgs e)
+        private void GoToStart(object sender, RoutedEventArgs e)
         {
-            navigation.To("Login");
+            navigation.To("Start");
         }
     }
 }

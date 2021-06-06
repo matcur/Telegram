@@ -76,6 +76,7 @@
         </StackPanel>
         <Frame 
             Grid.Row="1"
+            NavigationUIVisibility="Hidden" 
             Source="Pages/Start.xaml"/>
     </Grid>
 </Window>

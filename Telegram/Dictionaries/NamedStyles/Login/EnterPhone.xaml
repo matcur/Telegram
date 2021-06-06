@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Telegram.Dictionaries.NamedStyles.Login">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Brushes/Generic/Foreground.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="EnterPhoneStyle" TargetType="TextBox">
+        <Setter Property="Margin" Value="0 30 0 0"/>
+        <Setter Property="Padding" Value="12 0 0 8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="BorderBrush" Value="#313C49"/>
+        <Setter Property="FontSize" Value="21"/>
+        <Setter Property="Foreground" Value="{StaticResource LightForeground}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource LightForeground}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#313C49"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="#6396CB"/>
+                <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -5,7 +5,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border 
-                        Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}"
+                        Margin="{TemplateBinding Margin}">
                         <ContentPresenter 
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
