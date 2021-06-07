@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telegram.Core;
+using Telegram.Models;
+using Telegram.ViewModels;
 
 namespace Telegram.Pages
 {
@@ -23,15 +25,31 @@ namespace Telegram.Pages
     {
         private Navigation navigation;
 
+        private LoginViewModel viewModel;
+
         public Login()
         {
+            viewModel = new LoginViewModel();
+            DataContext = viewModel;
             InitializeComponent();
-            Loaded += delegate { navigation = new Navigation(this); };
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            navigation = new Navigation(this);
         }
 
         private void GoToStart(object sender, RoutedEventArgs e)
         {
             navigation.To("Start");
+        }
+
+        private void GoToVerification(object sender, RoutedEventArgs e)
+        {
+            navigation.To(
+                new TelegramCode(viewModel.Phone)
+            );
         }
     }
 }

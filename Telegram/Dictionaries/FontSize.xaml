@@ -2,5 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:Double x:Key="TitleFontSize">19</sys:Double>
+    <sys:Double x:Key="NormalFontSize">16</sys:Double>
     <sys:Double x:Key="SmallFontSize">14</sys:Double>
 </ResourceDictionary>
