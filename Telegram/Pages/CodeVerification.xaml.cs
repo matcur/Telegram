@@ -18,15 +18,15 @@ using Telegram.ViewModels;
 namespace Telegram.Pages
 {
     /// <summary>
-    /// Interaction logic for VerificationCode.xaml
+    /// Interaction logic for CodeVerification.xaml
     /// </summary>
-    public partial class TelegramCode : Page
+    public partial class CodeVerification : Page
     {
-        private TelegramCodeViewModel viewModel;
+        private readonly CodeVerificationViewModel viewModel;
 
-        public TelegramCode(Phone phone)
+        public CodeVerification(Phone phone, string description)
         {
-            viewModel = new TelegramCodeViewModel(phone);
+            viewModel = new CodeVerificationViewModel(phone, description);
             DataContext = viewModel;
             InitializeComponent();
         }

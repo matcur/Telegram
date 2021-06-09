@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Telegram.Db;
 
 namespace Telegram
 {
@@ -13,5 +14,9 @@ namespace Telegram
     /// </summary>
     public partial class App : Application
     {
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            new AppDb();
+        }
     }
 }
