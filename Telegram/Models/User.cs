@@ -45,5 +45,7 @@ namespace Telegram.Models
                 OnPropertyChanged(nameof(Phone));
             }
         }
+        
+        public List<Code> Codes { get; set; }
     }
 }

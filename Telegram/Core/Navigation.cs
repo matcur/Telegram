@@ -9,7 +9,7 @@ using System.Windows.Navigation;
 
 namespace Telegram.Core
 {
-    class Navigation
+    public class Navigation
     {
         private readonly NavigationService service;
 
