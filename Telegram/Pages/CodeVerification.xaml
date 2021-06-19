@@ -84,8 +84,13 @@
                 <TextBox 
                     Style="{StaticResource EnterPhoneStyle}"
                     Margin="0"
-                    Text="{Binding EnteredCode}"/>
-                <Button Style="{StaticResource PrimaryBtnStyle}">
+                    Text="{Binding EnteredCode.Value}"/>
+                <TextBlock
+                    Style="{StaticResource WrongCodeStyle}"
+                    Text="{Binding WrongCodeMessage}"/>
+                <Button 
+                    Style="{StaticResource PrimaryBtnStyle}"
+                    Command="{Binding LoginCommand}">
                     Next
                 </Button>
             </StackPanel>

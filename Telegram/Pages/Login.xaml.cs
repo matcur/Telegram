@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -56,23 +57,35 @@ namespace Telegram.Pages
 
         private async void GoToVerification(object sender, RoutedEventArgs e)
         {
-            var phone = viewModel.Phone;
-            if (await phones.Exists(phone.Number))
+            var response = await phones.Find(viewModel.Phone);
+            if (response.Success)
             {
-                navigation.To(
-                    new CodeVerification(phone, telegramTitle)
-                );
-                await verification.FromTelegram(phone);
-                
+                await GoToTelegramVerification(response.Result);
+
                 return;
             }
 
+            await GoToPhoneVerification(viewModel.Phone);
+        }
+
+        private async Task GoToPhoneVerification(Phone phone)
+        {
+            var user = await users.Register(phone);
+            
             navigation.To(
-                new CodeVerification(phone, phoneTitle)
+                new CodeVerification(navigation, user.Phone, phoneTitle)
+            );
+         
+            await verification.ByPhone(user.Phone);
+        }
+
+        private async Task GoToTelegramVerification(Phone phone)
+        {
+            navigation.To(
+                new CodeVerification(navigation, phone, telegramTitle)
             );
 
-            var user = await users.Register(phone);
-            var result = await verification.ByPhone(user.Phone);
+            await verification.FromTelegram(phone);
         }
     }
 }

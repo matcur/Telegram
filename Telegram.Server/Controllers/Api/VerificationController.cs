@@ -36,7 +36,7 @@ namespace Telegram.Server.Controllers.Api
             if (phone == null)
             {
                 return Json(new 
-                { 
+                {
                     Success = false, 
                     ErrorMessage = $"Phone number {map.Number} - {map.OwnerId} doesn't exists.",
                 });
@@ -52,8 +52,8 @@ namespace Telegram.Server.Controllers.Api
         [Route("api/1.0/verification/from-telegram")]
         public IActionResult FromTelegram([FromBody]PhoneMap map)
         {
-            var dbPhone = phones.FirstOrDefault(p => p.Number == map.Number);
-            if (dbPhone == null)
+            var phone = phones.FirstOrDefault(p => p.Number == map.Number);
+            if (phone == null)
             {
                 return Json(new
                 {
@@ -62,7 +62,7 @@ namespace Telegram.Server.Controllers.Api
                 });
             }
 
-            codes.Add(new Code { User = dbPhone.Owner });
+            codes.Add(new Code { UserId = phone.OwnerId });
             db.SaveChanges();
 
             return Json(new { Success = true, ErrorMessage = "" });
@@ -80,15 +80,15 @@ namespace Telegram.Server.Controllers.Api
             {
                 return Json(new
                 {
-                    Result = true,
+                    Success = true,
                     ErrorMessage = "",
                 });
             }
 
             return Json(new
             {
-                Result = false,
-                ErrorMessage = "Code is not right",
+                Success = false,
+                ErrorMessage = $"Code {code.Value} is not right",
             });
         }
     }

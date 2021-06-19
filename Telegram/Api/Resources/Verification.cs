@@ -18,31 +18,31 @@ namespace Telegram.Api.Resources
             api = new ApiClient();
         }
 
-        public async Task<BooleanResult> FromTelegram(Phone phone)
+        public async Task<bool> FromTelegram(Phone phone)
         {
             var response = await api.Post(
                 "verification/from-telegram", Serialize(phone)
             );
 
-            return Deserialize<BooleanResult>(response);
+            return Deserialize<RequestResult>(response).Success;
         }
 
-        public async Task<BooleanResult> ByPhone(Phone phone)
+        public async Task<RequestResult> ByPhone(Phone phone)
         {
             var response = await api.Post(
                 "verification/by-phone", Serialize(phone)
             );
 
-            return Deserialize<BooleanResult>(response);
+            return Deserialize<RequestResult>(response);
         }
 
-        public async Task<BooleanResult> CheckCode(Code code)
+        public async Task<bool> CheckCode(Code code)
         {
             var response = await api.Get(
-                $"verification/by-phone?Value={code.Value}&UserId={code.UserId}"
+                $"verification/check-code?Value={code.Value}&UserId={code.UserId}"
             );
 
-            return Deserialize<BooleanResult>(response);
+            return Deserialize<RequestResult>(response).Success;
         }
     }
 }

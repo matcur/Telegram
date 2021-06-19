@@ -33,15 +33,23 @@ namespace Telegram.Server.Controllers.Api
         [Route("api/1.0/phones/{number}")]
         public IActionResult Find(string number)
         {
-            var result = phones.First(p => p.Number == number);
+            var result = phones.FirstOrDefault(p => p.Number == number);
             if (result == null)
             {
                 Response.StatusCode = 404;
 
-                return Json(new { Erorr = $"Phone with number = {number}, not found." });
+                return Json(new 
+                {
+                    Success = false, 
+                    ErorrMessage = $"Phone with number = {number}, not found." 
+                });
             }
 
-            return Json(result);
+            return Json(new 
+            {
+                Result = result,
+                Success = true,
+            });
         }
     }
 }

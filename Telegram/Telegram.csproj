@@ -99,21 +99,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Api\ApiClient.cs" />
-    <Compile Include="Api\BooleanResult.cs" />
+    <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Resources\ApiResource.cs" />
     <Compile Include="Api\Resources\Codes.cs" />
     <Compile Include="Api\Resources\Phones.cs" />
     <Compile Include="Api\Resources\Users.cs" />
     <Compile Include="Api\Resources\Verification.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Models\Code.cs" />
     <Compile Include="Pages\CodeVerification.xaml.cs">
       <DependentUpon>CodeVerification.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PhoneVerification.xaml.cs">
-      <DependentUpon>PhoneVerification.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TelegramVerification.xaml.cs">
-      <DependentUpon>TelegramVerification.xaml</DependentUpon>
+    <Compile Include="Pages\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CodeVerificationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -180,6 +178,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\NamedStyles\TextBlocks\WrongCode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -197,19 +199,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\PhoneVerification.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\Start.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TelegramVerification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
