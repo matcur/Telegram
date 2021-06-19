@@ -13,7 +13,6 @@ namespace Telegram.Models
         public Code()
         {
             Value = new Random().Next(100000, 1000000).ToString();
-            Value = "111";
         }
     }
 }

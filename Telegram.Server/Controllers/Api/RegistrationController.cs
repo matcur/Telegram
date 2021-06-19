@@ -19,9 +19,9 @@ namespace Telegram.Server.Controllers.Api
             this.db = db;
             this.users = db.Users;
         }
-        
-        [Route("api/1.0/user/register")]
+
         [HttpPost]
+        [Route("api/1.0/user/register")]
         public IActionResult Register([FromBody]RegisteringUser registration)
         {
             var user = new User(registration);
@@ -30,6 +30,5 @@ namespace Telegram.Server.Controllers.Api
 
             return Json(new RegisteredUser(user));
         }
-
     }
 }

@@ -9,16 +9,13 @@ namespace Telegram.ViewModels
 {
     class CodeVerificationViewModel : ViewModel
     {
-        public string Description { get; }
-
         public string EnteredCode { get; set; }
 
         public Phone Phone { get; }
 
-        public CodeVerificationViewModel(Phone phone, string desctiption)
+        public CodeVerificationViewModel(Phone phone)
         {
             Phone = phone;
-            Description = desctiption;
         }
     }
 }

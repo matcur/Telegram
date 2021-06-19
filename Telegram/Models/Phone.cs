@@ -6,6 +6,8 @@ namespace Telegram.Models
     {
         private string number;
 
+        public int OwnerId { get; set; }
+
         public string Number 
         { 
             get => number;

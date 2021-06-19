@@ -10,6 +10,10 @@ namespace Telegram.Server.Core.Db
         public DbSet<Phone> Phones { get; set; }
 
         public DbSet<Code> Codes { get; set; }
+
+        public DbSet<Chat> Chats { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
         
         public AppDb(DbContextOptions options) : base(options)
         {

@@ -8,11 +8,14 @@ namespace Telegram.Server.Core.Mapping
         [Required]
         public string Number { get; set; }
 
+        public int OwnerId { get; set; }
+
         public PhoneMap() { }
 
         public PhoneMap(Phone phone)
         {
             Number = phone.Number;
+            OwnerId = phone.OwnerId;
         }
     }
 }

@@ -20,13 +20,13 @@ namespace Telegram.Pages
     /// <summary>
     /// Interaction logic for CodeVerification.xaml
     /// </summary>
-    public partial class CodeVerification : Page
+    public partial class PhoneVerification : Page
     {
         private readonly CodeVerificationViewModel viewModel;
 
-        public CodeVerification(Phone phone, string description)
+        public PhoneVerification(Phone phone)
         {
-            viewModel = new CodeVerificationViewModel(phone, description);
+            viewModel = new CodeVerificationViewModel(phone);
             DataContext = viewModel;
             InitializeComponent();
         }

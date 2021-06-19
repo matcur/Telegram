@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Telegram.Server.Core.Mapping;
 
@@ -22,7 +23,7 @@ namespace Telegram.Server.Core.Db.Models
 
         public Code(CodeMap map)
         {
-            Value = map.Value;
+            Value = new Random().Next(99999, 1000000).ToString();
         }
     }
 }

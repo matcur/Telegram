@@ -1,4 +1,4 @@
-﻿<Page x:Class="Telegram.Pages.CodeVerification"
+﻿<Page x:Class="Telegram.Pages.TelegramVerification"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -73,8 +73,11 @@
                 <TextBlock
                     Foreground="{StaticResource LightGrayForeground}"
                     FontSize="{StaticResource SmallFontSize}"
-                    Margin="0 10 0 0"
-                    Text="{Binding Description}"/>
+                    Margin="0 10 0 0">
+                    A code was sent via Telegram to your other
+                    <LineBreak/>
+                    devices, if you have any connect.
+                </TextBlock>
 
                 <Label 
                     Content="Code"

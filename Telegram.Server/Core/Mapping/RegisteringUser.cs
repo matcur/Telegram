@@ -15,8 +15,5 @@ namespace Telegram.Server.Core.Mapping
 
         [Required]
         public PhoneMap Phone { get; set; }
-
-        [Required]
-        public List<CodeMap> Codes { get; set; }
     }
 }

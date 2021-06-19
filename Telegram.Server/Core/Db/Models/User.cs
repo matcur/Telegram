@@ -18,16 +18,16 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<Code> Codes { get; set; } = new List<Code>();
 
+        public List<Chat> Chats { get; set; } = new List<Chat>();
+
         public User() { }
 
         public User(RegisteringUser registration)
         {
-            var codes = registration.Codes.Select(c => new Code(c)).ToList();
             var phone = new Phone(registration.Phone);
 
             FirstName = registration.FirstName;
             LastName = registration.LastName;
-            Codes = codes;
             Phone = phone;
         }
     }

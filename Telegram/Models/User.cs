@@ -14,6 +14,8 @@ namespace Telegram.Models
 
         private Phone phone;
 
+        public int Id { get; set; }
+
         public string FirstName
         {
             get => firstName;
@@ -21,6 +23,7 @@ namespace Telegram.Models
             {
                 firstName = value;
                 OnPropertyChanged(nameof(FirstName));
+                OnPropertyChanged(nameof(FullName));
             }
         }
 
@@ -31,6 +34,7 @@ namespace Telegram.Models
             {
                 lastName = value;
                 OnPropertyChanged(nameof(LastName));
+                OnPropertyChanged(nameof(FullName));
             }
         }
 

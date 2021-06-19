@@ -8,21 +8,20 @@ namespace Telegram.Server.Core.Mapping.Response
 {
     public class RegisteredUser
     {
-        public int Id => user.Id;
+        public int Id { get; }
 
-        public string FirstName => user.FirstName;
+        public string FirstName { get; }
 
-        public string LastName => user.LastName;
+        public string LastName { get; }
 
-        public PhoneMap Phone => new PhoneMap(user.Phone);
-
-        public List<CodeMap> Codes => user.Codes.Select(c => new CodeMap(c)).ToList();
-
-        private User user;
+        public PhoneMap Phone { get; }
 
         public RegisteredUser(User user)
         {
-            this.user = user;
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Phone = new PhoneMap(user.Phone);
         }
     }
 }
