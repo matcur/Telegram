@@ -21,7 +21,6 @@ namespace Telegram.Api.Resources
                 Serialize(user)
             );
 
-            // Не получается нормально десер.
             return Deserialize<User>(response);
         }
 

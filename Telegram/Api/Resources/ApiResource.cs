@@ -11,9 +11,9 @@ namespace Telegram.Api.Resources
 {
     public abstract class ApiResource
     {
-        public HttpContent Serialize(object o)
+        public HttpContent Serialize(object data)
         {
-            return JsonContent.Create(o);
+            return JsonContent.Create(data);
         }
 
         public T Deserialize<T>(string content)

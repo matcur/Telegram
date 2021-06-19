@@ -28,20 +28,18 @@ namespace Telegram.Server.Controllers.Api
             this.codes = db.Codes;
         }
 
-        [Route("api/1.0/verification/by-phone")]
         [HttpPost]
+        [Route("api/1.0/verification/by-phone")]
         public IActionResult ByPhone([FromBody]PhoneMap map)
         {
             var phone = phones.FirstOrDefault(p => p.Number == map.Number);
             if (phone == null)
             {
-                return Json(
-                    new 
-                    { 
-                        Success = false, 
-                        ErrorMessage = $"Phone number {map.Number} - {map.OwnerId} doesn't exists.",
-                    }
-                );
+                return Json(new 
+                { 
+                    Success = false, 
+                    ErrorMessage = $"Phone number {map.Number} - {map.OwnerId} doesn't exists.",
+                });
             }
 
             codes.Add(new Code { UserId = phone.OwnerId });
@@ -50,26 +48,48 @@ namespace Telegram.Server.Controllers.Api
             return Json(new { Success = true, ErrorMessage = "" });
         }
 
-        [Route("api/1.0/verification/from-telegram")]
         [HttpPost]
+        [Route("api/1.0/verification/from-telegram")]
         public IActionResult FromTelegram([FromBody]PhoneMap map)
         {
-            var dbPhone = phones.FirstOrDefault(p => true);
+            var dbPhone = phones.FirstOrDefault(p => p.Number == map.Number);
             if (dbPhone == null)
             {
-                return Json(
-                    new
-                    {
-                        Success = false,
-                        ErrorMessage = $"Phone number {map.Number} doesn't exists.",
-                    }
-                );
+                return Json(new
+                {
+                    Success = false,
+                    ErrorMessage = $"Phone number {map.Number} doesn't exists.",
+                });
             }
 
             codes.Add(new Code { User = dbPhone.Owner });
             db.SaveChanges();
 
             return Json(new { Success = true, ErrorMessage = "" });
+        }
+
+        [HttpGet]
+        [Route("api/1.0/verification/check-code")]
+        public IActionResult CheckCode([FromQuery]VerificatingCode code)
+        {
+            if (codes.Any(
+                c => code.Value == c.Value &&
+                c.UserId == code.UserId &&
+                !c.Entered
+            ))
+            {
+                return Json(new
+                {
+                    Result = true,
+                    ErrorMessage = "",
+                });
+            }
+
+            return Json(new
+            {
+                Result = false,
+                ErrorMessage = "Code is not right",
+            });
         }
     }
 }

@@ -19,9 +19,7 @@ namespace Telegram.Server.Core.Db.Models
 
         public User User { get; set; }
 
-        public Code() { }
-
-        public Code(CodeMap map)
+        public Code()
         {
             Value = new Random().Next(99999, 1000000).ToString();
         }

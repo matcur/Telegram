@@ -8,11 +8,8 @@ namespace Telegram.Models
 {
     public class Code : Model
     {
-        public string Value { get; }
+        public int UserId { get; set; }
 
-        public Code()
-        {
-            Value = new Random().Next(100000, 1000000).ToString();
-        }
+        public string Value { get; set; }
     }
 }

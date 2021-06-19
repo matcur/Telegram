@@ -29,9 +29,17 @@ namespace Telegram.Api.Resources
 
         public async Task<BooleanResult> ByPhone(Phone phone)
         {
-            var request = Serialize(phone);
             var response = await api.Post(
-                "verification/by-phone", request
+                "verification/by-phone", Serialize(phone)
+            );
+
+            return Deserialize<BooleanResult>(response);
+        }
+
+        public async Task<BooleanResult> CheckCode(Code code)
+        {
+            var response = await api.Get(
+                $"verification/by-phone?Value={code.Value}&UserId={code.UserId}"
             );
 
             return Deserialize<BooleanResult>(response);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Models;
@@ -24,6 +25,13 @@ namespace Telegram.Pages
         private readonly Users users;
 
         private readonly Verification verification;
+
+        private readonly string telegramTitle =
+            "A code was sent via Telegram to your other" +
+            Environment.NewLine +
+            "devices, if you have any connect.";
+
+        private readonly string phoneTitle = "A code was sent to your phone.";
 
         public Login()
         {
@@ -52,7 +60,7 @@ namespace Telegram.Pages
             if (await phones.Exists(phone.Number))
             {
                 navigation.To(
-                    new TelegramVerification(phone)
+                    new CodeVerification(phone, telegramTitle)
                 );
                 await verification.FromTelegram(phone);
                 
@@ -60,7 +68,7 @@ namespace Telegram.Pages
             }
 
             navigation.To(
-                new PhoneVerification(phone)
+                new CodeVerification(phone, phoneTitle)
             );
 
             var user = await users.Register(phone);
