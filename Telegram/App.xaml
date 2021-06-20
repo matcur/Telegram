@@ -12,12 +12,14 @@
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Header/Paths.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Header/Borders.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Lines/Arrow.xaml"/>
+                <ResourceDictionary Source="Dictionaries/NamedStyles/Lines/Burger.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Borders/Arrow.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Buttons/ClearButton.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Buttons/PrimaryButton.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Login/Buttons.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/Login/EnterPhone.xaml"/>
                 <ResourceDictionary Source="Dictionaries/NamedStyles/TextBlocks/WrongCode.xaml"/>
+                <ResourceDictionary Source="Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
                 <ResourceDictionary Source="Dictionaries/Brushes/Header.xaml"/>
                 <ResourceDictionary Source="Dictionaries/Brushes/Generic/Background.xaml"/>
                 <ResourceDictionary Source="Dictionaries/Brushes/Generic/Stroke.xaml"/>

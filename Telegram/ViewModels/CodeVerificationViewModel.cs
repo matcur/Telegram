@@ -31,6 +31,8 @@ namespace Telegram.ViewModels
 
         public RelayCommand LoginCommand { get; set; }
 
+        public RelayCommand GoToLoginCommand { get; set; }
+
         private string wrongCodeMessage = "";
 
         private readonly Verification verification;
@@ -52,10 +54,11 @@ namespace Telegram.ViewModels
 
         private void InitCommands()
         {
-            LoginCommand = new RelayCommand(Login);
+            LoginCommand = new RelayCommand(In);
+            GoToLoginCommand = new RelayCommand(GoToLogin);
         }
 
-        private async void Login()
+        private async void In()
         {
             WrongCodeMessage = "";
             if (await verification.CheckCode(EnteredCode))
@@ -66,6 +69,11 @@ namespace Telegram.ViewModels
             }
 
             WrongCodeMessage = "You wrote wrong code, try again.";
+        }
+
+        private void GoToLogin()
+        {
+            navigation.To(new Login());
         }
     }
 }

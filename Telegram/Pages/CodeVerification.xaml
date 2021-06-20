@@ -19,7 +19,8 @@
         </Grid.RowDefinitions>
 
         <Button 
-            Style="{StaticResource ToBtnStyle}">
+            Style="{StaticResource ToBtnStyle}"
+            Command="{Binding GoToLoginCommand}">
             <Border Style="{StaticResource ArrowBorderStyle}">
                 <Canvas
                     MinWidth="50"
