@@ -18,13 +18,6 @@ namespace Telegram.Core
             service = NavigationService.GetNavigationService(@object);
         }
 
-        public void To(string page)
-        {
-            service.Navigate(
-                new Uri($"pack://application:,,,/Pages/{page}.xaml", UriKind.Absolute)
-            );
-        }
-
         public void To(Page page)
         {
             service.Navigate(page);

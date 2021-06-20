@@ -52,7 +52,7 @@ namespace Telegram.Pages
 
         private void GoToStart(object sender, RoutedEventArgs e)
         {
-            navigation.To("Start");
+            navigation.To(new Start());
         }
 
         private async void GoToVerification(object sender, RoutedEventArgs e)

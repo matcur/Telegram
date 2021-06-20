@@ -57,6 +57,7 @@ namespace Telegram.ViewModels
 
         private async void Login()
         {
+            WrongCodeMessage = "";
             if (await verification.CheckCode(EnteredCode))
             {
                 navigation.To(new Index());

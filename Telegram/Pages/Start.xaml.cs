@@ -31,7 +31,7 @@ namespace Telegram.Pages
 
         private void GoToLogin(object sender, RoutedEventArgs e)
         {
-            navigation.To("Login");
+            navigation.To(new Login());
         }
     }
 }
