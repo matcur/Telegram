@@ -101,12 +101,17 @@
     <Compile Include="Api\ApiClient.cs" />
     <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Resources\ApiResource.cs" />
-    <Compile Include="Api\Resources\Codes.cs" />
-    <Compile Include="Api\Resources\Phones.cs" />
-    <Compile Include="Api\Resources\Users.cs" />
-    <Compile Include="Api\Resources\Verification.cs" />
+    <Compile Include="Api\Resources\CodesResource.cs" />
+    <Compile Include="Api\Resources\PhonesResources.cs" />
+    <Compile Include="Api\Resources\UserResource.cs" />
+    <Compile Include="Api\Resources\UsersResource.cs" />
+    <Compile Include="Api\Resources\VerificationResource.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Core\Searching\ChatSearch.cs" />
+    <Compile Include="Core\Searching\Search.cs" />
+    <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\Code.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Pages\CodeVerification.xaml.cs">
       <DependentUpon>CodeVerification.xaml</DependentUpon>
     </Compile>
@@ -116,10 +121,17 @@
     <Compile Include="UserControls\Index\Burger.xaml.cs">
       <DependentUpon>Burger.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Index\ChatItem.xaml.cs">
+      <DependentUpon>ChatItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Index\ChatList.xaml.cs">
+      <DependentUpon>ChatList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Index\ChatSearch.xaml.cs">
       <DependentUpon>ChatSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CodeVerificationViewModel.cs" />
+    <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PhoneCodeViewModel.cs" />
     <Compile Include="ViewModels\TelegramCodeViewModel.cs" />
@@ -226,6 +238,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Index\Burger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Index\ChatItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Index\ChatList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

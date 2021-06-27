@@ -9,11 +9,11 @@ using Telegram.Models;
 
 namespace Telegram.Api.Resources
 {
-    public class Verification : ApiResource
+    public class VerificationResource : ApiResource
     {
         private readonly ApiClient api;
 
-        public Verification()
+        public VerificationResource()
         {
             api = new ApiClient();
         }

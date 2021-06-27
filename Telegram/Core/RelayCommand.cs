@@ -7,15 +7,15 @@ using System.Windows.Input;
 
 namespace Telegram.Core
 {
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         public event EventHandler CanExecuteChanged = delegate { };
 
-        private readonly Action execute;
+        private readonly Action<object> execute;
 
         private readonly Func<bool> canExecute;
 
-        public RelayCommand(Action execute, Func<bool> canExecute = null)
+        public RelayCommand(Action<object> execute, Func<bool> canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;
@@ -28,7 +28,7 @@ namespace Telegram.Core
 
         public void Execute(object parameter)
         {
-            execute();
+            execute(parameter);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Telegram.ViewModels
 
         private string wrongCodeMessage = "";
 
-        private readonly Verification verification;
+        private readonly VerificationResource verification;
 
         private readonly Navigation navigation;
 
@@ -46,7 +46,7 @@ namespace Telegram.ViewModels
             EnteredCode.UserId = phone.OwnerId;
             EnteredCode.Value = "";
 
-            this.verification = new Verification();
+            this.verification = new VerificationResource();
             this.navigation = navigation;
 
             InitCommands();
@@ -54,8 +54,8 @@ namespace Telegram.ViewModels
 
         private void InitCommands()
         {
-            LoginCommand = new RelayCommand(In);
-            GoToLoginCommand = new RelayCommand(GoToLogin);
+            LoginCommand = new RelayCommand(o => In());
+            GoToLoginCommand = new RelayCommand(o => GoToLogin());
         }
 
         private async void In()

@@ -33,9 +33,12 @@
                 <Border 
                     Grid.Column="1"
                     Padding="5 15 10 15">
-                    <indexControls:ChatSearch/>
+                    <indexControls:ChatSearch
+                        TextChangedCommand="{Binding SearchTextChangedCommand}"/>
                 </Border>
             </Grid>
+
+            <indexControls:ChatList Grid.Row="1"/>
         </Grid>
         <GridSplitter
             Grid.Column="1"

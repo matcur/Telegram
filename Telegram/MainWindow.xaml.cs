@@ -23,7 +23,7 @@ namespace Telegram
     {
         public MainWindow()
         {
-            InitializeComponent();;
+            InitializeComponent();
         }
 
         private void OnDragMove(object sender, MouseButtonEventArgs e)

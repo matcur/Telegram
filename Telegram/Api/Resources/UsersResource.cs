@@ -5,11 +5,11 @@ using Telegram.Models;
 
 namespace Telegram.Api.Resources
 {
-    public class Users : ApiResource
+    public class UsersResource : ApiResource
     {
         private readonly ApiClient api;
 
-        public Users()
+        public UsersResource()
         {
             api = new ApiClient();
         }

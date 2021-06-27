@@ -21,11 +21,11 @@ namespace Telegram.Pages
         
         private readonly LoginViewModel viewModel;
 
-        private readonly Phones phones;
+        private readonly PhonesResources phones;
 
-        private readonly Users users;
+        private readonly UsersResource users;
 
-        private readonly Verification verification;
+        private readonly VerificationResource verification;
 
         private readonly string telegramTitle =
             "A code was sent via Telegram to your other" +
@@ -36,9 +36,9 @@ namespace Telegram.Pages
 
         public Login()
         {
-            phones = new Phones();
-            users = new Users();
-            verification = new Verification();
+            phones = new PhonesResources();
+            users = new UsersResource();
+            verification = new VerificationResource();
             viewModel = new LoginViewModel();
             DataContext = viewModel;
             InitializeComponent();

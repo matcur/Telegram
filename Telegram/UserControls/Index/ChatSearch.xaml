@@ -10,7 +10,11 @@
         <Border 
             CornerRadius="2"
             Background="{StaticResource ChatSearchBackground}">
-            <TextBox Style="{StaticResource ChatSearchStyle}"/>
+            <TextBox 
+                x:Name="input"
+                Style="{StaticResource ChatSearchStyle}"
+                Text="{Binding ChatSearch.Text}"
+                TextChanged="OnTextChanged"/>
         </Border>
     </Grid>
 </UserControl>
