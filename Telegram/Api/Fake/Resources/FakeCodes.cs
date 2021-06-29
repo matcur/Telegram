@@ -1,16 +1,17 @@
 ﻿using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Telegram.Api.Resources;
 using Telegram.Models;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Api.Fake.Resources
 {
-    public class CodesResource : ApiResource
+    public class FakeCodes : ApiResource, ICodesResource
     {
-        private readonly ApiClient api;
+        private readonly FakeClient api;
 
-        public CodesResource()
+        public FakeCodes()
         {
-            api = new ApiClient();
+            api = new FakeClient();
         }
 
         public async Task Add(int userId)

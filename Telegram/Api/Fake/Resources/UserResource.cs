@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Api.Resources;
 using Telegram.Models;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Api.Fake.Resources
 {
-    public class UserResource : ApiResource
+    public class UserResource : ApiResource, IUserResource
     {
-        private readonly ApiClient api;
+        private readonly FakeClient api;
 
         private readonly User user;
 
         public UserResource(User user)
         {
-            this.api = new ApiClient();
+            api = new FakeClient();
             this.user = user;
         }
 

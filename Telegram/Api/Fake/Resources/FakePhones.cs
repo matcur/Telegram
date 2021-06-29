@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Telegram.Api.Resources;
 using Telegram.Models;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Api.Fake.Resources
 {
-    public partial class PhonesResources : ApiResource
+    public partial class FakePhones : ApiResource, IPhonesResource
     {
-        private readonly ApiClient api;
+        private readonly FakeClient api;
 
-        public PhonesResources()
+        public FakePhones()
         {
-            api = new ApiClient();
+            api = new FakeClient();
         }
 
         public async Task<bool> Exists(string number)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Models;
@@ -35,7 +36,7 @@ namespace Telegram.ViewModels
 
         private string wrongCodeMessage = "";
 
-        private readonly VerificationResource verification;
+        private readonly IVerificationResource verification;
 
         private readonly Navigation navigation;
 
@@ -46,7 +47,7 @@ namespace Telegram.ViewModels
             EnteredCode.UserId = phone.OwnerId;
             EnteredCode.Value = "";
 
-            this.verification = new VerificationResource();
+            verification = new FakeVerification();
             this.navigation = navigation;
 
             InitCommands();
