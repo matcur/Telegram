@@ -14,8 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telegram.Api.Resources;
+using Telegram.Core.Models;
 using Telegram.Core.Searching;
-using Telegram.Models;
 using Telegram.ViewModels;
 
 namespace Telegram.Pages

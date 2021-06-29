@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telegram.Models
+namespace Telegram.Core.Models
 {
     public abstract class Model : INotifyPropertyChanged
     {

@@ -7,7 +7,7 @@ using System.Windows;
 using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core;
-using Telegram.Models;
+using Telegram.Core.Models;
 using Telegram.Pages;
 
 namespace Telegram.ViewModels

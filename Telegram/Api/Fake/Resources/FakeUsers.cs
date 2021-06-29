@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Telegram.Api.Resources;
-using Telegram.Models;
+using Telegram.Core.Models;
 
 namespace Telegram.Api.Fake.Resources
 {

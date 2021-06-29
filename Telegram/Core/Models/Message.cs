@@ -1,4 +1,4 @@
-﻿namespace Telegram.Models
+﻿namespace Telegram.Core.Models
 {
     public class Message : Model
     {

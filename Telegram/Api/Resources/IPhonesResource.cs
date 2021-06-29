@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Telegram.Models;
+using Telegram.Core.Models;
 
 namespace Telegram.Api.Resources
 {

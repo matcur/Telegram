@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telegram.Core;
-using Telegram.Models;
+using Telegram.Core.Models;
 using Telegram.ViewModels;
 
 namespace Telegram.Pages

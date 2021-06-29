@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Telegram.Api.Resources;
-using Telegram.Models;
 
 namespace Telegram.Api.Fake.Resources
 {

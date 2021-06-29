@@ -115,9 +115,9 @@
     <Compile Include="Core\Searching\ChatSearch.cs" />
     <Compile Include="Core\Searching\Search.cs" />
     <Compile Include="Api\IApiClient.cs" />
-    <Compile Include="Models\Chat.cs" />
-    <Compile Include="Models\Code.cs" />
-    <Compile Include="Models\Message.cs" />
+    <Compile Include="Core\Models\Chat.cs" />
+    <Compile Include="Core\Models\Code.cs" />
+    <Compile Include="Core\Models\Message.cs" />
     <Compile Include="Pages\CodeVerification.xaml.cs">
       <DependentUpon>CodeVerification.xaml</DependentUpon>
     </Compile>
@@ -261,9 +261,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\Phone.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Core\Models\Model.cs" />
+    <Compile Include="Core\Models\Phone.cs" />
+    <Compile Include="Core\Models\User.cs" />
     <Compile Include="Pages\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>

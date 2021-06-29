@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telegram.Models
+namespace Telegram.Core.Models
 {
     public class User : Model
     {
@@ -49,7 +49,7 @@ namespace Telegram.Models
                 OnPropertyChanged(nameof(Phone));
             }
         }
-        
+
         public List<Code> Codes { get; set; }
     }
 }

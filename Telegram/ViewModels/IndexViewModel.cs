@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Core;
+using Telegram.Core.Models;
 using Telegram.Core.Searching;
-using Telegram.Models;
 
 namespace Telegram.ViewModels
 {

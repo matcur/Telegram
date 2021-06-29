@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Telegram.Models
+namespace Telegram.Core.Models
 {
     public class Phone : Model
     {
@@ -8,14 +8,14 @@ namespace Telegram.Models
 
         public int OwnerId { get; set; }
 
-        public string Number 
-        { 
+        public string Number
+        {
             get => number;
             set
             {
                 number = value;
                 OnPropertyChanged(nameof(Number));
-            } 
+            }
         }
     }
 }
