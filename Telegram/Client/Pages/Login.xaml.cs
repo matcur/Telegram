@@ -9,9 +9,9 @@ using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Core.Models;
-using Telegram.ViewModels;
+using Telegram.Client.ViewModels;
 
-namespace Telegram.Pages
+namespace Telegram.Client.Pages
 {
     /// <summary>
     /// Interaction logic for Login.xaml

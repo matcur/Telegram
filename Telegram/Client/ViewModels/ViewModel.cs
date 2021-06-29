@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telegram.ViewModels
+namespace Telegram.Client.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {

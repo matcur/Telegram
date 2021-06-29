@@ -13,25 +13,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telegram.Core;
+using Telegram.Core.Models;
+using Telegram.Client.ViewModels;
 
-namespace Telegram.Pages
+namespace Telegram.Client.Pages
 {
     /// <summary>
-    /// Interaction logic for Start.xaml
+    /// Interaction logic for CodeVerification.xaml
     /// </summary>
-    public partial class Start : Page
+    public partial class CodeVerification : Page
     {
-        private  Navigation navigation;
+        private readonly CodeVerificationViewModel viewModel;
 
-        public Start()
+        public CodeVerification(Navigation navigation, Phone phone, string title)
         {
+            viewModel = new CodeVerificationViewModel(navigation, phone, title);
+            DataContext = viewModel;
             InitializeComponent();
-            Loaded += delegate { navigation = new Navigation(this); };
-        }
-
-        private void GoToLogin(object sender, RoutedEventArgs e)
-        {
-            navigation.To(new Login());
         }
     }
 }

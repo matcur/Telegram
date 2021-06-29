@@ -118,99 +118,99 @@
     <Compile Include="Core\Models\Chat.cs" />
     <Compile Include="Core\Models\Code.cs" />
     <Compile Include="Core\Models\Message.cs" />
-    <Compile Include="Pages\CodeVerification.xaml.cs">
+    <Compile Include="Client\Pages\CodeVerification.xaml.cs">
       <DependentUpon>CodeVerification.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Index.xaml.cs">
+    <Compile Include="Client\Pages\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Index\Burger.xaml.cs">
+    <Compile Include="Client\UserControls\Index\Burger.xaml.cs">
       <DependentUpon>Burger.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Index\ChatItem.xaml.cs">
+    <Compile Include="Client\UserControls\Index\ChatItem.xaml.cs">
       <DependentUpon>ChatItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Index\ChatList.xaml.cs">
+    <Compile Include="Client\UserControls\Index\ChatList.xaml.cs">
       <DependentUpon>ChatList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Index\ChatSearch.xaml.cs">
+    <Compile Include="Client\UserControls\Index\ChatSearch.xaml.cs">
       <DependentUpon>ChatSearch.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\CodeVerificationViewModel.cs" />
-    <Compile Include="ViewModels\IndexViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\PhoneCodeViewModel.cs" />
-    <Compile Include="ViewModels\TelegramCodeViewModel.cs" />
-    <Compile Include="ViewModels\ViewModel.cs" />
-    <Page Include="Dictionaries\BaseStyles\Button.xaml">
+    <Compile Include="Client\ViewModels\CodeVerificationViewModel.cs" />
+    <Compile Include="Client\ViewModels\IndexViewModel.cs" />
+    <Compile Include="Client\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Client\ViewModels\PhoneCodeViewModel.cs" />
+    <Compile Include="Client\ViewModels\TelegramCodeViewModel.cs" />
+    <Compile Include="Client\ViewModels\ViewModel.cs" />
+    <Page Include="Client\Dictionaries\BaseStyles\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Brushes\Generic\Background.xaml">
+    <Page Include="Client\Dictionaries\Brushes\Generic\Background.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Brushes\Generic\Foreground.xaml">
+    <Page Include="Client\Dictionaries\Brushes\Generic\Foreground.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Brushes\Generic\Stroke.xaml">
+    <Page Include="Client\Dictionaries\Brushes\Generic\Stroke.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Brushes\Header.xaml">
+    <Page Include="Client\Dictionaries\Brushes\Header.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\FontSize.xaml">
+    <Page Include="Client\Dictionaries\FontSize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Borders\Arrow.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Borders\Arrow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Buttons\ClearButton.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\ClearButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Buttons\PrimaryButton.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\PrimaryButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Header\Borders.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Header\Borders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Header\Buttons.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Header\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Header\Paths.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Header\Paths.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Lines\Arrow.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Lines\Arrow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Lines\Burger.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Lines\Burger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Login\Buttons.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Login\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\Login\EnterPhone.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Login\EnterPhone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\TextBlocks\WrongCode.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\WrongCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\NamedStyles\TextBoxs\ChatSearch.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\ChatSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,35 +227,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\CodeVerification.xaml">
+    <Page Include="Client\Pages\CodeVerification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Index.xaml">
+    <Page Include="Client\Pages\Index.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Login.xaml">
+    <Page Include="Client\Pages\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Start.xaml">
+    <Page Include="Client\Pages\Start.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Index\Burger.xaml">
+    <Page Include="Client\UserControls\Index\Burger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Index\ChatItem.xaml">
+    <Page Include="Client\UserControls\Index\ChatItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Index\ChatList.xaml">
+    <Page Include="Client\UserControls\Index\ChatList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Index\ChatSearch.xaml">
+    <Page Include="Client\UserControls\Index\ChatSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -264,10 +264,10 @@
     <Compile Include="Core\Models\Model.cs" />
     <Compile Include="Core\Models\Phone.cs" />
     <Compile Include="Core\Models\User.cs" />
-    <Compile Include="Pages\Login.xaml.cs">
+    <Compile Include="Client\Pages\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Start.xaml.cs">
+    <Compile Include="Client\Pages\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -297,10 +297,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dictionaries\Brushes\Pages\" />
+    <Folder Include="Client\Dictionaries\Brushes\Pages\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\start.png" />
+    <Resource Include="Client\Resources\Images\start.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

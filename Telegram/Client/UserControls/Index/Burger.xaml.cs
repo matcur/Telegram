@@ -12,23 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Telegram.Core;
-using Telegram.Core.Models;
-using Telegram.ViewModels;
 
-namespace Telegram.Pages
+namespace Telegram.Client.UserControls.Index
 {
     /// <summary>
-    /// Interaction logic for CodeVerification.xaml
+    /// Interaction logic for Burger.xaml
     /// </summary>
-    public partial class CodeVerification : Page
+    public partial class Burger : UserControl
     {
-        private readonly CodeVerificationViewModel viewModel;
-
-        public CodeVerification(Navigation navigation, Phone phone, string title)
+        public Burger()
         {
-            viewModel = new CodeVerificationViewModel(navigation, phone, title);
-            DataContext = viewModel;
             InitializeComponent();
         }
     }

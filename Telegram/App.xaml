@@ -6,25 +6,25 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionaries/BaseStyles/Button.xaml"/>
-                <ResourceDictionary Source="Dictionaries/BaseStyles/Button.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Header/Buttons.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Header/Paths.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Header/Borders.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Lines/Arrow.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Lines/Burger.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Borders/Arrow.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Buttons/ClearButton.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Buttons/PrimaryButton.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Login/Buttons.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/Login/EnterPhone.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/TextBlocks/WrongCode.xaml"/>
-                <ResourceDictionary Source="Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
-                <ResourceDictionary Source="Dictionaries/Brushes/Header.xaml"/>
-                <ResourceDictionary Source="Dictionaries/Brushes/Generic/Background.xaml"/>
-                <ResourceDictionary Source="Dictionaries/Brushes/Generic/Stroke.xaml"/>
-                <ResourceDictionary Source="Dictionaries/Brushes/Generic/Foreground.xaml"/>
-                <ResourceDictionary Source="Dictionaries/FontSize.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/BaseStyles/Button.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/BaseStyles/Button.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Header/Buttons.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Header/Paths.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Header/Borders.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Lines/Arrow.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Lines/Burger.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Borders/Arrow.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Buttons/ClearButton.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Buttons/PrimaryButton.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/Buttons.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/EnterPhone.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/WrongCode.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/Brushes/Header.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Background.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Stroke.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Foreground.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/FontSize.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

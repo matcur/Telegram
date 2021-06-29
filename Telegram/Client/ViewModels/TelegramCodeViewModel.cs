@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Core.Models;
 
-namespace Telegram.ViewModels
+namespace Telegram.Client.ViewModels
 {
-    public class PhoneCodeViewModel : ViewModel
+    public class TelegramCodeViewModel : ViewModel
     {
         public Phone Phone { get; }
 
         public string Code { get; set; }
 
-        public PhoneCodeViewModel(Phone phone)
+        public TelegramCodeViewModel(Phone phone)
         {
             Phone = phone;
         }

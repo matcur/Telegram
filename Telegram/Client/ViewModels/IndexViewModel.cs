@@ -8,7 +8,7 @@ using Telegram.Core;
 using Telegram.Core.Models;
 using Telegram.Core.Searching;
 
-namespace Telegram.ViewModels
+namespace Telegram.Client.ViewModels
 {
     public class IndexViewModel : ViewModel
     {

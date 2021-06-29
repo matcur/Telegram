@@ -12,17 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Telegram.Core;
 
-namespace Telegram.UserControls.Index
+namespace Telegram.Client.Pages
 {
     /// <summary>
-    /// Interaction logic for Burger.xaml
+    /// Interaction logic for Start.xaml
     /// </summary>
-    public partial class Burger : UserControl
+    public partial class Start : Page
     {
-        public Burger()
+        private  Navigation navigation;
+
+        public Start()
         {
             InitializeComponent();
+            Loaded += delegate { navigation = new Navigation(this); };
+        }
+
+        private void GoToLogin(object sender, RoutedEventArgs e)
+        {
+            navigation.To(new Login());
         }
     }
 }

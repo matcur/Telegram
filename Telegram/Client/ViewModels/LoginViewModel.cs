@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Core.Models;
 
-namespace Telegram.ViewModels
+namespace Telegram.Client.ViewModels
 {
     public class LoginViewModel : ViewModel
     {

@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telegram.Core;
 
-namespace Telegram.UserControls.Index
+namespace Telegram.Client.UserControls.Index
 {
     /// <summary>
     /// Interaction logic for ChatSearch.xaml

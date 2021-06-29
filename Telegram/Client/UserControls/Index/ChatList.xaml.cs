@@ -12,28 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Telegram.Core.Models;
 
-namespace Telegram.UserControls.Index
+namespace Telegram.Client.UserControls.Index
 {
     /// <summary>
-    /// Interaction logic for ChatItem.xaml
+    /// Interaction logic for ChatList.xaml
     /// </summary>
-    public partial class ChatItem : UserControl
+    public partial class ChatList : UserControl
     {
-        public static readonly DependencyProperty ChatProperty = DependencyProperty.Register(
-            "Chat",
-            typeof(Chat),
-            typeof(ChatItem)
-        );
-
-        public Chat Chat 
-        { 
-            get; 
-            set; 
-        }
-
-        public ChatItem()
+        public ChatList()
         {
             InitializeComponent();
         }

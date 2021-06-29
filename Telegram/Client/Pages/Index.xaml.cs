@@ -16,9 +16,9 @@ using System.Windows.Shapes;
 using Telegram.Api.Resources;
 using Telegram.Core.Models;
 using Telegram.Core.Searching;
-using Telegram.ViewModels;
+using Telegram.Client.ViewModels;
 
-namespace Telegram.Pages
+namespace Telegram.Client.Pages
 {
     /// <summary>
     /// Interaction logic for Index.xaml
