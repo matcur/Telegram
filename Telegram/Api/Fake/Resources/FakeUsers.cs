@@ -1,17 +1,18 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Telegram.Api.Resources;
 using Telegram.Models;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Api.Fake.Resources
 {
-    public class UsersResource : ApiResource
+    public class FakeUsers : ApiResource, IUsersResource
     {
-        private readonly ApiClient api;
+        private readonly FakeClient api;
 
-        public UsersResource()
+        public FakeUsers()
         {
-            api = new ApiClient();
+            api = new FakeClient();
         }
 
         public async Task<User> Register(User user)

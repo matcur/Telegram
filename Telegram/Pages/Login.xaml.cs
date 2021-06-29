@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Models;
@@ -21,11 +22,11 @@ namespace Telegram.Pages
         
         private readonly LoginViewModel viewModel;
 
-        private readonly PhonesResources phones;
+        private readonly IPhonesResource phones;
 
-        private readonly UsersResource users;
+        private readonly IUsersResource users;
 
-        private readonly VerificationResource verification;
+        private readonly IVerificationResource verification;
 
         private readonly string telegramTitle =
             "A code was sent via Telegram to your other" +
@@ -36,9 +37,9 @@ namespace Telegram.Pages
 
         public Login()
         {
-            phones = new PhonesResources();
-            users = new UsersResource();
-            verification = new VerificationResource();
+            phones = new FakePhones();
+            users = new FakeUsers();
+            verification = new FakeVerification();
             viewModel = new LoginViewModel();
             DataContext = viewModel;
             InitializeComponent();

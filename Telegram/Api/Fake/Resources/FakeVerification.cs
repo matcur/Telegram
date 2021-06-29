@@ -4,18 +4,18 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Telegram.Api;
+using Telegram.Api.Resources;
 using Telegram.Models;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Api.Fake.Resources
 {
-    public class VerificationResource : ApiResource
+    public class FakeVerification : ApiResource, IVerificationResource
     {
-        private readonly ApiClient api;
+        private readonly FakeClient api;
 
-        public VerificationResource()
+        public FakeVerification()
         {
-            api = new ApiClient();
+            api = new FakeClient();
         }
 
         public async Task<bool> FromTelegram(Phone phone)

@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace Telegram.Api
 {
-    public class ApiClient
+    public class FakeClient : IApiClient
     {
         private readonly string url = "https://localhost:44383/api/";
 
         private readonly HttpClient client = new HttpClient();
 
-        public ApiClient(string version = "1.0")
+        public FakeClient(string version = "1.0")
         {
             url += version + "/";
         }

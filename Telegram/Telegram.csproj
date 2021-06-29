@@ -98,17 +98,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Api\ApiClient.cs" />
+    <Compile Include="Api\Fake\FakeClient.cs" />
     <Compile Include="Api\RequestResult.cs" />
-    <Compile Include="Api\Resources\ApiResource.cs" />
-    <Compile Include="Api\Resources\CodesResource.cs" />
-    <Compile Include="Api\Resources\PhonesResources.cs" />
-    <Compile Include="Api\Resources\UserResource.cs" />
-    <Compile Include="Api\Resources\UsersResource.cs" />
-    <Compile Include="Api\Resources\VerificationResource.cs" />
+    <Compile Include="Api\Fake\Resources\ApiResource.cs" />
+    <Compile Include="Api\Fake\Resources\FakeCodes.cs" />
+    <Compile Include="Api\Fake\Resources\FakePhones.cs" />
+    <Compile Include="Api\Fake\Resources\FakeUser.cs" />
+    <Compile Include="Api\Fake\Resources\FakeUsers.cs" />
+    <Compile Include="Api\Fake\Resources\FakeVerification.cs" />
+    <Compile Include="Api\Resources\ICodesResource.cs" />
+    <Compile Include="Api\Resources\IPhonesResource.cs" />
+    <Compile Include="Api\Resources\IUserResource.cs" />
+    <Compile Include="Api\Resources\IUsersResource.cs" />
+    <Compile Include="Api\Resources\IVerificationResource.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\Searching\ChatSearch.cs" />
     <Compile Include="Core\Searching\Search.cs" />
+    <Compile Include="Api\IApiClient.cs" />
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\Code.cs" />
     <Compile Include="Models\Message.cs" />
