@@ -1,5 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <SolidColorBrush x:Key="MainIndexBackground" Color="#17212B"/>
+
     <SolidColorBrush x:Key="MainBackground" Color="#17212B"/>
     <SolidColorBrush x:Key="ChatBackground" Color="#0E1621"/>
     <SolidColorBrush x:Key="IndexMainBackground" Color="#17212B"/>
@@ -8,4 +11,5 @@
     <SolidColorBrush x:Key="ChatsScrollBackground" Color="#3F4750"/>
     <SolidColorBrush x:Key="ChatsScrollThumbnailBackground" Color="#A4B4C5"/>
     <SolidColorBrush x:Key="ChatSearchBackground" Color="#242F3D"/>
+    <SolidColorBrush x:Key="MessageBackground" Color="#182533"/>
 </ResourceDictionary>

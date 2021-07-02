@@ -14,16 +14,19 @@
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Lines/Arrow.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Lines/Burger.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Borders/Arrow.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Borders/Icon.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Buttons/ClearButton.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Buttons/PrimaryButton.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/Buttons.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/EnterPhone.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/WrongCode.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Paths/Icon.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Header.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Background.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Stroke.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Foreground.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/BorderBrush.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/FontSize.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

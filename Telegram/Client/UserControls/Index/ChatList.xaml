@@ -12,6 +12,7 @@
             BorderThickness="0"
             Padding="0"
             ItemsSource="{Binding ChatSearch.Filtered}"
+            SelectedItem="{Binding SelectedChat}"
             HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>

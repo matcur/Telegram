@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Telegram.Client.UserControls.Icons.Loupe"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Telegram.Client.UserControls.Icons"
+             mc:Ignorable="d" >
+    <Border Style="{StaticResource IconBorderStyle}">
+        <Path Style="{StaticResource IconStyle}">
+            <Path.Data>
+                <GeometryGroup>
+                    <EllipseGeometry
+                        Center="0 6"
+                        RadiusX="5"
+                        RadiusY="5"/>
+                    <LineGeometry
+                        StartPoint="3 9"
+                        EndPoint="9 16"/>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+    </Border>
+</UserControl>

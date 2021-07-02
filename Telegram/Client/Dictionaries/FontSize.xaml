@@ -4,4 +4,5 @@
     <sys:Double x:Key="TitleFontSize">19</sys:Double>
     <sys:Double x:Key="NormalFontSize">16</sys:Double>
     <sys:Double x:Key="SmallFontSize">14</sys:Double>
+    <sys:Double x:Key="TinyFontSize">12</sys:Double>
 </ResourceDictionary>

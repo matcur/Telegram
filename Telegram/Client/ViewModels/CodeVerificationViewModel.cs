@@ -9,6 +9,7 @@ using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Core.Models;
 using Telegram.Client.Pages;
+using System.Collections.ObjectModel;
 
 namespace Telegram.Client.ViewModels
 {
@@ -64,6 +65,14 @@ namespace Telegram.Client.ViewModels
             WrongCodeMessage = "";
             if (await verification.CheckCode(EnteredCode))
             {
+                var messages1 = new ObservableCollection<Message> { new Message { Content = "Tor" }, new Message { Content = "Message" } };
+                var messages2 = new ObservableCollection<Message> { new Message { Content = "Odin" }, new Message { Content = "Adin" } };
+                var chats = new List<Chat>
+                {
+                    new Chat { Description = "Fruits", Name = "Fruits", Messages = messages1 },
+                    new Chat { Description = "Fuck - 1", Name = "Cars", Messages = messages2 },
+                    new Chat { Description = "Fuck - 2", Name = "Limb", Messages = messages1 },
+                };
                 navigation.To(new Index());
 
                 return;

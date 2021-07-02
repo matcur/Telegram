@@ -4,7 +4,7 @@
         <ResourceDictionary Source="../../Brushes/Generic/Foreground.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="ChatSearchStyle" TargetType="TextBox">
-        <Setter Property="Height" Value="32"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Width" Value="auto"/>
         <Setter Property="Padding" Value="10 5 5 0"/>
         <Setter Property="Background" Value="Transparent"/>

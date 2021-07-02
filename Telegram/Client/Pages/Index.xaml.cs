@@ -17,6 +17,9 @@ using Telegram.Api.Resources;
 using Telegram.Core.Models;
 using Telegram.Core.Searching;
 using Telegram.Client.ViewModels;
+using System.ComponentModel;
+using System.IO;
+using IOPath = System.IO.Path;
 
 namespace Telegram.Client.Pages
 {
@@ -38,8 +41,17 @@ namespace Telegram.Client.Pages
                 new Chat { Description = "Fuck - 2", Name = "Limb", Messages = messages1 },
             };
             viewModel = new IndexViewModel(new ChatSearch(chats));
+            viewModel.PropertyChanged += OnChatSelected;
             DataContext = viewModel;
             InitializeComponent();
+        }
+
+        private void OnChatSelected(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(viewModel.SelectedChat))
+            {
+                frame.Navigate(new ChatPage(viewModel.SelectedChat));
+            }
         }
     }
 }

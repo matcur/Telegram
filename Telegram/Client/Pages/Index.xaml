@@ -19,7 +19,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
@@ -32,7 +32,8 @@
                 <indexControls:Burger/>
                 <Border 
                     Grid.Column="1"
-                    Padding="5 15 10 15">
+                    VerticalAlignment="Center"
+                    Padding="5 0 10 0">
                     <indexControls:ChatSearch
                         TextChangedCommand="{Binding SearchTextChangedCommand}"/>
                 </Border>
@@ -47,7 +48,9 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch"/>
         <Frame
+            x:Name="frame"
             Grid.Column="2"
-            Background="{StaticResource ChatBackground}"/>
+            Background="{StaticResource ChatBackground}"
+            DataContext="{Binding}"/>
     </Grid>
 </Page>

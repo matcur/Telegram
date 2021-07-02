@@ -12,6 +12,18 @@ namespace Telegram.Client.ViewModels
 {
     public class IndexViewModel : ViewModel
     {
+        private Chat selectedChat;
+
+        public Chat SelectedChat
+        {
+            get => selectedChat;
+            set
+            {
+                selectedChat = value;
+                OnPropertyChanged(nameof(SelectedChat));
+            }
+        }
+
         public Search<ObservableCollection<Chat>> ChatSearch { get; }
 
         public RelayCommand SearchTextChangedCommand { get; }
@@ -20,8 +32,9 @@ namespace Telegram.Client.ViewModels
         {
             ChatSearch = search;
             SearchTextChangedCommand = new RelayCommand(
-                o => ChatSearch.Text = (string)o
+                text => ChatSearch.Text = (string)text
             );
+            selectedChat = search.Filtered[0];
         }
     }
 }
