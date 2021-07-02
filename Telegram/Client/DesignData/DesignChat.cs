@@ -10,6 +10,8 @@ namespace Telegram.Client.DesignData
 {
     public class DesignChat
     {
+        public static DesignChat Chat => new DesignChat();
+
         public int Id => 1;
 
         public string Name => "Cinema";
