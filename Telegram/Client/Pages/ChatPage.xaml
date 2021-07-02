@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Telegram.Client.Pages"
       xmlns:designData="clr-namespace:Telegram.Client.DesignData"
-      xmlns:chatElements="clr-namespace:Telegram.Client.UserControls.Index.ChatElements"
+      xmlns:chat="clr-namespace:Telegram.Client.UserControls.ChatPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="350">
     <Grid Background="{StaticResource ChatBackground}">
@@ -21,7 +21,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <chatElements:Header/>
+        <chat:Header/>
         <Border 
             Grid.Row="1"
             HorizontalAlignment="Stretch">

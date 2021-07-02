@@ -124,7 +124,7 @@
     <Compile Include="Client\Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Client\UserControls\Index\ChatElements\Header.xaml.cs">
+    <Compile Include="Client\UserControls\ChatPage\Header.xaml.cs">
       <DependentUpon>Header.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\RelayCommand.cs" />
@@ -258,7 +258,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Client\UserControls\Index\ChatElements\Header.xaml">
+    <Page Include="Client\UserControls\ChatPage\Header.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

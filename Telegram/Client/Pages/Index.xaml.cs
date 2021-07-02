@@ -34,11 +34,19 @@ namespace Telegram.Client.Pages
         {
             var messages1 = new ObservableCollection<Message> { new Message { Content = "Tor" }, new Message { Content = "Message" } };
             var messages2 = new ObservableCollection<Message> { new Message { Content = "Odin" }, new Message { Content = "Adin" } };
+            var members = new ObservableCollection<User>
+            {
+                new User { Id = 1, FirstName = "Name", LastName = "Last-Name" },
+                new User { Id = 2, FirstName = "Lorem", LastName = "Fuck" },
+                new User { Id = 3, FirstName = "Jon", LastName = "Viliam" },
+                new User { Id = 4, FirstName = "Json", LastName = "Centurion" },
+                new User { Id = 5, FirstName = "Div", LastName = "Lirium" },
+            };
             var chats = new List<Chat>
             {
-                new Chat { Description = "Fruits", Name = "Fruits", Messages = messages1 },
-                new Chat { Description = "Fuck - 1", Name = "Cars", Messages = messages2 },
-                new Chat { Description = "Fuck - 2", Name = "Limb", Messages = messages1 },
+                new Chat { Description = "Fruits", Name = "Fruits", Messages = messages1, Members = members },
+                new Chat { Description = "Fuck - 1", Name = "Cars", Messages = messages2, Members = members },
+                new Chat { Description = "Fuck - 2", Name = "Limb", Messages = messages1, Members = members },
             };
             viewModel = new IndexViewModel(new ChatSearch(chats));
             viewModel.PropertyChanged += OnChatSelected;

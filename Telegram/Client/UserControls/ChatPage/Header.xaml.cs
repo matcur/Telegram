@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Telegram.Client.UserControls.Index.ChatElements
+namespace Telegram.Client.UserControls.ChatPage
 {
     /// <summary>
     /// Interaction logic for Header.xaml
