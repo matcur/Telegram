@@ -112,6 +112,9 @@
     <Compile Include="Api\Resources\IUsersResource.cs" />
     <Compile Include="Api\Resources\IVerificationResource.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
+    <Compile Include="Client\UserControls\ChatPage\Body.xaml.cs">
+      <DependentUpon>Body.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client\UserControls\Icons\Loupe.xaml.cs">
       <DependentUpon>Loupe.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\ChatSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\UserControls\ChatPage\Body.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
