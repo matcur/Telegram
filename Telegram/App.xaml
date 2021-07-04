@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/Buttons.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/EnterPhone.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/WrongCode.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/MessageText.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Paths/Icon.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Header.xaml"/>

@@ -22,16 +22,12 @@ namespace Telegram.Client.UserControls.Index
     public partial class ChatItem : UserControl
     {
         public static readonly DependencyProperty ChatProperty = DependencyProperty.Register(
-            "Chat",
+            nameof(Chat),
             typeof(Chat),
             typeof(ChatItem)
         );
 
-        public Chat Chat 
-        { 
-            get; 
-            set; 
-        }
+        public Chat Chat { get; set; }
 
         public ChatItem()
         {

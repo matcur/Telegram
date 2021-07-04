@@ -7,6 +7,6 @@ namespace Telegram
     /// </summary>
     public partial class App : Application
     {
-
+        public const string NamedStyleUri = "pack://application:,,,/Client/Dictionaries/NamedStyles";
     }
 }

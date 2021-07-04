@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Telegram.Client.UserControls.ChatPage"
              xmlns:designData="clr-namespace:Telegram.Client.DesignData"
              xmlns:pages="clr-namespace:Telegram.Client.Pages"
+             xmlns:userControls="clr-namespace:Telegram.Client.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400">
     <UserControl.Resources>
@@ -15,7 +16,6 @@
     </UserControl.Resources>
     <Border
         HorizontalAlignment="Stretch"
-        SizeChanged="OnSizeChanged"
         MinWidth="200">
         <ListView
             d:DataContext="{StaticResource designChat}"
@@ -44,12 +44,7 @@
                                     Foreground="{StaticResource MessageAuthorForeground}"
                                     FontSize="{StaticResource SmallFontSize}"
                                     FontWeight="600"/>
-                                <TextBlock
-                                    Width="{Binding ActualWidth, ElementName=StackPanel}"
-                                    Padding="0 0 0 10"
-                                    Text="{Binding Content}"
-                                    TextWrapping="Wrap"
-                                    Foreground="{StaticResource LightForeground}"/>
+                                <userControls:Content Value="{Binding Content}"/>
                             </StackPanel>
                         </Border>
                     </Grid>

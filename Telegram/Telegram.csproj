@@ -115,6 +115,9 @@
     <Compile Include="Client\UserControls\ChatPage\Body.xaml.cs">
       <DependentUpon>Body.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\UserControls\Content.xaml.cs">
+      <DependentUpon>Content.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client\UserControls\Icons\Loupe.xaml.cs">
       <DependentUpon>Loupe.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,8 @@
     <Compile Include="Client\UserControls\ChatPage\Header.xaml.cs">
       <DependentUpon>Header.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\Content\IContent.cs" />
+    <Compile Include="Client\Content\TextContent.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\Searching\ChatSearch.cs" />
     <Compile Include="Core\Searching\Search.cs" />
@@ -237,6 +242,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\MessageText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\WrongCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -246,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\UserControls\ChatPage\Body.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\UserControls\Content.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
