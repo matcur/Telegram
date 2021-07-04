@@ -19,7 +19,6 @@ using Telegram.Core.Searching;
 using Telegram.Client.ViewModels;
 using System.ComponentModel;
 using System.IO;
-using IOPath = System.IO.Path;
 
 namespace Telegram.Client.Pages
 {
@@ -32,8 +31,6 @@ namespace Telegram.Client.Pages
 
         public Index()
         {
-            var messages1 = new ObservableCollection<Message> { new Message { Content = "Tor" }, new Message { Content = "Message" } };
-            var messages2 = new ObservableCollection<Message> { new Message { Content = "Odin" }, new Message { Content = "Adin" } };
             var members = new ObservableCollection<User>
             {
                 new User { Id = 1, FirstName = "Name", LastName = "Last-Name" },
@@ -42,6 +39,9 @@ namespace Telegram.Client.Pages
                 new User { Id = 4, FirstName = "Json", LastName = "Centurion" },
                 new User { Id = 5, FirstName = "Div", LastName = "Lirium" },
             };
+            var messages1 = new ObservableCollection<Message> { new Message { Content = "Tor", Author = members[0] }, new Message { Content = "Message", Author = members[1] } };
+            var messages2 = new ObservableCollection<Message> { new Message { Content = "Odin", Author = members[3] }, new Message { Content = "Adin", Author = members[4] } };
+
             var chats = new List<Chat>
             {
                 new Chat { Description = "Fruits", Name = "Fruits", Messages = messages1, Members = members },

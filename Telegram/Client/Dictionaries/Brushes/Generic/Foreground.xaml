@@ -3,5 +3,5 @@
     <SolidColorBrush x:Key="LightForeground" Color="#fff"/>
     <SolidColorBrush x:Key="LightGrayForeground" Color="#72879B"/>
     <SolidColorBrush x:Key="LabelForeground" Color="#6396CB"/>
-    <SolidColorBrush x:Key="MessageChatForeground" Color="#71BAFA"/>
+    <SolidColorBrush x:Key="MessageAuthorForeground" Color="#71BAFA"/>
 </ResourceDictionary>

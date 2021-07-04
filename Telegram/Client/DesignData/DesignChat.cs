@@ -34,9 +34,9 @@ namespace Telegram.Client.DesignData
         public ObservableCollection<Message> Messages =>
             new ObservableCollection<Message>
             {
-                new Message { Id = 1, Content = "First message" },
-                new Message { Id = 2, Content = "Second message" },
-                new Message { Id = 3, Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim nulla non erat convallis, ut egestas nulla lacinia. Cras sollicitudin aliquet lacinia. Proin lobortis suscipit pellentesque. Sed varius eu mauris quis pellentesque. Donec id urna massa. Sed suscipit, ipsum bibendum molestie pellentesque, ante magna lacinia urna, vitae placerat lectus velit ac purus. Vivamus egestas, felis in elementum cursus, odio elit volutpat libero, et tristique ipsum dolor ut arcu. Sed molestie." },
+                new Message { Id = 1, Content = "First message", Author = Members[0] },
+                new Message { Id = 2, Content = "Second message", Author = Members[1] },
+                new Message { Id = 3, Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim nulla non erat convallis, ut egestas nulla lacinia. Cras sollicitudin aliquet lacinia. Proin lobortis suscipit pellentesque. Sed varius eu mauris quis pellentesque. Donec id urna massa. Sed suscipit, ipsum bibendum molestie pellentesque, ante magna lacinia urna, vitae placerat lectus velit ac purus. Vivamus egestas, felis in elementum cursus, odio elit volutpat libero, et tristique ipsum dolor ut arcu. Sed molestie.", Author = Members[0] },
             };
 
         public ObservableCollection<User> Members => 
