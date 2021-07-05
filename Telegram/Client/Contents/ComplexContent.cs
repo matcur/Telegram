@@ -20,6 +20,9 @@ namespace Telegram.Client.Contents
             get
             {
                 var stack = new StackPanel();
+                contents.Sort(
+                    (x, y) => x.DisplayOrder > y.DisplayOrder ? 1 : -1
+                );
                 foreach (var content in contents)
                 {
                     stack.Children.Add(content.VizualPresentation);
