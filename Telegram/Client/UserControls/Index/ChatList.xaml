@@ -8,15 +8,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ListView 
-            Background="Transparent"
-            BorderThickness="0"
-            Padding="0"
+            Style="{StaticResource ClearListViewStyle}"
             ItemsSource="{Binding ChatSearch.Filtered}"
             SelectedItem="{Binding SelectedChat}"
-            HorizontalContentAlignment="Stretch">
+            ItemContainerStyle="{StaticResource ClearListItemStyle}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="60">
+                    <Grid 
+                        Height="60">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
@@ -58,7 +57,8 @@
                                 <TextBlock
                                     Grid.Row="2"
                                     Text="{Binding LastMessage.Content[0].Value}"
-                                    Foreground="{StaticResource LightForeground}"/>
+                                    Foreground="{StaticResource LightForeground}"
+                                    TextTrimming="CharacterEllipsis"/>
                             </Grid>
                         </Border>
                     </Grid>

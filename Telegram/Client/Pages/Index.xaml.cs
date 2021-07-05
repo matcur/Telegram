@@ -40,6 +40,7 @@ namespace Telegram.Client.Pages
                 new User { Id = 5, FirstName = "Div", LastName = "Lirium" },
             };
             var textType = new ContentType { Name = ContentTypeName.Text };
+            var imageType = new ContentType { Name = ContentTypeName.Image };
 
             var messages1 = new ObservableCollection<Message> 
             { 
@@ -49,7 +50,7 @@ namespace Telegram.Client.Pages
             var messages2 = new ObservableCollection<Message>
             {
                 new Message { Content = new List<Content>{ new Content { Value = "Odin", Type = textType } }, Author = members[3] },
-                new Message { Content = new List<Content>{ new Content { Value = "Adin", Type = textType } }, Author = members[4] }
+                new Message { Content = new List<Content>{ new Content { Value = "https://www.irishtimes.com/polopoly_fs/1.4191365.1583230595!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg", Type = imageType } }, Author = members[4] }
             };
 
             var chats = new List<Chat>

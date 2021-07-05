@@ -23,6 +23,9 @@
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/MessageText.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Paths/Icon.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/ClearListView.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/ClearListItem.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/MessageListItem.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Header.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Background.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Stroke.xaml"/>

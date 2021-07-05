@@ -13,6 +13,7 @@ namespace Telegram.Client.Contents
             = new Dictionary<ContentTypeName, Func<Content, IContent>>
             {
                 { ContentTypeName.Text, content => new TextContent(content.Value) }, 
+                { ContentTypeName.Image, content => new ImageContent(content.Value) }, 
             };
 
         public IContent From(Content content)

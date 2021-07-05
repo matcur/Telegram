@@ -8,6 +8,7 @@ namespace Telegram.Core.Models
 {
     public enum ContentTypeName
     {
-        Text
+        Text,
+        Image,
     }
 }

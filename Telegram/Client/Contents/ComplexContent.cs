@@ -23,6 +23,7 @@ namespace Telegram.Client.Contents
                 contents.Sort(
                     (x, y) => x.DisplayOrder > y.DisplayOrder ? 1 : -1
                 );
+
                 foreach (var content in contents)
                 {
                     stack.Children.Add(content.VizualPresentation);

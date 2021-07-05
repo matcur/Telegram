@@ -112,6 +112,7 @@
     <Compile Include="Api\Resources\IUsersResource.cs" />
     <Compile Include="Api\Resources\IVerificationResource.cs" />
     <Compile Include="Client\Contents\ComplexContent.cs" />
+    <Compile Include="Client\Contents\ImageContent.cs" />
     <Compile Include="Client\Contents\VizualContentFactory.cs" />
     <Compile Include="Client\Contents\IContent.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
@@ -232,6 +233,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\Dictionaries\NamedStyles\Lines\Burger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\ListViews\MessageListItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\ListViews\ClearListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\ListViews\ClearListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
