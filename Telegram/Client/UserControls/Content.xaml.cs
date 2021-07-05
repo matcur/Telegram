@@ -12,35 +12,36 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Telegram.Client.Content;
+using Telegram.Client.Contents;
+using Telegram.Core.Models;
 
 namespace Telegram.Client.UserControls
 {
     /// <summary>
     /// Interaction logic for Content.xaml
     /// </summary>
-    public partial class Content : UserControl
+    public partial class ContentControl : UserControl
     {
         public static DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value),
-            typeof(IContent),
-            typeof(Content)
+            typeof(IEnumerable<Content>),
+            typeof(ContentControl)
         );
 
-        public IContent Value
+        public IEnumerable<Content> Value
         {
-            get => (IContent)GetValue(ValueProperty);
+            get => (IEnumerable<Content>)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
-        public Content()
+        public ContentControl()
         {
             InitializeComponent();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            presentations.Children.Add(Value.VizualPresentation);
+            presentations.Children.Add(new ComplexContent(Value).VizualPresentation);
         }
     }
 }

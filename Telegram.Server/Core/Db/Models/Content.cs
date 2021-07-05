@@ -7,21 +7,18 @@ using System.Threading.Tasks;
 
 namespace Telegram.Server.Core.Db.Models
 {
-    public class Message
+    public class Content
     {
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Chat")]
-        public int ChatId { get; set; }
+        public string Value { get; set; }
 
-        [ForeignKey("Author")]
-        public int AuthorId { get; set; }
+        [ForeignKey("Type")]
+        public int TypeId { get; set; }
 
-        public Chat Chat { get; set; }
+        public ContentType Type { get; set; }
 
-        public User Author { get; set; }
-
-        public List<Content> Content { get; set; }
+        public List<Message> Messages { get; set; }
     }
 }

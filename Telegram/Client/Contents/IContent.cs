@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Telegram.Client.Content
+namespace Telegram.Client.Contents
 {
     public interface IContent
     {

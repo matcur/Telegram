@@ -44,7 +44,7 @@
                                     Foreground="{StaticResource MessageAuthorForeground}"
                                     FontSize="{StaticResource SmallFontSize}"
                                     FontWeight="600"/>
-                                <userControls:Content Value="{Binding Content}"/>
+                                <userControls:ContentControl Value="{Binding Content}"/>
                             </StackPanel>
                         </Border>
                     </Grid>

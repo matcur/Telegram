@@ -10,7 +10,6 @@ using Telegram.Core;
 using Telegram.Core.Models;
 using Telegram.Client.Pages;
 using System.Collections.ObjectModel;
-using Telegram.Client.Content;
 
 namespace Telegram.Client.ViewModels
 {
@@ -66,14 +65,6 @@ namespace Telegram.Client.ViewModels
             WrongCodeMessage = "";
             if (await verification.CheckCode(EnteredCode))
             {
-                var messages1 = new ObservableCollection<Message> { new Message { Content = new TextContent("Tor") }, new Message { Content = new TextContent("Message") } };
-                var messages2 = new ObservableCollection<Message> { new Message { Content = new TextContent("Odin") }, new Message { Content = new TextContent("Adin") } };
-                var chats = new List<Chat>
-                {
-                    new Chat { Description = "Fruits", Name = "Fruits", Messages = messages1 },
-                    new Chat { Description = "Fuck - 1", Name = "Cars", Messages = messages2 },
-                    new Chat { Description = "Fuck - 2", Name = "Limb", Messages = messages1 },
-                };
                 navigation.To(new Index());
 
                 return;

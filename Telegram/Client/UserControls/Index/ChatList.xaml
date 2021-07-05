@@ -57,7 +57,7 @@
 
                                 <TextBlock
                                     Grid.Row="2"
-                                    Text="{Binding LastMessage.Content}"
+                                    Text="{Binding LastMessage.Content[0].Value}"
                                     Foreground="{StaticResource LightForeground}"/>
                             </Grid>
                         </Border>

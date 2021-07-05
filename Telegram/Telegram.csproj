@@ -111,6 +111,9 @@
     <Compile Include="Api\Resources\IUserResource.cs" />
     <Compile Include="Api\Resources\IUsersResource.cs" />
     <Compile Include="Api\Resources\IVerificationResource.cs" />
+    <Compile Include="Client\Contents\ComplexContent.cs" />
+    <Compile Include="Client\Contents\VizualContentFactory.cs" />
+    <Compile Include="Client\Contents\IContent.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
     <Compile Include="Client\UserControls\ChatPage\Body.xaml.cs">
       <DependentUpon>Body.xaml</DependentUpon>
@@ -133,8 +136,10 @@
     <Compile Include="Client\UserControls\ChatPage\Header.xaml.cs">
       <DependentUpon>Header.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Client\Content\IContent.cs" />
-    <Compile Include="Client\Content\TextContent.cs" />
+    <Compile Include="Client\Contents\TextContent.cs" />
+    <Compile Include="Core\Models\Content.cs" />
+    <Compile Include="Core\Models\ContentType.cs" />
+    <Compile Include="Core\Models\ContentTypeName.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\Searching\ChatSearch.cs" />
     <Compile Include="Core\Searching\Search.cs" />

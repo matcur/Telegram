@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using Telegram.Core.Models;
+
+namespace Telegram.Client.Contents
+{
+    public class ComplexContent : IContent
+    {
+        public int DisplayOrder => 10000;
+
+        public string Description => "Complex content";
+
+        public FrameworkElement VizualPresentation
+        {
+            get
+            {
+                var stack = new StackPanel();
+                foreach (var content in contents)
+                {
+                    stack.Children.Add(content.VizualPresentation);
+                }
+
+                return stack;
+            }
+        }
+
+        private readonly List<IContent> contents = new List<IContent>();
+
+        public ComplexContent(IEnumerable<Content> contents)
+        {
+            var factory = new VizualContentFactory();
+            foreach (var content in contents)
+            {
+                this.contents.Add(factory.From(content));
+            }
+        }
+
+        public ComplexContent(IEnumerable<IContent> contents)
+        {
+            this.contents.AddRange(contents);
+        }
+    }
+}

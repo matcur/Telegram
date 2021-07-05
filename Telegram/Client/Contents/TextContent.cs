@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Telegram.Client.Content
+namespace Telegram.Client.Contents
 {
     public class TextContent : IContent
     {

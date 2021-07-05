@@ -1,4 +1,4 @@
-﻿using Telegram.Client.Content;
+﻿using System.Collections.Generic;
 
 namespace Telegram.Core.Models
 {
@@ -6,12 +6,12 @@ namespace Telegram.Core.Models
     {
         public static readonly Message Empty = new Message
         {
-            Content = new TextContent("Empty message"),
+            Content = new List<Content>(),
         };
 
         public int Id { get; set; }
 
-        public IContent Content { get; set; }
+        public List<Content> Content { get; set; }
 
         public User Author { get; set; }
     }

@@ -19,7 +19,6 @@ using Telegram.Core.Searching;
 using Telegram.Client.ViewModels;
 using System.ComponentModel;
 using System.IO;
-using Telegram.Client.Content;
 
 namespace Telegram.Client.Pages
 {
@@ -40,8 +39,18 @@ namespace Telegram.Client.Pages
                 new User { Id = 4, FirstName = "Json", LastName = "Centurion" },
                 new User { Id = 5, FirstName = "Div", LastName = "Lirium" },
             };
-            var messages1 = new ObservableCollection<Message> { new Message { Content = new TextContent("Tor"), Author = members[0] }, new Message { Content = new TextContent("Message"), Author = members[1] } };
-            var messages2 = new ObservableCollection<Message> { new Message { Content = new TextContent("Odin"), Author = members[3] }, new Message { Content = new TextContent("Adin"), Author = members[4] } };
+            var textType = new ContentType { Name = ContentTypeName.Text };
+
+            var messages1 = new ObservableCollection<Message> 
+            { 
+                new Message { Content = new List<Content>{ new Content { Value = "Tor", Type = textType } }, Author = members[0] }, 
+                new Message { Content = new List<Content>{ new Content { Value = "Message", Type = textType } }, Author = members[1] }
+            };
+            var messages2 = new ObservableCollection<Message>
+            {
+                new Message { Content = new List<Content>{ new Content { Value = "Odin", Type = textType } }, Author = members[3] },
+                new Message { Content = new List<Content>{ new Content { Value = "Adin", Type = textType } }, Author = members[4] }
+            };
 
             var chats = new List<Chat>
             {
