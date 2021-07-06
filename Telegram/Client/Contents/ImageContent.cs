@@ -5,8 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Telegram.Client.Converters;
+using Telegram.Client.Elements.Images;
 
 namespace Telegram.Client.Contents
 {
@@ -21,17 +25,27 @@ namespace Telegram.Client.Contents
             get
             {
                 var result = new Image();
-                var bitmap = new BitmapImage();
                 
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(uri, UriKind.Absolute);
-                bitmap.EndInit();
-
-                result.Source = bitmap;
+                result.SetBinding(Image.SourceProperty, Binding);
+                result.HorizontalAlignment = HorizontalAlignment.Left;
 
                 return result;
             }
         }
+
+        public Binding Binding => new Binding
+        {
+            Converter = new ElementInitialization<ImageSource>(
+                () => new ScaledImage(
+                    new InitializedImage(
+                        new Uri(uri, UriKind.Absolute)
+                    ),
+                    400,
+                    200
+                ).VisualPresentation.Source
+            ),
+            IsAsync = true,
+        };
 
         private readonly string uri;
 

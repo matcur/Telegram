@@ -23,13 +23,8 @@ namespace Telegram.Client.Pages
     {
         private readonly Chat chat;
 
-        public Chat Chat
-        {
-            get
-            {
-                return chat;
-            }
-        }
+        public Chat Chat => chat;
+        
         public ChatPage(Chat chat)
         {
             this.chat = chat;

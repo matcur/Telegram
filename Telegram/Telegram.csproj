@@ -115,7 +115,11 @@
     <Compile Include="Client\Contents\ImageContent.cs" />
     <Compile Include="Client\Contents\VizualContentFactory.cs" />
     <Compile Include="Client\Contents\IContent.cs" />
+    <Compile Include="Client\Converters\ElementInitialization.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
+    <Compile Include="Client\Elements\Images\IImage.cs" />
+    <Compile Include="Client\Elements\Images\InitializedImage.cs" />
+    <Compile Include="Client\Elements\Images\ScaledImage.cs" />
     <Compile Include="Client\UserControls\ChatPage\Body.xaml.cs">
       <DependentUpon>Body.xaml</DependentUpon>
     </Compile>

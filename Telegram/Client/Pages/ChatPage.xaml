@@ -9,12 +9,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="350">
     <Grid Background="{StaticResource ChatBackground}">
-        <Grid.Resources>
-            <ObjectDataProvider 
-                x:Key="designChat"
-                ObjectType="{x:Type designData:DesignChat}" />
-        </Grid.Resources>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
@@ -22,6 +16,7 @@
         </Grid.RowDefinitions>
 
         <chat:Header/>
-        <chat:Body Grid.Row="1"/>
+        <chat:Body VerticalContentAlignment="Stretch" Grid.Row="1"/>
+        <chat:Header Grid.Row="2"/>
     </Grid>
 </Page>
