@@ -13,6 +13,6 @@ namespace Telegram.Client.Contents
 
         string Description { get; }
 
-        FrameworkElement VizualPresentation { get; }
+        FrameworkElement VisualPresentation { get; }
     }
 }

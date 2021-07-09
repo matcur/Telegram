@@ -20,7 +20,7 @@ namespace Telegram.Client.Contents
 
         public string Description => "Image";
 
-        public FrameworkElement VizualPresentation
+        public FrameworkElement VisualPresentation
         {
             get
             {
