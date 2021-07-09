@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Telegram.Client.ViewModels;
 using Telegram.Core.Models;
 
 namespace Telegram.Client.Pages
@@ -21,14 +22,12 @@ namespace Telegram.Client.Pages
     /// </summary>
     public partial class ChatPage : Page
     {
-        private readonly Chat chat;
-
-        public Chat Chat => chat;
+        private readonly ChatViewModel viewModel;
         
-        public ChatPage(Chat chat)
+        public ChatPage(Chat chat, User currentUser)
         {
-            this.chat = chat;
-            DataContext = this;
+            viewModel = new ChatViewModel(chat, currentUser);
+            DataContext = viewModel;
             InitializeComponent();
         }
     }

@@ -11,7 +11,7 @@ namespace Telegram.Core.Models
 
         public int Id { get; set; }
 
-        public List<Content> Content { get; set; }
+        public List<Content> Content { get; set; } = new List<Content>();
 
         public User Author { get; set; }
     }

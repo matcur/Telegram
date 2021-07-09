@@ -26,7 +26,7 @@ namespace Telegram.Core
             return canExecute == null || canExecute();
         }
 
-        public void Execute(object parameter)
+        public void Execute(object parameter = default)
         {
             execute(parameter);
         }

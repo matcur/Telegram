@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Api\Fake\FakeClient.cs" />
+    <Compile Include="Api\Fake\Resources\FakeMessages.cs" />
     <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Fake\Resources\ApiResource.cs" />
     <Compile Include="Api\Fake\Resources\FakeCodes.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Api\Fake\Resources\FakeUsers.cs" />
     <Compile Include="Api\Fake\Resources\FakeVerification.cs" />
     <Compile Include="Api\Resources\ICodesResource.cs" />
+    <Compile Include="Api\Resources\IMessagesResource.cs" />
     <Compile Include="Api\Resources\IPhonesResource.cs" />
     <Compile Include="Api\Resources\IUserResource.cs" />
     <Compile Include="Api\Resources\IUsersResource.cs" />
@@ -123,8 +125,17 @@
     <Compile Include="Client\UserControls\ChatPage\Body.xaml.cs">
       <DependentUpon>Body.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\UserControls\ChatPage\MessageInput.xaml.cs">
+      <DependentUpon>MessageInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\UserControls\ChatPage\MessageItem.xaml.cs">
+      <DependentUpon>MessageItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client\UserControls\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\UserControls\Icons\Clip.xaml.cs">
+      <DependentUpon>Clip.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\UserControls\Icons\Loupe.xaml.cs">
       <DependentUpon>Loupe.xaml</DependentUpon>
@@ -142,6 +153,10 @@
       <DependentUpon>Header.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\Contents\TextContent.cs" />
+    <Compile Include="Client\UserControls\Icons\Smile.xaml.cs">
+      <DependentUpon>Smile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\ViewModels\ChatViewModel.cs" />
     <Compile Include="Core\Models\Content.cs" />
     <Compile Include="Core\Models\ContentType.cs" />
     <Compile Include="Core\Models\ContentTypeName.cs" />
@@ -272,18 +287,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\BaseTextBox.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\ChatSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\MessageInput.xaml" />
     <Page Include="Client\UserControls\ChatPage\Body.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\UserControls\ChatPage\MessageInput.xaml" />
+    <Page Include="Client\UserControls\ChatPage\MessageItem.xaml" />
     <Page Include="Client\UserControls\Content.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\UserControls\Icons\Clip.xaml" />
     <Page Include="Client\UserControls\Icons\Loupe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -304,6 +324,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\UserControls\Icons\Smile.xaml" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -16,7 +16,13 @@
         </Grid.RowDefinitions>
 
         <chat:Header/>
-        <chat:Body VerticalContentAlignment="Stretch" Grid.Row="1"/>
-        <chat:Header Grid.Row="2"/>
+        <chat:Body 
+            Grid.Row="1"
+            Messages="{Binding Chat.Messages}"
+            VerticalContentAlignment="Stretch"/>
+        <chat:MessageInput 
+            Grid.Row="2"
+            SendCommand="{Binding SendMessageCommand}"
+            Message="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Page>

@@ -8,7 +8,8 @@
              xmlns:pages="clr-namespace:Telegram.Client.Pages"
              xmlns:userControls="clr-namespace:Telegram.Client.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400">
+             d:DesignHeight="450" d:DesignWidth="400"
+             Loaded="OnLoaded">
     <UserControl.Resources>
         <ObjectDataProvider 
             x:Key="designChat"
@@ -17,31 +18,10 @@
     <Border MinWidth="200">
         <ListView
             d:DataContext="{StaticResource designChat}"
-            ItemsSource="{Binding Chat.Messages}"
+            x:Name="messageListView"
             Style="{StaticResource ClearListViewStyle}"
             ItemContainerStyle="{StaticResource MessageListItemStyle}"
             ScrollViewer.VerticalScrollBarVisibility="Visible">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Border Width="40"/>
-                        <Border 
-                            CornerRadius="3 3 3 0"
-                            Padding="20 5 10 0"
-                            Background="{StaticResource MessageBackground}">
-                            <StackPanel>
-                                <TextBlock 
-                                    Padding="0 0 0 5"
-                                    Text="{Binding Author.FullName}"
-                                    Foreground="{StaticResource MessageAuthorForeground}"
-                                    FontSize="{StaticResource SmallFontSize}"
-                                    FontWeight="600"/>
-                                <userControls:ContentControl Value="{Binding Content}"/>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
     </Border>
 </UserControl>

@@ -62,7 +62,7 @@ namespace Telegram.Client.Pages
                         {
                             Value = "Fuck Youыуафауыфафыуафыуафыуауфыаыфуаыфуафыуауфыафыа", Type = textType,
                         },
-                    }, Author = members[4] 
+                    }, Author = members[2] 
                 }
             };
 
@@ -82,7 +82,7 @@ namespace Telegram.Client.Pages
         {
             if (e.PropertyName == nameof(viewModel.SelectedChat))
             {
-                frame.Navigate(new ChatPage(viewModel.SelectedChat));
+                frame.Navigate(new ChatPage(viewModel.SelectedChat, new User{ FirstName = "First", LastName = "Last Name"}));
             }
         }
     }
