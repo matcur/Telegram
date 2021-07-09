@@ -15,7 +15,7 @@ namespace Telegram.Client.Contents
 
         public string Description => "Complex content";
 
-        public FrameworkElement VizualPresentation
+        public FrameworkElement VisualPresentation
         {
             get
             {
@@ -26,7 +26,7 @@ namespace Telegram.Client.Contents
 
                 foreach (var content in contents)
                 {
-                    stack.Children.Add(content.VizualPresentation);
+                    stack.Children.Add(content.VisualPresentation);
                 }
 
                 return stack;
@@ -37,7 +37,7 @@ namespace Telegram.Client.Contents
 
         public ComplexContent(IEnumerable<Content> contents)
         {
-            var factory = new VizualContentFactory();
+            var factory = new VisualContentFactory();
             foreach (var content in contents)
             {
                 this.contents.Add(factory.From(content));

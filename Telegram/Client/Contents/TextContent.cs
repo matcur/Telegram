@@ -16,7 +16,7 @@ namespace Telegram.Client.Contents
 
         public string Text { get; }
 
-        public FrameworkElement VizualPresentation
+        public FrameworkElement VisualPresentation
         {
             get
             {

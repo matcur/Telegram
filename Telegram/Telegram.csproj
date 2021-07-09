@@ -113,7 +113,7 @@
     <Compile Include="Api\Resources\IVerificationResource.cs" />
     <Compile Include="Client\Contents\ComplexContent.cs" />
     <Compile Include="Client\Contents\ImageContent.cs" />
-    <Compile Include="Client\Contents\VizualContentFactory.cs" />
+    <Compile Include="Client\Contents\VisualContentFactory.cs" />
     <Compile Include="Client\Contents\IContent.cs" />
     <Compile Include="Client\Converters\ElementInitialization.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
