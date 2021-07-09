@@ -7,7 +7,7 @@ using Telegram.Core.Models;
 
 namespace Telegram.Client.Contents
 {
-    public class VizualContentFactory
+    public class VisualContentFactory
     {
         private Dictionary<ContentTypeName, Func<Content, IContent>> contents
             = new Dictionary<ContentTypeName, Func<Content, IContent>>
