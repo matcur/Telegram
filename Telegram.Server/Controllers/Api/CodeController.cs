@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Telegram.Api;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 
@@ -29,13 +30,17 @@ namespace Telegram.Server.Controllers.Api
         public IActionResult Create([FromBody]int userId)
         {
             if (!users.Any(u => u.Id == userId))
-                return Json(new { Success = false, ErrorMessage = $"User with id = {userId} not found." });
+            {
+                return Json(
+                    new RequestResult(false, $"User with id = {userId} not found.")
+                );
+            }
 
             var code = new Code { UserId = userId };
             codes.Add(code);
             db.SaveChanges();
 
-            return Json(new { Success = true, ErrorMessage = "" });
+            return Json(new RequestResult(true));
         }
     }
 }

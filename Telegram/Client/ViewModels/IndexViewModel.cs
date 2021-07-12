@@ -28,13 +28,27 @@ namespace Telegram.Client.ViewModels
 
         public RelayCommand SearchTextChangedCommand { get; }
 
-        public IndexViewModel(Search<ObservableCollection<Chat>> search)
+        public IndexViewModel(): this(new ChatSearch(new List<Chat>()))
         {
-            ChatSearch = search;
+
+        }
+
+        public IndexViewModel(Search<ObservableCollection<Chat>> chatSearch)
+        {
+            ChatSearch = chatSearch;
             SearchTextChangedCommand = new RelayCommand(
-                text => ChatSearch.Text = (string)text
+                text => OnSearchTextChanged(text)
             );
-            selectedChat = search.Filtered[0];
+        }
+
+        private string OnSearchTextChanged(object text)
+        {
+            return OnSearchTextChanged((string)text);
+        }
+
+        private string OnSearchTextChanged(string text)
+        {
+            return ChatSearch.Text = text;
         }
     }
 }

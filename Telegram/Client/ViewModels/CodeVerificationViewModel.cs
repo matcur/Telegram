@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace Telegram.Client.ViewModels
 {
-    class CodeVerificationViewModel : ViewModel
+    public class CodeVerificationViewModel : ViewModel
     {
         public string WrongCodeMessage 
         { 
@@ -31,7 +31,7 @@ namespace Telegram.Client.ViewModels
 
         public Code EnteredCode { get; } = new Code();
 
-        public RelayCommand LoginCommand { get; set; }
+        public RelayCommand InCommand { get; set; }
 
         public RelayCommand GoToLoginCommand { get; set; }
 
@@ -40,23 +40,25 @@ namespace Telegram.Client.ViewModels
         private readonly IVerificationResource verification;
 
         private readonly Navigation navigation;
+        
+        private readonly User currentUser;
 
-        public CodeVerificationViewModel(Navigation navigation, Phone phone, string title)
+        public CodeVerificationViewModel(User current, Navigation pageNavigation, string title)
         {
-            Phone = phone;
             Title = title;
-            EnteredCode.UserId = phone.OwnerId;
-            EnteredCode.Value = "";
+            Phone = current.Phone;
+            EnteredCode = new Code(Phone);
 
             verification = new FakeVerification();
-            this.navigation = navigation;
+            navigation = pageNavigation;
+            currentUser = current;
 
             InitCommands();
         }
 
         private void InitCommands()
         {
-            LoginCommand = new RelayCommand(o => In());
+            InCommand = new RelayCommand(o => In());
             GoToLoginCommand = new RelayCommand(o => GoToLogin());
         }
 
@@ -65,7 +67,7 @@ namespace Telegram.Client.ViewModels
             WrongCodeMessage = "";
             if (await verification.CheckCode(EnteredCode))
             {
-                navigation.To(new Index());
+                navigation.To(new Index(currentUser, new FakeChats()));
 
                 return;
             }

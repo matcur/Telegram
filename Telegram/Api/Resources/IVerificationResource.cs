@@ -7,8 +7,8 @@ namespace Telegram.Api.Resources
     {
         Task<RequestResult> ByPhone(Phone phone);
 
-        Task<bool> CheckCode(Code code);
+        Task<RequestResult> FromTelegram(Phone phone);
 
-        Task<bool> FromTelegram(Phone phone);
+        Task<bool> CheckCode(Code code);
     }
 }

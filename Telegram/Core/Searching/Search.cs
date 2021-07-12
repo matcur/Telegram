@@ -23,5 +23,7 @@ namespace Telegram.Core.Searching
         public abstract T Filtered { get; }
 
         protected string text = "";
+
+        public abstract void AddItems(T items);
     }
 }

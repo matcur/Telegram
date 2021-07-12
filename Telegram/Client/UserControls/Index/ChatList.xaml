@@ -9,7 +9,7 @@
     <Grid>
         <ListView 
             Style="{StaticResource ClearListViewStyle}"
-            ItemsSource="{Binding ChatSearch.Filtered}"
+            ItemsSource="{Binding ChatSearch.Filtered, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding SelectedChat}"
             ItemContainerStyle="{StaticResource ClearListItemStyle}">
             <ListView.ItemTemplate>

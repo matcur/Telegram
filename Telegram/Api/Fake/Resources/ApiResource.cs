@@ -6,8 +6,9 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Api.Fake.Resources
 {
     public abstract class ApiResource
     {
@@ -16,14 +17,24 @@ namespace Telegram.Api.Resources
             return JsonContent.Create(data);
         }
 
-        public T Deserialize<T>(string content)
+        public RequestResult Deserialize(string content)
         {
             var settings = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
 
-            return JsonSerializer.Deserialize<T>(content, settings);
+            return JsonSerializer.Deserialize<RequestResult>(content, settings);
+        }
+
+        public RequestResult<T> Deserialize<T>(string content)
+        {
+            var settings = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+
+            return JsonSerializer.Deserialize<RequestResult<T>>(content, settings);
         }
     }
 }

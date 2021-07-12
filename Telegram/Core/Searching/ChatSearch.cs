@@ -14,15 +14,22 @@ namespace Telegram.Core.Searching
 
         private readonly List<Chat> chats;
 
-        public ChatSearch(IEnumerable<Chat> chats)
+        public ChatSearch(IEnumerable<Chat> items)
         {
-            this.chats = new List<Chat>(chats);
-            Filtered = new ObservableCollection<Chat>(chats);
-            TextChanged += OnTextChanged;
+            chats = new List<Chat>(items);
+            Filtered = new ObservableCollection<Chat>(items);
+            TextChanged += Update;
         }
 
-        private void OnTextChanged(string text)
+        public override void AddItems(ObservableCollection<Chat> items)
         {
+            chats.AddRange(items);
+            Update(text);
+        }
+
+        private void Update(string text)
+        {
+            this.text = text;
             Filtered.Clear();
             foreach (var chat in chats)
             {

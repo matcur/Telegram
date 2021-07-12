@@ -20,6 +20,8 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
+        public List<Role> Roles { get; set; } = new List<Role>();
+
         public User() { }
 
         public User(RegisteringUser registration)

@@ -31,7 +31,7 @@ namespace Telegram.Api.Fake.Resources
         {
             var response = await api.Get($"phones/{number}");
 
-            return Deserialize<RequestResult<Phone>>(response);
+            return Deserialize<Phone>(response);
         }
     }
 }

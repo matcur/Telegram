@@ -5,8 +5,10 @@ namespace Telegram.Api.Resources
 {
     public interface IUsersResource
     {
-        Task<User> Register(Phone phone);
+        Task<RequestResult<User>> Register(Phone phone);
 
-        Task<User> Register(User user);
+        Task<RequestResult<User>> Register(User user);
+
+        Task<RequestResult<User>> Find(Phone phone);
     }
 }

@@ -7,7 +7,8 @@
       xmlns:indexControls="clr-namespace:Telegram.Client.UserControls.Index"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Index">
+      Title="Index"
+      Loaded="OnLoaded">
     <Grid Background="{StaticResource MainBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition 
@@ -19,7 +20,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
@@ -28,6 +29,10 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
 
                 <indexControls:Burger/>
                 <Border 
@@ -37,6 +42,17 @@
                     <indexControls:ChatSearch
                         TextChangedCommand="{Binding SearchTextChangedCommand}"/>
                 </Border>
+                
+                <StackPanel 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2">
+                    <TextBox x:Name="newChatNameInput"/>
+                    <Button
+                        Height="30"
+                        Background="#fff"
+                        Click="CreateChat"
+                        Content="Create"/>
+                </StackPanel>
             </Grid>
 
             <indexControls:ChatList Grid.Row="1"/>

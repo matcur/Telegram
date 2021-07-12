@@ -91,7 +91,7 @@
                     Text="{Binding WrongCodeMessage}"/>
                 <Button 
                     Style="{StaticResource PrimaryBtnStyle}"
-                    Command="{Binding LoginCommand}">
+                    Command="{Binding InCommand}">
                     Next
                 </Button>
             </StackPanel>

@@ -20,7 +20,7 @@ namespace Telegram.Api.Fake.Resources
             this.user = user;
         }
 
-        public async Task<List<Chat>> Chats(int count)
+        public async Task<RequestResult<List<Chat>>> Chats(int count)
         {
             var response = await api.Get(
                 $"users/{user.Id}/chats?count={count}"

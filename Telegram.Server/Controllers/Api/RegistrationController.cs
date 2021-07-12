@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Telegram.Api;
 using Telegram.Server.Core.Attributes.Model;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
@@ -28,7 +29,7 @@ namespace Telegram.Server.Controllers.Api
             users.Add(user);
             db.SaveChanges();
 
-            return Json(new RegisteredUser(user));
+            return Json(new RequestResult(true, new RegisteredUser(user)));
         }
     }
 }

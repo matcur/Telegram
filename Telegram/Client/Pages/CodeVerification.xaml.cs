@@ -25,9 +25,9 @@ namespace Telegram.Client.Pages
     {
         private readonly CodeVerificationViewModel viewModel;
 
-        public CodeVerification(Navigation navigation, Phone phone, string title)
+        public CodeVerification(CodeVerificationViewModel vm)
         {
-            viewModel = new CodeVerificationViewModel(navigation, phone, title);
+            viewModel = vm;
             DataContext = viewModel;
             InitializeComponent();
         }

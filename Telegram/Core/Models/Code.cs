@@ -11,5 +11,16 @@ namespace Telegram.Core.Models
         public int UserId { get; set; }
 
         public string Value { get; set; }
+
+        public Code()
+        {
+            
+        }
+
+        public Code(Phone phone)
+        {
+            UserId = phone.OwnerId;
+            Value = "";
+        }
     }
 }

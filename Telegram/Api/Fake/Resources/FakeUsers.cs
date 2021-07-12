@@ -15,7 +15,7 @@ namespace Telegram.Api.Fake.Resources
             api = new FakeClient();
         }
 
-        public async Task<User> Register(User user)
+        public async Task<RequestResult<User>> Register(User user)
         {
             var response = await api.Post(
                 "user/register",
@@ -25,11 +25,18 @@ namespace Telegram.Api.Fake.Resources
             return Deserialize<User>(response);
         }
 
-        public async Task<User> Register(Phone phone)
+        public async Task<RequestResult<User>> Register(Phone phone)
         {
             var user = new User { FirstName = "", LastName = "", Phone = phone };
 
             return await Register(user);
+        }
+
+        public async Task<RequestResult<User>> Find(Phone phone)
+        {
+            var response = await api.Get($"users/{phone.OwnerId}");
+
+            return Deserialize<User>(response);
         }
     }
 }

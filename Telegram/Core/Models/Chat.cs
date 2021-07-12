@@ -15,18 +15,7 @@ namespace Telegram.Core.Models
 
         public string Description { get; set; }
 
-        public Message LastMessage
-        {
-            get
-            {
-                if (Messages.Count == 0)
-                {
-                    return Message.Empty;
-                }
-
-                return Messages.Last();
-            }
-        }
+        public Message LastMessage { get; set; }
 
         public ObservableCollection<Message> Messages { get; set; } = new ObservableCollection<Message>();
 

@@ -99,6 +99,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Api\Fake\FakeClient.cs" />
+    <Compile Include="Api\Fake\Resources\FakeChat.cs" />
+    <Compile Include="Api\Fake\Resources\FakeChats.cs" />
     <Compile Include="Api\Fake\Resources\FakeMessages.cs" />
     <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Fake\Resources\ApiResource.cs" />
@@ -107,6 +109,8 @@
     <Compile Include="Api\Fake\Resources\FakeUser.cs" />
     <Compile Include="Api\Fake\Resources\FakeUsers.cs" />
     <Compile Include="Api\Fake\Resources\FakeVerification.cs" />
+    <Compile Include="Api\Resources\IChatResource.cs" />
+    <Compile Include="Api\Resources\IChatsResource.cs" />
     <Compile Include="Api\Resources\ICodesResource.cs" />
     <Compile Include="Api\Resources\IMessagesResource.cs" />
     <Compile Include="Api\Resources\IPhonesResource.cs" />
