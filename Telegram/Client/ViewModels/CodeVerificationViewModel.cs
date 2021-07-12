@@ -29,7 +29,7 @@ namespace Telegram.Client.ViewModels
 
         public Phone Phone { get; }
 
-        public Code EnteredCode { get; } = new Code();
+        public Code EnteredCode { get; }
 
         public RelayCommand InCommand { get; set; }
 
@@ -39,19 +39,19 @@ namespace Telegram.Client.ViewModels
 
         private readonly IVerificationResource verification;
 
-        private readonly Navigation navigation;
-        
-        private readonly User currentUser;
+        private readonly IUsersResource users;
 
-        public CodeVerificationViewModel(User current, Navigation pageNavigation, string title)
+        private readonly Navigation navigation;
+
+        public CodeVerificationViewModel(Phone phone, Navigation pageNavigation, string title)
         {
             Title = title;
-            Phone = current.Phone;
-            EnteredCode = new Code(Phone);
+            Phone = phone;
+            EnteredCode = new Code(phone);
 
             verification = new FakeVerification();
+            users = new FakeUsers();
             navigation = pageNavigation;
-            currentUser = current;
 
             InitCommands();
         }
@@ -67,7 +67,8 @@ namespace Telegram.Client.ViewModels
             WrongCodeMessage = "";
             if (await verification.CheckCode(EnteredCode))
             {
-                navigation.To(new Index(currentUser, new FakeChats()));
+                var response = await users.Find(Phone);
+                navigation.To(new Index(response.Result, new FakeChats()));
 
                 return;
             }

@@ -71,38 +71,37 @@ namespace Telegram.Client.Pages
 
         private async Task GoToPhoneVerification(Phone phone)
         {
-            var response = await users.Register(phone);
-            var user = response.Result;
+            var vm = new CodeVerificationViewModel(
+                phone,
+                navigation,
+                phoneTitle
+            );
 
             navigation.To(
-                new CodeVerification(
-                    new CodeVerificationViewModel(
-                        user,
-                        navigation,
-                        phoneTitle
-                    )    
-                )
+                new CodeVerification(vm)
             );
-         
-            Task.Factory.StartNew(() => verification.ByPhone(user.Phone));
+
+            var response = await users.Register(phone);
+            var user = response.Result;
+            vm.EnteredCode.UserId = user.Id;
+            phone.OwnerId = user.Id;
+
+            await verification.ByPhone(user.Phone);
         }
 
         private async Task GoToTelegramVerification(Phone phone)
         {
-            var response = await users.Find(phone);
-            var user = response.Result;
-            
             navigation.To(
                 new CodeVerification(
                     new CodeVerificationViewModel(
-                        user,
+                        phone,
                         navigation,
                         telegramTitle
                     )    
                 )
             );
 
-            Task.Factory.StartNew(() => verification.FromTelegram(phone));
+            await verification.FromTelegram(phone);
         }
     }
 }

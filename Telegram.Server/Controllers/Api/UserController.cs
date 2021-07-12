@@ -40,8 +40,6 @@ namespace Telegram.Server.Controllers.Api
                             .FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
-                Response.StatusCode = 204;
-
                 return Json(new RequestResult(false, $"User with id = {id}, not found."));
             }
 
