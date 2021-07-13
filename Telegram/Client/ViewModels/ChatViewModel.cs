@@ -19,12 +19,11 @@ namespace Telegram.Client.ViewModels
             }
         }
 
-        public RelayCommand SaveMessageCommand => new RelayCommand(
+        public RelayCommand AddMessageCommand => new RelayCommand(
             o =>
             {
-                messages.Add(Message);
-                Chat.Messages.Add(Message);
-                Message = new Message {Author = currentUser};
+                AddMessage(Message);
+                Message = new Message { Author = currentUser };
             }
         );
 
@@ -38,21 +37,30 @@ namespace Telegram.Client.ViewModels
             set => sendMessageCommand = value;
         }
 
-        private readonly IMessagesResource messages;
-        
         private RelayCommand sendMessageCommand;
         
         private Message message = new Message();
 
         private readonly User currentUser;
-        
-        public ChatViewModel(Chat chat, User currentUser)
+
+        private readonly IChatResource chatResource;
+
+        private readonly IMessagesResource messages;
+
+        public ChatViewModel(Chat chat, User current)
         {
             Chat = chat;
-            this.currentUser = currentUser;
-            message.Author = currentUser;
-            messages = new FakeMessages(chat);
-            sendMessageCommand = SaveMessageCommand;
+            messages = new FakeMessages();
+            chatResource = new FakeChat(chat);
+            currentUser = current;
+            message.Author = current;
+            sendMessageCommand = AddMessageCommand;
+        }
+
+        private void AddMessage(Message message)
+        {
+            chatResource.AddMessage(message);
+            Chat.Messages.Add(message);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Telegram.Server.Core.Db.Models;
 
 namespace Telegram.Server.Core.Db
@@ -17,11 +18,19 @@ namespace Telegram.Server.Core.Db
 
         public DbSet<Content> Contents { get; set; }
 
-        public DbSet<ContentType> ContentTypes { get; set; }
-
         public AppDb(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Content>()
+                .Property(c => c.Type)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ContentType)Enum.Parse(typeof(ContentType), v)
+                );
         }
     }
 }

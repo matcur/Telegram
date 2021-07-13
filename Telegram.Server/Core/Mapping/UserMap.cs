@@ -14,6 +14,8 @@ namespace Telegram.Server.Core.Mapping
 
         public PhoneMap Phone { get; set; }
 
+        public UserMap() { }
+
         public UserMap(User user)
         {
             Id = user.Id;

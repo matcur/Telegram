@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Telegram.Api.Fake.Resources;
+using Telegram.Api.Resources;
 using Telegram.Client.ViewModels;
 using Telegram.Core.Models;
 
@@ -23,12 +25,30 @@ namespace Telegram.Client.Pages
     public partial class ChatPage : Page
     {
         private readonly ChatViewModel viewModel;
-        
+
+        private readonly IMessagesResource messages;
+
+        private readonly IChatResource chatResource;
+
         public ChatPage(Chat chat, User currentUser)
         {
             viewModel = new ChatViewModel(chat, currentUser);
             DataContext = viewModel;
+            chatResource = new FakeChat(chat);
+            Loaded += OnLoaded;
+
             InitializeComponent();
+        }
+
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var response = await chatResource.Messages(0, 10);
+            var messages = response.Result;
+
+            foreach (var message in messages)
+            {
+                viewModel.Chat.Messages.Add(message);
+            }
         }
     }
 }

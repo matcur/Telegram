@@ -9,16 +9,16 @@ namespace Telegram.Client.Contents
 {
     public class VisualContentFactory
     {
-        private Dictionary<ContentTypeName, Func<Content, IContent>> contents
-            = new Dictionary<ContentTypeName, Func<Content, IContent>>
+        private Dictionary<ContentType, Func<Content, IContent>> contents
+            = new Dictionary<ContentType, Func<Content, IContent>>
             {
-                { ContentTypeName.Text, content => new TextContent(content.Value) }, 
-                { ContentTypeName.Image, content => new ImageContent(content.Value) }, 
+                { ContentType.Text, content => new TextContent(content.Value) }, 
+                { ContentType.Image, content => new ImageContent(content.Value) }, 
             };
 
         public IContent From(Content content)
         {
-            var type = content.Type.Name;
+            var type = content.Type;
             if (!contents.ContainsKey(type))
             {
                 throw new Exception($"Can't create content from {type}");

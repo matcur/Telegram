@@ -45,7 +45,7 @@ namespace Telegram.Client.UserControls.ChatPage
                 // TODO: refactor this shit
                 Message.Content.Add(new Content
                 {
-                    Type = new ContentType{ Name = ContentTypeName.Text },
+                    Type = ContentType.Text,
                     Value = input.Text,
                 });
                 SendCommand.Execute(Message);

@@ -9,6 +9,8 @@ namespace Telegram.Api.Resources
 {
     public interface IChatResource
     {
+        Task<RequestResult> AddMessage(Message message);
+
         Task<RequestResult<IEnumerable<Message>>> Messages(int offset, int count);
     }
 }

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
+using Newtonsoft.Json;
 
 namespace Telegram.Server
 {
@@ -26,7 +27,11 @@ namespace Telegram.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(options => 
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    });
             services.AddDbContext<AppDb>(options =>
             {
                 var connection = Configuration.GetConnectionString("DefaultConnection");

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Db.Models
 {
@@ -23,5 +24,13 @@ namespace Telegram.Server.Core.Db.Models
         public User Author { get; set; }
 
         public List<Content> Content { get; set; }
+
+        public Message() { }
+        
+        public Message(MessageMap map)
+        {
+            AuthorId = map.Author.Id;
+            Content = map.Content.Select(c => new Content(c)).ToList();
+        }
     }
 }

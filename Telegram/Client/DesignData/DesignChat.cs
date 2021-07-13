@@ -36,23 +36,23 @@ namespace Telegram.Client.DesignData
         {
             get
             {
-                var textType = new ContentType { Name = ContentTypeName.Text };
+                var textType = ContentType.Text;
 
                 return new ObservableCollection<Message>
                 {
-                    new Message 
+                    new Message
                     { 
-                        Content = new List<Content>{ new Content { Value = "First Message", Type = textType } }, 
+                        Content = new List<Core.Models.Content>{ new Core.Models.Content { Value = "First Message", Type = textType } }, 
                         Author = Members[0] 
                     },
                     new Message
                     {
-                        Content = new List<Content>{ new Content { Value = "Second message", Type = textType } },
+                        Content = new List<Core.Models.Content>{ new Core.Models.Content { Value = "Second message", Type = textType } },
                         Author = Members[1] 
                     },
-                    new Message 
+                    new Message
                     { 
-                        Content = new List<Content>{ new Content { Value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim nulla non erat convallis, ut egestas nulla lacinia. Cras sollicitudin aliquet lacinia. Proin lobortis suscipit pellentesque. Sed varius eu mauris quis pellentesque. Donec id urna massa. Sed suscipit, ipsum bibendum molestie pellentesque, ante magna lacinia urna, vitae placerat lectus velit ac purus. Vivamus egestas, felis in elementum cursus, odio elit volutpat libero, et tristique ipsum dolor ut arcu. Sed molestie.", Type = textType } }, 
+                        Content = new List<Core.Models.Content>{ new Core.Models.Content { Value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim nulla non erat convallis, ut egestas nulla lacinia. Cras sollicitudin aliquet lacinia. Proin lobortis suscipit pellentesque. Sed varius eu mauris quis pellentesque. Donec id urna massa. Sed suscipit, ipsum bibendum molestie pellentesque, ante magna lacinia urna, vitae placerat lectus velit ac purus. Vivamus egestas, felis in elementum cursus, odio elit volutpat libero, et tristique ipsum dolor ut arcu. Sed molestie.", Type = textType } }, 
                         Author = Members[0] 
                     },
                 };

@@ -22,6 +22,13 @@ namespace Telegram.Api.Fake.Resources
             id = chatId;
         }
 
+        public async Task<RequestResult> AddMessage(Message message)
+        {
+            var resource = await api.Post($"chats/{id}/messages/create", Serialize(message));
+
+            return Deserialize(resource);
+        }
+
         public async Task<RequestResult<IEnumerable<Message>>> Messages(int offset, int count)
         {
             var resource = await api.Get($"chats/{id}/messages?offset={offset}&count={count}");

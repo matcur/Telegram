@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telegram.Core.Models
+namespace Telegram.Client.DesignData
 {
-    public enum ContentTypeName
+    class Content
     {
-        Text,
-        Image,
     }
 }

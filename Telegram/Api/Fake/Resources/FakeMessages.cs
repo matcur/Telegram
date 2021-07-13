@@ -6,23 +6,11 @@ namespace Telegram.Api.Fake.Resources
 {
     public class FakeMessages : ApiResource, IMessagesResource
     {
-        private readonly int chatId;
-        
         private FakeClient api;
 
-        public FakeMessages(Chat chat) : this(chat.Id)
+        public FakeMessages()
         {
             api = new FakeClient();
-        }
-
-        public FakeMessages(int chatId)
-        {
-            this.chatId = chatId;
-        }
-    
-        public async Task Add(Message message)
-        {
-            await api.Post($"chat/{chatId}/messages", Serialize(message));
         }
 
         public async Task Update(Message message)

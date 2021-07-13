@@ -122,6 +122,7 @@
     <Compile Include="Client\Contents\VisualContentFactory.cs" />
     <Compile Include="Client\Contents\IContent.cs" />
     <Compile Include="Client\Converters\ElementInitialization.cs" />
+    <Compile Include="Client\DesignData\Content.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
     <Compile Include="Client\Elements\Images\IImage.cs" />
     <Compile Include="Client\Elements\Images\InitializedImage.cs" />
@@ -163,7 +164,6 @@
     <Compile Include="Client\ViewModels\ChatViewModel.cs" />
     <Compile Include="Core\Models\Content.cs" />
     <Compile Include="Core\Models\ContentType.cs" />
-    <Compile Include="Core\Models\ContentTypeName.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Core\Searching\ChatSearch.cs" />
     <Compile Include="Core\Searching\Search.cs" />

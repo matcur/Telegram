@@ -46,15 +46,17 @@ namespace Telegram.Server.Controllers.Api
         }
 
         [HttpGet]
-        [Route("api/1.0/chats/{chatId:int}/messages")]
-        public IActionResult Messages(int chatId, int offset, int count)
+        [Route("api/1.0/chats/{id:int}/messages")]
+        public IActionResult Messages(int id, [FromQuery]int offset, [FromQuery]int count)
         {
-            if (!chats.Any(c => c.Id == chatId))
+            if (!chats.Any(c => c.Id == id))
             {
-                return Json(new RequestResult(false, $"Chat with id = {chatId} does not exists"));
+                return Json(new RequestResult(false, $"Chat with id = {id} does not exists"));
             }
 
-            var result = messages.Where(m => m.ChatId == chatId)
+            var result = messages.Where(m => m.ChatId == id)
+                                 .Include(m => m.Content)
+                                 .Include(m => m.Author)
                                  .Skip(offset)
                                  .Take(count)
                                  .ToList();
@@ -64,7 +66,6 @@ namespace Telegram.Server.Controllers.Api
         
         [HttpPost]
         [Route("api/1.0/chats/create")]
-        [ModelValidation]
         public IActionResult Create([FromBody]ChatMap map)
         {
             var chat = new Chat(map);
@@ -99,6 +100,24 @@ namespace Telegram.Server.Controllers.Api
             db.SaveChanges();
 
             return Json(new RequestResult(true));
+        }
+
+        [HttpPost]
+        [ModelValidation]
+        [Route("api/1.0/chats/{id:int}/messages/create")]
+        public IActionResult Add([FromBody]MessageMap map, int id)
+        {
+            var chat = chats.FirstOrDefault(c => c.Id == id);
+            if (chat == null)
+            {
+                return Json(new RequestResult(false, $"Chat with id = {id} doesn't exist"));
+            }
+
+            chat.Messages.Add(new Message(map));
+            chats.Update(chat);
+            db.SaveChanges();
+
+            return Json(new RequestResult(true, ""));
         }
     }
 }

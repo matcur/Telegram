@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace Telegram.Server.Core.Db.Models
 {
-    public class ContentType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ContentType
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public List<Content> Contents { get; set; }
+        [EnumMember(Value = "Text")]
+        Text,
+        [EnumMember(Value = "Image")]
+        Image,
     }
 }
