@@ -20,7 +20,7 @@ namespace Telegram.Api.Fake.Resources
             this.chatId = chatId;
         }
     
-        public async Task Save(Message message)
+        public async Task Add(Message message)
         {
             await api.Post($"chat/{chatId}/messages", Serialize(message));
         }

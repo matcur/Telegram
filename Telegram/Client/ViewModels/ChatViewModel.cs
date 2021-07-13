@@ -22,7 +22,7 @@ namespace Telegram.Client.ViewModels
         public RelayCommand SaveMessageCommand => new RelayCommand(
             o =>
             {
-                messages.Save(Message);
+                messages.Add(Message);
                 Chat.Messages.Add(Message);
                 Message = new Message {Author = currentUser};
             }

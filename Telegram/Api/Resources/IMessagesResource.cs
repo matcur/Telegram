@@ -5,7 +5,7 @@ namespace Telegram.Api.Resources
 {
     public interface IMessagesResource
     {
-        Task Save(Message message);
+        Task Add(Message message);
         
         Task Update(Message message);
     }
