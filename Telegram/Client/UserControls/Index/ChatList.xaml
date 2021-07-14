@@ -6,64 +6,66 @@
              xmlns:local="clr-namespace:Telegram.Client.UserControls.Index"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ListView 
-            Style="{StaticResource ClearListViewStyle}"
-            ItemsSource="{Binding ChatSearch.Filtered, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding SelectedChat}"
-            ItemContainerStyle="{StaticResource ClearListItemStyle}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid 
-                        Height="60">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+    <ListView 
+        Style="{StaticResource ClearListViewStyle}"
+        Width="{Binding RelativeSource={
+            RelativeSource FindAncestor,
+            AncestorType={x:Type UserControl}},
+            Path=ActualWidth}"
+        ItemsSource="{Binding ChatSearch.Filtered, UpdateSourceTrigger=PropertyChanged}"
+        SelectedItem="{Binding SelectedChat}"
+        ItemContainerStyle="{StaticResource ClearListItemStyle}"
+        HorizontalContentAlignment="Stretch">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <Grid Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                        <Border 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                            <Image 
-                                Height="45" Width="45"
-                                Source="Resoures/Images/start.png"/>
-                        </Border>
+                    <Border 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <Image 
+                            Height="45" Width="45"
+                            Source="Resoures/Images/start.png"/>
+                    </Border>
 
-                        <Border 
-                            Grid.Column="1"
-                            Padding="10">
-                            <Grid Height="60">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
+                    <Border 
+                        Grid.Column="1"
+                        Padding="10">
+                        <Grid Height="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="8"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="8"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
 
-                                <TextBlock 
-                                    Text="{Binding Name}"
-                                    Foreground="{StaticResource LightForeground}"/>
+                            <TextBlock 
+                                Text="{Binding Name}"
+                                Foreground="{StaticResource LightForeground}"/>
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Text="5:12MP"
-                                    Foreground="{StaticResource LightForeground}"/>
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="5:12MP"
+                                Foreground="{StaticResource LightForeground}"/>
 
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Text="{Binding LastMessage.Content[0].Value}"
-                                    Foreground="{StaticResource LightForeground}"
-                                    TextTrimming="CharacterEllipsis"/>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+                            <TextBlock
+                                Grid.Row="2"
+                                Text="{Binding LastMessage.Content[0].Value}"
+                                Foreground="{StaticResource LightForeground}"
+                                TextTrimming="CharacterEllipsis"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </UserControl>

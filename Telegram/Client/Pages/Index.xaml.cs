@@ -36,7 +36,7 @@ namespace Telegram.Client.Pages
 
         public Index()
         {
-            currentUser = new User { Id = 9002 };
+            currentUser = new User { Id = 1 };
             chats = new FakeChats();
             viewModel = new IndexViewModel();
             viewModel.PropertyChanged += OnChatSelected;

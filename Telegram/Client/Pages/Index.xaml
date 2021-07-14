@@ -19,6 +19,9 @@
         </Grid.ColumnDefinitions>
 
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -55,7 +58,9 @@
                 </StackPanel>
             </Grid>
 
-            <indexControls:ChatList Grid.Row="1"/>
+            <indexControls:ChatList
+                Grid.Row="1"
+                HorizontalContentAlignment="Stretch"/>
         </Grid>
         <GridSplitter
             Grid.Column="1"
