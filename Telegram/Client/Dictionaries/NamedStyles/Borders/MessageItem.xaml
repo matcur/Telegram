@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="MessageItemStyle" TargetType="Border">
+        <Setter Property="Width" Value="{Binding RelativeSource={
+            RelativeSource FindAncestor,
+            AncestorType={x:Type ListView}},
+            Path=ActualWidth}"/>
+        <Setter Property="CornerRadius" Value="3 3 3 0"/>
+        <Setter Property="Padding" Value="20 5 10 0"/>
+        <Setter Property="Background" Value="{StaticResource MessageBackground}"/>
+    </Style>
+</ResourceDictionary>

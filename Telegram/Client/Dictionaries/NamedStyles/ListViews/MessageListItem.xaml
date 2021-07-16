@@ -3,9 +3,22 @@
     <Style x:Key="MessageListItemStyle" TargetType="ListViewItem">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="MaxWidth" Value="500"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Background="{TemplateBinding Background}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#202B36"/>
+                <Setter Property="Background" Value="Transparent"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="#2B5278"/>

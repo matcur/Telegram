@@ -9,19 +9,24 @@
              xmlns:userControls="clr-namespace:Telegram.Client.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             Loaded="OnLoaded">
+             Loaded="OnLoaded"
+             Padding="10">
     <UserControl.Resources>
         <ObjectDataProvider 
             x:Key="designChat"
             ObjectType="{x:Type designData:DesignChat}"/>
     </UserControl.Resources>
-    <Border MinWidth="200">
-        <ListView
-            d:DataContext="{StaticResource designChat}"
-            x:Name="messageListView"
-            Style="{StaticResource ClearListViewStyle}"
-            ItemContainerStyle="{StaticResource MessageListItemStyle}"
-            ScrollViewer.VerticalScrollBarVisibility="Visible">
-        </ListView>
-    </Border>
+    <ListView
+        d:DataContext="{StaticResource designChat}"
+        x:Name="messageListView"
+        Style="{StaticResource ClearListViewStyle}"
+        ItemContainerStyle="{StaticResource MessageListItemStyle}"
+        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+        HorizontalContentAlignment="Left">
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel HorizontalAlignment="Left"/>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+    </ListView>
 </UserControl>

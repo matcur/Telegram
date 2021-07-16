@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Lines/Burger.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Borders/Arrow.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Borders/Icon.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Borders/MessageItem.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Buttons/ClearButton.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Buttons/PrimaryButton.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/Buttons.xaml"/>

@@ -8,12 +8,11 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              MouseDoubleClick="OnDoubleClick">
-        <StackPanel>
-            <Border Width="40"/>
-            <Border 
-                CornerRadius="3 3 3 0"
-                Padding="20 5 10 0"
-                Background="{StaticResource MessageBackground}">
+        <StackPanel Orientation="Horizontal">
+            <Border Width="40">
+                <TextBlock Text="Fuck"/>
+            </Border>
+            <Border Style="{StaticResource MessageItemStyle}">
                 <StackPanel>
                     <TextBlock 
                         x:Name="authorName"
