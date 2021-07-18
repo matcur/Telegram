@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Telegram.Client.UserControls.Index.MenuItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Telegram.Client.UserControls.Index"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="250">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- 0 Indent -->
+            <ColumnDefinition Width="20"/>
+            <!-- 1 Icon -->
+            <ColumnDefinition Width="50"/>
+            <!-- 2 Title -->
+            <ColumnDefinition Width="auto"/>
+            <!-- 3 Free spase -->
+            <ColumnDefinition Width="*"/>
+            <!-- 4 Additional Action -->
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+            <Border.Child>
+                <UserControl Content="{Binding Icon}"/>
+            </Border.Child>
+        </Border>
+        <Border 
+            Grid.Column="2"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+            <TextBlock 
+                Foreground="{StaticResource LightForeground}"
+                FontSize="{StaticResource SmallFontSize}"
+                Text="{Binding Title}"/>
+        </Border>
+        <Border Grid.Column="4">
+            <UserControl Content="{Binding AdditionalAction}"/>
+        </Border>
+    </Grid>
+</UserControl>

@@ -12,8 +12,8 @@ namespace Telegram.Client.ViewModels
 {
     public class IndexViewModel : ViewModel
     {
-        private Chat selectedChat;
-
+        public event Action BurgerIsClicked = delegate {  };
+        
         public Chat SelectedChat
         {
             get => selectedChat;
@@ -26,7 +26,11 @@ namespace Telegram.Client.ViewModels
 
         public Search<ObservableCollection<Chat>> ChatSearch { get; }
 
-        public RelayCommand SearchTextChangedCommand { get; }
+        public RelayCommand SearchTextChangedCommand { get; set; }
+
+        public RelayCommand ShowLeftMenuCommand { get; set; }
+
+        private Chat selectedChat;
 
         public IndexViewModel(): this(new ChatSearch(new List<Chat>()))
         {
@@ -36,8 +40,16 @@ namespace Telegram.Client.ViewModels
         public IndexViewModel(Search<ObservableCollection<Chat>> chatSearch)
         {
             ChatSearch = chatSearch;
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
             SearchTextChangedCommand = new RelayCommand(
                 text => OnSearchTextChanged(text)
+            );
+            ShowLeftMenuCommand = new RelayCommand(
+                o => BurgerIsClicked()
             );
         }
 

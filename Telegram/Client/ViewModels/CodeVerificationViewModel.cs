@@ -53,10 +53,10 @@ namespace Telegram.Client.ViewModels
             users = new FakeUsers();
             navigation = pageNavigation;
 
-            InitCommands();
+            InitializeCommands();
         }
 
-        private void InitCommands()
+        private void InitializeCommands()
         {
             InCommand = new RelayCommand(o => In());
             GoToLoginCommand = new RelayCommand(o => GoToLogin());

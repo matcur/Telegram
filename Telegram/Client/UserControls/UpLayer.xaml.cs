@@ -13,16 +13,28 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Telegram.Client.UserControls.Index
+namespace Telegram.Client.UserControls
 {
     /// <summary>
-    /// Interaction logic for Burger.xaml
+    /// Interaction logic for UpLayer.xaml
     /// </summary>
-    public partial class Burger : UserControl
+    public partial class UpLayer : UserControl
     {
-        public Burger()
+        public UpLayer()
         {
+            Visibility = Visibility.Hidden;
             InitializeComponent();
+        }
+
+        public void Show(UserControl content)
+        {
+            Contents.Navigate(content);
+            Visibility = Visibility.Visible;
+        }
+
+        public void Hide()
+        {
+            Visibility = Visibility.Hidden;
         }
     }
 }

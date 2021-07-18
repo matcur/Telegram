@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Telegram"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow.xaml"
+             Activated="OnActivated">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,6 +23,7 @@
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Login/EnterPhone.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/WrongCode.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/MessageText.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBlocks/Information.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/ChatSearch.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/MessageInput.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/TextBoxs/BaseTextBox.xaml"/>
@@ -29,6 +31,9 @@
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/ClearListView.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/ClearListItem.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/MessageListItem.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/ListViews/MenuItem.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Images/CircleImage.xaml"/>
+                <ResourceDictionary Source="Client/Dictionaries/NamedStyles/Dark.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Header.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Background.xaml"/>
                 <ResourceDictionary Source="Client/Dictionaries/Brushes/Generic/Stroke.xaml"/>

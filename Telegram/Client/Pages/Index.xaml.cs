@@ -20,6 +20,7 @@ using Telegram.Client.ViewModels;
 using System.ComponentModel;
 using System.IO;
 using Telegram.Api.Fake.Resources;
+using Telegram.Client.UserControls.Index;
 
 namespace Telegram.Client.Pages
 {
@@ -34,14 +35,9 @@ namespace Telegram.Client.Pages
         
         private readonly IChatsResource chats;
 
-        public Index()
+        public Index(): this(new User { Id = 1 }, new FakeChats())
         {
-            currentUser = new User { Id = 1 };
-            chats = new FakeChats();
-            viewModel = new IndexViewModel();
-            viewModel.PropertyChanged += OnChatSelected;
-            DataContext = viewModel;
-            InitializeComponent();
+            
         }
 
         public Index(User current, IChatsResource chatsResource)
@@ -50,21 +46,27 @@ namespace Telegram.Client.Pages
             chats = chatsResource;
             viewModel = new IndexViewModel();
             viewModel.PropertyChanged += OnChatSelected;
+            viewModel.BurgerIsClicked += ShowLeftMenu;
             DataContext = viewModel;
             InitializeComponent();
+        }
+
+        private void ShowLeftMenu()
+        {
+            UpLayer.Show(new LeftMenu());
         }
 
         private void OnChatSelected(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(viewModel.SelectedChat))
             {
-                frame.Navigate(new ChatPage(viewModel.SelectedChat, currentUser));
+                ChatFrame.Navigate(new ChatPage(viewModel.SelectedChat, currentUser));
             }
         }
 
         private void CreateChat(object sender, RoutedEventArgs e)
         {
-            chats.Add(new Chat { Name = newChatNameInput.Text, Description = "test desc" });
+            chats.Add(new Chat { Name = NewChatNameInput.Text, Description = "test desc" });
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)

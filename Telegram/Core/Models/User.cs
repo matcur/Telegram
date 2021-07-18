@@ -8,12 +8,6 @@ namespace Telegram.Core.Models
 {
     public class User : Model
     {
-        private string firstName;
-
-        private string lastName;
-
-        private Phone phone;
-
         public int Id { get; set; }
 
         public string FirstName
@@ -51,5 +45,11 @@ namespace Telegram.Core.Models
         }
 
         public List<Code> Codes { get; set; }
+
+        private string firstName;
+
+        private string lastName;
+
+        private Phone phone;
     }
 }

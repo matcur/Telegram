@@ -26,15 +26,13 @@ namespace Telegram.Client.Pages
     {
         private readonly ChatViewModel viewModel;
 
-        private readonly IMessagesResource messages;
-
-        private readonly IChatResource chatResource;
+        private readonly IChatResource chat;
 
         public ChatPage(Chat chat, User currentUser)
         {
             viewModel = new ChatViewModel(chat, currentUser);
             DataContext = viewModel;
-            chatResource = new FakeChat(chat);
+            this.chat = new FakeChat(chat);
             Loaded += OnLoaded;
 
             InitializeComponent();
@@ -42,7 +40,7 @@ namespace Telegram.Client.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var response = await chatResource.Messages(0, 10);
+            var response = await chat.Messages(0, 10);
             var messages = response.Result;
 
             foreach (var message in messages)

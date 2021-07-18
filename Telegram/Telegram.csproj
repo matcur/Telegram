@@ -125,6 +125,8 @@
     <Compile Include="Client\Converters\ElementInitialization.cs" />
     <Compile Include="Client\DesignData\Content.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
+    <Compile Include="Client\DesignData\DesignUser.cs" />
+    <Compile Include="Client\Elements\Images\CircleImage.cs" />
     <Compile Include="Client\Elements\Images\IImage.cs" />
     <Compile Include="Client\Elements\Images\InitializedImage.cs" />
     <Compile Include="Client\Elements\Images\ScaledImage.cs" />
@@ -162,6 +164,15 @@
     <Compile Include="Client\UserControls\Icons\Smile.xaml.cs">
       <DependentUpon>Smile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\UserControls\Index\LeftMenu.xaml.cs">
+      <DependentUpon>LeftMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\UserControls\Index\MenuItem.xaml.cs">
+      <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\UserControls\UpLayer.xaml.cs">
+      <DependentUpon>UpLayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client\ViewModels\ChatViewModel.cs" />
     <Compile Include="Core\Models\Content.cs" />
     <Compile Include="Core\Models\ContentType.cs" />
@@ -178,7 +189,7 @@
     <Compile Include="Client\Pages\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Client\UserControls\Index\Burger.xaml.cs">
+    <Compile Include="Client\UserControls\Icons\Burger.xaml.cs">
       <DependentUpon>Burger.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\UserControls\Index\ChatItem.xaml.cs">
@@ -244,6 +255,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\Dark.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\Header\Borders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,11 +268,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\Images\CircleImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Client\Dictionaries\NamedStyles\Lines\Arrow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\Dictionaries\NamedStyles\Lines\Burger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\ListViews\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -285,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\Dictionaries\NamedStyles\Paths\Icon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\Information.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -334,6 +358,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\UserControls\Icons\Smile.xaml" />
+    <Page Include="Client\UserControls\Index\LeftMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\UserControls\Index\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\UserControls\UpLayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -363,7 +399,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Client\UserControls\Index\Burger.xaml">
+    <Page Include="Client\UserControls\Icons\Burger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -416,7 +452,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Client\Resources\Images\start.png" />
   </ItemGroup>
