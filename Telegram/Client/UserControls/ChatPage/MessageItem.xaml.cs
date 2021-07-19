@@ -11,13 +11,12 @@ namespace Telegram.Client.UserControls.ChatPage
         public event Action<Message> Editing = delegate { };
         
         public Message Message { get; }
-    
+
         public MessageItem(Message message)
         {
             Message = message;
+            DataContext = this;
             InitializeComponent();
-            contentControl.Value = Message.Content;
-            authorName.Text = Message.Author.FullName;
         }
 
         private void OnDoubleClick(object sender, MouseButtonEventArgs e)

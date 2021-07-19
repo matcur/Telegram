@@ -6,22 +6,25 @@
              xmlns:local="clr-namespace:Telegram.Client.UserControls.ChatPage"
              xmlns:userControls="clr-namespace:Telegram.Client.UserControls"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="70" d:DesignWidth="200"
              MouseDoubleClick="OnDoubleClick">
-        <StackPanel Orientation="Horizontal">
-            <Border Width="40">
-                <TextBlock Text="Fuck"/>
-            </Border>
-            <Border Style="{StaticResource MessageItemStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Border 
+                Grid.Column="2"
+                Style="{StaticResource MessageItemStyle}">
                 <StackPanel>
                     <TextBlock 
-                        x:Name="authorName"
-                        Padding="0 0 0 5"
-                        Foreground="{StaticResource MessageAuthorForeground}"
-                        FontSize="{StaticResource SmallFontSize}"
-                        FontWeight="600"/>
-                    <userControls:ContentControl x:Name="contentControl"/>
+                        Text="{Binding Message.Author.FullName}"
+                        Foreground="{StaticResource MessageAuthorForeground}"/>
+                    <userControls:ContentControl 
+                        x:Name="contentControl"
+                        Value="{Binding Message.Content}"/>
                 </StackPanel>
             </Border>
-        </StackPanel>
+        </Grid>
 </UserControl>

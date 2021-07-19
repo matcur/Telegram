@@ -41,7 +41,7 @@ namespace Telegram.Client.UserControls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            presentations.Children.Add(new ComplexContent(Value).VisualPresentation);
+            presentations?.Children.Add(new ComplexContent(Value).VisualPresentation);
         }
     }
 }
