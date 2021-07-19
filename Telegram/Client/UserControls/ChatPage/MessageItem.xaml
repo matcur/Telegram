@@ -20,10 +20,8 @@
                 <StackPanel>
                     <TextBlock 
                         Text="{Binding Message.Author.FullName}"
-                        Foreground="{StaticResource MessageAuthorForeground}"/>
-                    <userControls:ContentControl 
-                        x:Name="contentControl"
-                        Value="{Binding Message.Content}"/>
+                        Foreground="{Binding AuthorForeground}"/>
+                    <userControls:ContentControl Value="{Binding Message.Content}"/>
                 </StackPanel>
             </Border>
         </Grid>

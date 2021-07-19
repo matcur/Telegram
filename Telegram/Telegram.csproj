@@ -118,6 +118,8 @@
     <Compile Include="Api\Resources\IUserResource.cs" />
     <Compile Include="Api\Resources\IUsersResource.cs" />
     <Compile Include="Api\Resources\IVerificationResource.cs" />
+    <Compile Include="Client\Colors\ColorFromText.cs" />
+    <Compile Include="Client\Colors\IColor.cs" />
     <Compile Include="Client\Contents\ComplexContent.cs" />
     <Compile Include="Client\Contents\ImageContent.cs" />
     <Compile Include="Client\Contents\VisualContentFactory.cs" />
