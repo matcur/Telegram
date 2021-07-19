@@ -20,15 +20,40 @@ namespace Telegram.Client.UserControls
     /// </summary>
     public partial class UpLayer : UserControl
     {
+        public UserControl LeftElement
+        {
+            get => leftElement;
+            set
+            {
+                leftElement = value;
+                LeftPart.Navigate(value);
+                Show();
+            }
+        }
+
+        public UserControl CenterElement
+        {
+            get => centerElement;
+            set
+            {
+                centerElement = value;
+                CenterPart.Navigate(value);
+                Show();
+            }
+        }
+
+        private UserControl leftElement;
+
+        private UserControl centerElement;
+
         public UpLayer()
         {
             Visibility = Visibility.Hidden;
             InitializeComponent();
         }
 
-        public void Show(UserControl content)
+        public void Show()
         {
-            Contents.Navigate(content);
             Visibility = Visibility.Visible;
         }
 

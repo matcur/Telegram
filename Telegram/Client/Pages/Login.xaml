@@ -80,7 +80,7 @@
                     enter your mobile phone number.
                 </TextBlock>
                 <TextBox 
-                    Style="{StaticResource EnterPhoneStyle}"
+                    Style="{StaticResource InputStyle}"
                     Text="{Binding Phone.Number}"/>
                 <Button 
                     Style="{StaticResource PrimaryBtnStyle}"

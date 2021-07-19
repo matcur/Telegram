@@ -3,7 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Brushes/Generic/Foreground.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    <Style x:Key="EnterPhoneStyle" TargetType="TextBox">
+    <Style x:Key="InputStyle" TargetType="TextBox">
         <Setter Property="Margin" Value="0 30 0 0"/>
         <Setter Property="Padding" Value="12 0 0 8"/>
         <Setter Property="Background" Value="Transparent"/>

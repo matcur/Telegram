@@ -6,39 +6,44 @@
              xmlns:local="clr-namespace:Telegram.Client.UserControls.Index"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="250">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <!-- 0 Indent -->
-            <ColumnDefinition Width="20"/>
-            <!-- 1 Icon -->
-            <ColumnDefinition Width="50"/>
-            <!-- 2 Title -->
-            <ColumnDefinition Width="auto"/>
-            <!-- 3 Free spase -->
-            <ColumnDefinition Width="*"/>
-            <!-- 4 Additional Action -->
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
+    <Button
+        Style="{StaticResource ClearBtnStyle}"
+        Command="{Binding ClickCommand}"
+        Click="OnClick">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- 0 Indent -->
+                <ColumnDefinition Width="20"/>
+                <!-- 1 Icon -->
+                <ColumnDefinition Width="50"/>
+                <!-- 2 Title -->
+                <ColumnDefinition Width="auto"/>
+                <!-- 3 Free spase -->
+                <ColumnDefinition Width="*"/>
+                <!-- 4 Additional Action -->
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
 
-        <Border
-            Grid.Column="1"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center">
-            <Border.Child>
-                <UserControl Content="{Binding Icon}"/>
-            </Border.Child>
-        </Border>
-        <Border 
-            Grid.Column="2"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center">
-            <TextBlock 
-                Foreground="{StaticResource LightForeground}"
-                FontSize="{StaticResource SmallFontSize}"
-                Text="{Binding Title}"/>
-        </Border>
-        <Border Grid.Column="4">
-            <UserControl Content="{Binding AdditionalAction}"/>
-        </Border>
-    </Grid>
+            <Border
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+                <Border.Child>
+                    <UserControl Content="{Binding Icon}"/>
+                </Border.Child>
+            </Border>
+            <Border 
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+                <TextBlock 
+                    Foreground="{StaticResource LightForeground}"
+                    FontSize="{StaticResource SmallFontSize}"
+                    Text="{Binding Title}"/>
+            </Border>
+            <Border Grid.Column="4">
+                <UserControl Content="{Binding AdditionalAction}"/>
+            </Border>
+        </Grid>
+    </Button>
 </UserControl>

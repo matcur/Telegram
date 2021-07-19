@@ -12,7 +12,7 @@
             x:Key="designUser"
             ObjectType="{x:Type designData:DesignUser}"/>
     </UserControl.Resources>
-    <Grid Width="270">
+    <Grid Width="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -69,7 +69,8 @@
                 Style="{StaticResource ClearListViewStyle}"
                 ItemsSource="{Binding Items}"
                 HorizontalContentAlignment="Stretch"
-                ItemContainerStyle="{StaticResource MenuItemStyle}"/>
+                ItemContainerStyle="{StaticResource MenuItemStyle}"
+                SelectionChanged="OnItemSelected"/>
         </Border>
     </Grid>
 </UserControl>

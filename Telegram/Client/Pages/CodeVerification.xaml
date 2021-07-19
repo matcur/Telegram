@@ -83,7 +83,7 @@
                     Foreground="{StaticResource LabelForeground}"
                     FontSize="{StaticResource NormalFontSize}"/>
                 <TextBox 
-                    Style="{StaticResource EnterPhoneStyle}"
+                    Style="{StaticResource InputStyle}"
                     Margin="0"
                     Text="{Binding EnteredCode.Value}"/>
                 <TextBlock

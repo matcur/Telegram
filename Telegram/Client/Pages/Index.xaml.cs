@@ -53,7 +53,7 @@ namespace Telegram.Client.Pages
 
         private void ShowLeftMenu()
         {
-            UpLayer.Show(new LeftMenu());
+            UpLayer.LeftElement = new LeftMenu(UpLayer);
         }
 
         private void OnChatSelected(object sender, PropertyChangedEventArgs e)

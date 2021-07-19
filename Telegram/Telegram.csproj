@@ -144,6 +144,12 @@
     <Compile Include="Client\UserControls\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Client\UserControls\Forms\NewGroupForm.xaml.cs">
+      <DependentUpon>NewGroupForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\UserControls\Form\TextInput.xaml.cs">
+      <DependentUpon>TextInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Client\UserControls\Icons\Clip.xaml.cs">
       <DependentUpon>Clip.xaml</DependentUpon>
     </Compile>
@@ -221,6 +227,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\Brushes\Generic\Colors.xaml" />
     <Page Include="Client\Dictionaries\Brushes\Generic\Foreground.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -241,6 +248,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\Borders\Form.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\Borders\Icon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,6 +261,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\FormButton.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\Buttons\PrimaryButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -302,7 +311,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\Login\EnterPhone.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\Login\Input.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -314,6 +323,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\InputTitle.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\MessageText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -338,6 +348,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\UserControls\Forms\NewGroupForm.xaml" />
+    <Page Include="Client\UserControls\Form\TextInput.xaml" />
     <Page Include="Client\UserControls\Icons\Clip.xaml" />
     <Page Include="Client\UserControls\Icons\Loupe.xaml">
       <SubType>Designer</SubType>
