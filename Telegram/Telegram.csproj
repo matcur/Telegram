@@ -182,6 +182,9 @@
       <DependentUpon>UpLayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client\ViewModels\ChatViewModel.cs" />
+    <Compile Include="Core\Form\GroupForm.cs" />
+    <Compile Include="Core\Form\Inputs\IInput.cs" />
+    <Compile Include="Core\Form\Rules\NotEmpty.cs" />
     <Compile Include="Core\Models\Content.cs" />
     <Compile Include="Core\Models\ContentType.cs" />
     <Compile Include="Core\RelayCommand.cs" />
@@ -328,7 +331,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\WrongCode.xaml">
+    <Page Include="Client\Dictionaries\NamedStyles\TextBlocks\Error.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -393,6 +396,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Navigation.cs" />
+    <Compile Include="Core\Form\Inputs\Input.cs" />
+    <Compile Include="Core\Form\IRule.cs" />
+    <Compile Include="Core\Form\Rules\Email.cs" />
+    <Compile Include="Core\Form\Rules\MinLength.cs" />
+    <Compile Include="Core\Form\ValidationResult.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -469,6 +477,7 @@
   <ItemGroup>
     <Resource Include="Client\Resources\Images\start.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

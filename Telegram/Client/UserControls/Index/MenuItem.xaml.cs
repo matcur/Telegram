@@ -25,6 +25,7 @@ namespace Telegram.Client.UserControls.Index
         public UserControl Icon { get; }
         
         public UserControl AdditionalAction { get; }
+
         public Action ClickAction { get; }
 
         public string Title { get; }

@@ -87,7 +87,7 @@
                     Margin="0"
                     Text="{Binding EnteredCode.Value}"/>
                 <TextBlock
-                    Style="{StaticResource WrongCodeStyle}"
+                    Style="{StaticResource ErrorStyle}"
                     Text="{Binding WrongCodeMessage, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button 
                     Style="{StaticResource PrimaryBtnStyle}"

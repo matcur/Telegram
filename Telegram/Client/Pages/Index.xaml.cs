@@ -64,11 +64,6 @@ namespace Telegram.Client.Pages
             }
         }
 
-        private void CreateChat(object sender, RoutedEventArgs e)
-        {
-            chats.Add(new Chat { Name = NewChatNameInput.Text, Description = "test desc" });
-        }
-
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             viewModel.ChatSearch.AddItems(

@@ -8,7 +8,6 @@
              d:DesignHeight="50" d:DesignWidth="250">
     <Button
         Style="{StaticResource ClearBtnStyle}"
-        Command="{Binding ClickCommand}"
         Click="OnClick">
         <Grid>
             <Grid.ColumnDefinitions>

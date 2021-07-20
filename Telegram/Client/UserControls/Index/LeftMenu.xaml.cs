@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Telegram.Api.Fake;
+using Telegram.Api.Fake.Resources;
 using Telegram.Client.UserControls.Form;
 using Telegram.Client.UserControls.Forms;
 using Telegram.Client.UserControls.Icons;
@@ -44,7 +46,13 @@ namespace Telegram.Client.UserControls.Index
             {
                 return new List<MenuItem>
                 {
-                    new MenuItem("New Group", new Loupe(), () => upLayer.CenterElement = new NewGroupForm()),
+                    new MenuItem(
+                        "New Group",
+                        new Loupe(),
+                        () => upLayer.CenterElement = new NewGroupForm(
+                            new FakeChats()
+                        )
+                    ),
                     new MenuItem("New Channel", new Loupe()),
                     new MenuItem("Contacts", new Loupe()),
                     new MenuItem("Calls", new Loupe()),

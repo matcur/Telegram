@@ -35,30 +35,15 @@
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="100"/>
-                    </Grid.RowDefinitions>
 
                     <icons:Burger ClickCommand="{Binding ShowLeftMenuCommand}"/>
                     <Border
-                        Grid.Row="0" Grid.Column="1"
+                        Grid.Column="1"
                         VerticalAlignment="Center"
                         Padding="5 0 10 0">
                         <indexControls:ChatSearch
                             TextChangedCommand="{Binding SearchTextChangedCommand}"/>
                     </Border>
-                    
-                    <StackPanel 
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2" Grid.Column="0">
-                        <TextBox x:Name="NewChatNameInput"/>
-                        <Button
-                            Height="30"
-                            Background="#fff"
-                            Click="CreateChat"
-                            Content="Create"/>
-                    </StackPanel>
                 </Grid>
 
                 <indexControls:ChatList

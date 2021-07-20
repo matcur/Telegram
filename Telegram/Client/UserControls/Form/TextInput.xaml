@@ -5,14 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Telegram.Client.UserControls.Form"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
              Background="Transparent">
     <StackPanel>
         <TextBlock
             Text="{Binding Title}"
-            Foreground="{StaticResource InputTitleForeground}"/>
+            Style="{StaticResource InputTitleStyle}"/>
         <TextBox
             Text="{Binding Value}"
-            Style="{StaticResource InputStyle}"/>
+            Style="{StaticResource InputStyle}"
+            TextChanged="OnValueChange"/>
+        <TextBlock
+            Text="{Binding Error}"
+            Style="{StaticResource ErrorStyle}"/>
     </StackPanel>
 </UserControl>

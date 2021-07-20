@@ -3,7 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../FontSize.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    <Style x:Key="WrongCodeStyle" TargetType="TextBlock">
+    <Style x:Key="ErrorStyle" TargetType="TextBlock">
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Foreground" Value="#FF3232"/>
         <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
