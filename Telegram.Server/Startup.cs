@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
 using Newtonsoft.Json;
+using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server
 {
@@ -37,6 +38,7 @@ namespace Telegram.Server
                 var connection = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connection);
             });
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -44,13 +46,14 @@ namespace Telegram.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
             }
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chats");
             });
         }
     }
