@@ -5,7 +5,9 @@ namespace Telegram.Api.Fake
 {
     public class FakeClient : IApiClient
     {
-        private readonly string url = "https://localhost:44383/api/";
+        public string Host => "https://localhost:44383/";
+
+        private readonly string url = "http://localhost:5001/api/";
 
         private readonly HttpClient client = new HttpClient();
 

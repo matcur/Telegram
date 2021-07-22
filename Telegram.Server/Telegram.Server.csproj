@@ -10,11 +10,5 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Websockets\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\chat.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\signalr\dist\browser\signalr.min.js" />
-  </ItemGroup>
-
 
 </Project>

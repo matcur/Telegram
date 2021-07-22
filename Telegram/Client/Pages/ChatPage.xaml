@@ -7,7 +7,8 @@
       xmlns:designData="clr-namespace:Telegram.Client.DesignData"
       xmlns:chat="clr-namespace:Telegram.Client.UserControls.ChatPage"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="350">
+      d:DesignHeight="450" d:DesignWidth="350"
+      Loaded="OnLoaded">
     <Grid Background="{StaticResource ChatBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

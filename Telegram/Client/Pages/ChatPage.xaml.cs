@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telegram.Api.Fake.Resources;
+using Telegram.Api.Fake.Sockets;
 using Telegram.Api.Resources;
+using Telegram.Api.Sockets;
 using Telegram.Client.ViewModels;
 using Telegram.Core.Models;
 
@@ -24,29 +27,32 @@ namespace Telegram.Client.Pages
     /// </summary>
     public partial class ChatPage : Page
     {
-        private readonly ChatViewModel viewModel;
+        private readonly IChatSocket socket;
 
-        private readonly IChatResource chat;
+        private readonly ChatViewModel viewModel;
 
         public ChatPage(Chat chat, User currentUser)
         {
-            viewModel = new ChatViewModel(chat, currentUser);
+            socket = new FakeChatSocket(
+                new HubConnectionBuilder()
+            );
+            viewModel = new ChatViewModel(
+                chat,
+                currentUser,
+                socket
+            );
             DataContext = viewModel;
-            this.chat = new FakeChat(chat);
-            Loaded += OnLoaded;
 
             InitializeComponent();
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var response = await chat.Messages(0, 10);
-            var messages = response.Result;
+            var socketTask = socket.Start();
+            var messagesTask = viewModel.LoadMessages();
 
-            foreach (var message in messages)
-            {
-                viewModel.Chat.Messages.Add(message);
-            }
+            await socketTask;
+            await messagesTask;
         }
     }
 }
