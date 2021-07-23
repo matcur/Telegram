@@ -9,7 +9,7 @@ namespace Telegram.Client.Contents
 {
     public class VisualContentFactory
     {
-        private Dictionary<ContentType, Func<Content, IContent>> contents
+        private readonly Dictionary<ContentType, Func<Content, IContent>> contents
             = new Dictionary<ContentType, Func<Content, IContent>>
             {
                 { ContentType.Text, content => new TextContent(content.Value) }, 
@@ -24,7 +24,7 @@ namespace Telegram.Client.Contents
                 throw new Exception($"Can't create content from {type}");
             }
 
-            return contents[type].Invoke(content);
+            return contents[type](content);
         }
     }
 }

@@ -198,7 +198,6 @@
     <Compile Include="Client\Contents\VisualContentFactory.cs" />
     <Compile Include="Client\Contents\IContent.cs" />
     <Compile Include="Client\Converters\ElementInitialization.cs" />
-    <Compile Include="Client\DesignData\Content.cs" />
     <Compile Include="Client\DesignData\DesignChat.cs" />
     <Compile Include="Client\DesignData\DesignUser.cs" />
     <Compile Include="Client\Elements\Images\CircleImage.cs" />
@@ -295,6 +294,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\BaseStyles\TextBox.xaml" />
     <Page Include="Client\Dictionaries\Brushes\Generic\Background.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -338,23 +338,15 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Client\Dictionaries\NamedStyles\Buttons\FormButton.xaml" />
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\NavigateButton.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\Buttons\PrimaryButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\Settings.xaml" />
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\WindowClose.xaml" />
+    <Page Include="Client\Dictionaries\NamedStyles\Buttons\WindowState.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\Dark.xaml" />
-    <Page Include="Client\Dictionaries\NamedStyles\Header\Borders.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\Header\Buttons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\Header\Paths.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Client\Dictionaries\NamedStyles\Images\CircleImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -383,14 +375,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\Login\Buttons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\Login\Input.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\Paths\Header.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\Paths\Icon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -408,11 +393,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\BaseTextBox.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\ChatSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\Input.xaml" />
     <Page Include="Client\Dictionaries\NamedStyles\TextBoxs\MessageInput.xaml" />
     <Page Include="Client\UserControls\ChatPage\Body.xaml">
       <SubType>Designer</SubType>
@@ -550,7 +535,6 @@
   <ItemGroup>
     <Resource Include="Client\Resources\Images\start.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -42,13 +42,13 @@ namespace Telegram.Client.UserControls.ChatPage
         {
             if (e.Key == Key.Enter)
             {
-                // TODO: refactor this shit
                 Message.Content.Add(new Content
                 {
                     Type = ContentType.Text,
                     Value = input.Text,
                 });
                 SendCommand.Execute(Message);
+                input.Clear();
             }
         }
     }

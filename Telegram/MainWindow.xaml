@@ -34,7 +34,7 @@
                     Grid.Column="1"
                     Orientation="Horizontal">
                     <Button
-                        Style="{StaticResource HeaderBtnStyle}"
+                        Style="{StaticResource WindowStateBtnStyle}"
                         Click="Minimize">
                         <Path Style="{StaticResource HeaderPathStyle}">
                             <Path.Data>
@@ -45,8 +45,8 @@
                         </Path>
                     </Button>
                     <Button
-                        Style="{StaticResource HeaderBtnStyle}"
-                        Click="ToggleState">
+                        Style="{StaticResource WindowStateBtnStyle}"
+                        Click="ToggleWindowState">
                         <Path Style="{StaticResource HeaderPathStyle}">
                             <Path.Data>
                                 <RectangleGeometry
@@ -55,7 +55,7 @@
                         </Path>
                     </Button>
                     <Button
-                        Style="{StaticResource HeaderCloseBtnStyle}"
+                        Style="{StaticResource WindowCloseBtnStyle}"
                         Click="Close">
                         <Path 
                             Style="{StaticResource HeaderPathStyle}">

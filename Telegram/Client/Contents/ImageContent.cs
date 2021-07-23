@@ -24,28 +24,30 @@ namespace Telegram.Client.Contents
         {
             get
             {
-                var result = new Image();
+                var image = new Image();
                 
-                result.SetBinding(Image.SourceProperty, Binding);
-                result.HorizontalAlignment = HorizontalAlignment.Left;
+                image.SetBinding(Image.SourceProperty, Binding);
+                image.HorizontalAlignment = HorizontalAlignment.Left;
 
-                return result;
+                return image;
             }
         }
 
-        public Binding Binding => new Binding
+        private Binding Binding => new Binding
         {
-            Converter = new ElementInitialization<ImageSource>(
-                () => new ScaledImage(
-                    new InitializedImage(
-                        new Uri(uri, UriKind.Absolute)
-                    ),
-                    400,
-                    200
-                ).VisualPresentation.Source
+            Converter = new ElementInitialization(
+                () => Source
             ),
             IsAsync = true,
         };
+
+        private ImageSource Source => new ScaledImage(
+            new InitializedImage(
+                new Uri(uri, UriKind.Absolute)
+            ),
+            400,
+            200
+        ).VisualPresentation.Source;
 
         private readonly string uri;
 

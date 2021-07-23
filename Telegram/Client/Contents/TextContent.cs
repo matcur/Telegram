@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,31 +15,20 @@ namespace Telegram.Client.Contents
 
         public string Description => "Text";
 
-        public string Text { get; }
-
-        public FrameworkElement VisualPresentation
-        {
-            get
+        public FrameworkElement VisualPresentation =>
+            new TextBlock
             {
-                return new TextBlock
-                {
-                    Style = Style,
-                    Text = Text,
-                };
-            }
-        }
+                Style = style,
+                Text = text,
+            };
 
-        public Style Style
-        {
-            get
-            {
-                return (Style)Application.Current.FindResource("MessageTextStyle");
-            }
-        }
+        private readonly Style style = (Style)Application.Current.FindResource("MessageTextStyle");
+
+        private readonly string text;
 
         public TextContent(string text)
         {
-            Text = text;
+            this.text = text;
         }
     }
 }

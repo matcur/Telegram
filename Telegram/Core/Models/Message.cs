@@ -14,5 +14,14 @@ namespace Telegram.Core.Models
         public List<Content> Content { get; set; } = new List<Content>();
 
         public User Author { get; set; }
+
+        public Message() {  }
+
+        public Message(Message message)
+        {
+            Id = message.Id;
+            Content = new List<Content>(message.Content);
+            Author = message.Author;
+        }
     }
 }

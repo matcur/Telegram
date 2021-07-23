@@ -27,8 +27,8 @@ namespace Telegram.Client.ViewModels
         public RelayCommand AddMessageCommand => new RelayCommand(
             o =>
             {
-                AddMessage(Message);
-                Message = new Message { Author = currentUser };
+                AddMessage(new Message(Message));
+                Message.Content.Clear();
             }
         );
 

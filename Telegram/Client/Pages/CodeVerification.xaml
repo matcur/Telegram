@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <Button 
-            Style="{StaticResource ToBtnStyle}"
+            Style="{StaticResource NavigateBtnStyle}"
             Command="{Binding GoToLoginCommand}">
             <Border Style="{StaticResource ArrowBorderStyle}">
                 <Canvas

@@ -36,7 +36,7 @@ namespace Telegram
             Close();
         }
 
-        private void ToggleState(object sender, RoutedEventArgs e)
+        private void ToggleWindowState(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
                 Normalize();

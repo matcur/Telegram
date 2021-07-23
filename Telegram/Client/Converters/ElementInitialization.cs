@@ -6,11 +6,11 @@ using System.Windows.Data;
 
 namespace Telegram.Client.Converters
 {
-    public class ElementInitialization<T> : IValueConverter
+    public class ElementInitialization : IValueConverter
     {
-        private readonly Func<T> initialization;
+        private readonly Func<object> initialization;
 
-        public ElementInitialization(Func<T> initialization)
+        public ElementInitialization(Func<object> initialization)
         {
             this.initialization = initialization;
         }

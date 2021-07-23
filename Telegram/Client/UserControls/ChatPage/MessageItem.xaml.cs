@@ -14,17 +14,12 @@ namespace Telegram.Client.UserControls.ChatPage
         
         public Message Message { get; }
 
-        public SolidColorBrush AuthorForeground
-        {
-            get
-            {
-                return new SolidColorBrush(
-                    new ColorFromText(
-                        Message.Author.FullName
-                    ).Value
-                );
-            }
-        }
+        public SolidColorBrush AuthorForeground =>
+            new SolidColorBrush(
+                new ColorFromText(
+                    Message.Author.FullName
+                ).Value
+            );
 
         public MessageItem(Message message)
         {

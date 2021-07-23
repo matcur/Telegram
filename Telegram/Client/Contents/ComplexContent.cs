@@ -21,7 +21,7 @@ namespace Telegram.Client.Contents
             {
                 var stack = new StackPanel();
                 contents.Sort(
-                    (x, y) => x.DisplayOrder > y.DisplayOrder ? -1 : 1
+                    (x, y) => y.DisplayOrder - x.DisplayOrder
                 );
 
                 foreach (var content in contents)
