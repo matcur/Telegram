@@ -38,13 +38,13 @@
                     Foreground="White"
                     FontSize="22"
                     TextAlignment="Center"
-                    Text="Telegram Desktop"/>
+                    Text="Telegram.Client Desktop"/>
                 <TextBlock 
                     Foreground="#578ac1"
                     FontSize="16"
                     Padding="0 10 0 0"
                     TextAlignment="Center"
-                    Text="Welcome to the official Telegram Desktop app"/>
+                    Text="Welcome to the official Telegram.Client Desktop app"/>
                 <TextBlock 
                     Foreground="#578ac1"
                     FontSize="16"

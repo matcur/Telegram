@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.Server", "Telegram.Server\Telegram.Server.csproj", "{3EC5AA56-2B00-43A3-8AC8-08CB03DB040B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegram.csproj", "{60C01C81-B299-4636-89ED-9D63BA029FCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram.Client", "Telegram.Client\Telegram.Client.csproj", "{60C01C81-B299-4636-89ED-9D63BA029FCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

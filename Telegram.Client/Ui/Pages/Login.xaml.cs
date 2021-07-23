@@ -29,7 +29,7 @@ namespace Telegram.Client.Pages
         private readonly IVerificationResource verification;
 
         private readonly string telegramTitle =
-            "A code was sent via Telegram to your other" +
+            "A code was sent via Telegram.Client to your other" +
             Environment.NewLine +
             "devices, if you have any connect.";
 
