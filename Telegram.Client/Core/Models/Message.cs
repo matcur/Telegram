@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Telegram.Core.Models
+namespace Telegram.Client.Core.Models
 {
     public class Message : Model
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Telegram.Ui.UserControls.Form
+namespace Telegram.Client.Ui.UserControls.Form
 {
     public interface IVisualInput
     {

@@ -1,8 +1,7 @@
-﻿using System.Net.Http.Json;
-using System.Threading.Tasks;
-using Telegram.Api.Resources;
+﻿using System.Threading.Tasks;
+using Telegram.Client.Api.Resources;
 
-namespace Telegram.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeCodes : ApiResource, ICodesResource
     {

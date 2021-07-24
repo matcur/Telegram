@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Telegram.Api.Fake.Resources;
-using Telegram.Api.Resources;
-using Telegram.Api.Sockets;
-using Telegram.Core;
-using Telegram.Core.Models;
+using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Api.Sockets;
+using Telegram.Client.Core;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Ui.ViewModels
+namespace Telegram.Client.Ui.ViewModels
 {
     public class ChatViewModel : ViewModel
     {

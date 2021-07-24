@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Telegram.Ui.UserControls
+namespace Telegram.Client.Ui.UserControls
 {
     /// <summary>
     /// Interaction logic for UpLayer.xaml

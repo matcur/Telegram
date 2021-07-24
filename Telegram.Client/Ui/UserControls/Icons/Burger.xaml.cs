@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Telegram.Core;
+using Telegram.Client.Core;
 
-namespace Telegram.Ui.UserControls.Icons
+namespace Telegram.Client.Ui.UserControls.Icons
 {
     /// <summary>
     /// Interaction logic for Burger.xaml

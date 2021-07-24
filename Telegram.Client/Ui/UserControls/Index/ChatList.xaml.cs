@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Telegram.Ui.UserControls.Index
+namespace Telegram.Client.Ui.UserControls.Index
 {
     /// <summary>
     /// Interaction logic for ChatList.xaml

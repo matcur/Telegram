@@ -1,8 +1,8 @@
 using System.Drawing;
 using System.Threading.Tasks;
-using Telegram.Api.Resources;
+using Telegram.Client.Api.Resources;
 
-namespace Telegram.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeImages : IImagesResource
     {

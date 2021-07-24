@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Client.Api.Resources
 {
     public interface IImagesResource
     {

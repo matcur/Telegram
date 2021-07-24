@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Telegram.Core.Models;
+﻿using System.Threading.Tasks;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Resources
+namespace Telegram.Client.Api.Resources
 {
     public interface IMessagesResource
     {

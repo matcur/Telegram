@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Telegram.Api
+namespace Telegram.Client.Api
 {
     public interface IApiClient
     {

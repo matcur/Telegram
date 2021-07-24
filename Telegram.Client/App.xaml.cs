@@ -2,7 +2,7 @@
 using System.Net;
 using System.Windows;
 
-namespace Telegram
+namespace Telegram.Client
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
-using Telegram.Ui.ViewModels;
+using Telegram.Client.Ui.ViewModels;
 
-namespace Telegram.Ui.Pages
+namespace Telegram.Client.Ui.Pages
 {
     /// <summary>
     /// Interaction logic for CodeVerification.xaml

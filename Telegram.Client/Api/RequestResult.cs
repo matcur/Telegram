@@ -1,4 +1,4 @@
-﻿namespace Telegram.Api
+﻿namespace Telegram.Client.Api
 {
     public class RequestResult<T>
     {

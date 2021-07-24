@@ -2,13 +2,13 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using Telegram.Api.Fake.Resources;
-using Telegram.Api.Resources;
-using Telegram.Core.Models;
-using Telegram.Ui.UserControls.Index;
-using Telegram.Ui.ViewModels;
+using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.UserControls.Index;
+using Telegram.Client.Ui.ViewModels;
 
-namespace Telegram.Ui.Pages
+namespace Telegram.Client.Ui.Pages
 {
     /// <summary>
     /// Interaction logic for Index.xaml

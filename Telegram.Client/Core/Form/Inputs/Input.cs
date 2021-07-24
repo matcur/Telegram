@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Core.Form;
-using Telegram.Ui.UserControls.Form;
+using Telegram.Client.Ui.UserControls.Form;
 
-namespace Telegram.Core.Form.Inputs
+namespace Telegram.Client.Core.Form.Inputs
 {
     class Input : IInput
     {

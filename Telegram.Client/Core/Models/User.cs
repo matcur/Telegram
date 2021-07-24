@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Telegram.Core.Models
+namespace Telegram.Client.Core.Models
 {
     public class User : Model
     {

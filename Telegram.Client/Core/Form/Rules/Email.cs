@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Telegram.Core.Form;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Telegram.Core.Form.Rules
+namespace Telegram.Client.Core.Form.Rules
 {
     class Email : IRule
     {

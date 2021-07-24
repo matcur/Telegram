@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Telegram.Core.Models
+﻿namespace Telegram.Client.Core.Models
 {
     public class Phone : Model
     {

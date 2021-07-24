@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Telegram.Core.Models;
-using Telegram.Ui.Contents;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.Contents;
 
-namespace Telegram.Ui.UserControls
+namespace Telegram.Client.Ui.UserControls
 {
     /// <summary>
     /// Interaction logic for Content.xaml

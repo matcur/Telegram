@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Telegram.Core;
-using Telegram.Core.Models;
-using Telegram.Core.Searching;
+using Telegram.Client.Core;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Core.Searching;
 
-namespace Telegram.Ui.ViewModels
+namespace Telegram.Client.Ui.ViewModels
 {
     public class IndexViewModel : ViewModel
     {

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Telegram.Ui.Elements.Images
+namespace Telegram.Client.Ui.Elements.Images
 {
     public class CircleImage : IImage
     {

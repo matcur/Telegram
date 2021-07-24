@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Core.Form.Inputs;
+﻿using Telegram.Client.Core.Form.Inputs;
 
-namespace Telegram.Core.Form
+namespace Telegram.Client.Core.Form
 {
     class GroupForm
     {

@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Telegram.Ui.UserControls.ChatPage.MessageInput"
+﻿<UserControl x:Class="Telegram.Client.Ui.UserControls.ChatPage.MessageInput"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:icons="clr-namespace:Telegram.Ui.UserControls.Icons"
+             xmlns:icons="clr-namespace:Telegram.Client.Ui.UserControls.Icons"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="300"
              KeyDown="Send">

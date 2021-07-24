@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Telegram.Core;
-using Telegram.Core.Models;
+using Telegram.Client.Core;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Ui.UserControls.ChatPage
+namespace Telegram.Client.Ui.UserControls.ChatPage
 {
     public partial class MessageInput : UserControl
     {

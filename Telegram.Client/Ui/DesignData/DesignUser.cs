@@ -1,6 +1,6 @@
-﻿using Telegram.Core.Models;
+﻿using Telegram.Client.Core.Models;
 
-namespace Telegram.Ui.DesignData
+namespace Telegram.Client.Ui.DesignData
 {
     public class DesignUser
     {

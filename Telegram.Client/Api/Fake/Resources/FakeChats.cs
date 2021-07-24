@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Telegram.Api.Resources;
-using Telegram.Core.Models;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeChats : ApiResource, IChatsResource
     {

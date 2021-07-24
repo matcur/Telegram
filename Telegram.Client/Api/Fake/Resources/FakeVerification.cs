@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Api.Resources;
-using Telegram.Core.Models;
+﻿using System.Threading.Tasks;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeVerification : ApiResource, IVerificationResource
     {

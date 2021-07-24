@@ -1,6 +1,6 @@
-﻿using Telegram.Core.Models;
+﻿using Telegram.Client.Core.Models;
 
-namespace Telegram.Ui.ViewModels
+namespace Telegram.Client.Ui.ViewModels
 {
     public class PhoneCodeViewModel : ViewModel
     {

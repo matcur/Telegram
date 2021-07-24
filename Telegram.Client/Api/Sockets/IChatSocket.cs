@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Telegram.Core.Models;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Sockets
+namespace Telegram.Client.Api.Sockets
 {
     public interface IChatSocket
     {

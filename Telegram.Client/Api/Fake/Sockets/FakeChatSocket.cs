@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Telegram.Api.Sockets;
-using Telegram.Core.Models;
+using Microsoft.AspNetCore.SignalR.Client;
+using Telegram.Client.Api.Sockets;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Fake.Sockets
+namespace Telegram.Client.Api.Fake.Sockets
 {
     public class FakeChatSocket : IChatSocket
     {

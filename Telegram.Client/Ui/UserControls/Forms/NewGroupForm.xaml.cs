@@ -1,13 +1,13 @@
 using System.Windows;
 using System.Windows.Controls;
-using Telegram.Api.Resources;
-using Telegram.Core.Form;
-using Telegram.Core.Form.Inputs;
-using Telegram.Core.Form.Rules;
-using Telegram.Core.Models;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core.Form;
+using Telegram.Client.Core.Form.Inputs;
+using Telegram.Client.Core.Form.Rules;
+using Telegram.Client.Core.Models;
 using Image = System.Drawing.Image;
 
-namespace Telegram.Ui.UserControls.Forms
+namespace Telegram.Client.Ui.UserControls.Forms
 {
     public partial class NewGroupForm : UserControl
     {

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Core.Models;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Core.Searching
+namespace Telegram.Client.Core.Searching
 {
     public class ChatSearch : Search<ObservableCollection<Chat>>
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Telegram.Api.Fake.Resources;
-using Telegram.Core.Models;
-using Telegram.Ui.UserControls.Forms;
-using Telegram.Ui.UserControls.Icons;
+using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.UserControls.Forms;
+using Telegram.Client.Ui.UserControls.Icons;
 
-namespace Telegram.Ui.UserControls.Index
+namespace Telegram.Client.Ui.UserControls.Index
 {
     /// <summary>
     /// Interaction logic for LeftMenu.xaml

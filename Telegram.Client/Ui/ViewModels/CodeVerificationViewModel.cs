@@ -1,10 +1,10 @@
-﻿using Telegram.Api.Fake.Resources;
-using Telegram.Api.Resources;
-using Telegram.Core;
-using Telegram.Core.Models;
-using Telegram.Ui.Pages;
+﻿using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.Pages;
 
-namespace Telegram.Ui.ViewModels
+namespace Telegram.Client.Ui.ViewModels
 {
     public class CodeVerificationViewModel : ViewModel
     {

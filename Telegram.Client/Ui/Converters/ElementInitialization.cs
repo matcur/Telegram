@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Telegram.Ui.Converters
+namespace Telegram.Client.Ui.Converters
 {
     public class ElementInitialization : IValueConverter
     {

@@ -1,9 +1,9 @@
-<UserControl x:Class="Telegram.Ui.UserControls.Forms.NewGroupForm"
+<UserControl x:Class="Telegram.Client.Ui.UserControls.Forms.NewGroupForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:form1="clr-namespace:Telegram.Ui.UserControls.Form"
+             xmlns:form="clr-namespace:Telegram.Client.Ui.UserControls.Form"
              mc:Ignorable="d">
     <Border 
         Style="{StaticResource FormStyle}"
@@ -19,16 +19,16 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <form1:ImageInput
+                <form:ImageInput
                     x:Name="ImageInput"
                     Margin="0 0 20 0"/>
-                <form1:TextInput
+                <form:TextInput
                     Grid.Column="1"
                     x:Name="NameInput"
                     Margin="0 10 0 0"
                     Title="Name"/>
             </Grid>
-            <form1:TextInput
+            <form:TextInput
                 x:Name="DescriptionInput"
                 Title="Description"/>
             <StackPanel

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Telegram.Ui.UserControls.Icons
+namespace Telegram.Client.Ui.UserControls.Icons
 {
     /// <summary>
     /// Interaction logic for Options.xaml

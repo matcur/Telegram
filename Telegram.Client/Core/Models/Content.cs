@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Telegram.Core.Models
+﻿namespace Telegram.Client.Core.Models
 {
     public class Content
     {

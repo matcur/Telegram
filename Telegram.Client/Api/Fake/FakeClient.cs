@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Telegram.Api.Fake
+namespace Telegram.Client.Api.Fake
 {
     public class FakeClient : IApiClient
     {

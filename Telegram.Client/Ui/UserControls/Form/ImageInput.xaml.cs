@@ -1,12 +1,9 @@
 using System;
-using System.Drawing;
-using System.IO;
-using System.Net.Mime;
 using System.Windows;
 using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace Telegram.Ui.UserControls.Form
+namespace Telegram.Client.Ui.UserControls.Form
 {
     public partial class ImageInput : UserControl, IVisualInput
     {

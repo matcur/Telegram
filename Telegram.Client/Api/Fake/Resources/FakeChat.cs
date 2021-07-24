@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Telegram.Api.Resources;
-using Telegram.Api.Sockets;
-using Telegram.Core.Models;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeChat : ApiResource, IChatResource
     {

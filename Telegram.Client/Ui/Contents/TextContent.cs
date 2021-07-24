@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Telegram.Ui.Contents
+namespace Telegram.Client.Ui.Contents
 {
     public class TextContent : IContent
     {

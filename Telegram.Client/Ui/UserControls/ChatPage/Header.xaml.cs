@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Telegram.Ui.UserControls.ChatPage
+namespace Telegram.Client.Ui.UserControls.ChatPage
 {
     /// <summary>
     /// Interaction logic for Header.xaml

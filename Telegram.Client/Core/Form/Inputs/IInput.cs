@@ -1,4 +1,4 @@
-﻿namespace Telegram.Core.Form.Inputs
+﻿namespace Telegram.Client.Core.Form.Inputs
 {
     interface IInput
     {

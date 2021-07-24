@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace Telegram.Ui.Colors
+namespace Telegram.Client.Ui.Colors
 {
     interface IColor
     {

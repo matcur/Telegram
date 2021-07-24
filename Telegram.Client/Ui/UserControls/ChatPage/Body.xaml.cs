@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using Telegram.Core.Models;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Ui.UserControls.ChatPage
+namespace Telegram.Client.Ui.UserControls.ChatPage
 {
     /// <summary>
     /// Interaction logic for Body.xaml

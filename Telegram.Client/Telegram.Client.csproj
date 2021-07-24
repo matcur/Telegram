@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{60C01C81-B299-4636-89ED-9D63BA029FCA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Telegram</RootNamespace>
+    <RootNamespace>Telegram.Client</RootNamespace>
     <AssemblyName>Telegram.Client</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Telegram.Core;
+using Telegram.Client.Core;
 
-namespace Telegram.Ui.Pages
+namespace Telegram.Client.Ui.Pages
 {
     /// <summary>
     /// Interaction logic for Start.xaml

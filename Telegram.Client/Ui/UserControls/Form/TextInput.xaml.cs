@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Telegram.Ui.UserControls.Form
+namespace Telegram.Client.Ui.UserControls.Form
 {
     public partial class TextInput : UserControl, IVisualInput
     {

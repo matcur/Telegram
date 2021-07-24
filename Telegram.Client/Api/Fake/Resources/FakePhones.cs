@@ -1,10 +1,8 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Telegram.Api.Resources;
-using Telegram.Core.Models;
+﻿using System.Threading.Tasks;
+using Telegram.Client.Api.Resources;
+using Telegram.Client.Core.Models;
 
-namespace Telegram.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Resources
 {
     public partial class FakePhones : ApiResource, IPhonesResource
     {

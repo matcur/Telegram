@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Telegram.Ui.Contents
+namespace Telegram.Client.Ui.Contents
 {
     public interface IContent
     {

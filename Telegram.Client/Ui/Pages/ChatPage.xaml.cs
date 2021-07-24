@@ -1,12 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Microsoft.AspNetCore.SignalR.Client;
-using Telegram.Api.Fake.Sockets;
-using Telegram.Api.Sockets;
-using Telegram.Core.Models;
-using Telegram.Ui.ViewModels;
+using Telegram.Client.Api.Fake.Sockets;
+using Telegram.Client.Api.Sockets;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.ViewModels;
 
-namespace Telegram.Ui.Pages
+namespace Telegram.Client.Ui.Pages
 {
     /// <summary>
     /// Interaction logic for Chat.xaml

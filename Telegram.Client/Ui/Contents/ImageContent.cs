@@ -3,10 +3,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using Telegram.Ui.Converters;
-using Telegram.Ui.Elements.Images;
+using Telegram.Client.Ui.Converters;
+using Telegram.Client.Ui.Elements.Images;
 
-namespace Telegram.Ui.Contents
+namespace Telegram.Client.Ui.Contents
 {
     public class ImageContent : IContent
     {

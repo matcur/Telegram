@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Telegram.Ui.ViewModels
+namespace Telegram.Client.Ui.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {
