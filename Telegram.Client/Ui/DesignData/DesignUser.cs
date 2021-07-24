@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Core.Models;
+﻿using Telegram.Core.Models;
 
-namespace Telegram.Client.DesignData
+namespace Telegram.Ui.DesignData
 {
     public class DesignUser
     {

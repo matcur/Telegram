@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 
-namespace Telegram.Client.Converters
+namespace Telegram.Ui.Converters
 {
     public class ElementInitialization : IValueConverter
     {

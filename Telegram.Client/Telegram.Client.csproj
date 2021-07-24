@@ -101,6 +101,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Pipelines, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Pipelines.5.0.1\lib\net461\System.IO.Pipelines.dll</HintPath>
     </Reference>
@@ -153,6 +154,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -173,6 +175,7 @@
     <Compile Include="Api\Fake\FakeClient.cs" />
     <Compile Include="Api\Fake\Resources\FakeChat.cs" />
     <Compile Include="Api\Fake\Resources\FakeChats.cs" />
+    <Compile Include="Api\Fake\Resources\FakeImages.cs" />
     <Compile Include="Api\Fake\Resources\FakeMessages.cs" />
     <Compile Include="Api\Fake\Sockets\FakeChatSocket.cs" />
     <Compile Include="Api\RequestResult.cs" />
@@ -185,6 +188,7 @@
     <Compile Include="Api\Resources\IChatResource.cs" />
     <Compile Include="Api\Resources\IChatsResource.cs" />
     <Compile Include="Api\Resources\ICodesResource.cs" />
+    <Compile Include="Api\Resources\IImagesResource.cs" />
     <Compile Include="Api\Resources\IMessagesResource.cs" />
     <Compile Include="Api\Resources\IPhonesResource.cs" />
     <Compile Include="Api\Resources\IUserResource.cs" />
@@ -219,6 +223,10 @@
     <Compile Include="Ui\UserControls\Forms\NewGroupForm.xaml.cs">
       <DependentUpon>NewGroupForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ui\UserControls\Form\ImageInput.xaml.cs">
+      <DependentUpon>ImageInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\UserControls\Form\IVisualInput.cs" />
     <Compile Include="Ui\UserControls\Form\TextInput.xaml.cs">
       <DependentUpon>TextInput.xaml</DependentUpon>
     </Compile>
@@ -410,6 +418,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ui\UserControls\Forms\NewGroupForm.xaml" />
+    <Page Include="Ui\UserControls\Form\ImageInput.xaml" />
     <Page Include="Ui\UserControls\Form\TextInput.xaml" />
     <Page Include="Ui\UserControls\Icons\Clip.xaml" />
     <Page Include="Ui\UserControls\Icons\Loupe.xaml">
@@ -534,6 +543,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Ui\Resources\Images\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ui\Resources\Images\new-chat-img.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Client.Contents;
 using Telegram.Core.Models;
 
-namespace Telegram.Client.DesignData
+namespace Telegram.Ui.DesignData
 {
     public class DesignChat
     {

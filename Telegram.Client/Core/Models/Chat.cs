@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace Telegram.Core.Models
         public string Description { get; set; }
 
         public Message LastMessage { get; set; }
+        
+        public string ImagePath { get; set; }
 
         public ObservableCollection<Message> Messages { get; set; } = new ObservableCollection<Message>();
 

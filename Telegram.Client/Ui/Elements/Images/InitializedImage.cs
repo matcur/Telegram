@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Telegram.Client.Elements.Images
+namespace Telegram.Ui.Elements.Images
 {
     public class InitializedImage : IImage
     {

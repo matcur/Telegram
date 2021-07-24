@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Core.Models;
+﻿using Telegram.Core.Models;
 
-namespace Telegram.Client.ViewModels
+namespace Telegram.Ui.ViewModels
 {
     public class TelegramCodeViewModel : ViewModel
     {

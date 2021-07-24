@@ -1,24 +1,32 @@
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
+using Telegram.Api.Resources;
 using Telegram.Core.Form;
 using Telegram.Core.Form.Inputs;
 using Telegram.Core.Form.Rules;
-using Telegram.Api.Resources;
 using Telegram.Core.Models;
+using Image = System.Drawing.Image;
 
-namespace Telegram.Client.UserControls.Forms
+namespace Telegram.Ui.UserControls.Forms
 {
     public partial class NewGroupForm : UserControl
     {
         private readonly GroupForm form;
 
         private readonly IChatsResource chats;
+        
+        private readonly IImagesResource images;
 
-        public NewGroupForm(IChatsResource chats)
+        public NewGroupForm(IChatsResource chats, IImagesResource images)
         {
             this.chats = chats;
+            this.images = images;
             InitializeComponent();
             form = new GroupForm(
+                new Input(
+                    ImageInput,
+                    new NotEmpty()
+                ),
                 new Input(
                     NameInput,
                     new NotEmpty()
@@ -37,10 +45,12 @@ namespace Telegram.Client.UserControls.Forms
                 return;
             }
 
-            chats.Add(new Chat 
-            { 
+            var path = images.Add(Image.FromFile(ImageInput.Value));
+            chats.Add(new Chat
+            {
                 Name = NameInput.Value,
-                Description = DescriptionInput.Value, 
+                Description = DescriptionInput.Value,
+                ImagePath = "fuck you",
             });
         }
     }

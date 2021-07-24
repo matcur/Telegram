@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Telegram.Core.Models;
 
-namespace Telegram.Client.Contents
+namespace Telegram.Ui.Contents
 {
     public class ComplexContent : IContent
     {

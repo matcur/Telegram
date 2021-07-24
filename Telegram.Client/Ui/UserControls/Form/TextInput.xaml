@@ -1,11 +1,11 @@
-<UserControl x:Class="Telegram.Client.UserControls.Form.TextInput"
+<UserControl x:Class="Telegram.Ui.UserControls.Form.TextInput"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Telegram.Client.UserControls.Form"
              mc:Ignorable="d"
-             Background="Transparent">
+             Background="Transparent"
+             d:DataContext="{StaticResource design}">
     <StackPanel>
         <TextBlock
             Text="{Binding Title}"

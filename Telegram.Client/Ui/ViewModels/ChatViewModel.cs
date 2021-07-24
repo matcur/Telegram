@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Telegram.Api.Fake.Resources;
-using Telegram.Api.Fake.Sockets;
 using Telegram.Api.Resources;
 using Telegram.Api.Sockets;
 using Telegram.Core;
 using Telegram.Core.Models;
 
-namespace Telegram.Client.ViewModels
+namespace Telegram.Ui.ViewModels
 {
     public class ChatViewModel : ViewModel
     {

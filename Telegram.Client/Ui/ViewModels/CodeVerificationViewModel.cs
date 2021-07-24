@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Telegram.Api.Fake.Resources;
+﻿using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Core.Models;
-using Telegram.Client.Pages;
-using System.Collections.ObjectModel;
+using Telegram.Ui.Pages;
 
-namespace Telegram.Client.ViewModels
+namespace Telegram.Ui.ViewModels
 {
     public class CodeVerificationViewModel : ViewModel
     {

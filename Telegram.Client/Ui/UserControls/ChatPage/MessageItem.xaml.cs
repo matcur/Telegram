@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Telegram.Client.Colors;
 using Telegram.Core.Models;
+using Telegram.Ui.Colors;
 
-namespace Telegram.Client.UserControls.ChatPage
+namespace Telegram.Ui.UserControls.ChatPage
 {
     public partial class MessageItem : UserControl
     {

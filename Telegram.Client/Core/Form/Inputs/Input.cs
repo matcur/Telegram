@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Telegram.Client.UserControls.Form;
 using Telegram.Core.Form;
+using Telegram.Ui.UserControls.Form;
 
 namespace Telegram.Core.Form.Inputs
 {
@@ -18,7 +18,7 @@ namespace Telegram.Core.Form.Inputs
 
         private readonly Action<string> setErrorAction;
 
-        public Input(TextInput input, params IRule[] rules)
+        public Input(IVisualInput input, params IRule[] rules)
         {
             value = input.Value;
             this.rules = rules;

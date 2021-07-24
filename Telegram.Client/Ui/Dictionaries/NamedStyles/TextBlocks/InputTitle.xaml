@@ -2,6 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="InputTitleStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource InputTitleForeground}"/>
-        <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
+        <Setter Property="FontSize" Value="{StaticResource SmallFontSize}"/>
     </Style>
 </ResourceDictionary>

@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core;
 using Telegram.Core.Models;
-using Telegram.Client.ViewModels;
+using Telegram.Ui.ViewModels;
 
-namespace Telegram.Client.Pages
+namespace Telegram.Ui.Pages
 {
     /// <summary>
     /// Interaction logic for Login.xaml

@@ -1,11 +1,9 @@
-﻿<Page x:Class="Telegram.Client.Pages.ChatPage"
+﻿<Page x:Class="Telegram.Ui.Pages.ChatPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Telegram.Client.Pages"
-      xmlns:designData="clr-namespace:Telegram.Client.DesignData"
-      xmlns:chat="clr-namespace:Telegram.Client.UserControls.ChatPage"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:chatPage="clr-namespace:Telegram.Ui.UserControls.ChatPage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="350"
       Loaded="OnLoaded">
@@ -16,12 +14,12 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <chat:Header/>
-        <chat:Body 
+        <chatPage:Header/>
+        <chatPage:Body 
             Grid.Row="1"
             Messages="{Binding Chat.Messages}"
             VerticalContentAlignment="Stretch"/>
-        <chat:MessageInput 
+        <chatPage:MessageInput 
             Grid.Row="2"
             SendCommand="{Binding SendMessageCommand}"
             Message="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>

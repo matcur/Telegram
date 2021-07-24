@@ -1,28 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Telegram.Api.Fake.Resources;
 using Telegram.Api.Resources;
 using Telegram.Core.Models;
-using Telegram.Core.Searching;
-using Telegram.Client.ViewModels;
-using System.ComponentModel;
-using System.IO;
-using Telegram.Api.Fake.Resources;
-using Telegram.Client.UserControls.Index;
+using Telegram.Ui.UserControls.Index;
+using Telegram.Ui.ViewModels;
 
-namespace Telegram.Client.Pages
+namespace Telegram.Ui.Pages
 {
     /// <summary>
     /// Interaction logic for Index.xaml

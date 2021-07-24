@@ -1,11 +1,10 @@
 using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Telegram.Client.UserControls.Form
+namespace Telegram.Ui.UserControls.Form
 {
-    public partial class TextInput : UserControl
+    public partial class TextInput : UserControl, IVisualInput
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             nameof(Title),
@@ -31,6 +30,19 @@ namespace Telegram.Client.UserControls.Form
         {
             get => (string)GetValue(ErrorProperty);
             set => SetValue(ErrorProperty, value);
+        }
+
+        public Visibility ErrorVisibility
+        {
+            get
+            {
+                if (Error.Length == 0)
+                {
+                    return Visibility.Visible;
+                }
+
+                return Visibility.Hidden;
+            }
         }
 
         public string Value { get; set; }

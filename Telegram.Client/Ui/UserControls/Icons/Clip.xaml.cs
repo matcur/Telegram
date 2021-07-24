@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Telegram.Client.UserControls.Icons
+namespace Telegram.Ui.UserControls.Icons
 {
     public partial class Clip : UserControl
     {

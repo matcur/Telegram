@@ -1,7 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
-namespace Telegram.Client.Elements.Images
+namespace Telegram.Ui.Elements.Images
 {
     public class ScaledImage : IImage
     {

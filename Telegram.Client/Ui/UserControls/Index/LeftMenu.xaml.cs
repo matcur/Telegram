@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Telegram.Api.Fake;
 using Telegram.Api.Fake.Resources;
-using Telegram.Client.UserControls.Form;
-using Telegram.Client.UserControls.Forms;
-using Telegram.Client.UserControls.Icons;
 using Telegram.Core.Models;
+using Telegram.Ui.UserControls.Forms;
+using Telegram.Ui.UserControls.Icons;
 
-namespace Telegram.Client.UserControls.Index
+namespace Telegram.Ui.UserControls.Index
 {
     /// <summary>
     /// Interaction logic for LeftMenu.xaml
@@ -50,7 +38,7 @@ namespace Telegram.Client.UserControls.Index
                         "New Group",
                         new Loupe(),
                         () => upLayer.CenterElement = new NewGroupForm(
-                            new FakeChats()
+                            new FakeChats(), new FakeImages()
                         )
                     ),
                     new MenuItem("New Channel", new Loupe()),

@@ -19,7 +19,7 @@ namespace Telegram.Api.Fake.Sockets
         public FakeChatSocket(IHubConnectionBuilder builder)
         {
             connection = builder
-                .WithUrl("http://localhost:5001/chats")
+                .WithUrl("http://localhost:5000/chats")
                 .Build();
         }
 
