@@ -61,6 +61,8 @@ namespace Telegram.Client.Ui.UserControls.Index
 
         private void OnItemSelected(object sender, SelectionChangedEventArgs e)
         {
+            var item = (MenuItem)Options.SelectedItem;
+            item.Click();
             ItemSelected();
         }
     }

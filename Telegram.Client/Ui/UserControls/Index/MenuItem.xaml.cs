@@ -38,7 +38,7 @@ namespace Telegram.Client.Ui.UserControls.Index
             InitializeComponent();
         }
 
-        private void OnClick(object sender, RoutedEventArgs e)
+        public void Click()
         {
             ClickAction();
         }

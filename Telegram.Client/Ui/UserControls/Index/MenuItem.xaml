@@ -5,20 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="250">
-    <Button
-        Style="{StaticResource ClearBtnStyle}"
-        Click="OnClick">
+    <Button Style="{StaticResource ClearBtnStyle}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <!-- 0 Indent -->
                 <ColumnDefinition Width="20"/>
-                <!-- 1 Icon -->
                 <ColumnDefinition Width="50"/>
-                <!-- 2 Title -->
                 <ColumnDefinition Width="auto"/>
-                <!-- 3 Free spase -->
                 <ColumnDefinition Width="*"/>
-                <!-- 4 Additional Action -->
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
