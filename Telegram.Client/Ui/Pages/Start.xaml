@@ -37,7 +37,7 @@
                     Foreground="White"
                     FontSize="22"
                     TextAlignment="Center"
-                    Text="Telegram.Client Desktop"/>
+                    Text="Telegram Desktop"/>
                 <TextBlock 
                     Foreground="#578ac1"
                     FontSize="16"

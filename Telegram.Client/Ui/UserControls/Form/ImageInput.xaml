@@ -13,8 +13,10 @@
             Width="80" Height="80"
             CornerRadius="40"
             VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Background="Blue">
+            HorizontalAlignment="Center">
+            <Border.Background>
+                <ImageBrush ImageSource="../../Resources/Images/new-chat-img.png"/>
+            </Border.Background>
         </Border>
     </Button>
 </UserControl>

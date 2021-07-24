@@ -545,7 +545,7 @@
     <Resource Include="Ui\Resources\Images\start.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ui\Resources\Images\new-chat-img.png" />
+    <Resource Include="Ui\Resources\Images\new-chat-img.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
