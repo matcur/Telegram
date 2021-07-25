@@ -14,6 +14,8 @@ namespace Telegram.Server.Core.Db.Models
 
         public string Description { get; set; }
 
+        public string IconPath { get; set; }    
+
         [NotMapped]
         public Message LastMessage { get; set; }
 
@@ -29,6 +31,7 @@ namespace Telegram.Server.Core.Db.Models
         {
             Name = map.Name;
             Description = map.Description;
+            IconPath = map.IconPath;
         }
     }
 }

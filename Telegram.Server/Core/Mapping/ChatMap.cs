@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Telegram.Server.Core.Mapping
 {
@@ -9,5 +10,10 @@ namespace Telegram.Server.Core.Mapping
 
         [Required]
         public string Description { get; set; }
+
+        public string IconPath { get; set; }
+
+        [Required]
+        public IFormFile Icon { get; set; }
     }
 }

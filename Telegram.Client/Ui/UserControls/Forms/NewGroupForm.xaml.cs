@@ -15,12 +15,9 @@ namespace Telegram.Client.Ui.UserControls.Forms
 
         private readonly IChatsResource chats;
         
-        private readonly IImagesResource images;
-
-        public NewGroupForm(IChatsResource chats, IImagesResource images)
+        public NewGroupForm(IChatsResource chats)
         {
             this.chats = chats;
-            this.images = images;
             InitializeComponent();
             form = new GroupForm(
                 new Input(
@@ -45,12 +42,11 @@ namespace Telegram.Client.Ui.UserControls.Forms
                 return;
             }
 
-            var path = images.Add(Image.FromFile(ImageInput.Value));
             chats.Add(new Chat
             {
                 Name = NameInput.Value,
                 Description = DescriptionInput.Value,
-                ImagePath = "fuck you",
+                IconPath = ImageInput.Value,
             });
         }
     }

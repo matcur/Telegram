@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Core.Models;
@@ -16,7 +18,8 @@ namespace Telegram.Client.Api.Fake.Resources
 
         public async Task<RequestResult> Add(Chat chat)
         {
-            var response = await api.Post("chats/create", Serialize(chat));
+            var content = chat.ToHttpContent();
+            var response = await api.Post("chats/create", content);
 
             return Deserialize(response);
         }

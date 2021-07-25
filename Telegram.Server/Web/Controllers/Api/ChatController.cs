@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Api;
+using Telegram.Api.Filesystem;
 using Telegram.Server.Core.Attributes.Model;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
@@ -55,6 +56,7 @@ namespace Telegram.Server.Web.Controllers.Api
                                  .Include(m => m.Author)
                                  .Skip(offset)
                                  .Take(count)
+                                 .OrderByDescending(m => m.Id)
                                  .ToList();
 
             return Json(new RequestResult(true, result));
@@ -62,14 +64,15 @@ namespace Telegram.Server.Web.Controllers.Api
         
         [HttpPost]
         [Route("api/1.0/chats/create")]
-        public IActionResult Create([FromBody]ChatMap map)
+        public async Task<IActionResult> Create([FromForm]ChatMap map)
         {
+            map.IconPath = await new RandomFile(map.Icon).SaveAsync();
             var chat = new Chat(map);
             
             chats.Add(chat);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
-            return Json(new RequestResult(true));
+            return Json(new RequestResult(true, chat));
         }
 
         [HttpPost]

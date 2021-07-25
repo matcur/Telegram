@@ -154,6 +154,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -175,9 +176,9 @@
     <Compile Include="Api\Fake\FakeClient.cs" />
     <Compile Include="Api\Fake\Resources\FakeChat.cs" />
     <Compile Include="Api\Fake\Resources\FakeChats.cs" />
-    <Compile Include="Api\Fake\Resources\FakeImages.cs" />
     <Compile Include="Api\Fake\Resources\FakeMessages.cs" />
     <Compile Include="Api\Fake\Sockets\FakeChatSocket.cs" />
+    <Compile Include="Api\RequestContents\IRequestContent.cs" />
     <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Fake\Resources\ApiResource.cs" />
     <Compile Include="Api\Fake\Resources\FakeCodes.cs" />
@@ -188,7 +189,6 @@
     <Compile Include="Api\Resources\IChatResource.cs" />
     <Compile Include="Api\Resources\IChatsResource.cs" />
     <Compile Include="Api\Resources\ICodesResource.cs" />
-    <Compile Include="Api\Resources\IImagesResource.cs" />
     <Compile Include="Api\Resources\IMessagesResource.cs" />
     <Compile Include="Api\Resources\IPhonesResource.cs" />
     <Compile Include="Api\Resources\IUserResource.cs" />

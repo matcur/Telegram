@@ -38,7 +38,7 @@ namespace Telegram.Client.Ui.UserControls.Index
                         "New Group",
                         new Loupe(),
                         () => upLayer.CenterElement = new NewGroupForm(
-                            new FakeChats(), new FakeImages()
+                            new FakeChats()
                         )
                     ),
                     new MenuItem("New Channel", new Loupe()),
