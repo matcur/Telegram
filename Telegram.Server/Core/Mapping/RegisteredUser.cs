@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Telegram.Server.Core.Db.Models;
+﻿using Telegram.Server.Core.Db.Models;
 
-namespace Telegram.Server.Core.Mapping.Response
+namespace Telegram.Server.Core.Mapping
 {
     public class RegisteredUser
     {

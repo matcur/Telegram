@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Telegram.Api;
+using Telegram.Server.Core;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Mapping;

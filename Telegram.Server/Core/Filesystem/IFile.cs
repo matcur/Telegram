@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Telegram.Api.Filesystem
+namespace Telegram.Server.Core.Filesystem
 {
     public interface IFile
     {

@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using System.Text;
-using System.Text.Unicode;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Telegram.Api.Filesystem
+namespace Telegram.Server.Core.Filesystem
 {
     public class RandomFile : IFile
     {
