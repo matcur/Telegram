@@ -34,11 +34,7 @@ namespace Telegram.Server
                     {
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     });
-            services.AddDbContext<AppDb>(options =>
-            {
-                var connection = Configuration.GetConnectionString("DefaultConnection");
-                options.UseSqlServer(connection);
-            });
+            services.AddDbContext<AppDb>();
             services.AddSignalR();
         }
 

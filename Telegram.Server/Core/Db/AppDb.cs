@@ -32,5 +32,10 @@ namespace Telegram.Server.Core.Db
                     v => (ContentType)Enum.Parse(typeof(ContentType), v)
                 );
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=root;Password=root");
+        }
     }
 }
