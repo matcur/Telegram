@@ -1,0 +1,41 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.Contents;
+
+namespace Telegram.Client.Ui.UserControls.Index
+{
+    public partial class ChatItem : UserControl
+    {
+        public static readonly DependencyProperty ChatNameProperty = DependencyProperty.Register(
+            nameof(ChatName),
+            typeof(string),
+            typeof(ChatItem)
+        );
+
+        public static readonly DependencyProperty LastMessageProperty = DependencyProperty.Register(
+            nameof(LastMessage),
+            typeof(Message),
+            typeof(ChatItem)
+        );
+
+        public string ChatName
+        {
+            get => (string) GetValue(ChatNameProperty);
+            set => SetValue(ChatNameProperty, value);
+        }
+
+        public Message LastMessage
+        {
+            get => (Message) GetValue(LastMessageProperty);
+            set => SetValue(LastMessageProperty, value);
+        }
+        
+        public ChatItem()
+        {
+            InitializeComponent();
+        }
+    }
+}

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:designData="clr-namespace:Telegram.Client.Ui.DesignData"
              xmlns:icons="clr-namespace:Telegram.Client.Ui.UserControls.Icons"
+             xmlns:viewModels="clr-namespace:Telegram.Client.Ui.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="350">
     <UserControl.Resources>
@@ -18,7 +19,7 @@
         BorderThickness="1 0 0 1"
         BorderBrush="{StaticResource DelimeterBorderBrush}"
         Background="{StaticResource MainIndexBackground}" Grid.RowSpan="2">
-        <Grid>
+        <Grid d:DataContext="{d:DesignInstance viewModels:ChatViewModel}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>

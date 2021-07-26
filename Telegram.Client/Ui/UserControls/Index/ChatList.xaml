@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Telegram.Client.Ui.UserControls.Index"
+             xmlns:viewModels="clr-namespace:Telegram.Client.Ui.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" 
+             d:DataContext="{d:DesignInstance viewModels:IndexViewModel}">
     <ListView 
         Style="{StaticResource ClearListViewStyle}"
         Width="{Binding RelativeSource={
@@ -17,53 +20,9 @@
         HorizontalContentAlignment="Stretch">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <Grid Height="60">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Border 
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        <Image 
-                            Height="45" Width="45"
-                            Source="Resoures/Images/start.png"/>
-                    </Border>
-
-                    <Border 
-                        Grid.Column="1"
-                        Padding="10">
-                        <Grid Height="60">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="8"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock 
-                                Text="{Binding Name}"
-                                Foreground="{StaticResource LightForeground}"/>
-
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="5:12MP"
-                                Foreground="{StaticResource LightForeground}"/>
-
-                            <TextBlock
-                                Grid.Row="2"
-                                Text="{Binding LastMessage.Content[0].Value}"
-                                Foreground="{StaticResource LightForeground}"
-                                TextTrimming="CharacterEllipsis"/>
-                        </Grid>
-                    </Border>
-                </Grid>
+                <local:ChatItem
+                    ChatName="{Binding Name}"
+                    LastMessage="{Binding LastMessage}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

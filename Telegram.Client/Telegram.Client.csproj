@@ -252,6 +252,9 @@
     <Compile Include="Ui\UserControls\Icons\Smile.xaml.cs">
       <DependentUpon>Smile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ui\UserControls\Index\ChatItem.xaml.cs">
+      <DependentUpon>ChatItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ui\UserControls\Index\LeftMenu.xaml.cs">
       <DependentUpon>LeftMenu.xaml</DependentUpon>
     </Compile>
@@ -439,6 +442,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ui\UserControls\Icons\Smile.xaml" />
+    <Page Include="Ui\UserControls\Index\ChatItem.xaml" />
     <Page Include="Ui\UserControls\Index\LeftMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
