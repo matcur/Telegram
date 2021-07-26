@@ -1,8 +1,9 @@
+using System;
 using System.Threading.Tasks;
 
 namespace Telegram.Server.Core.Filesystem
 {
-    public interface IFile
+    public interface IFile : IDisposable
     {
         Task<string> SaveAsync();
 

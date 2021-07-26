@@ -49,5 +49,15 @@ namespace Telegram.Server.Core.Filesystem
 
             return name.Replace("/", "");
         }
+
+        public void Dispose()
+        {
+            stream?.Dispose();
+        }
+
+        ~ RandomFile()
+        {
+            Dispose();  
+        }
     }
 }
