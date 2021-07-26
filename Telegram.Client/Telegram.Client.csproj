@@ -178,7 +178,6 @@
     <Compile Include="Api\Fake\Resources\FakeChats.cs" />
     <Compile Include="Api\Fake\Resources\FakeMessages.cs" />
     <Compile Include="Api\Fake\Sockets\FakeChatSocket.cs" />
-    <Compile Include="Api\RequestContents\IRequestContent.cs" />
     <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Fake\Resources\ApiResource.cs" />
     <Compile Include="Api\Fake\Resources\FakeCodes.cs" />
