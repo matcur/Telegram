@@ -6,21 +6,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Telegram.Client.Ui.UserControls.Index"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" 
-             d:DataContext="{d:DesignInstance local:ChatItem}">
+             d:DesignHeight="80" d:DesignWidth="300" 
+             d:DataContext="{d:DesignInstance local:ChatItem}"
+             Background="Transparent">
     <Grid Height="60">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border
+        <Ellipse
+            Height="45" Width="45"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
-            <Image
-                Height="45" Width="45"
-                Source="Resoures/Images/start.png"/>
-        </Border>
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="{Binding IconUrl}"/>
+            </Ellipse.Fill>
+        </Ellipse>
 
         <Border 
             Grid.Column="1"

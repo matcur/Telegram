@@ -26,16 +26,16 @@ namespace Telegram.Server.Core.Filesystem
             return PublicPath(fullPath);
         }
 
-        private string PublicPath(string path)
-        {
-            var publicIndex = path.IndexOf("/files", StringComparison.Ordinal);
-            
-            return path.Remove(0, publicIndex);
-        }
-
         public void Dispose()
         {
             file?.Dispose();
+        }
+
+        private string PublicPath(string path)
+        {
+            var publicIndex = path.IndexOf(@"files", StringComparison.Ordinal);
+            
+            return path.Remove(0, publicIndex);
         }
 
         ~ PublicFile()

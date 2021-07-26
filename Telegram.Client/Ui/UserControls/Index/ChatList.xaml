@@ -22,7 +22,8 @@
             <DataTemplate>
                 <local:ChatItem
                     ChatName="{Binding Name}"
-                    LastMessage="{Binding LastMessage}"/>
+                    LastMessage="{Binding LastMessage}"
+                    IconUrl="{Binding IconUrl}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

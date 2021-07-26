@@ -31,7 +31,7 @@
 
                     <Image
                         Style="{StaticResource CircleImageStyle}"
-                        Source="../../../Resources/Images/start.png"/>
+                        Source="../../../Ui/Resources/Images/new-chat-img.png"/>
                 </Grid>
             
                 <Grid Margin="20 0 0 0">

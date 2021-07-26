@@ -19,9 +19,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <form:ImageInput
                     x:Name="ImageInput"
                     Margin="0 0 20 0"/>
+                
                 <form:TextInput
                     Grid.Column="1"
                     x:Name="NameInput"

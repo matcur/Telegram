@@ -21,7 +21,7 @@ namespace Telegram.Server.Core.Filesystem
         {
             var folder = Path.Combine(
                 Directory.GetCurrentDirectory(),
-                "wwwroot/files/"
+                @"wwwroot/files/"
             );
 
             return await SaveAsync(folder);
@@ -41,6 +41,11 @@ namespace Telegram.Server.Core.Filesystem
             return fullPath;
         }
 
+        public void Dispose()
+        {
+            stream?.Dispose();
+        }
+
         private string RandomName()
         {
             var name = Convert.ToBase64String(
@@ -48,11 +53,6 @@ namespace Telegram.Server.Core.Filesystem
             );
 
             return name.Replace("/", "");
-        }
-
-        public void Dispose()
-        {
-            stream?.Dispose();
         }
 
         ~ RandomFile()

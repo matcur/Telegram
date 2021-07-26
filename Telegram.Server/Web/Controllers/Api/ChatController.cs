@@ -6,6 +6,7 @@ using Telegram.Server.Core;
 using Telegram.Server.Core.Attributes.Model;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
+using Telegram.Server.Core.Extensions;
 using Telegram.Server.Core.Filesystem;
 using Telegram.Server.Core.Mapping;
 
@@ -66,7 +67,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/chats/create")]
         public async Task<IActionResult> Create([FromForm]ChatMap map)
         {
-            map.IconUrl = await new PublicFile(
+            map.IconUrl = Request.IndexUrl() + await new PublicFile(
                 new RandomFile(map.Icon)
             ).SaveAsync();
             

@@ -59,6 +59,7 @@ namespace Telegram.Server.Web.Controllers.Api
                                   Name = c.Name,
                                   Description = c.Description,
                                   LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
+                                  IconUrl = c.IconUrl,
                               }))
                               .First();
 

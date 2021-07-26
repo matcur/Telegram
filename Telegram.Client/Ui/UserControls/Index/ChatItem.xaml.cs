@@ -21,6 +21,12 @@ namespace Telegram.Client.Ui.UserControls.Index
             typeof(ChatItem)
         );
 
+        public static readonly DependencyProperty IconUrlProperty = DependencyProperty.Register(
+            nameof(IconUrl),
+            typeof(string),
+            typeof(ChatItem)
+        );
+
         public string ChatName
         {
             get => (string) GetValue(ChatNameProperty);
@@ -31,6 +37,12 @@ namespace Telegram.Client.Ui.UserControls.Index
         {
             get => (Message) GetValue(LastMessageProperty);
             set => SetValue(LastMessageProperty, value);
+        }
+
+        public string IconUrl
+        {
+            get => (string) GetValue(IconUrlProperty);
+            set => SetValue(IconUrlProperty, value);
         }
         
         public ChatItem()

@@ -1,13 +1,16 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Telegram.Client.Api.Fake
 {
     public class FakeClient : IApiClient
     {
-        public string Host => "https://localhost:44383/";
+        public string Host => host;
 
-        private readonly string url = "http://localhost:5000/api/";
+        private const string host = "http://localhost:5000/";
+
+        private readonly string url = host + "api/";
 
         private readonly HttpClient client = new HttpClient();
 
