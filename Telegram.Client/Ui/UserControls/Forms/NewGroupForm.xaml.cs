@@ -1,3 +1,4 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Telegram.Client.Api.Resources;
@@ -42,12 +43,11 @@ namespace Telegram.Client.Ui.UserControls.Forms
                 return;
             }
 
-            chats.Add(new Chat
-            {
-                Name = NameInput.Value,
-                Description = DescriptionInput.Value,
-                IconPath = ImageInput.Value,
-            });
+            chats.Add(
+                NameInput.Value,
+                DescriptionInput.Value,
+                File.Open(ImageInput.Value, FileMode.Open)
+            );
         }
     }
 }

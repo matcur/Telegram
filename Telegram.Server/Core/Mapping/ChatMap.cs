@@ -11,7 +11,7 @@ namespace Telegram.Server.Core.Mapping
         [Required]
         public string Description { get; set; }
 
-        public string IconPath { get; set; }
+        public string IconUrl { get; set; }
 
         [Required]
         public IFormFile Icon { get; set; }

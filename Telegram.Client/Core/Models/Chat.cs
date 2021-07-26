@@ -15,7 +15,7 @@ namespace Telegram.Client.Core.Models
 
         public string Description { get; set; }
 
-        public string IconPath { get; set; }
+        public string IconUrl { get; set; }
 
         public Image Icon { get; set; }
 
@@ -28,28 +28,6 @@ namespace Telegram.Client.Core.Models
         public Chat()
         {
             Messages.CollectionChanged += delegate { OnPropertyChanged(nameof(LastMessage)); };
-        }
-
-        public HttpContent ToHttpContent()
-        {
-            var content = new MultipartFormDataContent();
-            var streamContent = new StreamContent(
-                new FileStream(IconPath, FileMode.Open)
-            );
-            content.Add(streamContent,
-                nameof(Icon),
-                Path.GetFileName(IconPath)
-            );
-            content.Add(
-                new StringContent(Name),
-                nameof(Name)
-            );
-            content.Add(
-                new StringContent(Description), 
-                nameof(Description)
-            );
-
-            return content;
         }
     }
 }
