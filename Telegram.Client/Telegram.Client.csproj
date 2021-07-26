@@ -283,9 +283,6 @@
     <Compile Include="Ui\UserControls\Icons\Burger.xaml.cs">
       <DependentUpon>Burger.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Ui\UserControls\Index\ChatItem.xaml.cs">
-      <DependentUpon>ChatItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Ui\UserControls\Index\ChatList.xaml.cs">
       <DependentUpon>ChatList.xaml</DependentUpon>
     </Compile>
@@ -489,10 +486,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ui\UserControls\Icons\Burger.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Ui\UserControls\Index\ChatItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
