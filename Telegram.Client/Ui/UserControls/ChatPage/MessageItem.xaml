@@ -4,17 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:userControls="clr-namespace:Telegram.Client.Ui.UserControls"
+             xmlns:chatPage="clr-namespace:Telegram.Client.Ui.UserControls.ChatPage"
              mc:Ignorable="d"
              d:DesignHeight="70" d:DesignWidth="200"
-             MouseDoubleClick="OnDoubleClick">
+             d:DataContext="{d:DesignInstance chatPage:MessageItem}"
+             MouseDoubleClick="OnDoubleClick" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
+            
+            <Ellipse
+                Grid.Column="1"
+                Width="30" Height="30">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding Message.Author.AvatarUrl}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            
             <Border 
-                Grid.Column="2"
+                Grid.Column="3"
                 Style="{StaticResource MessageItemStyle}">
                 <StackPanel>
                     <TextBlock 

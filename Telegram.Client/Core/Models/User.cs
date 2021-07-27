@@ -30,6 +30,8 @@ namespace Telegram.Client.Core.Models
 
         public string FullName => $"{FirstName} {LastName}";
 
+        public string AvatarUrl { get; set; }
+
         public Phone Phone
         {
             get => phone;

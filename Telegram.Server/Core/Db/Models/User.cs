@@ -14,6 +14,8 @@ namespace Telegram.Server.Core.Db.Models
 
         public string LastName { get; set; }
 
+        public string AvatarUrl { get; set; }
+
         public Phone Phone { get; set; }
 
         public List<Code> Codes { get; set; } = new List<Code>();
@@ -21,7 +23,7 @@ namespace Telegram.Server.Core.Db.Models
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
         public List<Role> Roles { get; set; } = new List<Role>();
-
+        
         public User() { }
 
         public User(RegisteringUser registration)
