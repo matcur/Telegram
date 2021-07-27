@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Telegram.Client.Core;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Core.Searching;
+using Telegram.Client.Ui.Pages;
 
 namespace Telegram.Client.Ui.ViewModels
 {
@@ -29,6 +30,8 @@ namespace Telegram.Client.Ui.ViewModels
 
         private Chat selectedChat;
 
+        private readonly Dictionary<int, ChatPage> chatPages = new Dictionary<int, ChatPage>();
+
         public IndexViewModel(): this(new ChatSearch(new List<Chat>()))
         {
 
@@ -38,6 +41,17 @@ namespace Telegram.Client.Ui.ViewModels
         {
             ChatSearch = chatSearch;
             InitializeCommands();
+        }
+
+        public ChatPage ChatPage(Chat chat, User currentUser)
+        {
+            var id = chat.Id;
+            if (chatPages.ContainsKey(id))
+            {
+                return chatPages[id];
+            }
+
+            return chatPages[id] = new ChatPage(chat, currentUser);
         }
 
         private void InitializeCommands()

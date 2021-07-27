@@ -46,7 +46,10 @@ namespace Telegram.Client.Ui.Pages
         {
             if (e.PropertyName == nameof(viewModel.SelectedChat))
             {
-                ChatFrame.Navigate(new ChatPage(viewModel.SelectedChat, currentUser));
+                var selectedChat = viewModel.SelectedChat;
+                var targetPage = viewModel.ChatPage(selectedChat, currentUser);
+                
+                ChatFrame.Navigate(targetPage);
             }
         }
 

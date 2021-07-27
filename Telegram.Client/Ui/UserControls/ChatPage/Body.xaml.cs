@@ -24,6 +24,8 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
             set => SetValue(MessagesProperty, value);
         }
 
+        private bool loaded = false;
+
         public Body()
         {
             InitializeComponent();
@@ -31,6 +33,13 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
         
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (loaded)
+            {
+                return;
+            }
+
+            loaded = true;
+            
             Messages.CollectionChanged += OnMessagesChange;
             AddMessages(Messages);
         }

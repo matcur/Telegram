@@ -23,6 +23,8 @@ namespace Telegram.Client.Ui.UserControls
             set => SetValue(ValueProperty, value);
         }
 
+        private bool loaded = false;
+
         public ContentControl()
         {
             InitializeComponent();
@@ -30,7 +32,16 @@ namespace Telegram.Client.Ui.UserControls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            presentations?.Children.Add(new ComplexContent(Value).VisualPresentation);
+            if (loaded)
+            {
+                return;
+            }
+
+            loaded = true;
+            
+            presentations.Children.Add(
+                new ComplexContent(Value).VisualPresentation
+            );
         }
     }
 }

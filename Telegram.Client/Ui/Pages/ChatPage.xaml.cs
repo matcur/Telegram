@@ -17,6 +17,8 @@ namespace Telegram.Client.Ui.Pages
 
         private readonly ChatViewModel viewModel;
 
+        private bool loaded = false;
+
         public ChatPage(Chat chat, User currentUser)
         {
             socket = new FakeChatSocket(
@@ -34,6 +36,13 @@ namespace Telegram.Client.Ui.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (loaded)
+            {
+                return;
+            }
+            
+            loaded = true;
+            
             var socketTask = socket.Start();
             var messagesTask = viewModel.LoadMessages();
 
