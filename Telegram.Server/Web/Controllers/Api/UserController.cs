@@ -53,6 +53,9 @@ namespace Telegram.Server.Web.Controllers.Api
                               .Include(u => u.Chats)
                               .ThenInclude(c => c.Messages)
                               .ThenInclude(m => m.Author)
+                              .Include(u => u.Chats)
+                              .ThenInclude(c => c.Messages)
+                              .ThenInclude(m => m.Content)
                               .Select(u => u.Chats.Select(c => new Chat
                               {
                                   Id = c.Id,
