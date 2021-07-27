@@ -4,9 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:chatPage="clr-namespace:Telegram.Client.Ui.UserControls.ChatPage"
+      xmlns:viewModels="clr-namespace:Telegram.Client.Ui.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="350"
-      Loaded="OnLoaded">
+      Loaded="OnLoaded" d:DataContext="{d:DesignInstance viewModels:ChatViewModel}">
     <Grid Background="{StaticResource ChatBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
-using System.Windows.Controls;
-using Telegram.Client.Core.Models;
+using System.Windows.Forms;
+using Telegram.Client.Core.Extensions;
+using Message = Telegram.Client.Core.Models.Message;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Telegram.Client.Ui.UserControls.ChatPage
 {
@@ -63,8 +65,33 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
 
         private void AddMessage(Message message)
         {
-            var item = new MessageItem(message);
+            var lastItem = LastMessageItem();
+            var item = new MessageItem(message, lastItem.Message, Message.Empty);
+            lastItem.Next = message;
+            
             messageListView.Items.Add(item);
+        }
+
+        private Message LastMessage()
+        {
+            var items = messageListView.Items;
+            if (items.Count == 0)
+            {
+                return Message.Empty;
+            }
+
+            return LastMessageItem().Message;
+        }
+
+        private MessageItem LastMessageItem()
+        {
+            var items = messageListView.Items;
+            if (items.Count == 0)
+            {
+                return MessageItem.Empty;
+            }
+
+            return (MessageItem)items.Last();
         }
     }
 }

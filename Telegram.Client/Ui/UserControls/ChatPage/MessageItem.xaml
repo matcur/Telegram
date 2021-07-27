@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:userControls="clr-namespace:Telegram.Client.Ui.UserControls"
              xmlns:chatPage="clr-namespace:Telegram.Client.Ui.UserControls.ChatPage"
+             xmlns:converters="clr-namespace:Telegram.Client.Ui.Converters"
              mc:Ignorable="d"
              d:DesignHeight="70" d:DesignWidth="200"
              d:DataContext="{d:DesignInstance chatPage:MessageItem}"
              MouseDoubleClick="OnDoubleClick">
+    <UserControl.Resources>
+        <converters:BooleanVisibility x:Key="BooleanVisibility"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -19,7 +23,12 @@
         
         <Ellipse
             Grid.Column="1"
-            Width="30" Height="30">
+            Width="30" Height="30"
+            Visibility="{
+                Binding NeedDetails,
+                UpdateSourceTrigger=PropertyChanged,
+                Converter={StaticResource BooleanVisibility}
+            }">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="{Binding Message.Author.AvatarUrl}"/>
             </Ellipse.Fill>
@@ -27,7 +36,12 @@
         
         <Border
             Grid.Column="2"
-            VerticalAlignment="Bottom">
+            VerticalAlignment="Bottom"
+            Visibility="{
+                Binding NeedDetails,
+                UpdateSourceTrigger=PropertyChanged,
+                Converter={StaticResource BooleanVisibility}
+            }">
             <Polygon
                 Points="10,0 10,7 0,7"
                 Fill="{StaticResource MessageBackground}"/>

@@ -12,6 +12,8 @@ namespace Telegram.Server.Core.Mapping
 
         public string FullName => FirstName + " " + LastName;
 
+        public string AvatarUrl { get; set; }
+
         public PhoneMap Phone { get; set; }
 
         public UserMap() { }
@@ -21,6 +23,7 @@ namespace Telegram.Server.Core.Mapping
             Id = user.Id;
             FirstName = user.FirstName;
             LastName = user.LastName;
+            AvatarUrl = user.AvatarUrl;
             Phone = new PhoneMap(user.Phone);
         }
     }

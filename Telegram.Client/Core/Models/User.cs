@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace Telegram.Client.Core.Models
 {
     public class User : Model
     {
+        public static readonly User Nobody = new User
+        {
+            Id = -1,
+        };
+        
         public int Id { get; set; }
 
         public string FirstName

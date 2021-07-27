@@ -6,7 +6,9 @@ namespace Telegram.Client.Core.Models
     {
         public static readonly Message Empty = new Message
         {
+            Id = -1,
             Content = new List<Content>(),
+            Author = User.Nobody,
         };
 
         public int Id { get; set; }

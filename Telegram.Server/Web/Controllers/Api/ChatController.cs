@@ -57,7 +57,7 @@ namespace Telegram.Server.Web.Controllers.Api
                                  .Include(m => m.Author)
                                  .Skip(offset)
                                  .Take(count)
-                                 .OrderByDescending(m => m.Id)
+                                 .OrderBy(m => m.Id)
                                  .ToList();
 
             return Json(new RequestResult(true, result));

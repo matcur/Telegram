@@ -194,12 +194,14 @@
     <Compile Include="Api\Resources\IUsersResource.cs" />
     <Compile Include="Api\Resources\IVerificationResource.cs" />
     <Compile Include="Api\Sockets\IChatSocket.cs" />
+    <Compile Include="Core\Extensions\ListExtension.cs" />
     <Compile Include="Ui\Colors\ColorFromText.cs" />
     <Compile Include="Ui\Colors\IColor.cs" />
     <Compile Include="Ui\Contents\ComplexContent.cs" />
     <Compile Include="Ui\Contents\ImageContent.cs" />
     <Compile Include="Ui\Contents\VisualContentFactory.cs" />
     <Compile Include="Ui\Contents\IContent.cs" />
+    <Compile Include="Ui\Converters\BooleanVisibility.cs" />
     <Compile Include="Ui\Converters\ElementInitialization.cs" />
     <Compile Include="Ui\DesignData\DesignChat.cs" />
     <Compile Include="Ui\DesignData\DesignUser.cs" />
