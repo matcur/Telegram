@@ -8,32 +8,40 @@
              mc:Ignorable="d"
              d:DesignHeight="70" d:DesignWidth="200"
              d:DataContext="{d:DesignInstance chatPage:MessageItem}"
-             MouseDoubleClick="OnDoubleClick" >
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <Ellipse
-                Grid.Column="1"
-                Width="30" Height="30">
-                <Ellipse.Fill>
-                    <ImageBrush ImageSource="{Binding Message.Author.AvatarUrl}"/>
-                </Ellipse.Fill>
-            </Ellipse>
-            
-            <Border 
-                Grid.Column="3"
-                Style="{StaticResource MessageItemStyle}">
-                <StackPanel>
-                    <TextBlock 
-                        Text="{Binding Message.Author.FullName}"
-                        Foreground="{Binding AuthorForeground}"/>
-                    <userControls:ContentControl Value="{Binding Message.Content}"/>
-                </StackPanel>
-            </Border>
-        </Grid>
+             MouseDoubleClick="OnDoubleClick">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <Ellipse
+            Grid.Column="1"
+            Width="30" Height="30">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="{Binding Message.Author.AvatarUrl}"/>
+            </Ellipse.Fill>
+        </Ellipse>
+        
+        <Border
+            Grid.Column="2"
+            VerticalAlignment="Bottom">
+            <Polygon
+                Points="10,0 10,7 0,7"
+                Fill="{StaticResource MessageBackground}"/>
+        </Border>
+        
+        <Border 
+            Grid.Column="3"
+            Style="{StaticResource MessageItemStyle}">
+            <StackPanel>
+                <TextBlock 
+                    Text="{Binding Message.Author.FullName}"
+                    Foreground="{Binding AuthorForeground}"/>
+                <userControls:ContentControl Value="{Binding Message.Content}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>
