@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:form="clr-namespace:Telegram.Client.Ui.UserControls.Form"
              mc:Ignorable="d"
              d:DesignHeight="80" d:DesignWidth="80"
+             d:DataContext="{d:DesignInstance form:ImageInput}"
              Background="Transparent">
     <Button
         Style="{StaticResource ClearBtnStyle}"
@@ -15,7 +17,7 @@
             VerticalAlignment="Center"
             HorizontalAlignment="Center">
             <Border.Background>
-                <ImageBrush ImageSource="../../Resources/Images/new-chat-img.png"/>
+                <ImageBrush ImageSource="{Binding Source}"/>
             </Border.Background>
         </Border>
     </Button>
