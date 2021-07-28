@@ -197,6 +197,7 @@
     <Compile Include="Core\Extensions\ListExtension.cs" />
     <Compile Include="Ui\Colors\ColorFromText.cs" />
     <Compile Include="Ui\Colors\IColor.cs" />
+    <Compile Include="Ui\Colors\MoreLightColor.cs" />
     <Compile Include="Ui\Contents\ComplexContent.cs" />
     <Compile Include="Ui\Contents\ImageContent.cs" />
     <Compile Include="Ui\Contents\VisualContentFactory.cs" />

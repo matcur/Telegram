@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.Colors;
+using Color = System.Drawing.Color;
 
 namespace Telegram.Client.Ui.UserControls.ChatPage
 {
@@ -33,8 +34,10 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
 
         public SolidColorBrush AuthorForeground =>
             new SolidColorBrush(
-                new ColorFromText(
-                    Message.Author.FullName
+                new MoreLightColor(
+                    new ColorFromText(
+                        Message.Author.FullName
+                    ), 1.2f
                 ).Value
             );
 

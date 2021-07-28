@@ -2,7 +2,7 @@
 
 namespace Telegram.Client.Ui.Colors
 {
-    interface IColor
+    public interface IColor
     {
         Color Value { get; }
     }
