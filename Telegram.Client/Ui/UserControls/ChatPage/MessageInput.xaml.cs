@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Telegram.Client.Core;
@@ -6,34 +9,29 @@ using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Ui.UserControls.ChatPage
 {
-    public partial class MessageInput : UserControl
+    public partial class MessageInput : UserControl, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty SendCommandProperty = DependencyProperty.Register(
-            nameof(SendCommand),
-            typeof(RelayCommand),
-            typeof(MessageInput)
-        );
+        public event PropertyChangedEventHandler PropertyChanged = delegate {  };
 
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
-            nameof(Message),
-            typeof(Message),
-            typeof(MessageInput)
-        );
+        public event Action<Message> Submitting = delegate {  };
 
-        public Message Message
+        public string Text
         {
-            get => (Message) GetValue(MessageProperty);
-            set => SetValue(MessageProperty, value);
+            get => text;
+            set
+            {
+                text = value;
+                OnPropertyChanged(nameof(Text));
+            }
         }
 
-        public RelayCommand SendCommand
-        {
-            get => (RelayCommand) GetValue(SendCommandProperty);
-            set => SetValue(SendCommandProperty, value);
-        }
+        public Message Message { get; set; }
+
+        private string text;
         
         public MessageInput()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -41,14 +39,26 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
         {
             if (e.Key == Key.Enter)
             {
-                Message.Content.Add(new Content
-                {
-                    Type = ContentType.Text,
-                    Value = input.Text,
-                });
-                SendCommand.Execute(Message);
-                input.Clear();
+                Submit();
+                ClearData();
             }
+        }
+
+        private void Submit()
+        {
+            Message.Content.Add(new Content {Value = Text, Type = ContentType.Text});
+            Submitting(Message.Clone());
+        }
+
+        private void ClearData()
+        {
+            Message.Content.Clear();
+            Text = "";
+        }
+
+        private void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
         public event Action<Message> Editing = delegate { };
         
         public Message Message { get; }
+        
         public Message Previous { get; }
 
         public Message Next
@@ -72,7 +73,7 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
             InitializeComponent();
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

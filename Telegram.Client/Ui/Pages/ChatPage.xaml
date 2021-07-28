@@ -21,8 +21,7 @@
             Messages="{Binding Chat.Messages}"
             VerticalContentAlignment="Stretch"/>
         <chatPage:MessageInput 
-            Grid.Row="2"
-            SendCommand="{Binding SendMessageCommand}"
-            Message="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+            x:Name="Input"
+            Grid.Row="2"/>
     </Grid>
 </Page>

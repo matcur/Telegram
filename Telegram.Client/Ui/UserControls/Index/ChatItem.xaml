@@ -49,11 +49,20 @@
                     Text="5:12MP"
                     Foreground="{StaticResource LightForeground}"/>
 
-                <TextBlock
+                <StackPanel 
                     Grid.Row="2"
-                    Text="{Binding LastMessage.Content[0].Value}"
-                    Foreground="{StaticResource LightForeground}"
-                    TextTrimming="CharacterEllipsis"/>
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Text="{Binding LastMessage.Author.FirstName}"
+                        Foreground="Aqua"/>
+                    <TextBlock 
+                        Text=": "
+                        Foreground="Aqua"/>
+                    <TextBlock
+                        Text="{Binding LastMessage.Content[0].Value}"
+                        Foreground="{StaticResource LightForeground}"
+                        TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>

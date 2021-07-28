@@ -19,11 +19,14 @@ namespace Telegram.Client.Core.Models
 
         public Message() {  }
 
-        public Message(Message message)
+        public Message Clone()
         {
-            Id = message.Id;
-            Content = new List<Content>(message.Content);
-            Author = message.Author;
+            return new Message
+            {
+                Id = Id,
+                Author = Author,
+                Content = new List<Content>(Content),
+            };
         }
     }
 }

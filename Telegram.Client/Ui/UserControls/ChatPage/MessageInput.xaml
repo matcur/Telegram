@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:icons="clr-namespace:Telegram.Client.Ui.UserControls.Icons"
+             xmlns:chatPage="clr-namespace:Telegram.Client.Ui.UserControls.ChatPage"
              mc:Ignorable="d"
              d:DesignHeight="50" d:DesignWidth="300"
-             KeyDown="Send">
+             KeyDown="Send" d:DataContext="{d:DesignInstance chatPage:MessageInput}">
     <Grid Background="{StaticResource MainIndexBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <TextBox
-            x:Name="input"
+            Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
             Style="{StaticResource MessageInputStyle}"/>
         <icons:Smile
             Grid.Column="1"

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Telegram.Client.Api.Fake.Sockets;
 using Telegram.Client.Api.Sockets;
 using Telegram.Client.Core.Models;
+using Telegram.Client.Ui.UserControls.ChatPage;
 using Telegram.Client.Ui.ViewModels;
 
 namespace Telegram.Client.Ui.Pages
@@ -26,12 +27,14 @@ namespace Telegram.Client.Ui.Pages
             );
             viewModel = new ChatViewModel(
                 chat,
-                currentUser,
                 socket
             );
             DataContext = viewModel;
 
             InitializeComponent();
+
+            Input.Message = new Message {Author = currentUser};
+            Input.Submitting += viewModel.SendMessage;
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)

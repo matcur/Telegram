@@ -11,48 +11,31 @@ namespace Telegram.Client.Ui.ViewModels
     {
         public Chat Chat { get; }
 
-        public Message Message
-        {
-            get => message;
-            set
-            {
-                message = value;
-                OnPropertyChanged(nameof(Message));
-            }
-        }
-
         public RelayCommand AddMessageCommand => new RelayCommand(
-            o =>
+            message =>
             {
-                AddMessage(new Message(Message));
-                Message.Content.Clear();
+                AddMessage((Message)message);
             }
         );
 
         public RelayCommand UpdateMessageCommand => new RelayCommand(
-            o => messagesResource.Update(Message)
+            message => messagesResource.Update((Message)message)
         );
 
         public RelayCommand SendMessageCommand { get; set; }
 
-        private Message message = new Message();
-
-        private readonly User currentUser;
-        
         private readonly IChatSocket chatSocket;
 
         private readonly IChatResource chatResource;
 
         private readonly IMessagesResource messagesResource;
 
-        public ChatViewModel(Chat chat, User current, IChatSocket socket)
+        public ChatViewModel(Chat chat, IChatSocket socket)
         {
             Chat = chat;
             messagesResource = new FakeMessages();
             chatResource = new FakeChat(chat);
-            currentUser = current;
             chatSocket = socket;
-            message.Author = current;
             SendMessageCommand = AddMessageCommand;
             socket.OnReceiveMessage(OnReceiveMessage);
         }
@@ -66,6 +49,11 @@ namespace Telegram.Client.Ui.ViewModels
             {
                 Chat.Messages.Add(message);
             }
+        }
+
+        public void SendMessage(Message message)
+        {
+            SendMessageCommand.Execute(message);
         }
 
         private void OnReceiveMessage(int chatId, Message message)
