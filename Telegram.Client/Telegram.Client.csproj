@@ -173,6 +173,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Api\Auth\IVerificationResource.cs" />
+    <Compile Include="Api\Fake\Auth\FakeVerification.cs" />
     <Compile Include="Api\Fake\FakeClient.cs" />
     <Compile Include="Api\Fake\Resources\FakeChat.cs" />
     <Compile Include="Api\Fake\Resources\FakeChats.cs" />
@@ -184,7 +186,6 @@
     <Compile Include="Api\Fake\Resources\FakePhones.cs" />
     <Compile Include="Api\Fake\Resources\FakeUser.cs" />
     <Compile Include="Api\Fake\Resources\FakeUsers.cs" />
-    <Compile Include="Api\Fake\Resources\FakeVerification.cs" />
     <Compile Include="Api\Resources\IChatResource.cs" />
     <Compile Include="Api\Resources\IChatsResource.cs" />
     <Compile Include="Api\Resources\ICodesResource.cs" />
@@ -192,9 +193,9 @@
     <Compile Include="Api\Resources\IPhonesResource.cs" />
     <Compile Include="Api\Resources\IUserResource.cs" />
     <Compile Include="Api\Resources\IUsersResource.cs" />
-    <Compile Include="Api\Resources\IVerificationResource.cs" />
     <Compile Include="Api\Sockets\IChatSocket.cs" />
     <Compile Include="Core\Extensions\ListExtension.cs" />
+    <Compile Include="Core\VerificationType.cs" />
     <Compile Include="Ui\Colors\ColorFromText.cs" />
     <Compile Include="Ui\Colors\IColor.cs" />
     <Compile Include="Ui\Colors\MoreLightColor.cs" />

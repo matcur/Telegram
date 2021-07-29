@@ -1,4 +1,8 @@
-﻿using Telegram.Client.Api.Fake.Resources;
+﻿using System;
+using System.Collections.Generic;
+using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Api.Auth;
+using Telegram.Client.Api.Fake.Auth;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Core;
 using Telegram.Client.Core.Models;
@@ -8,6 +12,8 @@ namespace Telegram.Client.Ui.ViewModels
 {
     public class CodeVerificationViewModel : ViewModel
     {
+        public event Action<User> Logging = delegate {  };
+        
         public string WrongCodeMessage 
         { 
             get => wrongCodeMessage;
@@ -24,35 +30,33 @@ namespace Telegram.Client.Ui.ViewModels
 
         public Code EnteredCode { get; }
 
-        public RelayCommand InCommand { get; set; }
-
-        public RelayCommand GoToLoginCommand { get; set; }
+        public RelayCommand InCommand => new RelayCommand(o => In());
 
         private string wrongCodeMessage = "";
-
+        
         private readonly IVerificationResource verification;
 
         private readonly IUsersResource users;
 
-        private readonly Navigation navigation;
-
-        public CodeVerificationViewModel(Phone phone, Navigation pageNavigation, string title)
+        private readonly Dictionary<VerificationType, string> titles = new Dictionary<VerificationType, string>
         {
-            Title = title;
+            {
+                VerificationType.Telegram,
+                "A code was sent via Telegram.Client to your other" +
+                Environment.NewLine +
+                "devices, if you have any connect."
+            },
+            {VerificationType.Phone, "A code was sent to your phone."}
+        };
+
+        public CodeVerificationViewModel(Phone phone, VerificationType type)
+        {
+            Title = titles[type];
             Phone = phone;
             EnteredCode = new Code(phone);
 
             verification = new FakeVerification();
             users = new FakeUsers();
-            navigation = pageNavigation;
-
-            InitializeCommands();
-        }
-
-        private void InitializeCommands()
-        {
-            InCommand = new RelayCommand(o => In());
-            GoToLoginCommand = new RelayCommand(o => GoToLogin());
         }
 
         private async void In()
@@ -62,17 +66,12 @@ namespace Telegram.Client.Ui.ViewModels
             {
                 var response = await users.Find(Phone);
                 
-                navigation.To(new Index(response.Result, new FakeChats()));
+                Logging.Invoke(response.Result);
 
                 return;
             }
 
             WrongCodeMessage = "You wrote wrong code, try again.";
-        }
-
-        private void GoToLogin()
-        {
-            navigation.To(new Login());
         }
     }
 }

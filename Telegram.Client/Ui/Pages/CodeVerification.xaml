@@ -75,7 +75,7 @@
                     Foreground="{StaticResource LightGrayForeground}"
                     FontSize="{StaticResource SmallFontSize}"
                     Margin="0 10 0 0"
-                    Text="{Binding Title}"/>
+                    Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label 
                     Content="Code"

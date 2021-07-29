@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Telegram.Client.Api.Auth;
 using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Core;
@@ -17,30 +18,11 @@ namespace Telegram.Client.Ui.Pages
     {
         private Navigation navigation;
         
-        private readonly LoginViewModel viewModel;
-
-        private readonly IPhonesResource phones;
-
-        private readonly IUsersResource users;
-
-        private readonly IVerificationResource verification;
-
-        private readonly string telegramTitle =
-            "A code was sent via Telegram.Client to your other" +
-            Environment.NewLine +
-            "devices, if you have any connect.";
-
-        private readonly string phoneTitle = "A code was sent to your phone.";
-
-        public Login()
+        public Login(LoginViewModel viewModel)
         {
-            phones = new FakePhones();
-            users = new FakeUsers();
-            verification = new FakeVerification();
-            viewModel = new LoginViewModel();
+            viewModel.Verificating += ToCodeVerification;
             DataContext = viewModel;
             InitializeComponent();
-            Loaded += OnLoaded;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs args)
@@ -48,57 +30,22 @@ namespace Telegram.Client.Ui.Pages
             navigation = new Navigation(this);
         }
 
-        private void GoToStart(object sender, RoutedEventArgs e)
-        {
-            navigation.To(new Start());
-        }
-
-        private async void GoToVerification(object sender, RoutedEventArgs e)
-        {
-            var response = await phones.Find(viewModel.Phone);
-            if (response.Success)
-            {
-                await GoToTelegramVerification(response.Result);
-
-                return;
-            }
-
-            await GoToPhoneVerification(viewModel.Phone);
-        }
-
-        private async Task GoToPhoneVerification(Phone phone)
-        {
-            var vm = new CodeVerificationViewModel(
-                phone,
-                navigation,
-                phoneTitle
-            );
-
-            navigation.To(
-                new CodeVerification(vm)
-            );
-
-            var response = await users.Register(phone);
-            var user = response.Result;
-            vm.EnteredCode.UserId = user.Id;
-            phone.OwnerId = user.Id;
-
-            await verification.ByPhone(user.Phone);
-        }
-
-        private async Task GoToTelegramVerification(Phone phone)
+        private void ToCodeVerification(Phone phone, VerificationType type)
         {
             navigation.To(
                 new CodeVerification(
                     new CodeVerificationViewModel(
                         phone,
-                        navigation,
-                        telegramTitle
-                    )    
+                        type
+                    ),
+                    navigation
                 )
             );
+        }
 
-            await verification.FromTelegram(phone);
+        private void GoToStart(object sender, RoutedEventArgs e)
+        {
+            navigation.To(new Start());
         }
     }
 }

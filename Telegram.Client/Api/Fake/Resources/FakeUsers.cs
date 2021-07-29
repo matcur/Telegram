@@ -32,7 +32,7 @@ namespace Telegram.Client.Api.Fake.Resources
 
         public async Task<RequestResult<User>> Find(Phone phone)
         {
-            var response = await api.Get($"users/{phone.OwnerId}");
+            var response = await api.Get($"user/phone/{phone.Number}");
 
             return Deserialize<User>(response);
         }

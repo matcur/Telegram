@@ -1,6 +1,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Telegram.Client.Api.Auth;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Core.Form;
 using Telegram.Client.Core.Form.Inputs;

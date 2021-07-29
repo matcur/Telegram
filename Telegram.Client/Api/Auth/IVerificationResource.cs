@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Telegram.Client.Core.Models;
 
-namespace Telegram.Client.Api.Resources
+namespace Telegram.Client.Api.Auth
 {
     public interface IVerificationResource
     {

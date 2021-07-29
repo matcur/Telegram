@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Telegram.Client.Api.Resources;
+using Telegram.Client.Api.Auth;
+using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Core.Models;
 
-namespace Telegram.Client.Api.Fake.Resources
+namespace Telegram.Client.Api.Fake.Auth
 {
     public class FakeVerification : ApiResource, IVerificationResource
     {

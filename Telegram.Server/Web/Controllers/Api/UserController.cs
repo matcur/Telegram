@@ -68,5 +68,23 @@ namespace Telegram.Server.Web.Controllers.Api
 
             return Json(new RequestResult(true, result));
         }
+
+        [HttpGet]
+        [Route("api/1.0/user/phone/{number}")]
+        public IActionResult ByPhone(string number)
+        {
+            var user = users.FirstOrDefault(u => u.Phone.Number == number);
+            if (user == null)
+            {
+                return Json(
+                    new RequestResult(
+                        false,
+                        $"User with phone number == {number} is not found"
+                    )
+                );
+            }
+
+            return Json(new RequestResult(true, user));
+        }
     }
 }

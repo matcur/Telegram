@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Api.Auth;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.UserControls.Index;
@@ -20,11 +21,6 @@ namespace Telegram.Client.Ui.Pages
         private readonly User currentUser;
         
         private readonly IChatsResource chats;
-
-        public Index(): this(new User { Id = 1 }, new FakeChats())
-        {
-            
-        }
 
         public Index(User current, IChatsResource chatsResource)
         {
