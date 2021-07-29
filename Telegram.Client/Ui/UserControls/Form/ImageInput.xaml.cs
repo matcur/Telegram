@@ -43,11 +43,18 @@ namespace Telegram.Client.Ui.UserControls.Form
         
         private ImageSource source;
 
-        private ImageSource preview;
+        private readonly ImageSource preview;
+        
+        private readonly FileDialog dialog;
 
         public ImageInput()
         {
             preview = Bitmap(new Uri("pack://application:,,,/Ui/Resources/Images/new-chat-img.png"));
+            dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Filter = "Image Files (JPG,PNG,GIF)|*.JPG;*.PNG"
+            };
             Source = preview;
             DataContext = this;
             
@@ -67,11 +74,6 @@ namespace Telegram.Client.Ui.UserControls.Form
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Filter = "Image Files (JPG,PNG,GIF)|*.JPG;*.PNG"
-            };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Value = dialog.FileName;
