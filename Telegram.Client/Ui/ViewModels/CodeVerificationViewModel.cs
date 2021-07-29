@@ -12,7 +12,7 @@ namespace Telegram.Client.Ui.ViewModels
 {
     public class CodeVerificationViewModel : ViewModel
     {
-        public event Action<User> Logging = delegate {  };
+        public event Action<User> Logged = delegate {  };
         
         public string WrongCodeMessage 
         { 
@@ -66,7 +66,7 @@ namespace Telegram.Client.Ui.ViewModels
             {
                 var response = await users.Find(Phone);
                 
-                Logging.Invoke(response.Result);
+                Logged.Invoke(response.Result);
 
                 return;
             }

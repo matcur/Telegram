@@ -21,7 +21,7 @@ namespace Telegram.Client.Ui.Pages
         {
             this.viewModel = viewModel;
             this.navigation = navigation;
-            this.viewModel.Logging += ToIndex;
+            this.viewModel.Logged += ToIndex;
             DataContext = this.viewModel;
             InitializeComponent();
         }
