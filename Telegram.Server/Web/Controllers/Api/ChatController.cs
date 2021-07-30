@@ -55,10 +55,11 @@ namespace Telegram.Server.Web.Controllers.Api
             var result = messages.Where(m => m.ChatId == id)
                                  .Include(m => m.Content)
                                  .Include(m => m.Author)
+                                 .OrderByDescending(m => m.Id)
                                  .Skip(offset)
                                  .Take(count)
-                                 .OrderBy(m => m.Id)
                                  .ToList();
+            result.Reverse();
 
             return Json(new RequestResult(true, result));
         }
