@@ -3,7 +3,7 @@ using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Api.Auth
 {
-    public interface IVerificationResource
+    public interface IVerification
     {
         Task<RequestResult> ByPhone(Phone phone);
 

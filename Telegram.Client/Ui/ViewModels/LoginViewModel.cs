@@ -20,9 +20,9 @@ namespace Telegram.Client.Ui.ViewModels
         
         private readonly IUsersResource users;
 
-        private readonly IVerificationResource verification;
+        private readonly IVerification verification;
 
-        public LoginViewModel(IUsersResource users, IPhonesResource phones, IVerificationResource verification)
+        public LoginViewModel(IUsersResource users, IPhonesResource phones, IVerification verification)
         {
             this.users = users;
             this.phones = phones;

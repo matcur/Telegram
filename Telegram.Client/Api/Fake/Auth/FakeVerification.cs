@@ -5,7 +5,7 @@ using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Api.Fake.Auth
 {
-    public class FakeVerification : ApiResource, IVerificationResource
+    public class FakeVerification : ApiResource, IVerification
     {
         private readonly FakeClient api;
 

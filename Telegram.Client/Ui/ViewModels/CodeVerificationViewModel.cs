@@ -34,7 +34,7 @@ namespace Telegram.Client.Ui.ViewModels
 
         private string wrongCodeMessage = "";
         
-        private readonly IVerificationResource verification;
+        private readonly IVerification verification;
 
         private readonly IUsersResource users;
 

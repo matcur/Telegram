@@ -173,7 +173,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Api\Auth\IVerificationResource.cs" />
+    <Compile Include="Api\Auth\IVerification.cs" />
     <Compile Include="Api\Fake\Auth\FakeVerification.cs" />
     <Compile Include="Api\Fake\FakeClient.cs" />
     <Compile Include="Api\Fake\Resources\FakeChat.cs" />
