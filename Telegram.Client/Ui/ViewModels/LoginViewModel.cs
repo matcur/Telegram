@@ -36,19 +36,19 @@ namespace Telegram.Client.Ui.ViewModels
             {
                 Verificating.Invoke(
                     phone,
-                    VerificationType.Phone
+                    VerificationType.Telegram
                 );
                 await verification.FromTelegram(phone);
                 
                 return;
             }
-
+            
             Verificating.Invoke(
                 phone,
-                VerificationType.Telegram
+                VerificationType.Phone
             );
             await users.Register(phone);
-            await verification.FromTelegram(phone);
+            await verification.ByPhone(phone);
         }
     }
 }
