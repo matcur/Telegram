@@ -391,6 +391,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Ui\Dictionaries\NamedStyles\RepeatButtons\HiddenRepeatButton.xaml" />
+    <Page Include="Ui\Dictionaries\NamedStyles\ScrollBars\MessageScrollBar.xaml" />
     <Page Include="Ui\Dictionaries\NamedStyles\TextBlocks\Information.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -410,6 +412,8 @@
     </Page>
     <Page Include="Ui\Dictionaries\NamedStyles\TextBoxs\Input.xaml" />
     <Page Include="Ui\Dictionaries\NamedStyles\TextBoxs\MessageInput.xaml" />
+    <Page Include="Ui\Dictionaries\NamedStyles\Thumbs\MessageListThumb.xaml" />
+    <Page Include="Ui\Dictionaries\NamedStyles\Tracks\MessageTrackList.xaml" />
     <Page Include="Ui\UserControls\ChatPage\Body.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

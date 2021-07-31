@@ -11,7 +11,7 @@
         WindowStyle="None"
         AllowsTransparency="True">
     <WindowChrome.WindowChrome>
-        <WindowChrome ResizeBorderThickness="10"/>
+        <WindowChrome ResizeBorderThickness="2"/>
     </WindowChrome.WindowChrome>
     <Grid Background="#000">
         <Grid.RowDefinitions>
@@ -77,6 +77,6 @@
         <Frame 
             Grid.Row="1"
             NavigationUIVisibility="Hidden" 
-            Source="Ui/Pages/Start.xaml"/>
+            Source="Ui/Pages/Index.xaml"/>
     </Grid>
 </Window>

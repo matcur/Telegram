@@ -4,26 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:designData="clr-namespace:Telegram.Client.Ui.DesignData"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              Loaded="OnLoaded"
              Padding="0 10">
     <UserControl.Resources>
-        <ObjectDataProvider 
+        <ObjectDataProvider
             x:Key="designChat"
             ObjectType="{x:Type designData:DesignChat}"/>
     </UserControl.Resources>
-    <ListView
-        d:DataContext="{StaticResource designChat}"
-        x:Name="messageListView"
-        Style="{StaticResource ClearListViewStyle}"
-        ItemContainerStyle="{StaticResource MessageListItemStyle}"
-        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-        HorizontalContentAlignment="Left">
-        <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel HorizontalAlignment="Left"/>
-            </ItemsPanelTemplate>
-        </ListView.ItemsPanel>
-    </ListView>
+    <ScrollViewer x:Name="MessageScroll">
+        <ScrollViewer.Resources>
+            <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">
+                10
+            </system:Double>
+        </ScrollViewer.Resources>
+        <ScrollViewer.Template>
+            <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <ScrollContentPresenter Content="{TemplateBinding Content}"/>
+                    
+                    <ScrollBar
+                        Grid.Column="1"
+                        Scroll="OnScroll"
+                        Style="{StaticResource MessageScrollBarStyle}"
+                        Value="{TemplateBinding VerticalOffset}" 
+                        Maximum="{TemplateBinding ScrollableHeight}" 
+                        ViewportSize="{TemplateBinding ViewportHeight}">
+                        <ScrollBar.Resources>
+                            <Style TargetType="Thumb" BasedOn="{StaticResource MessageListThumbStyle}"/>
+                            <Style TargetType="RepeatButton" BasedOn="{StaticResource HiddenRepeatBtnStyle}"/>
+                        </ScrollBar.Resources>
+                    </ScrollBar>
+                </Grid>
+            </ControlTemplate>
+        </ScrollViewer.Template>
+        <ScrollViewer.Content>
+            <ListView
+                d:DataContext="{StaticResource designChat}"
+                x:Name="MessageList"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                PreviewMouseWheel="OnMouseWheel"
+                Style="{StaticResource ClearListViewStyle}"
+                ItemContainerStyle="{StaticResource MessageListItemStyle}"
+                HorizontalContentAlignment="Left">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel HorizontalAlignment="Left"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </ScrollViewer.Content>
+    </ScrollViewer>
 </UserControl>

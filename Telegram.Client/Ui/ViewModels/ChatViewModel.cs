@@ -42,7 +42,7 @@ namespace Telegram.Client.Ui.ViewModels
 
         public async Task LoadMessages()
         {
-            var response = await chatResource.Messages(0, 10);
+            var response = await chatResource.Messages(0, 30);
             var messages = response.Result;
 
             foreach (var message in messages)

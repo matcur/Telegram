@@ -2,10 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using Telegram.Client.Core.Extensions;
-using Message = Telegram.Client.Core.Models.Message;
-using UserControl = System.Windows.Controls.UserControl;
+using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Ui.UserControls.ChatPage
 {
@@ -44,6 +45,27 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
             
             Messages.CollectionChanged += OnMessagesChange;
             AddMessages(Messages);
+            MessageScroll.ScrollToBottom();
+        }
+
+        private void OnScroll(object sender, ScrollEventArgs e)
+        {
+            var verticalOffset = e.NewValue;
+            MessageScroll.ScrollToVerticalOffset(verticalOffset);
+        }
+
+        private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var offset = MessageScroll.VerticalOffset;
+            var indent = 20;
+            if (e.Delta > 0)
+            {
+                MessageScroll.ScrollToVerticalOffset(offset - indent);
+            }
+            else
+            {
+                MessageScroll.ScrollToVerticalOffset(offset + indent);
+            }
         }
 
         private void OnMessagesChange(object sender, NotifyCollectionChangedEventArgs e)
@@ -69,12 +91,12 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
             var item = new MessageItem(message, lastItem.Message, Message.Empty);
             lastItem.Next = message;
             
-            messageListView.Items.Add(item);
+            MessageList.Items.Add(item);
         }
 
         private Message LastMessage()
         {
-            var items = messageListView.Items;
+            var items = MessageList.Items;
             if (items.Count == 0)
             {
                 return Message.Empty;
@@ -85,7 +107,7 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
 
         private MessageItem LastMessageItem()
         {
-            var items = messageListView.Items;
+            var items = MessageList.Items;
             if (items.Count == 0)
             {
                 return MessageItem.Empty;

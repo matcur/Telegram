@@ -36,6 +36,10 @@
                 <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/ListViews/MessageListItem.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/ListViews/MenuItem.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/Images/CircleImage.xaml"/>
+                <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/ScrollBars/MessageScrollBar.xaml"/>
+                <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/RepeatButtons/HiddenRepeatButton.xaml"/>
+                <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/Thumbs/MessageListThumb.xaml"/>
+                <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/Tracks/MessageTrackList.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/NamedStyles/Dark.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/Brushes/Header.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/Brushes/Generic/Background.xaml"/>

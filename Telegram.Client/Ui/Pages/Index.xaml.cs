@@ -22,6 +22,11 @@ namespace Telegram.Client.Ui.Pages
         
         private readonly IChatsResource chats;
 
+        public Index() : this(new User{Id = 1}, new FakeChats())
+        {
+            
+        }
+
         public Index(User current, IChatsResource chatsResource)
         {
             currentUser = current;
