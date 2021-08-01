@@ -32,7 +32,7 @@
                     
                     <ScrollBar
                         Grid.Column="1"
-                        Scroll="OnScroll"
+                        ValueChanged="OnScroll"
                         Style="{StaticResource MessageScrollBarStyle}"
                         Value="{TemplateBinding VerticalOffset}" 
                         Maximum="{TemplateBinding ScrollableHeight}" 

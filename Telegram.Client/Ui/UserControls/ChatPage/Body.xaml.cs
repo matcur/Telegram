@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Telegram.Client.Core.Collections;
 using Telegram.Client.Core.Extensions;
 using Telegram.Client.Core.Models;
 
@@ -17,16 +19,18 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
     {
         public static readonly DependencyProperty MessagesProperty = DependencyProperty.Register(
             nameof(Messages),
-            typeof(ObservableCollection<Message>),
+            typeof(ILiveCollection<Message>),
             typeof(Body)
         );
+        
+        public event Action ScrolledToTop = delegate {  };
 
-        public ObservableCollection<Message> Messages
+        public ILiveCollection<Message> Messages
         {
-            get => (ObservableCollection<Message>)GetValue(MessagesProperty);
+            get => (ILiveCollection<Message>)GetValue(MessagesProperty);
             set => SetValue(MessagesProperty, value);
         }
-
+        
         private bool loaded = false;
 
         public Body()
@@ -44,14 +48,19 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
             loaded = true;
             
             Messages.CollectionChanged += OnMessagesChange;
-            AddMessages(Messages);
+            Insert(0, Messages);
             MessageScroll.ScrollToBottom();
         }
 
-        private void OnScroll(object sender, ScrollEventArgs e)
+        private void OnScroll(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var verticalOffset = e.NewValue;
-            MessageScroll.ScrollToVerticalOffset(verticalOffset);
+            var offset = e.NewValue;
+            MessageScroll.ScrollToVerticalOffset(offset);
+
+            if (offset < 20 && offset != 0)
+            {
+                ScrolledToTop.Invoke();
+            }
         }
 
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
@@ -71,27 +80,28 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
         private void OnMessagesChange(object sender, NotifyCollectionChangedEventArgs e)
         {
             var items = e.NewItems;
+            var startIndex = e.NewStartingIndex;
             if (items.Count != 0)
             {
-                AddMessages(items);
+                Insert(startIndex, items);
             }
         }
 
-        private void AddMessages(IEnumerable messages)
+        private void Insert(int index, IEnumerable messages)
         {
             foreach (var message in messages)
             {
-                AddMessage((Message)message);
+                Insert(index++, (Message)message);
             }
         }
 
-        private void AddMessage(Message message)
+        private void Insert(int index, Message message)
         {
             var lastItem = LastMessageItem();
             var item = new MessageItem(message, lastItem.Message, Message.Empty);
             lastItem.Next = message;
             
-            MessageList.Items.Add(item);
+            MessageList.Items.Insert(index, item);
         }
 
         private Message LastMessage()

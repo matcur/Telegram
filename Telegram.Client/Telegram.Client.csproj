@@ -194,6 +194,8 @@
     <Compile Include="Api\Resources\IUserResource.cs" />
     <Compile Include="Api\Resources\IUsersResource.cs" />
     <Compile Include="Api\Sockets\IChatSocket.cs" />
+    <Compile Include="Core\Collections\ILiveCollection.cs" />
+    <Compile Include="Core\Collections\LiveCollection.cs" />
     <Compile Include="Core\Extensions\ListExtension.cs" />
     <Compile Include="Core\VerificationType.cs" />
     <Compile Include="Ui\Colors\ColorFromText.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Api.Sockets;
@@ -40,15 +41,23 @@ namespace Telegram.Client.Ui.ViewModels
             socket.OnReceiveMessage(OnReceiveMessage);
         }
 
-        public async Task LoadMessages()
+        public async Task LoadMessages(int offset, int count)
         {
-            var response = await chatResource.Messages(0, 30);
+            var response = await chatResource.Messages(offset, count);
             var messages = response.Result;
 
             foreach (var message in messages)
             {
                 Chat.Messages.Add(message);
             }
+        }
+
+        public async Task LoadPreviousMessages(int count)
+        {
+            var loaded = Chat.Messages;
+            var response = await chatResource.Messages(loaded.Count, count);
+            
+            loaded.InsertRange(0, response.Result);
         }
 
         public void SendMessage(Message message)

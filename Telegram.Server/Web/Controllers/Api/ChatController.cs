@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
 using Telegram.Server.Core.Attributes.Model;
 using Telegram.Server.Core.Db;
+using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Extensions;
 using Telegram.Server.Core.Filesystem;
@@ -47,18 +48,17 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/chats/{id:int}/messages")]
         public IActionResult Messages(int id, [FromQuery]int offset, [FromQuery]int count)
         {
-            if (!chats.Any(c => c.Id == id))
+            var chat = chats.FirstOrDefault(c => c.Id == id);
+            if (chat == null)
             {
                 return Json(new RequestResult(false, $"Chat with id = {id} does not exists"));
             }
 
-            var result = messages.Where(m => m.ChatId == id)
-                                 .Include(m => m.Content)
-                                 .Include(m => m.Author)
-                                 .OrderByDescending(m => m.Id)
-                                 .Skip(offset)
-                                 .Take(count)
-                                 .ToList();
+            var result = messages
+                .Details(chat)
+                .Skip(offset)
+                .Take(count)
+                .ToList();
             result.Reverse();
 
             return Json(new RequestResult(true, result));

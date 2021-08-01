@@ -16,7 +16,8 @@
         </Grid.RowDefinitions>
 
         <chatPage:Header/>
-        <chatPage:Body 
+        <chatPage:Body
+            x:Name="Body"
             Grid.Row="1"
             Messages="{Binding Chat.Messages}"
             VerticalContentAlignment="Stretch"/>
