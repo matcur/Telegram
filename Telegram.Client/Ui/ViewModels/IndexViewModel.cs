@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Telegram.Client.Api;
+using Telegram.Client.Api.Resources;
 using Telegram.Client.Api.Sockets;
 using Telegram.Client.Core;
 using Telegram.Client.Core.Models;
@@ -12,6 +14,7 @@ namespace Telegram.Client.Ui.ViewModels
 {
     public class IndexViewModel : ViewModel
     {
+        private readonly IChatsResource chatsResource;
         public event Action BurgerIsClicked = delegate {  };
         
         public Chat SelectedChat
@@ -36,19 +39,30 @@ namespace Telegram.Client.Ui.ViewModels
 
         private readonly IConnectionSource<IChatSocket> chatSockets;
         
-        public IndexViewModel(IConnectionSource<IChatSocket> chatSockets)
-            : this(new ChatSearch(new List<Chat>()), chatSockets)
+        public IndexViewModel(IConnectionSource<IChatSocket> chatSockets, IChatsResource resource)
+            : this(new ChatSearch(new List<Chat>()), chatSockets, resource)
         {
         }
 
         public IndexViewModel(
             Search<ObservableCollection<Chat>> chatSearch,
-            IConnectionSource<IChatSocket> chatSockets
+            IConnectionSource<IChatSocket> sockets,
+            IChatsResource resource
         )
         {
-            this.chatSockets = chatSockets;
+            chatsResource = resource;
+            chatSockets = sockets;
             ChatSearch = chatSearch;
             InitializeCommands();
+        }
+
+        public async Task LoadChats(User user)
+        {
+            ChatSearch.AddItems(
+                new ObservableCollection<Chat>(
+                    await chatsResource.Iterate(user, 20)
+                )
+            );
         }
 
         public ChatPage ChatPage(Chat chat, User currentUser)

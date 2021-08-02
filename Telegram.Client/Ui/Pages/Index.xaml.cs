@@ -24,8 +24,6 @@ namespace Telegram.Client.Ui.Pages
         
         private readonly User currentUser;
         
-        private readonly IChatsResource chats;
-
         private readonly Connections<IChatSocket> chatSockets = new Connections<IChatSocket>(
             () => new FakeChatSocket(new HubConnectionBuilder())
         );
@@ -38,8 +36,7 @@ namespace Telegram.Client.Ui.Pages
         public Index(User current, IChatsResource chatsResource)
         {
             currentUser = current;
-            chats = chatsResource;
-            viewModel = new IndexViewModel(chatSockets);
+            viewModel = new IndexViewModel(chatSockets, chatsResource);
             viewModel.PropertyChanged += OnChatSelected;
             viewModel.BurgerIsClicked += ShowLeftMenu;
             DataContext = viewModel;
@@ -65,12 +62,7 @@ namespace Telegram.Client.Ui.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // TODO
-            viewModel.ChatSearch.AddItems(
-                new ObservableCollection<Chat>(
-                    await chats.Iterate(currentUser, 20)
-                )
-            );
+            await viewModel.LoadChats(currentUser);
         }
     }
 }
