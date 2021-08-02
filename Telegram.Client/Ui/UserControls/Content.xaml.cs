@@ -11,22 +11,36 @@ namespace Telegram.Client.Ui.UserControls
     /// </summary>
     public partial class ContentControl : UserControl
     {
-        public static DependencyProperty ValueProperty = DependencyProperty.Register(
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value),
             typeof(IEnumerable<Content>),
             typeof(ContentControl)
         );
 
+        public static readonly DependencyProperty ContentFactoryProperty = DependencyProperty.Register(
+            nameof(ContentFactory),
+            typeof(VisualContentFactory),
+            typeof(ContentControl)
+        );
+
         public IEnumerable<Content> Value
         {
-            get => (IEnumerable<Content>)GetValue(ValueProperty);
+            get => (IEnumerable<Content>) GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
+        }
+
+        public VisualContentFactory ContentFactory
+        {
+            get => (VisualContentFactory) GetValue(ContentFactoryProperty);
+            set => SetValue(ContentFactoryProperty, value);
         }
 
         private bool loaded = false;
 
         public ContentControl()
         {
+            Value = new List<Content>();
+            ContentFactory = new VisualContentFactory();
             InitializeComponent();
         }
 
@@ -38,10 +52,16 @@ namespace Telegram.Client.Ui.UserControls
             }
 
             loaded = true;
-            
-            presentations.Children.Add(
-                new ComplexContent(Value).VisualPresentation
-            );
+
+            if (Value != null)
+            {
+                presentations.Children.Add(
+                    new ComplexContent(
+                        Value,
+                        ContentFactory
+                    ).VisualPresentation
+                );
+            }
         }
     }
 }

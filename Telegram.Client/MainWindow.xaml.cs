@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Telegram.Client.Ui.Windows;
 
 namespace Telegram.Client
 {
@@ -8,9 +9,12 @@ namespace Telegram.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static readonly NotificationsWindow Notifications = new NotificationsWindow {Topmost = true};
+        
         public MainWindow()
         {
             InitializeComponent();
+            Notifications.Show();
         }
 
         private void OnDragMove(object sender, MouseButtonEventArgs e)
@@ -21,6 +25,7 @@ namespace Telegram.Client
         private void Close(object sender, RoutedEventArgs e)
         {
             Close();
+            Notifications.Close();
         }
 
         private void ToggleWindowState(object sender, RoutedEventArgs e)

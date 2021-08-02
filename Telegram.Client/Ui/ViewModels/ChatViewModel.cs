@@ -70,6 +70,7 @@ namespace Telegram.Client.Ui.ViewModels
             if (chatId == Chat.Id)
             {
                 Chat.Messages.Add(message);
+                
             }
         }
 

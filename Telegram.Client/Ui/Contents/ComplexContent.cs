@@ -31,9 +31,8 @@ namespace Telegram.Client.Ui.Contents
 
         private readonly List<IContent> contents = new List<IContent>();
 
-        public ComplexContent(IEnumerable<Content> contents)
+        public ComplexContent(IEnumerable<Content> contents, VisualContentFactory factory)
         {
-            var factory = new VisualContentFactory();
             foreach (var content in contents)
             {
                 this.contents.Add(factory.From(content));

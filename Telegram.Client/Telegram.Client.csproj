@@ -268,6 +268,12 @@
     <Compile Include="Ui\UserControls\Index\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ui\UserControls\Notification\MessageNotification.xaml.cs">
+      <DependentUpon>MessageNotification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\UserControls\Notification\NotificationItem.xaml.cs">
+      <DependentUpon>NotificationItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ui\UserControls\UpLayer.xaml.cs">
       <DependentUpon>UpLayer.xaml</DependentUpon>
     </Compile>
@@ -305,6 +311,9 @@
     <Compile Include="Ui\ViewModels\PhoneCodeViewModel.cs" />
     <Compile Include="Ui\ViewModels\TelegramCodeViewModel.cs" />
     <Compile Include="Ui\ViewModels\ViewModel.cs" />
+    <Compile Include="Ui\Windows\NotificationsWindow.xaml.cs">
+      <DependentUpon>NotificationsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Ui\Dictionaries\BaseStyles\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -462,6 +471,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Ui\UserControls\Notification\MessageNotification.xaml" />
+    <Page Include="Ui\UserControls\Notification\NotificationItem.xaml" />
     <Page Include="Ui\UserControls\UpLayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -512,6 +523,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Ui\Windows\NotificationsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Models\Model.cs" />

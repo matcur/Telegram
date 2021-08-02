@@ -18,8 +18,6 @@ namespace Telegram.Client.Core.Models
 
         public string IconUrl { get; set; }
 
-        public Image Icon { get; set; }
-
         public Message LastMessage { get; set; }
         
         public LiveCollection<Message> Messages { get; set; } = new LiveCollection<Message>();

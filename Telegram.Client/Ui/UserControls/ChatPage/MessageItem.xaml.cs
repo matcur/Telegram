@@ -58,7 +58,7 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
                 }
 
                 return (author.Id == previousAuthor.Id || previousAuthor == nobody)
-                       && (author.Id != nextAuthor.Id); 
+                       && author.Id != nextAuthor.Id; 
             }
         }
         
