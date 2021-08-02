@@ -174,12 +174,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Api\Auth\IVerification.cs" />
+    <Compile Include="Api\Connections.cs" />
     <Compile Include="Api\Fake\Auth\FakeVerification.cs" />
     <Compile Include="Api\Fake\FakeClient.cs" />
     <Compile Include="Api\Fake\Resources\FakeChat.cs" />
     <Compile Include="Api\Fake\Resources\FakeChats.cs" />
     <Compile Include="Api\Fake\Resources\FakeMessages.cs" />
     <Compile Include="Api\Fake\Sockets\FakeChatSocket.cs" />
+    <Compile Include="Api\IConnectionSource.cs" />
     <Compile Include="Api\RequestResult.cs" />
     <Compile Include="Api\Fake\Resources\ApiResource.cs" />
     <Compile Include="Api\Fake\Resources\FakeCodes.cs" />

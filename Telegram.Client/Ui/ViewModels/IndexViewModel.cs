@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Telegram.Client.Api;
+using Telegram.Client.Api.Sockets;
 using Telegram.Client.Core;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Core.Searching;
@@ -32,13 +34,19 @@ namespace Telegram.Client.Ui.ViewModels
 
         private readonly Dictionary<int, ChatPage> chatPages = new Dictionary<int, ChatPage>();
 
-        public IndexViewModel(): this(new ChatSearch(new List<Chat>()))
+        private readonly IConnectionSource<IChatSocket> chatSockets;
+        
+        public IndexViewModel(IConnectionSource<IChatSocket> chatSockets)
+            : this(new ChatSearch(new List<Chat>()), chatSockets)
         {
-
         }
 
-        public IndexViewModel(Search<ObservableCollection<Chat>> chatSearch)
+        public IndexViewModel(
+            Search<ObservableCollection<Chat>> chatSearch,
+            IConnectionSource<IChatSocket> chatSockets
+        )
         {
+            this.chatSockets = chatSockets;
             ChatSearch = chatSearch;
             InitializeCommands();
         }
@@ -51,7 +59,7 @@ namespace Telegram.Client.Ui.ViewModels
                 return chatPages[id];
             }
 
-            return chatPages[id] = new ChatPage(chat, currentUser);
+            return chatPages[id] = new ChatPage(chat, currentUser, chatSockets.New());
         }
 
         private void InitializeCommands()

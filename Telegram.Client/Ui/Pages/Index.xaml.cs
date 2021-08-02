@@ -2,9 +2,13 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.AspNetCore.SignalR.Client;
+using Telegram.Client.Api;
 using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Api.Auth;
+using Telegram.Client.Api.Fake.Sockets;
 using Telegram.Client.Api.Resources;
+using Telegram.Client.Api.Sockets;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.UserControls.Index;
 using Telegram.Client.Ui.ViewModels;
@@ -22,7 +26,11 @@ namespace Telegram.Client.Ui.Pages
         
         private readonly IChatsResource chats;
 
-        public Index() : this(new User{Id = 1}, new FakeChats())
+        private readonly Connections<IChatSocket> chatSockets = new Connections<IChatSocket>(
+            () => new FakeChatSocket(new HubConnectionBuilder())
+        );
+
+        public Index() : this(new User{Id = 1, FirstName = "fuck"}, new FakeChats())
         {
             
         }
@@ -31,10 +39,11 @@ namespace Telegram.Client.Ui.Pages
         {
             currentUser = current;
             chats = chatsResource;
-            viewModel = new IndexViewModel();
+            viewModel = new IndexViewModel(chatSockets);
             viewModel.PropertyChanged += OnChatSelected;
             viewModel.BurgerIsClicked += ShowLeftMenu;
             DataContext = viewModel;
+            
             InitializeComponent();
         }
 
@@ -56,6 +65,7 @@ namespace Telegram.Client.Ui.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            // TODO
             viewModel.ChatSearch.AddItems(
                 new ObservableCollection<Chat>(
                     await chats.Iterate(currentUser, 20)

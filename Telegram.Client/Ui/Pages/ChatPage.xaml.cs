@@ -24,15 +24,10 @@ namespace Telegram.Client.Ui.Pages
 
         private bool loaded = false;
 
-        public ChatPage(Chat chat, User currentUser)
+        public ChatPage(Chat chat, User currentUser, IChatSocket socket)
         {
-            socket = new FakeChatSocket(
-                new HubConnectionBuilder()
-            );
-            viewModel = new ChatViewModel(
-                chat,
-                socket
-            );
+            this.socket = socket;
+            viewModel = new ChatViewModel(chat, socket);
             DataContext = viewModel;
 
             InitializeComponent();
