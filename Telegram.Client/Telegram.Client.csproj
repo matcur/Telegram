@@ -427,6 +427,7 @@
     <Page Include="Ui\Dictionaries\NamedStyles\TextBoxs\MessageInput.xaml" />
     <Page Include="Ui\Dictionaries\NamedStyles\Thumbs\MessageListThumb.xaml" />
     <Page Include="Ui\Dictionaries\NamedStyles\Tracks\MessageTrackList.xaml" />
+    <Page Include="Ui\Dictionaries\Numbers\ElementWidth.xaml" />
     <Page Include="Ui\UserControls\ChatPage\Body.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

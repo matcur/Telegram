@@ -5,36 +5,35 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using Telegram.Client.Core;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.Contents;
 
 namespace Telegram.Client.Ui.UserControls.Notification
 {
-    // TODO add opacity
     public partial class NotificationItem : UserControl
     {
-        public event Action<NotificationItem> CloseClicked = delegate {  };
+        public UIElement ItemContent { get; }
         
-        public UIElement Content { get; }
-
-        public NotificationItem(UIElement content)
+        public NotificationItem(UIElement itemContent)
         {
-            Content = content;
+            ItemContent = itemContent;
             
             InitializeComponent();
 
-            Panel.Children.Add(content);
-        }
-
-        private void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            CloseClicked.Invoke(this);
+            Margin = new Thickness(5 * Width, 10, 0, 0);;
+            Panel.Children.Add(itemContent);
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(1000);
-            CloseClicked.Invoke(this);
+            await BeginClosing();
+        }
+
+        private async Task BeginClosing()
+        {
+            await Task.Delay(15000);
         }
     }
 }

@@ -27,7 +27,6 @@ namespace Telegram.Client.Ui.Windows
         public void AddNotification(NotificationItem notification)
         {
             notifications.Add(notification);
-            notification.CloseClicked += RemoveNotification;
             ItemAdded.Invoke(notification);
         }
 
@@ -39,7 +38,7 @@ namespace Telegram.Client.Ui.Windows
         private void MoveToRightBottom()
         {
             Top = SystemParameters.PrimaryScreenHeight - Height - 50;
-            Left = SystemParameters.PrimaryScreenWidth - Width - 10;
+            Left = SystemParameters.PrimaryScreenWidth - Width;
         }
     }
 }

@@ -11,7 +11,7 @@
         ShowInTaskbar="False"
         WindowStartupLocation="Manual"
         WindowStyle="None" 
-        Width="400">
+        Width="{StaticResource NotificationsWindowWidth}">
     <Window.Background>
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
