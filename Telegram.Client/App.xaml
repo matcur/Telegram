@@ -47,7 +47,7 @@
                 <ResourceDictionary Source="Ui/Dictionaries/Brushes/Generic/Foreground.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/Brushes/Generic/BorderBrush.xaml"/>
                 <ResourceDictionary Source="Ui/Dictionaries/Numbers/ElementWidth.xaml"/>
-                <ResourceDictionary Source="Ui/Dictionaries/FontSize.xaml"/>
+                <ResourceDictionary Source="Ui/Dictionaries/Numbers/FontSize.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

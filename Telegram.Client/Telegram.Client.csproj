@@ -340,10 +340,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Ui\Dictionaries\FontSize.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Ui\Dictionaries\NamedStyles\Borders\Arrow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -428,6 +424,10 @@
     <Page Include="Ui\Dictionaries\NamedStyles\Thumbs\MessageListThumb.xaml" />
     <Page Include="Ui\Dictionaries\NamedStyles\Tracks\MessageTrackList.xaml" />
     <Page Include="Ui\Dictionaries\Numbers\ElementWidth.xaml" />
+    <Page Include="Ui\Dictionaries\Numbers\FontSize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Ui\UserControls\ChatPage\Body.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
