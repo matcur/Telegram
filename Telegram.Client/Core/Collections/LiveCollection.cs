@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Runtime.CompilerServices;
+using Telegram.Client.Annotations;
 using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Core.Collections
@@ -11,6 +13,8 @@ namespace Telegram.Client.Core.Collections
     public class LiveCollection<T> : ILiveCollection<T>
     {
         public event NotifyCollectionChangedEventHandler CollectionChanged = delegate{  };
+        
+        public event PropertyChangedEventHandler PropertyChanged = delegate {  };
         
         public T this[int index]
         {
@@ -41,6 +45,7 @@ namespace Telegram.Client.Core.Collections
                 item,
                 items.Count - 1
             );
+            OnPropertyChanged(nameof(Count));
         }
 
         public void AddRange(IEnumerable<T> collection)
@@ -52,6 +57,7 @@ namespace Telegram.Client.Core.Collections
                 new List<T>(collection),
                 count
             );
+            OnPropertyChanged(nameof(Count));
         }
 
         public void Clear()
@@ -62,6 +68,7 @@ namespace Telegram.Client.Core.Collections
                 items,
                 0
             );
+            OnPropertyChanged(nameof(Count));
         }
 
         public bool Contains(T item)
@@ -83,6 +90,7 @@ namespace Telegram.Client.Core.Collections
                     NotifyCollectionChangedAction.Remove,
                     item    
                 );
+                OnPropertyChanged(nameof(Count));
             }
 
             return removed;
@@ -102,6 +110,7 @@ namespace Telegram.Client.Core.Collections
                 item,
                 index    
             );
+            OnPropertyChanged(nameof(Count));
         }
 
         public void InsertRange(int index, IEnumerable<T> collection)
@@ -115,6 +124,7 @@ namespace Telegram.Client.Core.Collections
                 list,
                 index
             );
+            OnPropertyChanged(nameof(Count));
         }
 
         public void RemoveAt(int index)
@@ -133,6 +143,7 @@ namespace Telegram.Client.Core.Collections
                 AfterItems(index + 1),
                 index + 1
             );
+            OnPropertyChanged(nameof(Count));
         }
         
         public IEnumerator<T> GetEnumerator()
@@ -189,6 +200,12 @@ namespace Telegram.Client.Core.Collections
                     index
                 )
             );
+        }
+
+        [NotifyPropertyChangedInvocator]
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

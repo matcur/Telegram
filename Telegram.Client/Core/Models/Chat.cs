@@ -19,14 +19,21 @@ namespace Telegram.Client.Core.Models
         public string IconUrl { get; set; }
 
         public Message LastMessage { get; set; }
-        
+
+        public LiveCollection<Message> UnreadMessages { get; set; }
+
         public LiveCollection<Message> Messages { get; set; } = new LiveCollection<Message>();
 
         public ObservableCollection<User> Members { get; set; } = new ObservableCollection<User>();
 
         public Chat()
         {
-            Messages.CollectionChanged += delegate { OnPropertyChanged(nameof(LastMessage)); };
+            Messages.CollectionChanged += delegate
+            {
+                OnPropertyChanged(nameof(LastMessage));
+                OnPropertyChanged(nameof(UnreadMessages));
+                OnPropertyChanged(nameof(UnreadMessages.Count));
+            };
         }
     }
 }

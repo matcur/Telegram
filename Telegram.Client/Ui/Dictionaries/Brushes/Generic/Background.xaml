@@ -13,4 +13,6 @@
     <SolidColorBrush x:Key="ChatSearchBackground" Color="#242F3D"/>
     <SolidColorBrush x:Key="MessageBackground" Color="#182533"/>
     <SolidColorBrush x:Key="UserInfoMenuBackground" Color="#276899"/>
+    <SolidColorBrush x:Key="UnreadMessagesCountBackground" Color="#3E546A"/>
+    <SolidColorBrush x:Key="ActiveUnreadMessagesCountBackground" Color="#3E546A"/>
 </ResourceDictionary>

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Telegram.Client.Core.Collections;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.Contents;
 
@@ -26,6 +27,18 @@ namespace Telegram.Client.Ui.UserControls.Index
             typeof(string),
             typeof(ChatItem)
         );
+
+        public static readonly DependencyProperty UnreadMessagesProperty = DependencyProperty.Register(
+            nameof(UnreadMessages),
+            typeof(ILiveCollection<Message>),
+            typeof(ChatItem)
+        );
+
+        public ILiveCollection<Message> UnreadMessages
+        {
+            get => (ILiveCollection<Message>) GetValue(UnreadMessagesProperty);
+            set => SetValue(UnreadMessagesProperty, value);
+        }
 
         public string ChatName
         {

@@ -5,8 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Telegram.Client.Ui.UserControls.Index"
+             xmlns:designData="clr-namespace:Telegram.Client.Ui.DesignData"
              mc:Ignorable="d"
-             d:DesignHeight="80" d:DesignWidth="300" 
+             d:DesignHeight="60" d:DesignWidth="300" 
              d:DataContext="{d:DesignInstance local:ChatItem}"
              Background="Transparent">
     <Grid Height="60">
@@ -26,7 +27,7 @@
 
         <Border 
             Grid.Column="1"
-            Padding="10">
+            Padding="10 5 10 5">
             <Grid Height="60">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -59,9 +60,29 @@
                         Text=": "
                         Foreground="Aqua"/>
                     <TextBlock
-                        Text="{Binding LastMessage.Content[0].Value}"
+                        Text="{Binding LastMessage.Content[0].Value, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{StaticResource LightForeground}"
                         TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                
+                <StackPanel
+                    Grid.Row="2" Grid.Column="2"
+                    HorizontalAlignment="Right">
+                    <Border
+                        Background="{StaticResource UnreadMessagesCountBackground}"
+                        Padding="6 2"
+                        CornerRadius="22">
+                        <Border.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <Trigger Property="Selected"/>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBlock
+                            Foreground="White"
+                            Text="{Binding UnreadMessages.Count, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
                 </StackPanel>
             </Grid>
         </Border>

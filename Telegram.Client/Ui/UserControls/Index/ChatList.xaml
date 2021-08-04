@@ -22,8 +22,9 @@
             <DataTemplate>
                 <local:ChatItem
                     ChatName="{Binding Name}"
-                    LastMessage="{Binding LastMessage}"
-                    IconUrl="{Binding IconUrl}"/>
+                    LastMessage="{Binding LastMessage, UpdateSourceTrigger=PropertyChanged}"
+                    IconUrl="{Binding IconUrl}"
+                    UnreadMessages="{Binding UnreadMessages, UpdateSourceTrigger=PropertyChanged}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

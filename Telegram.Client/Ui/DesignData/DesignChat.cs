@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Telegram.Client.Core.Collections;
 using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Ui.DesignData
@@ -28,6 +29,8 @@ namespace Telegram.Client.Ui.DesignData
             }
         }
 
+        public ILiveCollection<Message> UnreadMessages => new LiveCollection<Message>(Messages); 
+
         public ObservableCollection<Message> Messages
         {
             get
@@ -48,7 +51,7 @@ namespace Telegram.Client.Ui.DesignData
                     },
                     new Message
                     { 
-                        Content = new List<Core.Models.Content>{ new Core.Models.Content { Value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim nulla non erat convallis, ut egestas nulla lacinia. Cras sollicitudin aliquet lacinia. Proin lobortis suscipit pellentesque. Sed varius eu mauris quis pellentesque. Donec id urna massa. Sed suscipit, ipsum bibendum molestie pellentesque, ante magna lacinia urna, vitae placerat lectus velit ac purus. Vivamus egestas, felis in elementum cursus, odio elit volutpat libero, et tristique ipsum dolor ut arcu. Sed molestie.", Type = textType } }, 
+                        Content = new List<Core.Models.Content>{ new Core.Models.Content { Value = "Lorem ipsum", Type = textType } }, 
                         Author = Members[0] 
                     },
                 };

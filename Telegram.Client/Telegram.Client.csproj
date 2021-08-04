@@ -200,6 +200,7 @@
     <Compile Include="Core\Collections\LiveCollection.cs" />
     <Compile Include="Core\Extensions\ListExtension.cs" />
     <Compile Include="Core\VerificationType.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Ui\Colors\ColorFromText.cs" />
     <Compile Include="Ui\Colors\IColor.cs" />
     <Compile Include="Ui\Colors\MoreLightColor.cs" />
