@@ -16,7 +16,6 @@
                 <ColumnDefinition 
                     Width="260"
                     MinWidth="260" MaxWidth="290"/>
-                <ColumnDefinition Width="3"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -28,7 +27,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                
+            
                 <Grid
                     Height="50"
                     MinWidth="260">
@@ -52,14 +51,13 @@
                     HorizontalContentAlignment="Stretch"/>
             </Grid>
             <GridSplitter
-                Grid.Column="1"
                 Width="4"
                 Background="Transparent"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Stretch"/>
             <Frame
                 x:Name="ChatFrame"
-                Grid.Column="2"
+                Grid.Column="1"
                 Background="{StaticResource ChatBackground}"
                 DataContext="{Binding}"/>
         </Grid>

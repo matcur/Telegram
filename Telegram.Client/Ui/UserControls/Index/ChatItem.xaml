@@ -72,13 +72,6 @@
                         Background="{StaticResource UnreadMessagesCountBackground}"
                         Padding="6 2"
                         CornerRadius="22">
-                        <Border.Style>
-                            <Style>
-                                <Style.Triggers>
-                                    <Trigger Property="Selected"/>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
                         <TextBlock
                             Foreground="White"
                             Text="{Binding UnreadMessages.Count, UpdateSourceTrigger=PropertyChanged}"/>
