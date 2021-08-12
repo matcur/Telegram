@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
@@ -16,13 +17,17 @@ namespace Telegram.Server.Web.Controllers.Api
 
         private readonly DbSet<User> users;
 
-        private readonly DbSet<Chat> chats;
-
         public UserController(AppDb appDb)
         {
             db = appDb;
             users = db.Users;
-            chats = db.Chats;
+        }
+
+        [Route("fuck")]
+        [Authorize]
+        public IActionResult Index1()
+        {
+            return Json(User.Identity.Name);
         }
 
         [Route("api/1.0/users")]

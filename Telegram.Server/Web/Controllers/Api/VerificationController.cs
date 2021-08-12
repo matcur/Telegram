@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
+using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Mapping;
@@ -11,6 +12,8 @@ namespace Telegram.Server.Web.Controllers.Api
     public class VerificationController : Controller
     {
         private readonly AppDb db;
+        
+        private readonly UserIdentity identity;
 
         private readonly DbSet<Chat> chats;
 
@@ -18,9 +21,10 @@ namespace Telegram.Server.Web.Controllers.Api
 
         private readonly DbSet<Code> codes;
 
-        public VerificationController(AppDb db)
+        public VerificationController(AppDb db, UserIdentity identity)
         {
             this.db = db;
+            this.identity = identity;
             this.chats = db.Chats;
             this.phones = db.Phones;
             this.codes = db.Codes;
@@ -70,15 +74,23 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/verification/check-code")]
-        public IActionResult CheckCode([FromQuery]VerificatingCode code)
+        public IActionResult CheckCode([FromQuery]string value, [FromQuery]int userId)
         {
-            if (codes.Any(
-                c => code.Value == c.Value &&
-                c.UserId == code.UserId &&
-                !c.Entered
-            ))
+            if (identity.IsValid(value, userId))
             {
                 return Json(new RequestResult(true, true));
+            }
+
+            return Json(new RequestResult(true, false));
+        }
+
+        [HttpGet]
+        [Route("api/1.0/verification/authorization-token")]
+        public IActionResult AuthorizationToken([FromQuery]string value, [FromQuery]int userId)
+        {
+            if (identity.IsValid(value, userId))
+            {
+                return Json(new RequestResult(true, new {Token = identity.Token(userId)}));
             }
 
             return Json(new RequestResult(true, false));

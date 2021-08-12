@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Media;
 using Telegram.Client.Core.Models;
 
 namespace Telegram.Client.Api.Auth
@@ -10,5 +11,7 @@ namespace Telegram.Client.Api.Auth
         Task<RequestResult> FromTelegram(Phone phone);
 
         Task<bool> CheckCode(Code code);
+
+        // Todo Task<RequestResult<string>> AuthorizationToken(Code code);
     }
 }

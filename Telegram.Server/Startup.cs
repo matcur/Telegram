@@ -9,11 +9,17 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Telegram.Server.Core.Db;
 using Newtonsoft.Json;
+using Telegram.Server.Core.Auth;
+using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server
@@ -29,6 +35,20 @@ namespace Telegram.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = AuthorizationOptions.Issuer,
+                            ValidateAudience = true,
+                            ValidAudience = AuthorizationOptions.Audience,
+                            ValidateLifetime = true,
+                            IssuerSigningKey = AuthorizationOptions.SecurityKey,
+                        };
+                    });
             services.AddControllersWithViews()
                     .AddNewtonsoftJson(options => 
                     {
@@ -36,6 +56,18 @@ namespace Telegram.Server
                     });
             services.AddDbContext<AppDb>();
             services.AddSignalR();
+
+            services.AddTransient<ISecurityToken>(services =>
+            {
+                var token = new TelegramToken(
+                    AuthorizationOptions.Issuer,
+                    AuthorizationOptions.Audience,
+                    AuthorizationOptions.LifeTimeMinutes
+                );
+
+                return new EncodedToken(token, new JwtSecurityTokenHandler());
+            });
+            services.AddTransient<UserIdentity>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,6 +79,9 @@ namespace Telegram.Server
 
             app.UseStaticFiles();
             app.UseRouting();
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
