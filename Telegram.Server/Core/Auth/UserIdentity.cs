@@ -53,8 +53,8 @@ namespace Telegram.Server.Core.Auth
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, phone.Number),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, "SimpleUser")
+                new Claim(ClaimsIdentity.DefaultNameClaimType, phone.OwnerId.ToString()),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, "simpleUser")
             };
             
             return new ClaimsIdentity(
