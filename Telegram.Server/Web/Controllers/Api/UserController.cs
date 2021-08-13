@@ -38,25 +38,27 @@ namespace Telegram.Server.Web.Controllers.Api
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/1.0/users/{id:int}/chats")]
         public IActionResult Chats(int id, int count)
         {
-            var result = users.Where(u => u.Id == id)
-                              .Include(u => u.Chats)
-                              .ThenInclude(c => c.Messages)
-                              .ThenInclude(m => m.Author)
-                              .Include(u => u.Chats)
-                              .ThenInclude(c => c.Messages)
-                              .ThenInclude(m => m.Content)
-                              .Select(u => u.Chats.Select(c => new Chat
-                              {
-                                  Id = c.Id,
-                                  Name = c.Name,
-                                  Description = c.Description,
-                                  LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
-                                  IconUrl = c.IconUrl,
-                              }))
-                              .First();
+            var result = users
+                .Where(u => u.Id == id)
+                .Include(u => u.Chats)
+                .ThenInclude(c => c.Messages)
+                .ThenInclude(m => m.Author)
+                .Include(u => u.Chats)
+                .ThenInclude(c => c.Messages)
+                .ThenInclude(m => m.Content)
+                .Select(u => u.Chats.Select(c => new Chat
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
+                    IconUrl = c.IconUrl,
+                }))
+                .First();
 
             return Json(new RequestResult(true, result));
         }
