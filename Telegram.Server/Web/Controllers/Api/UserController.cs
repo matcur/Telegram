@@ -23,19 +23,6 @@ namespace Telegram.Server.Web.Controllers.Api
             users = db.Users;
         }
 
-        [Route("fuck")]
-        [Authorize]
-        public IActionResult Index1()
-        {
-            return Json(User.Identity.Name);
-        }
-
-        [Route("api/1.0/users")]
-        public IActionResult Index()
-        {
-            return Json(new { Users = users.ToList() });
-        }
-
         [HttpGet]
         [Route("api/1.0/users/{id}")]
         public IActionResult Find(int id)

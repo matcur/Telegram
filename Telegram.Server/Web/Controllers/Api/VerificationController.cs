@@ -95,12 +95,5 @@ namespace Telegram.Server.Web.Controllers.Api
 
             return Json(new RequestResult(true, false));
         }
-
-        [HttpGet]
-        [Route("api/1.0/codes")]
-        public IActionResult Codes()
-        {
-            return Json(codes.ToList());
-        }
     }
 }
