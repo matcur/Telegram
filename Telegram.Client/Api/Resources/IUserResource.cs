@@ -6,6 +6,6 @@ namespace Telegram.Client.Api.Resources
 {
     public interface IUserResource
     {
-        Task<RequestResult<List<Chat>>> Chats(int count);
+        Task<IEnumerable<Chat>> Chats(int count);
     }
 }

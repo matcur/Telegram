@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Api.Auth;
 using Telegram.Client.Api.Fake.Auth;
@@ -12,7 +13,8 @@ namespace Telegram.Client.Ui.ViewModels
 {
     public class CodeVerificationViewModel : ViewModel
     {
-        public event Action<User> Logged = delegate {  };
+        // Action get logged user and authorization token
+        public event Action<User, string> Logged = delegate {  };
         
         public string WrongCodeMessage 
         { 
@@ -49,24 +51,33 @@ namespace Telegram.Client.Ui.ViewModels
             {VerificationType.Phone, "A code was sent to your phone."}
         };
 
-        public CodeVerificationViewModel(Phone phone, VerificationType type)
+        public CodeVerificationViewModel(
+            Phone phone,
+            VerificationType type,
+            IVerification verification,
+            IUsersResource users
+        )
         {
             Title = titles[type];
             Phone = phone;
             EnteredCode = new Code(phone);
 
-            verification = new FakeVerification();
-            users = new FakeUsers();
+            this.verification = verification;
+            this.users = users;
         }
 
         private async void In()
         {
             WrongCodeMessage = "";
-            if (await verification.CheckCode(EnteredCode) || true)
+            if (await verification.CheckCode(EnteredCode))
             {
-                var response = await users.Find(Phone);
+                var tokenTask = verification.AuthorizationToken(EnteredCode);
+                var userTask = users.Find(Phone);
+
+                var user = (await userTask).Result;
+                var token = (await tokenTask).Result;
                 
-                Logged.Invoke(response.Result);
+                Logged.Invoke(user, token);
 
                 return;
             }

@@ -12,10 +12,15 @@ namespace Telegram.Client.Api.Fake
 
         private readonly string url = host + "api/";
 
-        private readonly HttpClient client = new HttpClient();
+        private readonly HttpClient client;
 
-        public FakeClient(string version = "1.0")
+        public FakeClient(string version = "1.0") : this(new HttpClient(), version)
         {
+        }
+
+        public FakeClient(HttpClient client, string version = "1.0")
+        {
+            this.client = client;
             url += version + "/";
         }
 
@@ -31,6 +36,11 @@ namespace Telegram.Client.Api.Fake
             var response = await client.PostAsync(url + resource, body);
 
             return await response.Content.ReadAsStringAsync();
+        }
+
+        public void AddHeader(string key, string value)
+        {
+            client.DefaultRequestHeaders.Add(key, value);            
         }
     }
 }

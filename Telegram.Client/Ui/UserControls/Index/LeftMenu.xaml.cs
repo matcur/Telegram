@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Telegram.Client.Api.Fake.Resources;
+using Telegram.Client.Api.Resources;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.UserControls.Forms;
 using Telegram.Client.Ui.UserControls.Icons;
@@ -38,7 +39,7 @@ namespace Telegram.Client.Ui.UserControls.Index
                         "New Group",
                         new Loupe(),
                         () => upLayer.CenterElement = new NewGroupForm(
-                            new FakeChats()
+                            chats
                         )
                     ),
                     new MenuItem("New Channel", new Loupe()),
@@ -51,10 +52,13 @@ namespace Telegram.Client.Ui.UserControls.Index
         }
 
         private readonly UpLayer upLayer;
+        
+        private readonly IChatsResource chats;
 
-        public LeftMenu(UpLayer upLayer)
+        public LeftMenu(UpLayer upLayer, IChatsResource chats)
         {
             this.upLayer = upLayer;
+            this.chats = chats;
             DataContext = this;
             InitializeComponent();
         }

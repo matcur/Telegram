@@ -6,11 +6,11 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public partial class FakePhones : ApiResource, IPhonesResource
     {
-        private readonly FakeClient api;
+        private readonly IApiClient api;
 
-        public FakePhones()
+        public FakePhones(IApiClient api)
         {
-            api = new FakeClient();
+            this.api = api;
         }
 
         public async Task<bool> Exists(string number)

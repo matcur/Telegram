@@ -5,11 +5,11 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeCodes : ApiResource, ICodesResource
     {
-        private readonly FakeClient api;
+        private readonly IApiClient api;
 
-        public FakeCodes()
+        public FakeCodes(IApiClient api)
         {
-            api = new FakeClient();
+            this.api = api;
         }
 
         public async Task Add(int userId)

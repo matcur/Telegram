@@ -11,19 +11,19 @@ namespace Telegram.Client.Api.Fake.Resources
 
         private readonly User user;
 
-        public FakeUser(User user)
+        public FakeUser(User user, IApiClient api)
         {
-            api = new FakeClient();
             this.user = user;
+            this.api = api;
         }
 
-        public async Task<RequestResult<List<Chat>>> Chats(int count)
+        public async Task<IEnumerable<Chat>> Chats(int count)
         {
             var response = await api.Get(
-                $"users/{user.Id}/chats?count={count}"
+                $"authorized-user/chats?count={count}"
             );
 
-            return Deserialize<List<Chat>>(response);
+            return Deserialize<List<Chat>>(response).Result;
         }
     }
 }

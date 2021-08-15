@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using Microsoft.AspNetCore.SignalR.Client;
 using Telegram.Client.Api.Fake.Sockets;
+using Telegram.Client.Api.Resources;
 using Telegram.Client.Api.Sockets;
 using Telegram.Client.Core.Models;
 using Telegram.Client.Ui.UserControls.ChatPage;
@@ -27,11 +28,11 @@ namespace Telegram.Client.Ui.Pages
 
         private readonly ChatViewModel viewModel;
         
-        public ChatPage(Chat chat, User currentUser, IChatSocket socket)
+        public ChatPage(Chat chat, User currentUser, IChatSocket socket, IChatResource chatResource)
         {
             this.chat = chat;
             this.socket = socket;
-            viewModel = new ChatViewModel(chat, socket);
+            viewModel = new ChatViewModel(chat, socket, chatResource);
             DataContext = viewModel;
 
             InitializeComponent();

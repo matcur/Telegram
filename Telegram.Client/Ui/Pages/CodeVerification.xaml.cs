@@ -1,5 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Net.Http;
+using System.Windows.Controls;
 using Telegram.Client.Api.Auth;
+using Telegram.Client.Api.Fake;
 using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Api.Resources;
 using Telegram.Client.Core;
@@ -26,13 +28,22 @@ namespace Telegram.Client.Ui.Pages
             InitializeComponent();
         }
 
-        private void ToIndex(User user)
+        private void ToIndex(User user, string authorizationToken)
         {
+            var api = new FakeClient(
+                new HttpClient
+                {
+                    DefaultRequestHeaders = {{"Authorization", $"Bearer {authorizationToken}"}}
+                }
+            );
+            
             navigation.To(
                 new Index(
                     user,
-                    new FakeChats()
-                )    
+                    new FakeUser(user, api),
+                    new FakeChats(api),
+                    chat => new FakeChat(chat, api)
+                )
             );
         }
     }

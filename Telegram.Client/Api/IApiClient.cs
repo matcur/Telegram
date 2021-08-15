@@ -10,5 +10,7 @@ namespace Telegram.Client.Api
         Task<string> Get(string resource);
 
         Task<string> Post(string resource, HttpContent body);
+
+        void AddHeader(string key, string value);
     }
 }

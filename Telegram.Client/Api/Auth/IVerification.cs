@@ -12,6 +12,6 @@ namespace Telegram.Client.Api.Auth
 
         Task<bool> CheckCode(Code code);
 
-        // Todo Task<RequestResult<string>> AuthorizationToken(Code code);
+        Task<RequestResult<string>> AuthorizationToken(Code code);
     }
 }

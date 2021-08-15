@@ -39,7 +39,6 @@ namespace Telegram.Server.Web.Controllers.Api
         }
 
         [HttpGet]
-        [Authorize("admin")]
         [Route("api/1.0/users/{id:int}/chats")]
         public IActionResult Chats(int id, [FromQuery]int count, [FromQuery]int offset = 0)
         {

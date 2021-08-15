@@ -10,11 +10,11 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeChats : ApiResource, IChatsResource
     {
-        private readonly FakeClient api;
+        private readonly IApiClient api;
 
-        public FakeChats()
+        public FakeChats(IApiClient api)
         {
-            api = new FakeClient();
+            this.api = api;
         }
 
         public async Task<RequestResult> Add(string name, string description, FileStream icon)

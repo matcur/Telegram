@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Telegram.Client.Api.Fake;
 using Telegram.Client.Api.Fake.Auth;
 using Telegram.Client.Api.Fake.Resources;
 using Telegram.Client.Core;
@@ -22,13 +23,19 @@ namespace Telegram.Client.Ui.Pages
 
         private void GoToLogin(object sender, RoutedEventArgs e)
         {
+            var api = new FakeClient();
+            var users = new FakeUsers(api);
+            var verification = new FakeVerification(api);
+            
             navigation.To(
                 new Login(
                     new LoginViewModel(
-                        new FakeUsers(),
-                        new FakePhones(),
-                        new FakeVerification()
-                    )    
+                        users,
+                        new FakePhones(api),
+                        verification
+                    ),
+                    verification,
+                    users
                 )
             );
         }

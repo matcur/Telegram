@@ -8,15 +8,15 @@
 
         public T Result { get; set; }
 
-        public RequestResult(bool success, string errorMessage = "")
+        public RequestResult(bool success, string errorMessage = "") 
+            : this(success, default(T), errorMessage)
+        {
+        }
+
+        public RequestResult(bool success, T result, string errorMessage = "")
         {
             Success = success;
             ErrorMessage = errorMessage;
-        }
-        
-        public RequestResult(bool success, T result)
-        {
-            Success = success;
             Result = result;
         }
     }

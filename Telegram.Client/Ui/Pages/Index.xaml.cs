@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,19 +25,31 @@ namespace Telegram.Client.Ui.Pages
         
         private readonly User currentUser;
         
+        private readonly IChatsResource chatsResource;
+
         private readonly Connections<IChatSocket> chatSockets = new Connections<IChatSocket>(
             () => new FakeChatSocket(new HubConnectionBuilder())
         );
 
-        public Index() : this(new User{Id = 1, FirstName = "fuck"}, new FakeChats())
+        public Index(
+            IUserResource userResource,
+            IChatsResource chatsResource,
+            Func<Chat, IChatResource> chatFactory
+        ) : this(new User{Id = 1, FirstName = "fuck"}, userResource, chatsResource, chatFactory)
         {
             
         }
 
-        public Index(User current, IChatsResource chatsResource)
+        public Index(
+            User current,
+            IUserResource userResource,
+            IChatsResource chatsResource, 
+            Func<Chat, IChatResource> chatFactory
+        )
         {
+            this.chatsResource = chatsResource;
             currentUser = current;
-            viewModel = new IndexViewModel(chatSockets, chatsResource);
+            viewModel = new IndexViewModel(userResource, chatSockets, chatFactory);
             viewModel.PropertyChanged += OnChatSelected;
             viewModel.BurgerIsClicked += ShowLeftMenu;
             DataContext = viewModel;
@@ -46,7 +59,7 @@ namespace Telegram.Client.Ui.Pages
 
         private void ShowLeftMenu()
         {
-            UpLayer.LeftElement = new LeftMenu(UpLayer);
+            UpLayer.LeftElement = new LeftMenu(UpLayer, chatsResource);
         }
 
         private void OnChatSelected(object sender, PropertyChangedEventArgs e)
@@ -62,7 +75,7 @@ namespace Telegram.Client.Ui.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await viewModel.LoadChats(currentUser);
+            await viewModel.LoadChats();
         }
     }
 }

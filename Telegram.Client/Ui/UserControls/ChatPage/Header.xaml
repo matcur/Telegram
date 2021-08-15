@@ -34,7 +34,7 @@
             <TextBlock
                 Foreground="{StaticResource LightForeground}"
                 FontSize="{StaticResource NormalFontSize}"
-                Text="{Binding Chat.Name}"/>
+                Text="{Binding Name}"/>
             <StackPanel 
                 Grid.Row="1"
                 Orientation="Horizontal">

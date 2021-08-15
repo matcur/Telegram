@@ -9,7 +9,7 @@ namespace Telegram.Client.Ui.ViewModels
 {
     public class LoginViewModel : ViewModel
     {
-        public event Action<Phone, VerificationType> Verificating = delegate {  };
+        public event Action<Phone, VerificationType> Verificated = delegate {  };
 
         public RelayCommand VerificationCommand => 
             new RelayCommand(o => Verify(Phone));
@@ -31,23 +31,23 @@ namespace Telegram.Client.Ui.ViewModels
 
         private async void Verify(Phone phone)
         {
-            var response = await phones.Find(phone);
-            if (response.Success)
+            var phoneResponse = await phones.Find(phone);
+            if (phoneResponse.Success)
             {
-                Verificating.Invoke(
-                    phone,
+                Verificated.Invoke(
+                    phoneResponse.Result,
                     VerificationType.Telegram
                 );
                 await verification.FromTelegram(phone);
                 
                 return;
             }
-            
-            Verificating.Invoke(
-                phone,
+
+            var userResponse = await users.Register(phone);
+            Verificated.Invoke(
+                userResponse.Result.Phone,
                 VerificationType.Phone
             );
-            await users.Register(phone);
             await verification.ByPhone(phone);
         }
     }

@@ -16,11 +16,17 @@ namespace Telegram.Client.Ui.Pages
     /// </summary>
     public partial class Login : Page
     {
+        private readonly IVerification verification;
+        
+        private readonly IUsersResource users;
+        
         private Navigation navigation;
         
-        public Login(LoginViewModel viewModel)
+        public Login(LoginViewModel viewModel, IVerification verification, IUsersResource users)
         {
-            viewModel.Verificating += ToCodeVerification;
+            this.verification = verification;
+            this.users = users;
+            viewModel.Verificated += ToCodeVerification;
             DataContext = viewModel;
             InitializeComponent();
         }
@@ -36,7 +42,9 @@ namespace Telegram.Client.Ui.Pages
                 new CodeVerification(
                     new CodeVerificationViewModel(
                         phone,
-                        type
+                        type,
+                        verification,
+                        users
                     ),
                     navigation
                 )

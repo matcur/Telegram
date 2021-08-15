@@ -15,12 +15,8 @@ namespace Telegram.Client.Ui.ViewModels
         public RelayCommand AddMessageCommand => new RelayCommand(
             message =>
             {
-                AddMessage((Message)message);
+                AddNewMessage((Message)message);
             }
-        );
-
-        public RelayCommand UpdateMessageCommand => new RelayCommand(
-            message => messagesResource.Update((Message)message)
         );
 
         public RelayCommand SendMessageCommand { get; set; }
@@ -29,13 +25,10 @@ namespace Telegram.Client.Ui.ViewModels
 
         private readonly IChatResource chatResource;
 
-        private readonly IMessagesResource messagesResource;
-
-        public ChatViewModel(Chat chat, IChatSocket socket)
+        public ChatViewModel(Chat chat, IChatSocket socket, IChatResource chatResource)
         {
             Chat = chat;
-            messagesResource = new FakeMessages();
-            chatResource = new FakeChat(chat);
+            this.chatResource = chatResource;
             chatSocket = socket;
             SendMessageCommand = AddMessageCommand;
             socket.OnReceiveMessage(OnReceiveMessage);
@@ -70,11 +63,10 @@ namespace Telegram.Client.Ui.ViewModels
             if (chatId == Chat.Id)
             {
                 Chat.Messages.Add(message);
-                
             }
         }
 
-        private void AddMessage(Message message)
+        private void AddNewMessage(Message message)
         {
             chatResource.AddMessage(message);
             chatSocket.Emit(Chat.Id, message);

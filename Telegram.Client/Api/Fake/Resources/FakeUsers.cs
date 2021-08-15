@@ -6,11 +6,11 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeUsers : ApiResource, IUsersResource
     {
-        private readonly FakeClient api;
+        private readonly IApiClient api;
 
-        public FakeUsers()
+        public FakeUsers(IApiClient api)
         {
-            api = new FakeClient();
+            this.api = api;
         }
 
         public async Task<RequestResult<User>> Register(User user)

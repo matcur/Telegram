@@ -11,10 +11,10 @@ namespace Telegram.Client.Api.Fake.Resources
 
         private readonly Chat chat;
 
-        public FakeChat(Chat chat)
+        public FakeChat(Chat chat, IApiClient api)
         {
-            api = new FakeClient();
             this.chat = chat;
+            this.api = api;
         }
 
         public async Task<RequestResult> AddMessage(Message message)

@@ -14,7 +14,6 @@ namespace Telegram.Client.Ui.ViewModels
 {
     public class IndexViewModel : ViewModel
     {
-        private readonly IChatsResource chatsResource;
         public event Action BurgerIsClicked = delegate {  };
         
         public Chat SelectedChat
@@ -39,33 +38,42 @@ namespace Telegram.Client.Ui.ViewModels
 
         private readonly IConnectionSource<IChatSocket> chatSockets;
         
-        public IndexViewModel(IConnectionSource<IChatSocket> chatSockets, IChatsResource resource)
-            : this(new ChatSearch(new List<Chat>()), chatSockets, resource)
+        private readonly IUserResource currentUser;
+        
+        private readonly Func<Chat, IChatResource> chatFactory;
+
+        public IndexViewModel(
+            IUserResource currentUser,
+            IConnectionSource<IChatSocket> chatSockets,
+            Func<Chat, IChatResource> chatFactory
+        ) : this(currentUser, chatSockets, chatFactory, new ChatSearch(new List<Chat>()))
         {
         }
 
         public IndexViewModel(
-            Search<ObservableCollection<Chat>> chatSearch,
+            IUserResource currentUser,
             IConnectionSource<IChatSocket> sockets,
-            IChatsResource resource
+            Func<Chat, IChatResource> chatFactory,
+            Search<ObservableCollection<Chat>> chatSearch
         )
         {
-            chatsResource = resource;
+            this.currentUser = currentUser;
+            this.chatFactory = chatFactory;
             chatSockets = sockets;
             ChatSearch = chatSearch;
             InitializeCommands();
         }
 
-        public async Task LoadChats(User user)
+        public async Task LoadChats()
         {
             ChatSearch.AddItems(
                 new ObservableCollection<Chat>(
-                    await chatsResource.Iterate(user, 20)
+                    await currentUser.Chats(20)
                 )
             );
         }
 
-        public ChatPage ChatPage(Chat chat, User currentUser)
+        public ChatPage ChatPage(Chat chat, User user)
         {
             var id = chat.Id;
             if (chatPages.ContainsKey(id))
@@ -73,7 +81,12 @@ namespace Telegram.Client.Ui.ViewModels
                 return chatPages[id];
             }
 
-            return chatPages[id] = new ChatPage(chat, currentUser, chatSockets.New());
+            return chatPages[id] = new ChatPage(
+                chat,
+                user,
+                chatSockets.New(),
+                chatFactory.Invoke(chat)
+            );
         }
 
         private void InitializeCommands()

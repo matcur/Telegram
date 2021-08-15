@@ -90,7 +90,7 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             if (identity.IsValid(value, userId))
             {
-                return Json(new RequestResult(true, new {Token = identity.Token(userId)}));
+                return Json(new RequestResult<string>(true, identity.Token(userId), ""));
             }
 
             return Json(new RequestResult(true, false));

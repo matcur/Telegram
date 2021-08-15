@@ -77,6 +77,6 @@
         <Frame 
             Grid.Row="1"
             NavigationUIVisibility="Hidden" 
-            Source="Ui/Pages/Index.xaml"/>
+            Source="Ui/Pages/Start.xaml"/>
     </Grid>
 </Window>
