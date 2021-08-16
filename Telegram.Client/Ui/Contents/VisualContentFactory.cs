@@ -7,7 +7,7 @@ namespace Telegram.Client.Ui.Contents
     // TODO
     public class VisualContentFactory
     {
-        private readonly Dictionary<ContentType, Func<Content, IContent>> contents
+        private readonly Dictionary<ContentType, Func<Content, IContent>> _contents
             = new Dictionary<ContentType, Func<Content, IContent>>
             {
                 { ContentType.Text, content => new TextContent(content.Value) }, 
@@ -18,18 +18,18 @@ namespace Telegram.Client.Ui.Contents
 
         public VisualContentFactory(Dictionary<ContentType, Func<Content, IContent>> contents)
         {
-            this.contents = contents;
+            _contents = contents;
         }
 
         public IContent From(Content content)
         {
             var type = content.Type;
-            if (!contents.ContainsKey(type))
+            if (!_contents.ContainsKey(type))
             {
                 throw new Exception($"Can't create content from {type}");
             }
 
-            return contents[type](content);
+            return _contents[type](content);
         }
     }
 }

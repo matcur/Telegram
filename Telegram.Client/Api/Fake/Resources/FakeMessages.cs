@@ -6,16 +6,16 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeMessages : ApiResource, IMessagesResource
     {
-        private IApiClient api;
+        private IApiClient _api;
 
         public FakeMessages(IApiClient api)
         {
-            this.api = api;
+            _api = api;
         }
 
         public async Task Update(Message message)
         {
-            await api.Post($"messages/{message.Id}/update", Serialize(message));
+            await _api.Post($"messages/{message.Id}/update", Serialize(message));
         }
     }
 }

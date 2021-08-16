@@ -9,21 +9,21 @@ namespace Telegram.Server.Web.Controllers.Api
 {
     public class PhoneController : Controller
     {
-        private readonly AppDb db;
+        private readonly AppDb _db;
 
-        private readonly DbSet<Phone> phones;
+        private readonly DbSet<Phone> _phones;
 
         public PhoneController(AppDb db)
         {
-            this.db = db;
-            this.phones = db.Phones;
+            _db = db;
+            _phones = db.Phones;
         }
 
         [HttpGet]
         [Route("api/1.0/phones/{number}/exists")]
         public IActionResult Exists(string number)
         {
-            var result = phones.Any(p => p.Number == number);
+            var result = _phones.Any(p => p.Number == number);
 
             return Json(new RequestResult(true, result));
         }
@@ -31,7 +31,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/phones/{number}")]
         public IActionResult Find(string number)
         {
-            var result = phones.FirstOrDefault(p => p.Number == number);
+            var result = _phones.FirstOrDefault(p => p.Number == number);
             if (result == null)
             {
                 return Json(

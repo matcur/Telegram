@@ -7,11 +7,11 @@ namespace Telegram.Server.Core.Auth.Security
 {
     public class TelegramToken : ISecurityToken
     {
-        private readonly string issuer;
+        private readonly string _issuer;
         
-        private readonly string audience;
+        private readonly string _audience;
 
-        private readonly TimeSpan expires;
+        private readonly TimeSpan _expires;
 
         public TelegramToken(string issuer, string audience, int minutes)
             : this(issuer, audience, TimeSpan.FromMinutes(minutes))
@@ -20,9 +20,9 @@ namespace Telegram.Server.Core.Auth.Security
 
         public TelegramToken(string issuer, string audience, TimeSpan expires)
         {
-            this.issuer = issuer;
-            this.audience = audience;
-            this.expires = expires;
+            _issuer = issuer;
+            _audience = audience;
+            _expires = expires;
         }
 
         public SecurityToken From(ClaimsIdentity claimsIdentity)
@@ -30,11 +30,11 @@ namespace Telegram.Server.Core.Auth.Security
             var now = DateTime.Now;
 
             return new JwtSecurityToken(
-                issuer,
-                audience,
+                _issuer,
+                _audience,
                 claimsIdentity.Claims,
                 now,
-                now.Add(expires),
+                now.Add(_expires),
                 new SigningCredentials(
                     AuthorizationOptions.SecurityKey, SecurityAlgorithms.HmacSha256
                 )

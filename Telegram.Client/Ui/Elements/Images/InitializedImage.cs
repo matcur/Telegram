@@ -6,11 +6,11 @@ namespace Telegram.Client.Ui.Elements.Images
 {
     public class InitializedImage : IImage
     {
-        private readonly Uri uri;
+        private readonly Uri _uri;
 
         public InitializedImage(Uri uri)
         {
-            this.uri = uri;
+            _uri = uri;
         }
 
         public Image VisualPresentation
@@ -21,7 +21,7 @@ namespace Telegram.Client.Ui.Elements.Images
                 var bitmap = new BitmapImage();
                 
                 bitmap.BeginInit();
-                bitmap.UriSource = uri;
+                bitmap.UriSource = _uri;
                 bitmap.EndInit();
 
                 result.Source = bitmap;

@@ -10,29 +10,29 @@ namespace Telegram.Client.Ui.Elements.Images
         {
             get
             {
-                var halfWidth = image.Width / 2;
-                var halfHeight = image.Height / 2;
+                var halfWidth = _image.Width / 2;
+                var halfHeight = _image.Height / 2;
                 
-                image.Clip = new EllipseGeometry(
+                _image.Clip = new EllipseGeometry(
                     new Point(halfWidth, halfHeight),
                     halfWidth,
                     halfHeight
                 );
 
-                return image;
+                return _image;
             }
         }
 
-        private readonly Image image;
+        private readonly Image _image;
 
         public CircleImage(Image image)
         {
-            this.image = image;
+            _image = image;
         }
 
         public CircleImage(IImage image)
         {
-            this.image = image.VisualPresentation;
+            _image = image.VisualPresentation;
         }
     }
 }

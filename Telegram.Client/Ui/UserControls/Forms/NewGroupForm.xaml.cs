@@ -13,15 +13,15 @@ namespace Telegram.Client.Ui.UserControls.Forms
 {
     public partial class NewGroupForm : UserControl
     {
-        private readonly GroupForm form;
+        private readonly GroupForm _form;
 
-        private readonly IChatsResource chats;
+        private readonly IChatsResource _chats;
         
         public NewGroupForm(IChatsResource chats)
         {
-            this.chats = chats;
+            _chats = chats;
             InitializeComponent();
-            form = new GroupForm(
+            _form = new GroupForm(
                 new Input(
                     ImageInput,
                     new NotEmpty()
@@ -39,12 +39,12 @@ namespace Telegram.Client.Ui.UserControls.Forms
 
         private void TryCreate(object sender, RoutedEventArgs e)
         {
-            if (!form.IsValid())
+            if (!_form.IsValid())
             {
                 return;
             }
 
-            chats.Add(
+            _chats.Add(
                 NameInput.Value,
                 DescriptionInput.Value,
                 File.Open(ImageInput.Value, FileMode.Open)

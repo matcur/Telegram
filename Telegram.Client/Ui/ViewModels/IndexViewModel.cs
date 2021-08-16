@@ -18,10 +18,10 @@ namespace Telegram.Client.Ui.ViewModels
         
         public Chat SelectedChat
         {
-            get => selectedChat;
+            get => _selectedChat;
             set
             {
-                selectedChat = value;
+                _selectedChat = value;
                 OnPropertyChanged(nameof(SelectedChat));
             }
         }
@@ -32,15 +32,15 @@ namespace Telegram.Client.Ui.ViewModels
 
         public RelayCommand ShowLeftMenuCommand { get; set; }
 
-        private Chat selectedChat;
+        private Chat _selectedChat;
 
-        private readonly Dictionary<int, ChatPage> chatPages = new Dictionary<int, ChatPage>();
+        private readonly Dictionary<int, ChatPage> _chatPages = new Dictionary<int, ChatPage>();
 
-        private readonly IConnectionSource<IChatSocket> chatSockets;
+        private readonly IConnectionSource<IChatSocket> _chatSockets;
         
-        private readonly IUserResource currentUser;
+        private readonly IUserResource _currentUser;
         
-        private readonly Func<Chat, IChatResource> chatFactory;
+        private readonly Func<Chat, IChatResource> _chatFactory;
 
         public IndexViewModel(
             IUserResource currentUser,
@@ -57,9 +57,9 @@ namespace Telegram.Client.Ui.ViewModels
             Search<ObservableCollection<Chat>> chatSearch
         )
         {
-            this.currentUser = currentUser;
-            this.chatFactory = chatFactory;
-            chatSockets = sockets;
+            _currentUser = currentUser;
+            _chatFactory = chatFactory;
+            _chatSockets = sockets;
             ChatSearch = chatSearch;
             InitializeCommands();
         }
@@ -68,7 +68,7 @@ namespace Telegram.Client.Ui.ViewModels
         {
             ChatSearch.AddItems(
                 new ObservableCollection<Chat>(
-                    await currentUser.Chats(20)
+                    await _currentUser.Chats(20)
                 )
             );
         }
@@ -76,16 +76,16 @@ namespace Telegram.Client.Ui.ViewModels
         public ChatPage ChatPage(Chat chat, User user)
         {
             var id = chat.Id;
-            if (chatPages.ContainsKey(id))
+            if (_chatPages.ContainsKey(id))
             {
-                return chatPages[id];
+                return _chatPages[id];
             }
 
-            return chatPages[id] = new ChatPage(
+            return _chatPages[id] = new ChatPage(
                 chat,
                 user,
-                chatSockets.New(),
-                chatFactory.Invoke(chat)
+                _chatSockets.New(),
+                _chatFactory.Invoke(chat)
             );
         }
 

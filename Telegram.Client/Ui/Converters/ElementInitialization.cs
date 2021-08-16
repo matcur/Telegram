@@ -6,16 +6,16 @@ namespace Telegram.Client.Ui.Converters
 {
     public class ElementInitialization : IValueConverter
     {
-        private readonly Func<object> initialization;
+        private readonly Func<object> _initialization;
 
         public ElementInitialization(Func<object> initialization)
         {
-            this.initialization = initialization;
+            _initialization = initialization;
         }
         
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return initialization();
+            return _initialization();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

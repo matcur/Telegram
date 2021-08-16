@@ -8,45 +8,45 @@ namespace Telegram.Client.Ui.Elements.Images
         {
             get
             {
-                var height = image.Height;
-                if (height > maxHeight)
+                var height = _image.Height;
+                if (height > _maxHeight)
                 {
                     CastToHeight(height);
                 }
 
-                var width = image.Width;
-                if (width > maxWidth)
+                var width = _image.Width;
+                if (width > _maxWidth)
                 {
                     CastToWidth(width);
                 }
 
-                return image;
+                return _image;
             }
         }
 
-        private readonly double maxWidth;
+        private readonly double _maxWidth;
         
-        private readonly double maxHeight;
+        private readonly double _maxHeight;
 
-        private readonly Image image;
+        private readonly Image _image;
 
         public ScaledImage(IImage image, double maxWidth, double maxHeight)
         {
-            this.image = image.VisualPresentation;
-            this.maxWidth = maxWidth;
-            this.maxHeight = maxHeight;
+            _image = image.VisualPresentation;
+            _maxWidth = maxWidth;
+            _maxHeight = maxHeight;
         }
 
         private void CastToWidth(double width)
         {
-            image.Height *= width / maxWidth;
-            image.Width = maxWidth;
+            _image.Height *= width / _maxWidth;
+            _image.Width = _maxWidth;
         }
 
         private void CastToHeight(double height)
         {
-            image.Width *= height / maxHeight;
-            image.Height = maxHeight;
+            _image.Width *= height / _maxHeight;
+            _image.Height = _maxHeight;
         }
     }
 }

@@ -11,30 +11,27 @@ namespace Telegram.Server.Web.Controllers.Api
 {
     public class VerificationController : Controller
     {
-        private readonly AppDb db;
+        private readonly AppDb _db;
         
-        private readonly UserIdentity identity;
+        private readonly UserIdentity _identity;
 
-        private readonly DbSet<Chat> chats;
+        private readonly DbSet<Phone> _phones;
 
-        private readonly DbSet<Phone> phones;
-
-        private readonly DbSet<Code> codes;
+        private readonly DbSet<Code> _codes;
 
         public VerificationController(AppDb db, UserIdentity identity)
         {
-            this.db = db;
-            this.identity = identity;
-            this.chats = db.Chats;
-            this.phones = db.Phones;
-            this.codes = db.Codes;
+            _db = db;
+            _identity = identity;
+            _phones = db.Phones;
+            _codes = db.Codes;
         }
 
         [HttpPost]
         [Route("api/1.0/verification/by-phone")]
         public IActionResult ByPhone([FromBody]PhoneMap map)
         {
-            var phone = phones.FirstOrDefault(p => p.Number == map.Number);
+            var phone = _phones.FirstOrDefault(p => p.Number == map.Number);
             if (phone == null)
             {
                 return Json(
@@ -45,8 +42,8 @@ namespace Telegram.Server.Web.Controllers.Api
                 );
             }
 
-            codes.Add(new Code { UserId = phone.OwnerId });
-            db.SaveChanges();
+            _codes.Add(new Code { UserId = phone.OwnerId });
+            _db.SaveChanges();
 
             return Json(new RequestResult(true));
         }
@@ -55,7 +52,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/verification/from-telegram")]
         public IActionResult FromTelegram([FromBody]PhoneMap map)
         {
-            var phone = phones.FirstOrDefault(p => p.Number == map.Number);
+            var phone = _phones.FirstOrDefault(p => p.Number == map.Number);
             if (phone == null)
             {
                 return Json(
@@ -66,8 +63,8 @@ namespace Telegram.Server.Web.Controllers.Api
                 );
             }
 
-            codes.Add(new Code { UserId = phone.OwnerId });
-            db.SaveChanges();
+            _codes.Add(new Code { UserId = phone.OwnerId });
+            _db.SaveChanges();
 
             return Json(new RequestResult(true));
         }
@@ -76,7 +73,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/verification/check-code")]
         public IActionResult CheckCode([FromQuery]string value, [FromQuery]int userId)
         {
-            if (identity.IsValid(value, userId))
+            if (_identity.IsValid(value, userId))
             {
                 return Json(new RequestResult(true, true));
             }
@@ -88,9 +85,9 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/verification/authorization-token")]
         public IActionResult AuthorizationToken([FromQuery]string value, [FromQuery]int userId)
         {
-            if (identity.IsValid(value, userId))
+            if (_identity.IsValid(value, userId))
             {
-                return Json(new RequestResult<string>(true, identity.Token(userId), ""));
+                return Json(new RequestResult<string>(true, _identity.Token(userId), ""));
             }
 
             return Json(new RequestResult(true, false));

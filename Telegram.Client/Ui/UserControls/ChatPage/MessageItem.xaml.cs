@@ -25,10 +25,10 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
 
         public Message Next
         {
-            get => next;
+            get => _next;
             set
             {
-                next = value;
+                _next = value;
                 OnPropertyChanged(nameof(NeedDetails));
             }
         }
@@ -62,7 +62,7 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
             }
         }
         
-        private Message next;
+        private Message _next;
 
         public MessageItem(Message message, Message previous, Message next)
         {

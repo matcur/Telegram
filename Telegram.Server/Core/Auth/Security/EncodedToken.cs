@@ -6,24 +6,24 @@ namespace Telegram.Server.Core.Auth.Security
 {
     public class EncodedToken : ISecurityToken
     {
-        private readonly ISecurityToken securityToken;
+        private readonly ISecurityToken _securityToken;
         
-        private readonly SecurityTokenHandler tokenHandler;
+        private readonly SecurityTokenHandler _tokenHandler;
 
         public EncodedToken(ISecurityToken securityToken, SecurityTokenHandler tokenHandler)
         {
-            this.securityToken = securityToken;
-            this.tokenHandler = tokenHandler;
+            _securityToken = securityToken;
+            _tokenHandler = tokenHandler;
         }
         
         public SecurityToken From(ClaimsIdentity claimsIdentity)
         {
-            return securityToken.From(claimsIdentity);
+            return _securityToken.From(claimsIdentity);
         }
 
         public string ToString(ClaimsIdentity claimsIdentity)
         {
-            return tokenHandler.WriteToken(
+            return _tokenHandler.WriteToken(
                 From(claimsIdentity)
             );
         }

@@ -14,21 +14,21 @@ namespace Telegram.Server.Web.Controllers.Api
 {
     public class UserController : Controller
     {
-        private readonly AppDb db;
+        private readonly AppDb _db;
 
-        private readonly DbSet<User> users;
+        private readonly DbSet<User> _users;
 
-        public UserController(AppDb appDb)
+        public UserController(AppDb db)
         {
-            db = appDb;
-            users = db.Users;
+            _db = db;
+            _users = _db.Users;
         }
 
         [HttpGet]
         [Route("api/1.0/users/{id}")]
         public IActionResult Find(int id)
         {
-            var user = users.Include(u => u.Phone)
+            var user = _users.Include(u => u.Phone)
                             .FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
@@ -42,7 +42,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/users/{id:int}/chats")]
         public IActionResult Chats(int id, [FromQuery]int count, [FromQuery]int offset = 0)
         {
-            var result = users.DetailChats(id, count, offset);
+            var result = _users.DetailChats(id, count, offset);
 
             return Json(new RequestResult(true, result));
         }
@@ -51,7 +51,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/user/phone/{number}")]
         public IActionResult ByPhone(string number)
         {
-            var user = users.FirstOrDefault(u => u.Phone.Number == number);
+            var user = _users.FirstOrDefault(u => u.Phone.Number == number);
             if (user == null)
             {
                 return Json(

@@ -18,15 +18,15 @@ namespace Telegram.Client.Core.Collections
         
         public T this[int index]
         {
-            get => items[index];
+            get => _items[index];
             set => Insert(index, value);
         }
 
-        public int Count => items.Count;
+        public int Count => _items.Count;
 
         public bool IsReadOnly => false;
 
-        private readonly List<T> items;
+        private readonly List<T> _items;
         
         public LiveCollection(): this(new List<T>()) {  }
 
@@ -34,16 +34,16 @@ namespace Telegram.Client.Core.Collections
         
         private LiveCollection(List<T> items)
         {
-            this.items = items;
+            _items = items;
         }
 
         public void Add(T item)
         {
-            items.Add(item);
+            _items.Add(item);
             FireCollectionChanged(
                 NotifyCollectionChangedAction.Add,
                 item,
-                items.Count - 1
+                _items.Count - 1
             );
             OnPropertyChanged(nameof(Count));
         }
@@ -51,7 +51,7 @@ namespace Telegram.Client.Core.Collections
         public void AddRange(IEnumerable<T> collection)
         {
             var count = Count - 1;
-            items.AddRange(collection);
+            _items.AddRange(collection);
             FireCollectionChanged(
                 NotifyCollectionChangedAction.Add,
                 new List<T>(collection),
@@ -62,10 +62,10 @@ namespace Telegram.Client.Core.Collections
 
         public void Clear()
         {
-            items.Clear();
+            _items.Clear();
             FireCollectionChanged(
                 NotifyCollectionChangedAction.Reset,
-                items,
+                _items,
                 0
             );
             OnPropertyChanged(nameof(Count));
@@ -73,17 +73,17 @@ namespace Telegram.Client.Core.Collections
 
         public bool Contains(T item)
         {
-            return items.Contains(item);
+            return _items.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            items.CopyTo(array, arrayIndex);
+            _items.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(T item)
         {
-            var removed = items.Remove(item);
+            var removed = _items.Remove(item);
             if (removed)
             {
                 FireCollectionChanged(
@@ -98,12 +98,12 @@ namespace Telegram.Client.Core.Collections
         
         public int IndexOf(T item)
         {
-            return items.IndexOf(item);
+            return _items.IndexOf(item);
         }
 
         public void Insert(int index, T item)
         {
-            items.Insert(index, item);
+            _items.Insert(index, item);
 
             FireCollectionChanged(
                 NotifyCollectionChangedAction.Add,
@@ -117,7 +117,7 @@ namespace Telegram.Client.Core.Collections
         {
             var list = new List<T>(collection);
 
-            items.InsertRange(index, collection);
+            _items.InsertRange(index, collection);
             
             FireCollectionChanged(
                 NotifyCollectionChangedAction.Add,
@@ -129,9 +129,9 @@ namespace Telegram.Client.Core.Collections
 
         public void RemoveAt(int index)
         {
-            var removed = items[index];
+            var removed = _items[index];
             
-            items.RemoveAt(index);
+            _items.RemoveAt(index);
             
             FireCollectionChanged(
                 NotifyCollectionChangedAction.Remove,
@@ -148,7 +148,7 @@ namespace Telegram.Client.Core.Collections
         
         public IEnumerator<T> GetEnumerator()
         {
-            return items.GetEnumerator();
+            return _items.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -159,9 +159,9 @@ namespace Telegram.Client.Core.Collections
         private List<T> AfterItems(int index)
         {
             var result = new List<T>();
-            for (var i = index + 1; i < items.Count; i++)
+            for (var i = index + 1; i < _items.Count; i++)
             {
-                result.Add(items[i]);
+                result.Add(_items[i]);
             }
 
             return result;

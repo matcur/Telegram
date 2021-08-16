@@ -7,24 +7,24 @@ namespace Telegram.Client.Core
     {
         public event EventHandler CanExecuteChanged = delegate { };
 
-        private readonly Action<object> execute;
+        private readonly Action<object> _execute;
 
-        private readonly Func<bool> canExecute;
+        private readonly Func<bool> _canExecute;
 
         public RelayCommand(Action<object> execute, Func<bool> canExecute = null)
         {
-            this.execute = execute;
-            this.canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return canExecute == null || canExecute();
+            return _canExecute == null || _canExecute();
         }
 
         public void Execute(object parameter = default)
         {
-            execute(parameter);
+            _execute(parameter);
         }
     }
 }

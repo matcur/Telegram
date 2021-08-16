@@ -12,25 +12,25 @@ namespace Telegram.Server.Core.Auth
 {
     public class UserIdentity
     {
-        private readonly ISecurityToken securityToken;
+        private readonly ISecurityToken _securityToken;
         
-        private readonly DbSet<User> users;
+        private readonly DbSet<User> _users;
         
-        private readonly DbSet<Code> codes;
+        private readonly DbSet<Code> _codes;
         
-        private readonly DbSet<Phone> phones;
+        private readonly DbSet<Phone> _phones;
 
         public UserIdentity(AppDb db, ISecurityToken securityToken)
         {
-            this.securityToken = securityToken;
-            users = db.Users;
-            codes = db.Codes;
-            phones = db.Phones;
+            _securityToken = securityToken;
+            _users = db.Users;
+            _codes = db.Codes;
+            _phones = db.Phones;
         }
 
         public bool IsValid(string code, int userId)
         {
-            return codes.Any(
+            return _codes.Any(
                 c => code == c.Value &&
                      c.UserId == userId &&
                      !c.Entered
@@ -39,9 +39,9 @@ namespace Telegram.Server.Core.Auth
 
         public string Token(int userId)
         {
-            if (users.Any(u => u.Id == userId))
+            if (_users.Any(u => u.Id == userId))
             {
-                return securityToken.ToString(Claims(userId));
+                return _securityToken.ToString(Claims(userId));
             }
 
             throw new Exception($"User with id = {userId} not found");
@@ -49,7 +49,7 @@ namespace Telegram.Server.Core.Auth
 
         public ClaimsIdentity Claims(int userId)
         {
-            var phone = phones.First(u => u.OwnerId == userId);
+            var phone = _phones.First(u => u.OwnerId == userId);
 
             var claims = new List<Claim>
             {

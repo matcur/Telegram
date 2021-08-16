@@ -958,7 +958,7 @@ namespace Telegram.Client.Annotations
   ///   [CollectionAccess(CollectionAccessType.Read)]
   ///   public string GetFirstString()
   ///   {
-  ///     return this.ElementAt(0);
+  ///     return ElementAt(0);
   ///   }
   /// }
   /// class Test

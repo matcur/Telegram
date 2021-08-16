@@ -4,16 +4,16 @@ namespace Telegram.Client.Core.Form
 {
     class GroupForm
     {
-        private readonly IInput[] inputs;
+        private readonly IInput[] _inputs;
 
         public GroupForm(params IInput[] inputs)
         {
-            this.inputs = inputs;
+            _inputs = inputs;
         }
 
         public bool IsValid()
         {
-            foreach (var input in inputs)
+            foreach (var input in _inputs)
             {
                 var result = input.Validate(input.Value);
                 if (!result.Success)

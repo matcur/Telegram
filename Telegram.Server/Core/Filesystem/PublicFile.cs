@@ -5,30 +5,30 @@ namespace Telegram.Server.Core.Filesystem
 {
     public class PublicFile : IFile
     {
-        private readonly IFile file;
+        private readonly IFile _file;
 
         public PublicFile(IFile file)
         {
-            this.file = file;
+            _file = file;
         }
 
         public async Task<string> SaveAsync()
         {
-            var fullPath = await file.SaveAsync();
+            var fullPath = await _file.SaveAsync();
             
             return PublicPath(fullPath);
         }
 
         public async Task<string> SaveAsync(string folder)
         {
-            var fullPath = await file.SaveAsync(folder);
+            var fullPath = await _file.SaveAsync(folder);
 
             return PublicPath(fullPath);
         }
 
         public void Dispose()
         {
-            file?.Dispose();
+            _file?.Dispose();
         }
 
         private string PublicPath(string path)

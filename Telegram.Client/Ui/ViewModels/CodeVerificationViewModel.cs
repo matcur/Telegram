@@ -18,10 +18,10 @@ namespace Telegram.Client.Ui.ViewModels
         
         public string WrongCodeMessage 
         { 
-            get => wrongCodeMessage;
+            get => _wrongCodeMessage;
             set
             {
-                wrongCodeMessage = value;
+                _wrongCodeMessage = value;
                 OnPropertyChanged(nameof(WrongCodeMessage));
             }
         }
@@ -34,13 +34,13 @@ namespace Telegram.Client.Ui.ViewModels
 
         public RelayCommand InCommand => new RelayCommand(o => In());
 
-        private string wrongCodeMessage = "";
+        private string _wrongCodeMessage = "";
         
-        private readonly IVerification verification;
+        private readonly IVerification _verification;
 
-        private readonly IUsersResource users;
+        private readonly IUsersResource _users;
 
-        private readonly Dictionary<VerificationType, string> titles = new Dictionary<VerificationType, string>
+        private readonly Dictionary<VerificationType, string> _titles = new Dictionary<VerificationType, string>
         {
             {
                 VerificationType.Telegram,
@@ -58,21 +58,21 @@ namespace Telegram.Client.Ui.ViewModels
             IUsersResource users
         )
         {
-            Title = titles[type];
+            Title = _titles[type];
             Phone = phone;
             EnteredCode = new Code(phone);
 
-            this.verification = verification;
-            this.users = users;
+            _verification = verification;
+            _users = users;
         }
 
         private async void In()
         {
             WrongCodeMessage = "";
-            if (await verification.CheckCode(EnteredCode))
+            if (await _verification.CheckCode(EnteredCode))
             {
-                var tokenTask = verification.AuthorizationToken(EnteredCode);
-                var userTask = users.Find(Phone);
+                var tokenTask = _verification.AuthorizationToken(EnteredCode);
+                var userTask = _users.Find(Phone);
 
                 var user = (await userTask).Result;
                 var token = (await tokenTask).Result;

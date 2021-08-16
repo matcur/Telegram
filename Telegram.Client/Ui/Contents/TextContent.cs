@@ -12,17 +12,17 @@ namespace Telegram.Client.Ui.Contents
         public FrameworkElement VisualPresentation =>
             new TextBlock
             {
-                Style = style,
-                Text = text,
+                Style = _style,
+                Text = _text,
             };
 
-        private readonly Style style = (Style)Application.Current.FindResource("MessageTextStyle");
+        private readonly Style _style = (Style)Application.Current.FindResource("MessageTextStyle");
 
-        private readonly string text;
+        private readonly string _text;
 
         public TextContent(string text)
         {
-            this.text = text;
+            _text = text;
         }
     }
 }

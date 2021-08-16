@@ -16,39 +16,39 @@ namespace Telegram.Client.Ui.ViewModels
         
         public Phone Phone { get; } = new Phone { Number = "89519370404" };
 
-        private readonly IPhonesResource phones;
+        private readonly IPhonesResource _phones;
         
-        private readonly IUsersResource users;
+        private readonly IUsersResource _users;
 
-        private readonly IVerification verification;
+        private readonly IVerification _verification;
 
         public LoginViewModel(IUsersResource users, IPhonesResource phones, IVerification verification)
         {
-            this.users = users;
-            this.phones = phones;
-            this.verification = verification;
+            _users = users;
+            _phones = phones;
+            _verification = verification;
         }
 
         private async void Verify(Phone phone)
         {
-            var phoneResponse = await phones.Find(phone);
+            var phoneResponse = await _phones.Find(phone);
             if (phoneResponse.Success)
             {
                 Verificated.Invoke(
                     phoneResponse.Result,
                     VerificationType.Telegram
                 );
-                await verification.FromTelegram(phone);
+                await _verification.FromTelegram(phone);
                 
                 return;
             }
 
-            var userResponse = await users.Register(phone);
+            var userResponse = await _users.Register(phone);
             Verificated.Invoke(
                 userResponse.Result.Phone,
                 VerificationType.Phone
             );
-            await verification.ByPhone(phone);
+            await _verification.ByPhone(phone);
         }
     }
 }

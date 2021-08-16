@@ -15,16 +15,16 @@ namespace Telegram.Client.Ui.Pages
     /// </summary>
     public partial class CodeVerification : Page
     {
-        private readonly CodeVerificationViewModel viewModel;
+        private readonly CodeVerificationViewModel _viewModel;
         
-        private readonly Navigation navigation;
+        private readonly Navigation _navigation;
 
         public CodeVerification(CodeVerificationViewModel viewModel, Navigation navigation)
         {
-            this.viewModel = viewModel;
-            this.navigation = navigation;
-            this.viewModel.Logged += ToIndex;
-            DataContext = this.viewModel;
+            _viewModel = viewModel;
+            _navigation = navigation;
+            _viewModel.Logged += ToIndex;
+            DataContext = _viewModel;
             InitializeComponent();
         }
 
@@ -37,7 +37,7 @@ namespace Telegram.Client.Ui.Pages
                 }
             );
             
-            navigation.To(
+            _navigation.To(
                 new Index(
                     user,
                     new FakeUser(user, api),

@@ -6,16 +6,16 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public partial class FakePhones : ApiResource, IPhonesResource
     {
-        private readonly IApiClient api;
+        private readonly IApiClient _api;
 
         public FakePhones(IApiClient api)
         {
-            this.api = api;
+            _api = api;
         }
 
         public async Task<bool> Exists(string number)
         {
-            var response = await api.Get("phones/" + number + "/exists");
+            var response = await _api.Get("phones/" + number + "/exists");
 
             return Deserialize<RequestResult>(response).Success;
         }
@@ -27,7 +27,7 @@ namespace Telegram.Client.Api.Fake.Resources
 
         public async Task<RequestResult<Phone>> Find(string number)
         {
-            var response = await api.Get($"phones/{number}");
+            var response = await _api.Get($"phones/{number}");
 
             return Deserialize<Phone>(response);
         }

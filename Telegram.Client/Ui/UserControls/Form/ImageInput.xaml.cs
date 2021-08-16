@@ -20,10 +20,10 @@ namespace Telegram.Client.Ui.UserControls.Form
 
         public string Value
         {
-            get => value;
+            get => _value;
             private set
             {
-                this.value = value;
+                _value = value;
                 ValueChanged(value);
                 Source = Bitmap(new Uri(value, UriKind.Absolute));
             }
@@ -31,31 +31,31 @@ namespace Telegram.Client.Ui.UserControls.Form
 
         public ImageSource Source
         {
-            get => source;
+            get => _source;
             set
             {
-                source = value;
+                _source = value;
                 OnPropertyChanged();
             }
         }
 
-        private string value;
+        private string _value;
         
-        private ImageSource source;
+        private ImageSource _source;
 
-        private readonly ImageSource preview;
+        private readonly ImageSource _preview;
         
-        private readonly FileDialog dialog;
+        private readonly FileDialog _dialog;
 
         public ImageInput()
         {
-            preview = Bitmap(new Uri("pack://application:,,,/Ui/Resources/Images/new-chat-img.png"));
-            dialog = new OpenFileDialog
+            _preview = Bitmap(new Uri("pack://application:,,,/Ui/Resources/Images/new-chat-img.png"));
+            _dialog = new OpenFileDialog
             {
                 Multiselect = false,
                 Filter = "Image Files (JPG,PNG,GIF)|*.JPG;*.PNG"
             };
-            Source = preview;
+            Source = _preview;
             DataContext = this;
             
             InitializeComponent();
@@ -74,9 +74,9 @@ namespace Telegram.Client.Ui.UserControls.Form
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (_dialog.ShowDialog() == DialogResult.OK)
             {
-                Value = dialog.FileName;
+                Value = _dialog.FileName;
             }
         }
 

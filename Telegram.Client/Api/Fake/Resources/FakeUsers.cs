@@ -6,16 +6,16 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeUsers : ApiResource, IUsersResource
     {
-        private readonly IApiClient api;
+        private readonly IApiClient _api;
 
         public FakeUsers(IApiClient api)
         {
-            this.api = api;
+            _api = api;
         }
 
         public async Task<RequestResult<User>> Register(User user)
         {
-            var response = await api.Post(
+            var response = await _api.Post(
                 "user/register",
                 Serialize(user)
             );
@@ -32,7 +32,7 @@ namespace Telegram.Client.Api.Fake.Resources
 
         public async Task<RequestResult<User>> Find(Phone phone)
         {
-            var response = await api.Get($"user/phone/{phone.Number}");
+            var response = await _api.Get($"user/phone/{phone.Number}");
 
             return Deserialize<User>(response);
         }

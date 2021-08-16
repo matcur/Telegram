@@ -9,14 +9,14 @@ namespace Telegram.Server.Web.Controllers.Api
 {
     public class RegistrationController : Controller
     {
-        private readonly AppDb db;
+        private readonly AppDb _db;
 
-        private readonly DbSet<User> users;
+        private readonly DbSet<User> _users;
 
         public RegistrationController(AppDb db)
         {
-            this.db = db;
-            this.users = db.Users;
+            _db = db;
+            _users = db.Users;
         }
 
         [HttpPost]
@@ -24,8 +24,8 @@ namespace Telegram.Server.Web.Controllers.Api
         public IActionResult Register([FromBody]RegisteringUser registration)
         {
             var user = new User(registration);
-            users.Add(user);
-            db.SaveChanges();
+            _users.Add(user);
+            _db.SaveChanges();
 
             return Json(new RequestResult(true, new RegisteredUser(user)));
         }

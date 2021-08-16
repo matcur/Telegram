@@ -20,55 +20,55 @@ namespace Telegram.Client.Ui.Pages
     {
         public const int MessagePerRequest = 10;
 
-        private bool loaded = false;
+        private bool _loaded = false;
 
-        private readonly Chat chat;
+        private readonly Chat _chat;
         
-        private readonly IChatSocket socket;
+        private readonly IChatSocket _socket;
 
-        private readonly ChatViewModel viewModel;
+        private readonly ChatViewModel _viewModel;
         
         public ChatPage(Chat chat, User currentUser, IChatSocket socket, IChatResource chatResource)
         {
-            this.chat = chat;
-            this.socket = socket;
-            viewModel = new ChatViewModel(chat, socket, chatResource);
-            DataContext = viewModel;
+            _chat = chat;
+            _socket = socket;
+            _viewModel = new ChatViewModel(chat, socket, chatResource);
+            DataContext = _viewModel;
 
             InitializeComponent();
 
             Input.Message = new Message {Author = currentUser};
-            Input.Submitting += viewModel.SendMessage;
+            Input.Submitting += _viewModel.SendMessage;
             Body.ScrolledToTop += OnScrolledToTop;
             socket.OnReceiveMessage(ShowNotification);
         }
 
         private async void OnScrolledToTop()
         {
-            await viewModel.LoadPreviousMessages(MessagePerRequest);
+            await _viewModel.LoadPreviousMessages(MessagePerRequest);
         }
 
         private void ShowNotification(int chatId, Message message)
         {
-            if (chatId == chat.Id)
+            if (chatId == _chat.Id)
             {
                 MainWindow.Notifications.AddNotification(
-                    new MessageNotification(message, chat)
+                    new MessageNotification(message, _chat)
                 );
             }
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (loaded)
+            if (_loaded)
             {
                 return;
             }
             
-            loaded = true;
+            _loaded = true;
             
-            var socketTask = socket.Start();
-            var messagesTask = viewModel.LoadMessages(0, MessagePerRequest);
+            var socketTask = _socket.Start();
+            var messagesTask = _viewModel.LoadMessages(0, MessagePerRequest);
 
             await socketTask;
             await messagesTask;

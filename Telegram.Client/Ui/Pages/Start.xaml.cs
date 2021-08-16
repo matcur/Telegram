@@ -13,12 +13,12 @@ namespace Telegram.Client.Ui.Pages
     /// </summary>
     public partial class Start : Page
     {
-        private  Navigation navigation;
+        private  Navigation _navigation;
 
         public Start()
         {
             InitializeComponent();
-            Loaded += delegate { navigation = new Navigation(this); };
+            Loaded += delegate { _navigation = new Navigation(this); };
         }
 
         private void GoToLogin(object sender, RoutedEventArgs e)
@@ -27,7 +27,7 @@ namespace Telegram.Client.Ui.Pages
             var users = new FakeUsers(api);
             var verification = new FakeVerification(api);
             
-            navigation.To(
+            _navigation.To(
                 new Login(
                     new LoginViewModel(
                         users,

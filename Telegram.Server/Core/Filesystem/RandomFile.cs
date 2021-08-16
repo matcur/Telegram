@@ -7,14 +7,14 @@ namespace Telegram.Server.Core.Filesystem
 {
     public class RandomFile : IFile
     {
-        private readonly Stream stream;
+        private readonly Stream _stream;
         
-        private readonly string extension;
+        private readonly string _extension;
 
         public RandomFile(IFormFile file)
         {
-            extension = Path.GetExtension(file.FileName);
-            stream = file.OpenReadStream();
+            _extension = Path.GetExtension(file.FileName);
+            _stream = file.OpenReadStream();
         }
 
         public async Task<string> SaveAsync()
@@ -31,10 +31,10 @@ namespace Telegram.Server.Core.Filesystem
         {
             var fullPath = Path.Combine(
                 folder,
-                Path.GetFileName(RandomName() + extension)
+                Path.GetFileName(RandomName() + _extension)
             );
 
-            await stream.CopyToAsync(
+            await _stream.CopyToAsync(
                 File.Create(fullPath)
             );
 
@@ -43,7 +43,7 @@ namespace Telegram.Server.Core.Filesystem
 
         public void Dispose()
         {
-            stream?.Dispose();
+            _stream?.Dispose();
         }
 
         private string RandomName()

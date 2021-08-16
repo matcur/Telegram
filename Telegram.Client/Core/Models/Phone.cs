@@ -2,16 +2,16 @@
 {
     public class Phone : Model
     {
-        private string number;
+        private string _number;
 
         public int OwnerId { get; set; }
 
         public string Number
         {
-            get => number;
+            get => _number;
             set
             {
-                number = value;
+                _number = value;
                 OnPropertyChanged(nameof(Number));
             }
         }

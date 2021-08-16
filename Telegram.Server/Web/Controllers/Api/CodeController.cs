@@ -9,24 +9,24 @@ namespace Telegram.Server.Web.Controllers.Api
 {
     public class CodeController : Controller
     {
-        private readonly AppDb db;
+        private readonly AppDb _db;
 
-        private readonly DbSet<Code> codes;
+        private readonly DbSet<Code> _codes;
 
-        private readonly DbSet<User> users;
+        private readonly DbSet<User> _users;
 
         public CodeController(AppDb db)
         {
-            this.db = db;
-            this.codes = db.Codes;
-            this.users = db.Users;
+            _db = db;
+            _codes = db.Codes;
+            _users = db.Users;
         }
 
         [HttpPost]
         [Route("api/1.0/codes")]
         public IActionResult Create([FromBody]int userId)
         {
-            if (!users.Any(u => u.Id == userId))
+            if (!_users.Any(u => u.Id == userId))
             {
                 return Json(
                     new RequestResult(false, $"User with id = {userId} not found.")
@@ -34,8 +34,8 @@ namespace Telegram.Server.Web.Controllers.Api
             }
 
             var code = new Code { UserId = userId };
-            codes.Add(code);
-            db.SaveChanges();
+            _codes.Add(code);
+            _db.SaveChanges();
 
             return Json(new RequestResult(true));
         }

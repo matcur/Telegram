@@ -8,22 +8,22 @@ namespace Telegram.Client.Api
     {
         public event Action<T> NewAdded = delegate {  };
         
-        public IReadOnlyList<T> Pool => pool;
+        public IReadOnlyList<T> Pool => _pool;
 
-        private readonly List<T> pool = new List<T>();
+        private readonly List<T> _pool = new List<T>();
         
-        private readonly Func<T> factory;
+        private readonly Func<T> _factory;
 
         public Connections(Func<T> factory)
         {
-            this.factory = factory;
+            _factory = factory;
         }
 
         public T New()
         {
-            var connection = factory.Invoke();
+            var connection = _factory.Invoke();
             
-            pool.Add(connection);
+            _pool.Add(connection);
             NewAdded.Invoke(connection);
 
             return connection;

@@ -8,16 +8,16 @@ namespace Telegram.Client.Api.Fake.Auth
 {
     public class FakeVerification : ApiResource, IVerification
     {
-        private readonly IApiClient api;
+        private readonly IApiClient _api;
 
         public FakeVerification(IApiClient api)
         {
-            this.api = api;
+            _api = api;
         }
 
         public async Task<RequestResult> FromTelegram(Phone phone)
         {
-            var response = await api.Post(
+            var response = await _api.Post(
                 "verification/from-telegram", Serialize(phone)
             );
 
@@ -26,7 +26,7 @@ namespace Telegram.Client.Api.Fake.Auth
 
         public async Task<RequestResult> ByPhone(Phone phone)
         {
-            var response = await api.Post(
+            var response = await _api.Post(
                 "verification/by-phone", Serialize(phone)
             );
             
@@ -35,7 +35,7 @@ namespace Telegram.Client.Api.Fake.Auth
 
         public async Task<bool> CheckCode(Code code)
         {
-            var response = await api.Get(
+            var response = await _api.Get(
                 $"verification/check-code?Value={code.Value}&UserId={code.UserId}"
             );
 
@@ -44,7 +44,7 @@ namespace Telegram.Client.Api.Fake.Auth
 
         public async Task<RequestResult<string>> AuthorizationToken(Code code)
         {
-            var response = await api.Get(
+            var response = await _api.Get(
                 $"verification/authorization-token?value={code.Value}&UserId={code.UserId}"
             );
 

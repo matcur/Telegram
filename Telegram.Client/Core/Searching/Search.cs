@@ -8,17 +8,17 @@ namespace Telegram.Client.Core.Searching
 
         public string Text
         {
-            get => text;
+            get => _text;
             set
             {
-                text = value;
-                TextChanged(text);
+                _text = value;
+                TextChanged(_text);
             }
         }
 
         public abstract T Filtered { get; }
 
-        protected string text = "";
+        protected string _text = "";
 
         public abstract void AddItems(T items);
     }

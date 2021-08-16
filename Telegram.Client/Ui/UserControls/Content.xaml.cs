@@ -35,7 +35,7 @@ namespace Telegram.Client.Ui.UserControls
             set => SetValue(ContentFactoryProperty, value);
         }
 
-        private bool loaded = false;
+        private bool _loaded = false;
 
         public ContentControl()
         {
@@ -46,12 +46,12 @@ namespace Telegram.Client.Ui.UserControls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (loaded)
+            if (_loaded)
             {
                 return;
             }
 
-            loaded = true;
+            _loaded = true;
 
             if (Value != null)
             {

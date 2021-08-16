@@ -5,18 +5,18 @@ namespace Telegram.Client.Ui.Colors
 {
     public class ColorFromText : IColor
     {
-        private readonly string text;
+        private readonly string _text;
 
         public ColorFromText(string text)
         {
-            this.text = text;
+            _text = text;
         }
 
         public Color Value
         {
             get
             {
-                var bytes = BitConverter.GetBytes(text.GetHashCode());
+                var bytes = BitConverter.GetBytes(_text.GetHashCode());
 
                 return Color.FromRgb(
                     bytes[0],

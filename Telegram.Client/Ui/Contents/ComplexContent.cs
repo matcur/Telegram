@@ -16,11 +16,11 @@ namespace Telegram.Client.Ui.Contents
             get
             {
                 var stack = new StackPanel();
-                contents.Sort(
+                _contents.Sort(
                     (x, y) => y.DisplayOrder - x.DisplayOrder
                 );
 
-                foreach (var content in contents)
+                foreach (var content in _contents)
                 {
                     stack.Children.Add(content.VisualPresentation);
                 }
@@ -29,19 +29,19 @@ namespace Telegram.Client.Ui.Contents
             }
         }
 
-        private readonly List<IContent> contents = new List<IContent>();
+        private readonly List<IContent> _contents = new List<IContent>();
 
         public ComplexContent(IEnumerable<Content> contents, VisualContentFactory factory)
         {
             foreach (var content in contents)
             {
-                this.contents.Add(factory.From(content));
+                _contents.Add(factory.From(content));
             }
         }
 
         public ComplexContent(IEnumerable<IContent> contents)
         {
-            this.contents.AddRange(contents);
+            _contents.AddRange(contents);
         }
     }
 }

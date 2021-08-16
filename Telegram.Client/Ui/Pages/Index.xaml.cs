@@ -21,13 +21,13 @@ namespace Telegram.Client.Ui.Pages
     /// </summary>
     public partial class Index : Page
     {
-        private readonly IndexViewModel viewModel;
+        private readonly IndexViewModel _viewModel;
         
-        private readonly User currentUser;
+        private readonly User _currentUser;
         
-        private readonly IChatsResource chatsResource;
+        private readonly IChatsResource _chatsResource;
 
-        private readonly Connections<IChatSocket> chatSockets = new Connections<IChatSocket>(
+        private readonly Connections<IChatSocket> _chatSockets = new Connections<IChatSocket>(
             () => new FakeChatSocket(new HubConnectionBuilder())
         );
 
@@ -47,27 +47,27 @@ namespace Telegram.Client.Ui.Pages
             Func<Chat, IChatResource> chatFactory
         )
         {
-            this.chatsResource = chatsResource;
-            currentUser = current;
-            viewModel = new IndexViewModel(userResource, chatSockets, chatFactory);
-            viewModel.PropertyChanged += OnChatSelected;
-            viewModel.BurgerIsClicked += ShowLeftMenu;
-            DataContext = viewModel;
+            _chatsResource = chatsResource;
+            _currentUser = current;
+            _viewModel = new IndexViewModel(userResource, _chatSockets, chatFactory);
+            _viewModel.PropertyChanged += OnChatSelected;
+            _viewModel.BurgerIsClicked += ShowLeftMenu;
+            DataContext = _viewModel;
             
             InitializeComponent();
         }
 
         private void ShowLeftMenu()
         {
-            UpLayer.LeftElement = new LeftMenu(UpLayer, chatsResource);
+            UpLayer.LeftElement = new LeftMenu(UpLayer, _chatsResource);
         }
 
         private void OnChatSelected(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(viewModel.SelectedChat))
+            if (e.PropertyName == nameof(_viewModel.SelectedChat))
             {
-                var selectedChat = viewModel.SelectedChat;
-                var targetPage = viewModel.ChatPage(selectedChat, currentUser);
+                var selectedChat = _viewModel.SelectedChat;
+                var targetPage = _viewModel.ChatPage(selectedChat, _currentUser);
                 
                 ChatFrame.Navigate(targetPage);
             }
@@ -75,7 +75,7 @@ namespace Telegram.Client.Ui.Pages
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            await viewModel.LoadChats();
+            await _viewModel.LoadChats();
         }
     }
 }

@@ -10,10 +10,10 @@ namespace Telegram.Client.Ui.UserControls
     {
         public UserControl LeftElement
         {
-            get => leftElement;
+            get => _leftElement;
             set
             {
-                leftElement = value;
+                _leftElement = value;
                 LeftPart.Navigate(value);
                 Show();
             }
@@ -21,18 +21,18 @@ namespace Telegram.Client.Ui.UserControls
 
         public UserControl CenterElement
         {
-            get => centerElement;
+            get => _centerElement;
             set
             {
-                centerElement = value;
+                _centerElement = value;
                 CenterPart.Navigate(value);
                 Show();
             }
         }
 
-        private UserControl leftElement;
+        private UserControl _leftElement;
 
-        private UserControl centerElement;
+        private UserControl _centerElement;
 
         public UpLayer()
         {

@@ -9,7 +9,7 @@ namespace Telegram.Client.Ui.Colors
         {
             get
             {
-                var color = this.color.Value;
+                var color = _color.Value;
 
                 var lightColor = ControlPaint.Light(
                     System.Drawing.Color.FromArgb(
@@ -17,7 +17,7 @@ namespace Telegram.Client.Ui.Colors
                         color.R,
                         color.G,
                         color.B
-                    ), coefficient
+                    ), _coefficient
                 );
 
                 return Color.FromArgb(
@@ -29,14 +29,14 @@ namespace Telegram.Client.Ui.Colors
             }
         }
 
-        private readonly IColor color;
+        private readonly IColor _color;
         
-        private readonly float coefficient;
+        private readonly float _coefficient;
 
         public MoreLightColor(IColor color, float coefficient = 0.2f)
         {
-            this.color = color;
-            this.coefficient = coefficient;
+            _color = color;
+            _coefficient = coefficient;
         }
     }
 }

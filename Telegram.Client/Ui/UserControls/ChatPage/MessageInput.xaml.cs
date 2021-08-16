@@ -17,17 +17,17 @@ namespace Telegram.Client.Ui.UserControls.ChatPage
 
         public string Text
         {
-            get => text;
+            get => _text;
             set
             {
-                text = value;
+                _text = value;
                 OnPropertyChanged(nameof(Text));
             }
         }
 
         public Message Message { get; set; }
 
-        private string text;
+        private string _text;
         
         public MessageInput()
         {

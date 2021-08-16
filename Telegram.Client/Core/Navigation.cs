@@ -6,16 +6,16 @@ namespace Telegram.Client.Core
 {
     public class Navigation
     {
-        private readonly NavigationService service;
+        private readonly NavigationService _service;
 
         public Navigation(DependencyObject @object)
         {
-            service = NavigationService.GetNavigationService(@object);
+            _service = NavigationService.GetNavigationService(@object);
         }
 
         public void To(Page page)
         {
-            service.Navigate(page);
+            _service.Navigate(page);
         }
     }
 }

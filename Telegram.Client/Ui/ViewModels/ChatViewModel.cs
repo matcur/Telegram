@@ -21,22 +21,22 @@ namespace Telegram.Client.Ui.ViewModels
 
         public RelayCommand SendMessageCommand { get; set; }
 
-        private readonly IChatSocket chatSocket;
+        private readonly IChatSocket _chatSocket;
 
-        private readonly IChatResource chatResource;
+        private readonly IChatResource _chatResource;
 
         public ChatViewModel(Chat chat, IChatSocket socket, IChatResource chatResource)
         {
             Chat = chat;
-            this.chatResource = chatResource;
-            chatSocket = socket;
+            _chatResource = chatResource;
+            _chatSocket = socket;
             SendMessageCommand = AddMessageCommand;
             socket.OnReceiveMessage(OnReceiveMessage);
         }
 
         public async Task LoadMessages(int offset, int count)
         {
-            var response = await chatResource.Messages(offset, count);
+            var response = await _chatResource.Messages(offset, count);
             var messages = response.Result;
 
             foreach (var message in messages)
@@ -48,7 +48,7 @@ namespace Telegram.Client.Ui.ViewModels
         public async Task LoadPreviousMessages(int count)
         {
             var loaded = Chat.Messages;
-            var response = await chatResource.Messages(loaded.Count, count);
+            var response = await _chatResource.Messages(loaded.Count, count);
             
             loaded.InsertRange(0, response.Result);
         }
@@ -68,8 +68,8 @@ namespace Telegram.Client.Ui.ViewModels
 
         private void AddNewMessage(Message message)
         {
-            chatResource.AddMessage(message);
-            chatSocket.Emit(Chat.Id, message);
+            _chatResource.AddMessage(message);
+            _chatSocket.Emit(Chat.Id, message);
         }
     }
 }

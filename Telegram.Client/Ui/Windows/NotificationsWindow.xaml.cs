@@ -9,14 +9,14 @@ namespace Telegram.Client.Ui.Windows
     {
         public event Action<NotificationItem> ItemAdded = delegate {  };
 
-        private readonly UIElementCollection notifications;
+        private readonly UIElementCollection _notifications;
         
         public NotificationsWindow()
         {
             Height = SystemParameters.PrimaryScreenHeight;
             InitializeComponent();
             MoveToRightBottom();
-            notifications = NotificationList.Children;
+            _notifications = NotificationList.Children;
         }
 
         public void AddNotification(UIElement content)
@@ -26,13 +26,13 @@ namespace Telegram.Client.Ui.Windows
 
         public void AddNotification(NotificationItem notification)
         {
-            notifications.Add(notification);
+            _notifications.Add(notification);
             ItemAdded.Invoke(notification);
         }
 
         private void RemoveNotification(NotificationItem notification)
         {
-            notifications.Remove(notification);
+            _notifications.Remove(notification);
         }
 
         private void MoveToRightBottom()

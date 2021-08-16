@@ -10,25 +10,25 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeChats : ApiResource, IChatsResource
     {
-        private readonly IApiClient api;
+        private readonly IApiClient _api;
 
         public FakeChats(IApiClient api)
         {
-            this.api = api;
+            _api = api;
         }
 
         public async Task<RequestResult> Add(string name, string description, FileStream icon)
         {
             var content = FormContent(name, description, icon);
 
-            var response = await api.Post("chats/create", content);
+            var response = await _api.Post("chats/create", content);
 
             return Deserialize(response);
         }
 
         public async Task<IEnumerable<Chat>> Iterate(User user, int count)
         {
-            var response = await api.Get($"users/{user.Id}/chats?count={count}");
+            var response = await _api.Get($"users/{user.Id}/chats?count={count}");
             
             return Deserialize<IEnumerable<Chat>>(response).Result;
         }

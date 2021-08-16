@@ -7,19 +7,19 @@ namespace Telegram.Client.Api.Fake.Resources
 {
     public class FakeUser : ApiResource, IUserResource
     {
-        private readonly IApiClient api;
+        private readonly IApiClient _api;
 
-        private readonly User user;
+        private readonly User _user;
 
         public FakeUser(User user, IApiClient api)
         {
-            this.user = user;
-            this.api = api;
+            _user = user;
+            _api = api;
         }
 
         public async Task<IEnumerable<Chat>> Chats(int count)
         {
-            var response = await api.Get(
+            var response = await _api.Get(
                 $"authorized-user/chats?count={count}"
             );
 

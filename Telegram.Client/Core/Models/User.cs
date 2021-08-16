@@ -14,10 +14,10 @@ namespace Telegram.Client.Core.Models
 
         public string FirstName
         {
-            get => firstName;
+            get => _firstName;
             set
             {
-                firstName = value;
+                _firstName = value;
                 OnPropertyChanged(nameof(FirstName));
                 OnPropertyChanged(nameof(FullName));
             }
@@ -25,10 +25,10 @@ namespace Telegram.Client.Core.Models
 
         public string LastName
         {
-            get => lastName;
+            get => _lastName;
             set
             {
-                lastName = value;
+                _lastName = value;
                 OnPropertyChanged(nameof(LastName));
                 OnPropertyChanged(nameof(FullName));
             }
@@ -40,20 +40,20 @@ namespace Telegram.Client.Core.Models
 
         public Phone Phone
         {
-            get => phone;
+            get => _phone;
             set
             {
-                phone = value;
+                _phone = value;
                 OnPropertyChanged(nameof(Phone));
             }
         }
 
         public List<Code> Codes { get; set; }
 
-        private string firstName;
+        private string _firstName;
 
-        private string lastName;
+        private string _lastName;
 
-        private Phone phone;
+        private Phone _phone;
     }
 }

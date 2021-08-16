@@ -38,8 +38,8 @@ namespace Telegram.Client.Ui.UserControls.Index
                     new MenuItem(
                         "New Group",
                         new Loupe(),
-                        () => upLayer.CenterElement = new NewGroupForm(
-                            chats
+                        () => _upLayer.CenterElement = new NewGroupForm(
+                            _chats
                         )
                     ),
                     new MenuItem("New Channel", new Loupe()),
@@ -51,14 +51,14 @@ namespace Telegram.Client.Ui.UserControls.Index
             }
         }
 
-        private readonly UpLayer upLayer;
+        private readonly UpLayer _upLayer;
         
-        private readonly IChatsResource chats;
+        private readonly IChatsResource _chats;
 
         public LeftMenu(UpLayer upLayer, IChatsResource chats)
         {
-            this.upLayer = upLayer;
-            this.chats = chats;
+            _upLayer = upLayer;
+            _chats = chats;
             DataContext = this;
             InitializeComponent();
         }

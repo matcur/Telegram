@@ -37,17 +37,17 @@ namespace Telegram.Client.Ui.Contents
 
         private ImageSource Source => new ScaledImage(
             new InitializedImage(
-                new Uri(uri, UriKind.Absolute)
+                new Uri(_uri, UriKind.Absolute)
             ),
             400,
             200
         ).VisualPresentation.Source;
 
-        private readonly string uri;
+        private readonly string _uri;
 
         public ImageContent(string uri)
         {
-            this.uri = uri;
+            _uri = uri;
         }
     }
 }
