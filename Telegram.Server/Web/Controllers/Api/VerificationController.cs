@@ -29,15 +29,15 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpPost]
         [Route("api/1.0/verification/by-phone")]
-        public IActionResult ByPhone([FromBody]PhoneMap map)
+        public IActionResult ByPhone(string number)
         {
-            var phone = _phones.FirstOrDefault(p => p.Number == map.Number);
+            var phone = _phones.FirstOrDefault(p => p.Number == number);
             if (phone == null)
             {
                 return Json(
                     new RequestResult(
                         false,
-                        $"Phone number {map.Number} - {map.OwnerId} doesn't exists."
+                        $"Phone number {number} - {number} doesn't exists."
                     )
                 );
             }
@@ -50,15 +50,15 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpPost]
         [Route("api/1.0/verification/from-telegram")]
-        public IActionResult FromTelegram([FromBody]PhoneMap map)
+        public IActionResult FromTelegram([FromQuery]string number)
         {
-            var phone = _phones.FirstOrDefault(p => p.Number == map.Number);
+            var phone = _phones.FirstOrDefault(p => p.Number == number);
             if (phone == null)
             {
                 return Json(
                     new RequestResult(
                         false,
-                        $"Phone number {map.Number} doesn't exists."
+                        $"Phone number {number} doesn't exists."
                     )    
                 );
             }
@@ -73,12 +73,9 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/verification/check-code")]
         public IActionResult CheckCode([FromQuery]string value, [FromQuery]int userId)
         {
-            if (_identity.IsValid(value, userId))
-            {
-                return Json(new RequestResult(true, true));
-            }
+            var valid = _identity.IsValid(value, userId);
 
-            return Json(new RequestResult(true, false));
+            return Json(new RequestResult(true, valid));
         }
 
         [HttpGet]

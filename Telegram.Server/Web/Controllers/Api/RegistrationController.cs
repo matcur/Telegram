@@ -21,9 +21,14 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpPost]
         [Route("api/1.0/user/register")]
-        public IActionResult Register([FromBody]RegisteringUser registration)
+        public IActionResult Register([FromQuery]string firstName, [FromQuery]string lastName, [FromQuery]string phoneNumber)
         {
-            var user = new User(registration);
+            var user = new User
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Phone = new Phone { Number = phoneNumber },
+            };
             _users.Add(user);
             _db.SaveChanges();
 

@@ -35,6 +35,7 @@ namespace Telegram.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -79,7 +80,9 @@ namespace Telegram.Server
 
             app.UseStaticFiles();
             app.UseRouting();
-            
+
+            app.UseCors(builder => builder.AllowAnyOrigin());
+
             app.UseAuthentication();
             app.UseAuthorization();
 
