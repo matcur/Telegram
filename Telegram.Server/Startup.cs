@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Telegram.Server.Core.Db;
@@ -69,6 +70,10 @@ namespace Telegram.Server
                 return new EncodedToken(token, new JwtSecurityTokenHandler());
             });
             services.AddTransient<UserIdentity>();
+            
+            services.AddSpaStaticFiles(
+                configuration => configuration.RootPath = "ClientApp/build"
+            );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -90,6 +95,16 @@ namespace Telegram.Server
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chats");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
         }
     }
