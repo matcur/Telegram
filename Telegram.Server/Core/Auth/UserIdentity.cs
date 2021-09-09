@@ -28,7 +28,7 @@ namespace Telegram.Server.Core.Auth
             _phones = db.Phones;
         }
 
-        public bool IsValid(string code, int userId)
+        public bool ValidCode(string code, int userId)
         {
             return _codes.Any(
                 c => code == c.Value &&
@@ -37,7 +37,7 @@ namespace Telegram.Server.Core.Auth
             );
         }
 
-        public string Token(int userId)
+        public string CreateToken(int userId)
         {
             if (_users.Any(u => u.Id == userId))
             {
