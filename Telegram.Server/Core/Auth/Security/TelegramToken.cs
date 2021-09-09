@@ -40,10 +40,5 @@ namespace Telegram.Server.Core.Auth.Security
                 )
             );
         }
-
-        public string ToString(ClaimsIdentity claimsIdentity)
-        {
-            return From(claimsIdentity).ToString();
-        }
     }
 }
