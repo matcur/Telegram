@@ -12,7 +12,7 @@ namespace Telegram.Server.Core.Auth
 {
     public class UserIdentity
     {
-        private readonly ISecurityToken _securityToken;
+        private readonly IAuthorizationToken _authorizationToken;
         
         private readonly DbSet<User> _users;
         
@@ -20,9 +20,9 @@ namespace Telegram.Server.Core.Auth
         
         private readonly DbSet<Phone> _phones;
 
-        public UserIdentity(AppDb db, ISecurityToken securityToken)
+        public UserIdentity(AppDb db, IAuthorizationToken authorizationToken)
         {
-            _securityToken = securityToken;
+            _authorizationToken = authorizationToken;
             _users = db.Users;
             _codes = db.Codes;
             _phones = db.Phones;
@@ -41,7 +41,7 @@ namespace Telegram.Server.Core.Auth
         {
             if (_users.Any(u => u.Id == userId))
             {
-                return _securityToken.ToString(Claims(userId));
+                return _authorizationToken.ToString(Claims(userId));
             }
 
             throw new Exception($"User with id = {userId} not found");

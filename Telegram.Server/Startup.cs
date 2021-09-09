@@ -58,7 +58,7 @@ namespace Telegram.Server
             services.AddDbContext<AppDb>();
             services.AddSignalR();
 
-            services.AddTransient<ISecurityToken>(services =>
+            services.AddTransient<IAuthorizationToken>(services =>
             {
                 var token = new TelegramToken(
                     AuthorizationOptions.Issuer,

@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Telegram.Server.Core.Auth.Security
 {
-    public class TelegramToken : ISecurityToken
+    public class TelegramToken : IAuthorizationToken
     {
         private readonly string _issuer;
         

@@ -4,21 +4,21 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Telegram.Server.Core.Auth.Security
 {
-    public class EncodedToken : ISecurityToken
+    public class EncodedToken : IAuthorizationToken
     {
-        private readonly ISecurityToken _securityToken;
+        private readonly IAuthorizationToken _authorizationToken;
         
         private readonly SecurityTokenHandler _tokenHandler;
 
-        public EncodedToken(ISecurityToken securityToken, SecurityTokenHandler tokenHandler)
+        public EncodedToken(IAuthorizationToken authorizationToken, SecurityTokenHandler tokenHandler)
         {
-            _securityToken = securityToken;
+            _authorizationToken = authorizationToken;
             _tokenHandler = tokenHandler;
         }
         
         public SecurityToken From(ClaimsIdentity claimsIdentity)
         {
-            return _securityToken.From(claimsIdentity);
+            return _authorizationToken.From(claimsIdentity);
         }
 
         public string ToString(ClaimsIdentity claimsIdentity)
