@@ -53,7 +53,7 @@ namespace Telegram.Server.Core.Auth
             throw new Exception($"User with id = {userId} not found");
         }
 
-        public ClaimsIdentity Claims(int userId)
+        private ClaimsIdentity Claims(int userId)
         {
             var phone = _phones.First(u => u.OwnerId == userId);
 
