@@ -60,13 +60,11 @@ namespace Telegram.Server
 
             services.AddTransient<IAuthorizationToken>(services =>
             {
-                var token = new TelegramToken(
+                return new TelegramToken(
                     AuthorizationOptions.Issuer,
                     AuthorizationOptions.Audience,
                     AuthorizationOptions.LifeTimeMinutes
                 );
-
-                return new EncodedToken(token, new JwtSecurityTokenHandler());
             });
             services.AddTransient<UserIdentity>();
         }
