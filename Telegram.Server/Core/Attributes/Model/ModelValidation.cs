@@ -12,7 +12,9 @@ namespace Telegram.Server.Core.Attributes.Model
         {
             var model = context.ModelState;
             if (!model.IsValid)
+            {
                 context.Result = new BadRequestObjectResult(model);
+            }
         }
     }
 }
