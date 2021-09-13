@@ -3,10 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Telegram.Server.Core.Auth.Security
 {
-    public interface ISecurityToken
+    public interface IAuthorizationToken
     {
         SecurityToken From(ClaimsIdentity claimsIdentity);
-
-        string ToString(ClaimsIdentity claimsIdentity);
     }
 }

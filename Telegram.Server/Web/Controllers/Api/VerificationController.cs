@@ -73,7 +73,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/verification/check-code")]
         public IActionResult CheckCode([FromQuery]string value, [FromQuery]int userId)
         {
-            var valid = _identity.IsValid(value, userId);
+            var valid = _identity.ValidCode(value, userId);
 
             return Json(new RequestResult(true, valid));
         }
@@ -82,9 +82,9 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/verification/authorization-token")]
         public IActionResult AuthorizationToken([FromQuery]string value, [FromQuery]int userId)
         {
-            if (_identity.IsValid(value, userId))
+            if (_identity.ValidCode(value, userId))
             {
-                return Json(new RequestResult<string>(true, _identity.Token(userId), ""));
+                return Json(new RequestResult<string>(true, _identity.CreateToken(userId), ""));
             }
 
             return Json(new RequestResult(true, false));
