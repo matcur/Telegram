@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Telegram.Server.Core.Db.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Telegram.Server.Core.Mapping
 {

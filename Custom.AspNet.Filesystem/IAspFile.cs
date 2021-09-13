@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Custom.AspNet.Filesystem
+﻿namespace Custom.AspNet.Filesystem
 {
     public interface IAspFile
     {

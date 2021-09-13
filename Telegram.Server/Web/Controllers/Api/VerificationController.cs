@@ -5,7 +5,6 @@ using Telegram.Server.Core;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
-using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Web.Controllers.Api
 {

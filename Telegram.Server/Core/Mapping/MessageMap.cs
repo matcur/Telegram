@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Telegram.Server.Core.Db.Models;
+﻿using System.Collections.Generic;
 
 namespace Telegram.Server.Core.Mapping
 {
