@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Http;
 
 namespace Custom.AspNet.Filesystem.Files

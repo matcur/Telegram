@@ -8,7 +8,6 @@ using Telegram.Server.Core.Attributes.Model;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
-using Telegram.Server.Core.Extensions;
 using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Web.Controllers.Api

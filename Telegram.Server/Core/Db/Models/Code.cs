@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Db.Models
 {
