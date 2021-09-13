@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Custom.AspNet.Filesystem.Files;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
@@ -68,9 +69,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/chats/create")]
         public async Task<IActionResult> Create([FromForm]ChatMap map)
         {
-            map.IconUrl = Request.IndexUrl() + await new PublicFile(
-                new RandomFile(map.Icon)
-            ).SaveAsync();
+            map.IconUrl = new ApplicationFile(map.Icon, "wwwroot").Save();
             
             var chat = new Chat(map);
             _chats.Add(chat);
