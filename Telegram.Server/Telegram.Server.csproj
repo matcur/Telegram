@@ -20,4 +20,8 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <ProjectReference Include="..\Custom.AspNet.Filesystem\Custom.AspNet.Filesystem.csproj" />
+  </ItemGroup>
+
 </Project>
