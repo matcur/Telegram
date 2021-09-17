@@ -1,10 +1,6 @@
-import React, {FC} from 'react'
+import React from 'react'
 
-type Props = {
-
-}
-
-export const Toggler: FC<Props> = ({}: Props) => {
+export const Toggler = () => {
   return (
     <label className="toggler-container small-toggler">
       <input type="checkbox" className="toggler"/>

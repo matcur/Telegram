@@ -1,12 +1,8 @@
-import React, {FC} from 'react'
+import React from 'react'
 import cat from "public/images/index/cat-3.jpg";
 import {ReactComponent as Caret} from "public/svgs/caret.svg";
 
-type Props = {
-
-}
-
-export const LeftMenuUserInfo: FC<Props> = ({}: Props) => {
+export const LeftMenuUserInfo = () => {
   return (
     <div className="left-menu-user-info">
       <div className="df jcsb aic top-part">

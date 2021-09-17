@@ -1,5 +1,4 @@
 import React, {FormEvent, ReactElement, useState} from 'react'
-import {ReactComponent as LeftArrowIcon} from "public/svgs/left-arrow.svg";
 import {useHistory} from "react-router";
 import {VerificationApi} from "api/VerificationApi";
 import {CodesApi} from "api/CodesApi";

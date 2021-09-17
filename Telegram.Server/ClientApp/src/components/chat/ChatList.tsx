@@ -2,9 +2,7 @@ import React, {FC, useEffect} from 'react'
 import {Chat} from "models";
 import {useAppDispatch, useAppSelector} from "app/hooks";
 import { ChatItem } from './ChatItem';
-import {addChatRange} from "app/slices/chatsSlice";
 import {addChats} from "app/slices/authorizationSlice";
-import {ChatsApi} from "api/ChatsApi";
 import {AuthorizedUserApi} from "api/AuthorizedUserApi";
 
 type Props = {

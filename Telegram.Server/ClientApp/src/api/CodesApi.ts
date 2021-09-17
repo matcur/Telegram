@@ -1,5 +1,4 @@
 import {ApiClient} from "api/ApiClient";
-import {Code} from "models";
 
 export class CodesApi {
   api = new ApiClient()

@@ -1,16 +1,12 @@
-import React, {FC, useContext, useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {FormButton} from "components/form/FormButton";
 import {ImageInput} from "components/form/ImageInput";
 import {TextInput} from "components/form/TextInput";
-import {InputEvent, useFormInput} from "hooks/useFormInput";
+import {InputEvent} from "hooks/useFormInput";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import {AddMembersForm} from "components/forms/AddMembersForm";
 
-type Props = {
-
-}
-
-export const NewGroupForm: FC<Props> = ({}) => {
+export const NewGroupForm = () => {
   const context = useContext(UpLayerContext)
   const [name, setName] = useState('')
   const [nameEntered, setNameEntered] = useState(false)

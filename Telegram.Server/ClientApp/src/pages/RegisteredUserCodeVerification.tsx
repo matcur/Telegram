@@ -1,14 +1,9 @@
-import React, {FC, useEffect} from 'react'
-import {useParams} from "react-router";
+import React, {useEffect} from 'react'
 import {BaseCodeVerification} from "pages/BaseCodeVerification";
 import {VerificationApi} from "api/VerificationApi";
 import {useQueryParams} from "hooks/useQueryParams";
 
-type Props = {
-
-}
-
-export const RegisteredUserCodeVerification: FC<Props> = ({}: Props) => {
+export const RegisteredUserCodeVerification = () => {
   const query = useQueryParams()
 
   const phoneNumber = query.get('phoneNumber') ?? ''

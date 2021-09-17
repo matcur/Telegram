@@ -4,9 +4,7 @@ import rightPart from 'public/images/start/start-right-part.png'
 import airplane from 'public/images/start/start-airplane.png'
 import {Link} from "react-router-dom";
 
-type Props = {}
-
-const Start = ({}: Props) => {
+const Start = () => {
   return (
     <div className="page start-page">
       <div className="start-image">

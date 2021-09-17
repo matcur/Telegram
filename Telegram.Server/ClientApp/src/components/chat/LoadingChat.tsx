@@ -1,10 +1,6 @@
-import React, {FC} from 'react'
+import React from 'react'
 
-type Props = {
-
-}
-
-export const LoadingChat: FC<Props> = ({}: Props) => {
+export const LoadingChat = () => {
   return (
     <div>
       I'am loading
