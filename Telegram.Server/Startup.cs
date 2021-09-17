@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Web.Hubs;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Telegram.Server
 {
@@ -25,7 +27,6 @@ namespace Telegram.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -56,6 +57,7 @@ namespace Telegram.Server
                     AuthorizationOptions.LifeTimeMinutes
                 );
             });
+            services.AddTransient<SecurityTokenHandler, JwtSecurityTokenHandler>();
             services.AddTransient<UserIdentity>();
             
             services.AddSpaStaticFiles(
@@ -72,8 +74,6 @@ namespace Telegram.Server
 
             app.UseStaticFiles();
             app.UseRouting();
-
-            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseAuthentication();
             app.UseAuthorization();
