@@ -1,7 +1,6 @@
 import React, {FC} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 import {Chat} from "models";
-import {lastIn} from "utils/lastIn";
 import {nullMessage} from "nullables";
 import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
@@ -13,7 +12,7 @@ type Props = {
 }
 
 export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
-  const lastMessage = lastIn(chat.messages, nullMessage)
+  const lastMessage = chat.lastMessage?? nullMessage
 
   return (
     <div

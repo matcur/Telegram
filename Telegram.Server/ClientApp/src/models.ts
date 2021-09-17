@@ -27,6 +27,7 @@ export type Chat = {
   name: string
   messages: Message[]
   members: User[]
+  lastMessage?: Message
 }
 
 export type Phone = {
