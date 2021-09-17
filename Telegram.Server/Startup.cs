@@ -66,6 +66,7 @@ namespace Telegram.Server
                     AuthorizationOptions.LifeTimeMinutes
                 );
             });
+            services.AddTransient<SecurityTokenHandler, JwtSecurityTokenHandler>();
             services.AddTransient<UserIdentity>();
         }
 
