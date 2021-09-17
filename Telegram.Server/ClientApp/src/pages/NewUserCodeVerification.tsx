@@ -1,15 +1,10 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {BaseCodeVerification} from "pages/BaseCodeVerification";
-import {useParams} from "react-router";
 import {VerificationApi} from "api/VerificationApi";
 import {useQueryParams} from "hooks/useQueryParams";
 import {RegistrationApi} from "api/RegistrationApi";
 
-type Props = {
-
-}
-
-export const NewUserCodeVerification: FC<Props> = ({}: Props) => {
+export const NewUserCodeVerification = () => {
   const query = useQueryParams()
   const [userId, setUserId] = useState(-1)
 

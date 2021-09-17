@@ -1,16 +1,11 @@
 import React, {useState} from 'react';
-import {ReactComponent as LeftArrowIcon} from 'public/svgs/left-arrow.svg';
 import {useHistory} from "react-router";
 import {isValidPhone} from "utils/isValidPhone";
 import {PhonesApi} from "api/PhonesApi";
 import {useFormInput} from "hooks/useFormInput";
 import {PageNavigation} from "pages/partials/PageNavigation";
 
-type Props = {
-
-}
-
-export const Login = (props: Props) => {
+export const Login = () => {
   const history = useHistory()
   const phone = useFormInput('89519370404')
   const [invalidPhoneMessage, setInvalidPhoneMessage] = useState('')

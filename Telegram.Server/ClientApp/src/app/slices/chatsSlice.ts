@@ -4,7 +4,6 @@ import {nullChat} from "nullables";
 import {removeFrom} from "utils/removeFrom";
 import {RootState} from "app/store";
 import {maxId} from "utils/maxId";
-import {Writable} from "stream";
 
 type State = {
   list: Chat[]
