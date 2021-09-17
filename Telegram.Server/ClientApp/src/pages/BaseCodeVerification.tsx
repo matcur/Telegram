@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react'
+import React, {FormEvent, ReactElement, useState} from 'react'
 import {ReactComponent as LeftArrowIcon} from "public/svgs/left-arrow.svg";
 import {useHistory} from "react-router";
 import {VerificationApi} from "api/VerificationApi";
@@ -38,11 +38,15 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
     code.onChange(e)
     setWrongMessage('')
   }
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    toIndex(code.value)
+  }
 
   return (
     <div className="page code-verification-page">
       <PageNavigation onBackClick={toLogin}/>
-      <form className="login-form">
+      <form className="login-form" onSubmit={onSubmit}>
         <div className="form-title">{phoneNumber}</div>
         <p className="phone-caption">
           {title}
@@ -56,11 +60,11 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
           <div className="input-line"/>
         </div>
         <p style={{color: 'red'}}>{wrongCodeMessage}</p>
-        <div
-          className="btn btn-primary login-form-btn"
-          onClick={() => toIndex(code.value)}>
+        <button
+          type="submit"
+          className="btn btn-primary login-form-btn">
           NEXT
-        </div>
+        </button>
       </form>
     </div>
   )
