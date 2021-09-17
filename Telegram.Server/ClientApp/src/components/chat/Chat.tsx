@@ -42,7 +42,7 @@ export const Chat: FC<Props> = ({chat}: Props) => {
       return
     }
 
-    async function load() {
+    const load = async () => {
       await setTimeout(() => {
         dispatch(addMessages({chatId: chat.id, messages: [nullMessage, nullMessage]}))
         setLoaded(true)
