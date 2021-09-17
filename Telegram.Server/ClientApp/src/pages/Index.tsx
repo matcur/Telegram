@@ -8,11 +8,7 @@ import {useRequireAuthentication} from "hooks/useRequireAuthentication";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import { LeftMenuContext } from 'contexts/LeftMenuContext';
 
-type Props = {
-
-}
-
-export const Index = (props: Props) => {
+export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
   const [upLayerVisible, setUpLayerVisible] = useState(false)
   const [leftMenuVisible, setLeftMenuVisible] = useState(false)
