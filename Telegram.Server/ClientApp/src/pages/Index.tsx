@@ -17,7 +17,7 @@ export const Index = (props: Props) => {
   const [upLayerVisible, setUpLayerVisible] = useState(false)
   const [leftMenuVisible, setLeftMenuVisible] = useState(false)
   const [centralElement, setCentralElement] = useState(<div/>)
-  useRequireAuthentication('/registered-user-code-verification?phoneNumber=89545672654')
+  useRequireAuthentication('/login?phoneNumber=89545672654')
 
   const hideUpLayer = () => {
     setLeftMenuVisible(false)
