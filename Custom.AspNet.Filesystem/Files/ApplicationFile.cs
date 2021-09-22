@@ -7,7 +7,11 @@ namespace Custom.AspNet.Filesystem.Files
 {
     public class ApplicationFile : IAspFile
     {
-        public static readonly string Root = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+        public static readonly string Root = 
+            Path.Combine(
+                Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location),
+                "../../.."
+            );
         
         private readonly IAspFile _source;
 
