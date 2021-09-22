@@ -32,7 +32,7 @@ namespace Custom.AspNet.Filesystem.Files
             var parts = path.Split($"{Root}\\");
             if (parts.Length == 1)
             {
-                throw new Exception("File path doesn't contains '\\wwwroot'.");
+                throw new Exception($"File path doesn't contains {Root}'.");
             }
 
             var applicationPath = parts[1];
