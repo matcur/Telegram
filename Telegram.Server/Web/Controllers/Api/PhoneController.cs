@@ -28,6 +28,7 @@ namespace Telegram.Server.Web.Controllers.Api
             return Json(new RequestResult(true, result));
         }
 
+        [HttpGet]
         [Route("api/1.0/phones/{number}")]
         public IActionResult Find(string number)
         {
