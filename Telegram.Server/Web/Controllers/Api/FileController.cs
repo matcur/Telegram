@@ -11,7 +11,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/file")]
         public IActionResult Add(IFormFile file)
         {
-            var path = new ApplicationFile(file, "wwwroot\\files").Save();
+            var path = new PublicFile(file, "files").Save();
 
             return Json(new RequestResult(true, (object)path));
         }
