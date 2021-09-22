@@ -14,6 +14,7 @@ using Telegram.Server.Web.Hubs;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.OpenApi.Models;
 
 namespace Telegram.Server
 {
@@ -42,11 +43,15 @@ namespace Telegram.Server
                             IssuerSigningKey = AuthorizationOptions.SecurityKey,
                         };
                     });
-            services.AddControllersWithViews()
+            services.AddMvc()
                     .AddNewtonsoftJson(options => 
                     {
                         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     });
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo {Version = "1.0", Title = "Telegram Api"});
+            });
             services.AddDbContext<AppDb>();
             services.AddSignalR();
 
@@ -82,6 +87,12 @@ namespace Telegram.Server
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
