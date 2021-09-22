@@ -19,8 +19,6 @@ namespace Telegram.Server.Core.Auth
         private readonly DbSet<User> _users;
         
         private readonly DbSet<Code> _codes;
-        
-        private readonly DbSet<Phone> _phones;
 
         public UserIdentity(AppDb db, IAuthorizationToken authorizationToken, SecurityTokenHandler tokenHandler)
         {
@@ -28,7 +26,6 @@ namespace Telegram.Server.Core.Auth
             _tokenHandler = tokenHandler;
             _users = db.Users;
             _codes = db.Codes;
-            _phones = db.Phones;
         }
 
         public bool ValidCode(string code, int userId)
