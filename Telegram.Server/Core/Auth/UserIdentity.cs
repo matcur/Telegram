@@ -37,11 +37,11 @@ namespace Telegram.Server.Core.Auth
             );
         }
 
-        public string CreateToken(int userId)
+        public string CreateToken(int userId, string role)
         {
             if (_users.Any(u => u.Id == userId))
             {
-                var token = _authorizationToken.From(Claims(userId));
+                var token = _authorizationToken.From(Claims(userId, role));
 
                 return _tokenHandler.WriteToken(token);
             }
@@ -49,12 +49,12 @@ namespace Telegram.Server.Core.Auth
             throw new Exception($"User with id = {userId} not found");
         }
 
-        private ClaimsIdentity Claims(int userId)
+        private ClaimsIdentity Claims(int userId, string role)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userId.ToString()),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, "simpleUser")
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
             };
             
             return new ClaimsIdentity(
