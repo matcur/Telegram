@@ -9,7 +9,7 @@ namespace Custom.AspNet.Filesystem.Files
         private readonly IAspFile _source;
 
         public PublicFile(IFormFile source, string folder)
-            : this(new ApplicationFile(source, folder))
+            : this(new ApplicationFile(source, Path.Combine("wwwroot", folder)))
         {
 
         }
