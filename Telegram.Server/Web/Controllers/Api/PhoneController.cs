@@ -21,7 +21,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/phones/{number}/exists")]
-        public IActionResult Exists(string number)
+        public IActionResult Exists([FromRoute]string number)
         {
             var result = _phones.Any(p => p.Number == number);
 
@@ -30,7 +30,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/phones/{number}")]
-        public IActionResult Find(string number)
+        public IActionResult Find([FromRoute]string number)
         {
             var result = _phones.FirstOrDefault(p => p.Number == number);
             if (result == null)

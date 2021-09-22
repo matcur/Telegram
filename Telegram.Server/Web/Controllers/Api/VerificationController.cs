@@ -28,7 +28,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpPost]
         [Route("api/1.0/verification/by-phone")]
-        public IActionResult ByPhone(string number)
+        public IActionResult ByPhone([FromQuery]string number)
         {
             var phone = _phones.FirstOrDefault(p => p.Number == number);
             if (phone == null)
