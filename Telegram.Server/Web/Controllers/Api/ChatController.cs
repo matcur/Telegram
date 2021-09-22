@@ -32,7 +32,7 @@ namespace Telegram.Server.Web.Controllers.Api
         
         [HttpGet]
         [Route("api/1.0/chats/{chatId:int}")]
-        public IActionResult Find(int chatId)
+        public IActionResult Find([FromRoute]int chatId)
         {
             var chat = _chats.FirstOrDefault(c => c.Id == chatId);
             if (chat == null)
@@ -45,7 +45,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/chats/{id:int}/messages")]
-        public IActionResult Messages(int id, [FromQuery]int offset, [FromQuery]int count)
+        public IActionResult Messages([FromRoute]int id, [FromQuery]int offset, [FromQuery]int count)
         {
             var chat = _chats.FirstOrDefault(c => c.Id == id);
             if (chat == null)
@@ -78,7 +78,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpPost]
         [Route("api/1.0/chats/{chatId:int}/new-member/{userId:int}")]
-        public async Task<IActionResult> AddMember(int chatId, int userId)
+        public async Task<IActionResult> AddMember([FromRoute]int chatId, [FromRoute]int userId)
         {
             // Todo refactor
             var memberTask = _users.FirstOrDefaultAsync(u => u.Id == userId);
@@ -105,7 +105,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [HttpPost]
         [ModelValidation]
         [Route("api/1.0/chats/{id:int}/messages/create")]
-        public IActionResult Add([FromBody]MessageMap map, int id)
+        public IActionResult Add([FromBody]MessageMap map, [FromRoute]int id)
         {
             var chat = _chats.FirstOrDefault(c => c.Id == id);
             if (chat == null)

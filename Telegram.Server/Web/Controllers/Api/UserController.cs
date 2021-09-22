@@ -23,7 +23,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/users/{id}")]
-        public IActionResult Find(int id)
+        public IActionResult Find([FromRoute]int id)
         {
             var user = _users.Include(u => u.Phone)
                             .FirstOrDefault(u => u.Id == id);
@@ -37,7 +37,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/users/{id:int}/chats")]
-        public IActionResult Chats(int id, [FromQuery]int count, [FromQuery]int offset = 0)
+        public IActionResult Chats([FromRoute]int id, [FromQuery]int count, [FromQuery]int offset = 0)
         {
             var result = _users.DetailChats(id, count, offset);
 
@@ -46,7 +46,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/user/phone/{number}")]
-        public IActionResult ByPhone(string number)
+        public IActionResult ByPhone([FromRoute]string number)
         {
             var user = _users.FirstOrDefault(u => u.Phone.Number == number);
             if (user == null)
