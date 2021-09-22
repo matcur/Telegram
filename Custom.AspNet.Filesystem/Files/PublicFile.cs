@@ -28,7 +28,7 @@ namespace Custom.AspNet.Filesystem.Files
                 throw new Exception(@"File path doesn't contains '\wwwroot'.");
             }
 
-            var publicPath = parts[1];
+            var publicPath = parts[1].Replace(@"\", "/");
 
             return publicPath;
         }
