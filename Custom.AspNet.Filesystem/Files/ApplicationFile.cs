@@ -31,9 +31,9 @@ namespace Custom.AspNet.Filesystem.Files
                 throw new Exception("File path doesn't contains '\\wwwroot'.");
             }
 
-            var publicPath = parts[1];
+            var applicationPath = parts[1];
 
-            return publicPath;
+            return applicationPath;
         }
     }
 }
