@@ -18,7 +18,7 @@ const App = () => {
           <Route exact path="/login" component={Login}/>
           <Route exact path="/new-user-code-verification" component={NewUserCodeVerification}/>
           <Route exact path="/registered-user-code-verification" component={RegisteredUserCodeVerification}/>
-          <Route exact path="/" component={Index}/>
+          <Route path="/" component={Index}/>
         </Switch>
       </BrowserRouter>
     </div>
