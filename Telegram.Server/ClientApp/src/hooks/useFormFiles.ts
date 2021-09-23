@@ -7,16 +7,20 @@ export const useFormFiles = () => {
   const upload = async (input: HTMLInputElement) => {
     const files = input.files
     if (files === null) {
-      return
+      return []
     }
 
     if (files.length === 0) {
-      return
+      return []
     }
 
     return await new FilesApi()
       .upload(input.name, files)
-      .then(response => setUrls(response.result))
+      .then(response => {
+        setUrls(response.result)
+
+        return response.result
+      })
   }
 
   return {
