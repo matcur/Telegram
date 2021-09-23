@@ -67,8 +67,6 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/chats/create")]
         public async Task<IActionResult> Create([FromForm]ChatMap map)
         {
-            map.IconUrl = new ApplicationFile(map.Icon, "wwwroot").Save();
-            
             var chat = new Chat(map);
             _chats.Add(chat);
             await _db.SaveChangesAsync();
