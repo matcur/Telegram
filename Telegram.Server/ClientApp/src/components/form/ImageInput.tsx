@@ -1,4 +1,4 @@
-import React, {createRef, FC, useState} from 'react'
+import React, {createRef, FC} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 
 type Props = {
@@ -19,7 +19,7 @@ export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files'}) =
     <div
       className="image-input-wrapper">
       <img
-        src={thumbnail}
+        src={thumbnail? thumbnail: cat}
         alt=""
         className="circle image-input"
         onClick={onClick}/>
