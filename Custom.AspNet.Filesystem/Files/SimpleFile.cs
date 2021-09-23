@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.AspNetCore.Http;
 
 namespace Custom.AspNet.Filesystem.Files
@@ -25,6 +26,16 @@ namespace Custom.AspNet.Filesystem.Files
             }
 
             return _path;
+        }
+
+        public void Remove()
+        {
+            if (!File.Exists(_path))
+            {
+                throw new Exception($"File {_path} doesn't exists.");
+            }
+            
+            File.Delete(_path);
         }
     }
 }

@@ -3,5 +3,7 @@
     public interface IAspFile
     {
         string Save();
+
+        void Remove();
     }
 }
