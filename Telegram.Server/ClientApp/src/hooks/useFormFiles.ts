@@ -5,7 +5,7 @@ export const useFormFiles = () => {
   const [urls, setUrls] = useState<string[]>([])
 
   const upload = async (input: HTMLInputElement) => {
-    const files = input.files;
+    const files = input.files
     if (files === null) {
       return
     }

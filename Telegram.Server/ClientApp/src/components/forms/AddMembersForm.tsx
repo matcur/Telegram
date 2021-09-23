@@ -13,9 +13,10 @@ import {UpLayerContext} from "contexts/UpLayerContext";
 
 type Props = {
   chatName: string
+  chatIcon: string
 }
 
-export const AddMembersForm: FC<Props> = ({chatName}) => {
+export const AddMembersForm: FC<Props> = ({chatName, chatIcon}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const search = useFormInput()
   const selectedFriends = useArray<User>()
