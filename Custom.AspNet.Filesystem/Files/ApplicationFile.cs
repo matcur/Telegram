@@ -39,5 +39,10 @@ namespace Custom.AspNet.Filesystem.Files
 
             return applicationPath;
         }
+
+        public void Remove()
+        {
+            _source.Remove();
+        }
     }
 }
