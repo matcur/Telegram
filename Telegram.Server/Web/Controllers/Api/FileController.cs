@@ -1,3 +1,4 @@
+using Custom.AspNet.Filesystem.FileCollections;
 using Custom.AspNet.Filesystem.Files;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +9,15 @@ namespace Telegram.Server.Web.Controllers.Api
     public class FileController : Controller
     {
         [HttpPost]
-        [Route("api/1.0/file")]
-        public IActionResult Add(IFormFile file)
+        [Route("api/1.0/files")]
+        public IActionResult Add(IFormFileCollection files)
         {
-            var path = new PublicFile(file, "files").Save();
+            var path = new ApplicationFiles(
+                files, 
+                file => new PublicFile(file, "files").Save()
+            ).Save();
 
-            return Json(new RequestResult(true, (object)path));
+            return Json(new RequestResult(true, path));
         }
     }
 }
