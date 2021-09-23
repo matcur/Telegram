@@ -22,7 +22,7 @@ export const Index = () => {
   }
 
   return (
-    <UpLayerContext.Provider value={{setVisible: setUpLayerVisible, setCentralElement}}>
+    <UpLayerContext.Provider value={{setVisible: setUpLayerVisible, setCentralElement, hide: hideUpLayer}}>
       <LeftMenuContext.Provider value={{setVisible: setLeftMenuVisible}}>
         <div className="index">
           <UpLayer
