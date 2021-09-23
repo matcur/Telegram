@@ -28,6 +28,7 @@ export type Chat = {
   messages: Message[]
   members: User[]
   lastMessage?: Message
+  iconUrl?: string
 }
 
 export type Phone = {

@@ -2,32 +2,33 @@ import React, {createRef, FC, useState} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 
 type Props = {
-  onSelected: (e: HTMLInputElement) => Promise<string>
-  initialThumbnail: string
+  onSelected: (e: HTMLInputElement) => void
+  thumbnail: string
+  name?: string
 }
 
-export const ImageInput: FC<Props> = ({onSelected, initialThumbnail}) => {
-  const [source, setSource] = useState(initialThumbnail)
+export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files'}) => {
   const input = createRef<HTMLInputElement>()
 
-  const onClick = async () => {
-    const newSource = onSelected(input.current!)
-    setSource(await newSource)
+  const onClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault()
+    input.current!.click()
   }
 
   return (
     <div
-      className="image-input-wrapper"
-      onClick={() => input.current?.click()}>
+      className="image-input-wrapper">
       <img
-        src={cat}
+        src={thumbnail}
         alt=""
         className="circle image-input"
         onClick={onClick}/>
       <input
         ref={input}
         type="file"
-        className="file-input"/>
+        className="file-input"
+        name={name}
+        onChange={() => onSelected(input.current!)}/>
     </div>
   )
 }

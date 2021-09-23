@@ -1,25 +1,34 @@
-import React, {useContext, useState} from 'react'
+import React, {FC, useContext, useState} from 'react'
 import {FormButton} from "components/form/FormButton";
 import {ImageInput} from "components/form/ImageInput";
 import {TextInput} from "components/form/TextInput";
 import {InputEvent} from "hooks/useFormInput";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import {AddMembersForm} from "components/forms/AddMembersForm";
+import {useFormFiles} from "../../hooks/useFormFiles";
 
-export const NewGroupForm = () => {
+type Props = {
+  initName?: string
+  initIcon?: string
+}
+
+export const NewGroupForm: FC<Props> = ({initName = '', initIcon = ''}) => {
   const context = useContext(UpLayerContext)
-  const [name, setName] = useState('')
+  const [name, setName] = useState(initName)
   const [nameEntered, setNameEntered] = useState(false)
+  const [icon, setIcon] = useState(initIcon)
+  const files = useFormFiles()
 
-  const loadImage = (input: HTMLInputElement) => {
-    return new Promise(() => {}).then(() => 'an-image');
+  const loadImage = async (input: HTMLInputElement) => {
+    await files.upload(input)
+    setIcon(files.urls[0])
   }
   const hideUpLayer = () => {
     context.setVisible(false)
     context.setCentralElement(<div/>)
   }
   const showNextStep = () => {
-    context.setCentralElement(<AddMembersForm chatName={name}/>)
+    context.setCentralElement(<AddMembersForm chatName={name} chatIcon={icon}/>)
   }
   const formValid = () => name !== ''
   const onNextClick = () => {
@@ -38,7 +47,7 @@ export const NewGroupForm = () => {
         <div className="df aic">
           <ImageInput
             onSelected={loadImage}
-            initialThumbnail=""/>
+            thumbnail={icon}/>
           <TextInput
             label="Group Name"
             input={{value: name, onChange: onNameChange}}
