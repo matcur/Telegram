@@ -37,7 +37,9 @@ namespace Custom.AspNet.Filesystem.Files
                 @try++;
                 if (@try > 50)
                 {
-                    throw new Exception("Can't get free file name.");
+                    throw new Exception(
+                        $"Can't get free file name. Probably {_fileName.GetType()} always returns the same value."
+                    );
                 }
             } while (File.Exists(path));
 
