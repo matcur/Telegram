@@ -1,5 +1,5 @@
-import React, {FC, useContext} from 'react'
-import {useAppDispatch, useAppSelector} from "app/hooks";
+import React, {FC} from 'react'
+import {useAppSelector} from "app/hooks";
 import {Search} from "components/search/Search";
 import {useFormInput} from "hooks/useFormInput";
 import {ShortUserInfo} from "components/user/ShortUserInfo";
@@ -7,9 +7,6 @@ import {FormButton} from "components/form/FormButton";
 import {like} from "utils/like";
 import {User} from "models";
 import {useArray} from "hooks/useArray";
-import {ChatsApi} from "api/ChatsApi";
-import {addChat} from "app/slices/authorizationSlice";
-import {UpLayerContext} from "contexts/UpLayerContext";
 
 type Props = {
   onCreateClick: (users: User[]) => void
