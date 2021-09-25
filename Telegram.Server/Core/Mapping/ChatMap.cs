@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using Telegram.Server.Core.Db.Models;
 
 namespace Telegram.Server.Core.Mapping
 {
@@ -15,5 +17,7 @@ namespace Telegram.Server.Core.Mapping
 
         [Required]
         public IFormFile Icon { get; set; }
+
+        public List<User> Members { get;set; }
     }
 }
