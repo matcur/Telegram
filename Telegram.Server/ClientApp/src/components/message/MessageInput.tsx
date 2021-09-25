@@ -5,6 +5,7 @@ import {ReactComponent as Smile} from 'public/svgs/smile.svg'
 import {ReactComponent as Microphone} from 'public/svgs/microphone.svg'
 import {useForm} from "react-hook-form";
 import {Content} from "models";
+import {useAppSelector} from "../../app/hooks";
 
 type Props = {
   onSubmitting: (data: FormData, content: Content[]) => void
@@ -16,6 +17,7 @@ type Form = {
 }
 
 export const MessageInput: FC<Props> = ({onSubmitting, textInput}: Props) => {
+  const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
 
@@ -31,6 +33,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput}: Props) => {
   }
 
   const seedForm = (form: FormData, data: Form, content: Content[], files: FileList) => {
+    form.append('authorId', currentUser.id.toString())
     form.append('content[0].type', 'Text')
     form.append('content[0].value', textInput.value)
     content.push({type: 'Text', value: textInput.value, displayOrder: 1000})
