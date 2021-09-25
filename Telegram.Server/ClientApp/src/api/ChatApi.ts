@@ -17,12 +17,9 @@ export class ChatApi {
   }
 
   async addMessage(data: FormData) {
-    // return await this.api.post(
-    //   `chats/${this.id}/messages/create`,
-    //   data
-    // )
-    return await new Promise((res, rej) => {
-      res(123)
-    })
+    return await this.api.post(
+      `chats/${this.id}/messages/create`,
+      data
+    )
   }
 }
