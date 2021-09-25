@@ -30,7 +30,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = ''}) => {
       name: name,
       iconUrl: icon,
       members: [
-        currentUser,
+        {...currentUser, chats: []},
         ...members
       ]
     }
