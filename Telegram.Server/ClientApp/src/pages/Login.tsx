@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 import {useHistory} from "react-router";
 import {isValidPhone} from "utils/isValidPhone";
 import {PhonesApi} from "api/PhonesApi";
@@ -10,7 +10,8 @@ export const Login = () => {
   const phone = useFormInput('89519370404')
   const [invalidPhoneMessage, setInvalidPhoneMessage] = useState('')
 
-  const toVerification = async () => {
+  const toVerification = async (e: FormEvent) => {
+    e.preventDefault()
     if (isValidPhone(phone.value)) {
       const response = await new PhonesApi().find(phone.value)
       if (response.success) {
