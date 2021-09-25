@@ -103,7 +103,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [HttpPost]
         [ModelValidation]
         [Route("api/1.0/chats/{id:int}/messages/create")]
-        public IActionResult Add([FromBody]MessageMap map, [FromRoute]int id)
+        public IActionResult Add([FromForm]MessageMap map, [FromRoute]int id)
         {
             var chat = _chats.FirstOrDefault(c => c.Id == id);
             if (chat == null)
