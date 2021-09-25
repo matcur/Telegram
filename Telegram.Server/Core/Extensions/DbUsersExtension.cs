@@ -12,18 +12,18 @@ namespace Telegram.Server.Core.Extensions
             return self
                 .Where(u => u.Id == userId)
                 .Include(u => u.Chats)
-                .ThenInclude(c => c.Messages)
+                .ThenInclude(c => c.Chat.Messages)
                 .ThenInclude(m => m.Author)
                 .Include(u => u.Chats)
-                .ThenInclude(c => c.Messages)
+                .ThenInclude(c => c.Chat.Messages)
                 .ThenInclude(m => m.Content)
                 .Select(u => u.Chats.Select(c => new Chat
                 {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
-                    IconUrl = c.IconUrl,
+                    Id = c.Chat.Id,
+                    Name = c.Chat.Name,
+                    Description = c.Chat.Description,
+                    LastMessage = c.Chat.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
+                    IconUrl = c.Chat.IconUrl,
                 }))
                 .First();
         }
