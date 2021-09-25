@@ -94,7 +94,7 @@ namespace Telegram.Server.Web.Controllers.Api
                 return Json(new RequestResult(false, $"Chat with id = {chatId} does not exists"));
             }
             
-            chat.Members.Add(member);
+            chat.Members.Add(new ChatUser(member.Id));
             _db.SaveChanges();
 
             return Json(new RequestResult(true));
