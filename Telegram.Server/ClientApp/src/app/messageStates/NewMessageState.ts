@@ -12,10 +12,10 @@ export class NewMessageState implements MessageState {
     private currentUser: User
   ) { }
 
-  submit(data: FormData, content: Content[]) {
+  async submit(data: FormData, content: Content[]) {
     const id = this.chatId;
 
-    (new ChatApi(id)).addMessage(data)
+    await new ChatApi(id).addMessage(data)
     this.dispatch(
       addMessage({chatId: id, message: {content, author: this.currentUser, chatId: id}})
     )
