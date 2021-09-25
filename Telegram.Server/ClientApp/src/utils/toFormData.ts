@@ -20,7 +20,6 @@ function seed(value: any, formData: FormData, key: string, namespace: string) {
   } else if (value instanceof Array) {
     value.forEach((element, index) => {
       if (typeof element != 'object') {
-        console.log(`${formKey}[]`, element)
         formData.append(`${formKey}[]`, element)
       }
       else {
@@ -31,7 +30,6 @@ function seed(value: any, formData: FormData, key: string, namespace: string) {
   } else if (typeof value === 'object' && !(value instanceof File)) {
     toFormData(value, formData, formKey)
   } else {
-    console.log(formKey, value.toString())
     formData.append(formKey, value.toString())
   }
 }
