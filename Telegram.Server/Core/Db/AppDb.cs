@@ -31,6 +31,19 @@ namespace Telegram.Server.Core.Db
                     v => v.ToString(),
                     v => (ContentType)Enum.Parse(typeof(ContentType), v)
                 );
+            
+            modelBuilder.Entity<ChatUser>()
+                .HasKey(nameof(ChatUser.UserId), nameof(ChatUser.ChatId));
+            
+            modelBuilder.Entity<ChatUser>() 
+                .HasOne(pt => pt.Chat)
+                .WithMany(p => p.Members)
+                .HasForeignKey(pt => pt.ChatId);
+ 
+            modelBuilder.Entity<ChatUser>() 
+                .HasOne(pt => pt.User) 
+                .WithMany(t => t.Chats)
+                .HasForeignKey(pt => pt.UserId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
