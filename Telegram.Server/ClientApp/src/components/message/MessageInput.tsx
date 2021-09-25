@@ -32,6 +32,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput}: Props) => {
     textInput.onChange('')
   }
 
+  // Todo: use toFormData function
   const seedForm = (form: FormData, data: Form, content: Content[], files: FileList) => {
     form.append('authorId', currentUser.id.toString())
     form.append('content[0].type', 'Text')
