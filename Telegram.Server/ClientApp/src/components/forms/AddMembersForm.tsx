@@ -12,16 +12,13 @@ import {addChat} from "app/slices/authorizationSlice";
 import {UpLayerContext} from "contexts/UpLayerContext";
 
 type Props = {
-  chatName: string
-  chatIcon: string
+  onCreateClick: (users: User[]) => void
 }
 
-export const AddMembersForm: FC<Props> = ({chatName, chatIcon}) => {
+export const AddMembersForm: FC<Props> = ({onCreateClick}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const search = useFormInput()
   const selectedFriends = useArray<User>()
-  const dispatch = useAppDispatch()
-  const upLayerContext = useContext(UpLayerContext)
 
   const filtered = currentUser.friends?.filter(
     f => like(`${f.firstName} ${f.lastName}`, search.value)
@@ -34,20 +31,6 @@ export const AddMembersForm: FC<Props> = ({chatName, chatIcon}) => {
       user={user}
       onClick={selected? selectedFriends.remove: selectedFriends.add}
       className={`friend-info ${selected? 'selected-friend': ''}`}/>
-  }
-  const create = async () => {
-    const chat = new ChatsApi().add({
-      name: chatName,
-      members: [
-        currentUser,
-        ...selectedFriends.value
-      ]
-    })
-
-    dispatch(addChat(await chat))
-
-    upLayerContext.setCentralElement(<div/>)
-    upLayerContext.setVisible(false)
   }
 
   return (
@@ -66,7 +49,7 @@ export const AddMembersForm: FC<Props> = ({chatName, chatIcon}) => {
         <FormButton name="Cancel"/>
         <FormButton
           name="Create"
-          onClick={create}/>
+          onClick={() => onCreateClick(selectedFriends.value)}/>
       </div>
     </div>
   )

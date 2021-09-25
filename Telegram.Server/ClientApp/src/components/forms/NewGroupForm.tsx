@@ -6,6 +6,10 @@ import {InputEvent} from "hooks/useFormInput";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import {AddMembersForm} from "components/forms/AddMembersForm";
 import {useFormFiles} from "../../hooks/useFormFiles";
+import {ChatsApi} from "../../api/ChatsApi";
+import {addChat} from "../../app/slices/authorizationSlice";
+import {User} from "../../models";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 
 type Props = {
   initName?: string
@@ -13,22 +17,41 @@ type Props = {
 }
 
 export const NewGroupForm: FC<Props> = ({initName = '', initIcon = ''}) => {
-  const context = useContext(UpLayerContext)
+  const currentUser = useAppSelector(state => state.authorization.currentUser)
+  const upLayer = useContext(UpLayerContext)
   const [name, setName] = useState(initName)
   const [nameEntered, setNameEntered] = useState(false)
   const [icon, setIcon] = useState(initIcon)
   const files = useFormFiles()
+  const dispatch = useAppDispatch()
 
+  const createChat = async (members: User[]) => {
+    const chat = {
+      name: name,
+      iconUrl: icon,
+      members: [
+        currentUser,
+        ...members
+      ]
+    }
+    const response = await new ChatsApi().add(chat)
+
+    dispatch(addChat(response.result))
+  }
+  const onCreate = async (members: User[]) => {
+    await createChat(members)
+    upLayer.hide()
+  }
   const loadImage = async (input: HTMLInputElement) => {
-    await files.upload(input)
-    setIcon(files.urls[0])
+    const urls = await files.upload(input)
+    setIcon(urls[0])
   }
   const hideUpLayer = () => {
-    context.setVisible(false)
-    context.setCentralElement(<div/>)
+    upLayer.setVisible(false)
+    upLayer.setCentralElement(<div/>)
   }
   const showNextStep = () => {
-    context.setCentralElement(<AddMembersForm chatName={name} chatIcon={icon}/>)
+    upLayer.setCentralElement(<AddMembersForm onCreateClick={onCreate}/>)
   }
   const formValid = () => name !== ''
   const onNextClick = () => {
