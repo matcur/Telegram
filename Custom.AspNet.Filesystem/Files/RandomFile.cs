@@ -47,14 +47,5 @@ namespace Custom.AspNet.Filesystem.Files
                 _source, path
             ).Save();
         }
-
-        public void Remove()
-        {
-            var name = _fileName.Value(_source);
-
-            new SimpleFile(
-                _source, Path.Combine(_folder, name)
-            ).Remove();
-        }
     }
 }
