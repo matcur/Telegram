@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Db.Models
@@ -21,7 +22,7 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<Message> Messages { get; set; } = new List<Message>();
 
-        public List<User> Members { get; set; } = new List<User>();
+        public List<ChatUser> Members { get; set; } = new List<ChatUser>();
 
         public List<Role> Roles { get; set; } = new List<Role>();
 
@@ -32,6 +33,7 @@ namespace Telegram.Server.Core.Db.Models
             Name = map.Name;
             Description = map.Description;
             IconUrl = map.IconUrl;
+            Members = map.Members.Select(m => new ChatUser(m.Id)).ToList();
         }
     }
 }
