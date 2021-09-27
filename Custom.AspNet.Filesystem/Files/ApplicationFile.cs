@@ -1,16 +1,31 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Http;
 
 namespace Custom.AspNet.Filesystem.Files
 {
     public class ApplicationFile : IAspFile
     {
-        internal static string Root;
-        
-        private readonly IAspFile _source;
+        internal static string Root
+        {
+            get
+            {
+                if (_root == null)
+                {
+                    throw new Exception(
+                        "Call services.AddFileSystem before using Custom.AspNet.Filesystem.Files classes."
+                    );
+                }
+                
+                return _root;
+            }
+            set => _root = value;
+        }
 
+        private static string _root;
+
+        private readonly IAspFile _source;
+        
         public ApplicationFile(IFormFile source, string folder)
             : this(new RandomFile(source, Path.Combine(Root, folder)))
         {
