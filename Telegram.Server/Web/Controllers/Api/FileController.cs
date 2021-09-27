@@ -12,7 +12,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/files")]
         public IActionResult Add(IFormFileCollection files)
         {
-            var path = new ApplicationFiles(
+            var path = new FileCollection(
                 files, 
                 file => new PublicFile(file, "files").Save()
             ).Save();
