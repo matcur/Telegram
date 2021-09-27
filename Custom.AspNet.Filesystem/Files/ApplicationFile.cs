@@ -7,11 +7,7 @@ namespace Custom.AspNet.Filesystem.Files
 {
     public class ApplicationFile : IAspFile
     {
-        public static readonly string Root = 
-            Path.Combine(
-                Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location),
-                "../../.."
-            );
+        internal static string Root;
         
         private readonly IAspFile _source;
 
@@ -29,7 +25,7 @@ namespace Custom.AspNet.Filesystem.Files
         public string Save()
         {
             var path = _source.Save();
-            var parts = path.Split($"{Root}\\");
+            var parts = path.Split($"{Root}");
             if (parts.Length == 1)
             {
                 throw new Exception($"File path doesn't contains {Root}'.");
