@@ -4,7 +4,7 @@ import {VerificationApi} from "api/VerificationApi";
 import {useQueryParams} from "hooks/useQueryParams";
 import {RegistrationApi} from "api/RegistrationApi";
 
-export const NewUserCodeVerification = () => {
+export const PhoneVerification = () => {
   const query = useQueryParams()
   const [userId, setUserId] = useState(-1)
 
