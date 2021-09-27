@@ -10,8 +10,7 @@ export const NewUserCodeVerification = () => {
 
   const phoneNumber = query.get('phoneNumber') ?? ''
   const title = <span>
-    A code was sent <strong>via Phone</strong> to your other<br/>
-    devices, if you have any connected.
+    A code was sent <strong>via Phone</strong>.
   </span>
 
   useEffect(() => {
