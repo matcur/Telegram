@@ -15,8 +15,8 @@ export const Login = () => {
     if (isValidPhone(phoneInput.value)) {
       const response = await new PhonesApi().find(phoneInput.value)
       if (response.success) {
-        const result = response.result
-        history.push(`/registered-user-code-verification?phoneNumber=${result.number}&userId=${result.ownerId}`)
+        const phone = response.result
+        history.push(`/registered-user-code-verification?phoneNumber=${phone.number}&userId=${phone.ownerId}`)
       } else {
         history.push(`/new-user-code-verification?phoneNumber=${phoneInput.value}`)
       }
