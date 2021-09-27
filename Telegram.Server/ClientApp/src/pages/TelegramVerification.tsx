@@ -3,7 +3,7 @@ import {BaseCodeVerification} from "pages/BaseCodeVerification";
 import {VerificationApi} from "api/VerificationApi";
 import {useQueryParams} from "hooks/useQueryParams";
 
-export const RegisteredUserCodeVerification = () => {
+export const TelegramVerification = () => {
   const query = useQueryParams()
 
   const phoneNumber = query.get('phoneNumber') ?? ''
