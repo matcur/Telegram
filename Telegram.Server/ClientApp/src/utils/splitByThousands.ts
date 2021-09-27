@@ -1,4 +1,4 @@
-export const splitByThousands = (value: string | number) => {
+export const splitByThousands = (value: string | number, splitter: string = ',') => {
   value = value.toString()
 
   const split = value.split('').reverse()
@@ -11,7 +11,7 @@ export const splitByThousands = (value: string | number) => {
   for (let i = 1; i <= byThreeSectionCount; i++) {
     const newCommaPosition = i * 3 + commInserted
 
-    split.splice(newCommaPosition, 0, ',')
+    split.splice(newCommaPosition, 0, splitter)
     commInserted++
   }
 
