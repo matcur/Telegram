@@ -22,8 +22,10 @@ export const Login = () => {
 
   const onNextClick = (e: FormEvent) => {
     e.preventDefault()
-    if (isValidPhone(phoneInput.value)) {
-      toVerification(phoneInput.value)
+    
+    const phone = phoneInput.value;
+    if (isValidPhone(phone)) {
+      toVerification(phone)
     } else {
       setInvalidPhoneMessage('Invalid phone number. Try again.')
     }
