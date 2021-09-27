@@ -18,7 +18,7 @@ export const Login = () => {
         const phone = response.result
         history.push(`/telegram-verification?phoneNumber=${phone.number}&userId=${phone.ownerId}`)
       } else {
-        history.push(`/new-user-code-verification?phoneNumber=${phoneInput.value}`)
+        history.push(`/phone-verification?phoneNumber=${phoneInput.value}`)
       }
     } else {
       setInvalidPhoneMessage('Invalid phone number. Try again.')
