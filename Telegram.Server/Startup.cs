@@ -13,6 +13,7 @@ using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Web.Hubs;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Custom.AspNet.Filesystem;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
 
@@ -21,9 +22,12 @@ namespace Telegram.Server
     public class Startup
     {
         public IConfiguration Configuration { get; }
+     
+        private readonly IWebHostEnvironment _environment;
         
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
+            _environment = environment;
             Configuration = configuration;
         }
 
@@ -54,6 +58,8 @@ namespace Telegram.Server
             });
             services.AddDbContext<AppDb>();
             services.AddSignalR();
+            
+            services.AddFileSystem(_environment.WebRootPath);
 
             services.AddTransient<IAuthorizationToken>(services =>
             {
