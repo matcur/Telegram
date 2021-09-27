@@ -12,7 +12,7 @@ namespace Custom.AspNet.Filesystem.FileCollections
         private readonly Func<IFormFile, string> _fileCreation;
 
         public FileCollection(IEnumerable<IFormFile> files, string folder)
-            : this(files, file => new ApplicationFile(file, folder).Save())
+            : this(files, file => new PublicFile(file, folder).Save())
         {
 
         }
