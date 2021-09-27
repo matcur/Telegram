@@ -19,6 +19,7 @@ export const Login = () => {
       history.push(`/phone-verification?phoneNumber=${phoneInput.value}`)
     }
   }
+  const toStart = () => history.push('/start')
 
   const onNextClick = (e: FormEvent) => {
     e.preventDefault()
@@ -30,7 +31,6 @@ export const Login = () => {
       setInvalidPhoneMessage('Invalid phone number. Try again.')
     }
   }
-  const toStart = () => history.push('/start')
   const onPhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
     phoneInput.onChange(e)
     setInvalidPhoneMessage('')
