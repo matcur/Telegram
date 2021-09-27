@@ -10,16 +10,20 @@ export const Login = () => {
   const phoneInput = useFormInput('89519370404')
   const [invalidPhoneMessage, setInvalidPhoneMessage] = useState('')
 
-  const toVerification = async (e: FormEvent) => {
+  const toVerification = async (phoneNumber: string) => {
+    const response = await new PhonesApi().find(phoneNumber)
+    if (response.success) {
+      const phone = response.result
+      history.push(`/telegram-verification?phoneNumber=${phone.number}&userId=${phone.ownerId}`)
+    } else {
+      history.push(`/phone-verification?phoneNumber=${phoneInput.value}`)
+    }
+  }
+
+  const onNextClick = (e: FormEvent) => {
     e.preventDefault()
     if (isValidPhone(phoneInput.value)) {
-      const response = await new PhonesApi().find(phoneInput.value)
-      if (response.success) {
-        const phone = response.result
-        history.push(`/telegram-verification?phoneNumber=${phone.number}&userId=${phone.ownerId}`)
-      } else {
-        history.push(`/phone-verification?phoneNumber=${phoneInput.value}`)
-      }
+      toVerification(phoneInput.value)
     } else {
       setInvalidPhoneMessage('Invalid phone number. Try again.')
     }
@@ -33,7 +37,7 @@ export const Login = () => {
   return (
     <div className="page login-page">
       <PageNavigation onBackClick={toStart}/>
-      <form className="login-form" onSubmit={toVerification}>
+      <form className="login-form" onSubmit={onNextClick}>
         <div className="form-title">Your Phone Number</div>
         <p className="phone-caption">
           Please confirm your country code and<br/>
@@ -49,7 +53,7 @@ export const Login = () => {
         <div className="invalid-phone-number">{invalidPhoneMessage}</div>
         <div
           className="btn btn-primary login-form-btn"
-          onClick={toVerification}>
+          onClick={onNextClick}>
           NEXT
         </div>
       </form>
