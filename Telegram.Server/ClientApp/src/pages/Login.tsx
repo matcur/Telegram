@@ -7,18 +7,18 @@ import {PageNavigation} from "pages/partials/PageNavigation";
 
 export const Login = () => {
   const history = useHistory()
-  const phone = useFormInput('89519370404')
+  const phoneInput = useFormInput('89519370404')
   const [invalidPhoneMessage, setInvalidPhoneMessage] = useState('')
 
   const toVerification = async (e: FormEvent) => {
     e.preventDefault()
-    if (isValidPhone(phone.value)) {
-      const response = await new PhonesApi().find(phone.value)
+    if (isValidPhone(phoneInput.value)) {
+      const response = await new PhonesApi().find(phoneInput.value)
       if (response.success) {
         const result = response.result
         history.push(`/registered-user-code-verification?phoneNumber=${result.number}&userId=${result.ownerId}`)
       } else {
-        history.push(`/new-user-code-verification?phoneNumber=${phone.value}`)
+        history.push(`/new-user-code-verification?phoneNumber=${phoneInput.value}`)
       }
     } else {
       setInvalidPhoneMessage('Invalid phone number. Try again.')
@@ -26,7 +26,7 @@ export const Login = () => {
   }
   const toStart = () => history.push('/start')
   const onPhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
-    phone.onChange(e)
+    phoneInput.onChange(e)
     setInvalidPhoneMessage('')
   }
 
@@ -41,7 +41,7 @@ export const Login = () => {
         </p>
         <div className="form-group login-phone-group">
           <input
-            value={phone.value}
+            value={phoneInput.value}
             onInput={onPhoneInput}
             className="clear-input form-input phone-input"/>
           <div className="input-line"/>
