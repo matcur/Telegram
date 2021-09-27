@@ -725,20 +725,20 @@ a {
     margin-top: 4px;
 }
 
-.previous-in-row-user-message,
-.last-in-row-user-message {
+.previous-in-row-message,
+.last-in-row-message {
     margin-top: 2px;
 }
 
-.first-in-row-user-message .message-triangle,
-.first-in-row-user-message .message-author-avatar,
-.previous-in-row-user-message .message-triangle,
-.previous-in-row-user-message .message-author-avatar {
+.first-in-row-message .message-triangle,
+.first-in-row-message .message-author-avatar,
+.previous-in-row-message .message-triangle,
+.previous-in-row-message .message-author-avatar {
     visibility: hidden;
 }
 
-.last-in-row-user-message .message-wrapper:hover .message-reply,
-.previous-in-row-user-message .message-wrapper:hover .message-reply {
+.last-in-row-message .message-wrapper:hover .message-reply,
+.previous-in-row-message .message-wrapper:hover .message-reply {
     display: none;
 }
 

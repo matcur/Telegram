@@ -4,9 +4,9 @@ import {sameUsers} from "utils/sameUsers";
 
 const classes = {
   single: 'single-message',
-  first: 'first-in-row-user-message',
-  previous: 'previous-in-row-user-message',
-  last: 'last-in-row-user-message',
+  first: 'first-in-row-message',
+  previous: 'previous-in-row-message',
+  last: 'last-in-row-message',
 }
 
 export const inRowPositionClass = (previous: User, current: User, next: User) => {
