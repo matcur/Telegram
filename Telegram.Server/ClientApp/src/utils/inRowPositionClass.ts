@@ -9,10 +9,6 @@ const classes = {
   last: 'last-in-row-user-message',
 }
 
-/**
- * Defines element class for message in chat,
- * dependents on sibling message authors
- */
 export const inRowPositionClass = (previous: User, current: User, next: User) => {
   if (!sameUsers(previous, current) && !sameUsers(current, next)) {
     return classes.single
