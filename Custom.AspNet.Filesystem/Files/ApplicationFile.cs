@@ -26,6 +26,12 @@ namespace Custom.AspNet.Filesystem.Files
 
         private readonly IAspFile _source;
         
+        public ApplicationFile(IFormFile source, string folder, string name)
+            : this(new SimpleFile(source, folder, name))
+        {
+
+        }
+
         public ApplicationFile(IFormFile source, string folder)
             : this(new RandomFile(source, Path.Combine(Root, folder)))
         {

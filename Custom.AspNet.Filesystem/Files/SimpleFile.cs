@@ -10,6 +10,12 @@ namespace Custom.AspNet.Filesystem.Files
         
         private readonly string _path;
 
+        public SimpleFile(IFormFile source, string folder, string name)
+            : this(source, Path.Combine(folder, name))
+        {
+
+        }
+
         public SimpleFile(IFormFile source, string path)
         {
             _source = source;
