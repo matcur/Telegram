@@ -16,7 +16,8 @@ export const NewUserCodeVerification = () => {
 
   useEffect(() => {
     const load = async () => {
-      const user = (await (new RegistrationApi().register({number: phoneNumber}))).result
+      const response = await new RegistrationApi().register({number: phoneNumber})
+      const user = response.result
       setUserId(user.id)
 
       new VerificationApi().byPhone(phoneNumber)
