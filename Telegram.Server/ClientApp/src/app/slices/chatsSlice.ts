@@ -17,19 +17,6 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState: {list: []} as State,
   reducers: {
-    addMessage(state, {payload}: PayloadAction<{chatId: number, message: Omit<Message, 'id' | 'creationDate'>}>) {
-      const chat = state.list.find(c => c.id === payload.chatId)
-
-      chat?.messages.push(newMessage(payload.message, chat.messages))
-    },
-    addMessages(state, {payload}: PayloadAction<{chatId: number, messages: Omit<Message, 'id' | 'creationDate'>[]}>) {
-      const chat = state.list.find(c => c.id === payload.chatId)
-      if (chat === undefined) {
-        return
-      }
-
-      payload.messages.forEach(m => chat.messages.push(newMessage(m, chat.messages)))
-    },
     addChatRange(state, {payload}: PayloadAction<Chat[]>) {
       payload.forEach(chat => {
         state.list.push(chat)
@@ -50,20 +37,6 @@ const chatsSlice = createSlice({
   }
 })
 
-export const { addChatRange, remove, addMessage, addMessages, updateMessage } = chatsSlice.actions
+export const { addChatRange, remove, updateMessage } = chatsSlice.actions
 
 export const chatsReducer = chatsSlice.reducer
-
-export const detailChat = (state: RootState, id: number) => {
-  const chats = state.chats.list
-
-  if (!chats.some(chat => chat.id === id)) {
-    return nullChat
-  }
-
-  return chats.find(chat => chat.id === id)!
-}
-
-export const chatMessages = (state: RootState, id: number) => {
-  return detailChat(state, id).messages
-}

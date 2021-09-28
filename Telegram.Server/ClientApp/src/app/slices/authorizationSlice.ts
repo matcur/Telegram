@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Chat, User} from "models";
-import {nullUser} from "nullables";
+import {Chat, Message, User} from "models";
+import {nullChat, nullUser} from "nullables";
+import {RootState} from "../store";
 
 type State = {
   currentUser: User
@@ -22,10 +23,44 @@ const authorizationSlice = createSlice({
     },
     addChats(state, {payload}: PayloadAction<Chat[]>) {
       state.currentUser.chats = payload
+    },
+    addMessage(state, {payload}: PayloadAction<{chatId: number, message: Message}>) {
+      const chat = selectChats(state).find(c => c.id === payload.chatId)
+
+      if (chat !== undefined) {
+        chat.messages.push(payload.message)
+        chat.lastMessage = payload.message
+      }
+    },
+    addMessages(state, {payload}: PayloadAction<{chatId: number, messages: Message[]}>) {
+      const chat = selectChats(state).find(c => c.id === payload.chatId)
+      if (chat === undefined) {
+        return
+      }
+
+      payload.messages.forEach(m => chat.messages.push(m))
     }
   }
 })
 
-export const {authorize, addChat, addChats} = authorizationSlice.actions
+export const {authorize, addChat, addChats, addMessages, addMessage} = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer
+
+export const chatMessages = (state: RootState, chatId: number) => {
+  return detailChat(state, chatId).messages
+}
+
+export const detailChat = (state: RootState, id: number) => {
+  const chats = selectChats(state.authorization)
+
+  if (!chats.some(chat => chat.id === id)) {
+    return nullChat
+  }
+
+  return chats.find(chat => chat.id === id)!
+}
+
+export const selectChats = (state: State) => {
+  return state.currentUser.chats
+}
