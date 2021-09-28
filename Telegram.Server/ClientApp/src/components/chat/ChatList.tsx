@@ -17,6 +17,10 @@ export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltrati
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    if (token === '') {
+      return
+    }
+    
     const load = async() => {
       const response = await new AuthorizedUserApi(token).chats()
       dispatch(addChats(response.result))
