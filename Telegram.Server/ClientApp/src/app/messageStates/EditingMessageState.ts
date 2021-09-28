@@ -14,7 +14,7 @@ export class EditingMessageState implements MessageState {
     private afterSubmitState: MessageState
   ) { }
 
-  submit(data: FormData, content: Content[]) {
+  save(data: FormData, content: Content[]) {
     this.setState(this.afterSubmitState)
 
     const message = this.message

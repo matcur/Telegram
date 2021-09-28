@@ -3,21 +3,24 @@ import {Content, User} from "models";
 import {Dispatch} from "react";
 import {AnyAction} from "@reduxjs/toolkit";
 import {ChatApi} from "api/ChatApi";
-import {addMessage} from "app/slices/chatsSlice";
+import {addMessage} from "app/slices/authorizationSlice";
 
 export class NewMessageState implements MessageState {
   constructor(
     private dispatch: Dispatch<AnyAction>,
+    private currentUser: User,
     private chatId: number,
-    private currentUser: User
   ) { }
 
-  async submit(data: FormData, content: Content[]) {
+  async save(data: FormData, content: Content[]) {
     const id = this.chatId;
 
-    await new ChatApi(id).addMessage(data)
+    const response = await new ChatApi(id).addMessage(data)
+    const message = response.result
+    message.author = this.currentUser
+    
     this.dispatch(
-      addMessage({chatId: id, message: {content, author: this.currentUser, chatId: id}})
+      addMessage({chatId: id, message})
     )
   }
 }
