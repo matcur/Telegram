@@ -9,7 +9,7 @@ namespace Custom.AspNet.Filesystem
         public static void AddFileSystem(this IServiceCollection services, string wwwrootPath)
         {
             ApplicationFile.Root = Path.GetFullPath(
-                Path.Combine(wwwrootPath, @"..\")
+                Path.Combine(wwwrootPath, @"..")
             );
         }
     }
