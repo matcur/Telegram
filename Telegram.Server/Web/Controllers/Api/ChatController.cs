@@ -100,22 +100,25 @@ namespace Telegram.Server.Web.Controllers.Api
             return Json(new RequestResult(true));
         }
 
+        //Todo: extract in separate controller
         [HttpPost]
         [ModelValidation]
-        [Route("api/1.0/chats/{id:int}/messages/create")]
-        public IActionResult Add([FromForm]MessageMap map, [FromRoute]int id)
+        [Route("api/1.0/messages/create")]
+        public IActionResult Add([FromForm]MessageMap map)
         {
-            var chat = _chats.FirstOrDefault(c => c.Id == id);
+            var chat = _chats.FirstOrDefault(c => c.Id == map.ChatId);
             if (chat == null)
             {
-                return Json(new RequestResult(false, $"Chat with id = {id} doesn't exist"));
+                return Json(new RequestResult(
+                    false, $"Chat with id = {map.ChatId} doesn't exist"
+                ));
             }
 
-            chat.Messages.Add(new Message(map));
-            _chats.Update(chat);
+            var message = new Message(map);
+            _db.Add(message);
             _db.SaveChanges();
 
-            return Json(new RequestResult(true, ""));
+            return Json(new RequestResult(true, message));
         }
     }
 }
