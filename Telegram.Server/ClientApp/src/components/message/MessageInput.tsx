@@ -10,13 +10,14 @@ import {useAppSelector} from "../../app/hooks";
 type Props = {
   onSubmitting: (data: FormData, content: Content[]) => void
   textInput: {value: string, onChange: (e: React.FormEvent<HTMLInputElement> | string) => void}
+  chatId: number
 }
 
 type Form = {
   files: FileList
 }
 
-export const MessageInput: FC<Props> = ({onSubmitting, textInput}: Props) => {
+export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
@@ -34,6 +35,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput}: Props) => {
 
   // Todo: use toFormData function
   const seedForm = (form: FormData, data: Form, content: Content[], files: FileList) => {
+    form.append('chatId', chatId.toString())
     form.append('authorId', currentUser.id.toString())
     form.append('content[0].type', 'Text')
     form.append('content[0].value', textInput.value)
