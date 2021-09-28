@@ -25,6 +25,14 @@ namespace Telegram.Server.Core.Db
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<Content>()
+                .Property(c => c.Type)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ContentType)Enum.Parse(typeof(ContentType), v)
+                );
+            
             modelBuilder.Entity<ChatUser>()
                 .HasKey(nameof(ChatUser.UserId), nameof(ChatUser.ChatId));
             
