@@ -3,7 +3,6 @@ import {MessageInput} from "components/message/MessageInput";
 import {ChatMessages} from "components/chat/ChatMessages";
 import {useAppDispatch, useAppSelector} from "app/hooks";
 import {Chat as ChatModel, Content, Message} from "models";
-import {addMessages, chatMessages} from "app/slices/chatsSlice";
 import {LoadingChat} from "./LoadingChat";
 import {nullMessage} from "nullables";
 import {ChatHeader} from "components/chat/ChatHeader";
@@ -12,22 +11,26 @@ import {textContent} from "utils/textContent";
 import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
+import {ChatApi} from "api/ChatApi";
+import {addMessages, chatMessages} from "app/slices/authorizationSlice";
 
 type Props = {
   chat: ChatModel
 }
 
 export const Chat: FC<Props> = ({chat}: Props) => {
-  const messages = useAppSelector(state => chatMessages(state, chat.id))
-  const currentUser = useAppSelector(state => state.authorization.currentUser)
+  const id = chat.id
   const dispatch = useAppDispatch()
+  const currentUser = useAppSelector(state => state.authorization.currentUser)
+  const newMessageState = new NewMessageState(dispatch, currentUser, chat.id)
+  
+  const messages = useAppSelector(state => chatMessages(state, id))
   const input = useFormInput()
-  const newMessageState = new NewMessageState(dispatch, chat.id, currentUser)
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   const [loaded, setLoaded] = useState(false)
 
   const onSubmit = (data: FormData, content: Content[]) => {
-    inputState.submit(data, content)
+    inputState.save(data, content)
   }
   const editMessage = (message: Message) => {
     input.onChange(textContent(message))
@@ -43,10 +46,11 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     }
 
     const load = async () => {
-      await setTimeout(() => {
-        dispatch(addMessages({chatId: chat.id, messages: [nullMessage, nullMessage]}))
-        setLoaded(true)
-      }, 1000)
+      const response = await new ChatApi(id).messages(0, 10)
+      const messages = response.result
+      
+      dispatch(addMessages({chatId: id, messages}))
+      setLoaded(true)
     }
 
     load()
@@ -62,7 +66,8 @@ export const Chat: FC<Props> = ({chat}: Props) => {
             messages={messages}/>
           <MessageInput
             textInput={input}
-            onSubmitting={onSubmit}/>
+            onSubmitting={onSubmit}
+            chatId={id}/>
         </>)
         : <LoadingChat/>
       }
