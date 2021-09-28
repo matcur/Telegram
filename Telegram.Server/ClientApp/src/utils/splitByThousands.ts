@@ -12,7 +12,6 @@ export const splitByThousands = (value: string | number, splitter: string = ',')
     const newCommaPosition = i * 3 + commInserted
 
     split.splice(newCommaPosition, 0, splitter)
-    commInserted++
   }
 
   return split.reverse().join('')

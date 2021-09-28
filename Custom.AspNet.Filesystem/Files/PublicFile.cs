@@ -28,10 +28,10 @@ namespace Custom.AspNet.Filesystem.Files
         public string Save()
         {
             var path = _source.Save();
-            var parts = path.Split(@"wwwroot\");
+            var parts = path.Split(@"wwwroot");
             if (parts.Length == 1)
             {
-                throw new Exception(@"File path doesn't contains '\wwwroot'.");
+                throw new Exception(@"File path doesn't contains 'wwwroot'.");
             }
 
             var publicPath = parts[1].Replace(@"\", "/");
