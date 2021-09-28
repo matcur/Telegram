@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.TypeHandling;
 using Telegram.Server.Core.Db.Models;
 
 namespace Telegram.Server.Core.Extensions

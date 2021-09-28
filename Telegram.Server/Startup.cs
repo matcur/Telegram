@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Web.Hubs;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Custom.AspNet.Filesystem;
 using Microsoft.AspNetCore.HttpOverrides;
