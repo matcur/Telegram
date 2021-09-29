@@ -23,7 +23,9 @@ namespace Telegram.Server
         public IConfiguration Configuration { get; }
      
         private readonly IWebHostEnvironment _environment;
-        
+
+        private const string DefaultCors = "defaultCors";
+
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _environment = environment;
@@ -32,6 +34,16 @@ namespace Telegram.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(DefaultCors,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -89,6 +101,8 @@ namespace Telegram.Server
 
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCors(DefaultCors);
 
             app.UseAuthentication();
             app.UseAuthorization();
