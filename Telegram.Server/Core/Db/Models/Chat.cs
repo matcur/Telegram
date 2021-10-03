@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace Telegram.Server.Core.Db.Models
         public List<ChatUser> Members { get; set; } = new List<ChatUser>();
 
         public List<Role> Roles { get; set; } = new List<Role>();
+
+        [DefaultValue(ChatType.Conversation)]
+        public ChatType Type { get; set; }
 
         public Chat() { }
         
