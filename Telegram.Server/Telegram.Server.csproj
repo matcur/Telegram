@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Caching\Caching.csproj" />
-    <ProjectReference Include="..\Custom.AspNet.Filesystem\Custom.AspNet.Filesystem.csproj" />
+    <ProjectReference Include="..\Sherden.AspNet.Filesystem\Sherden.AspNet.Filesystem.csproj" />
   </ItemGroup>
 
 </Project>

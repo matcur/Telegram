@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
-namespace Custom.AspNet.Filesystem.Files
+namespace Sherden.AspNet.Filesystem.Files
 {
     public class ApplicationFile : IAspFile
     {
@@ -13,7 +13,7 @@ namespace Custom.AspNet.Filesystem.Files
                 if (_root == null)
                 {
                     throw new Exception(
-                        "Call services.AddFileSystem before using Custom.AspNet.Filesystem.Files classes."
+                        "Call services.AddFileSystem before using Sherden.AspNet.Filesystem.Files classes."
                     );
                 }
                 

@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
-namespace Custom.AspNet.Filesystem.FileNames
+namespace Sherden.AspNet.Filesystem.FileNames
 {
     public class SimpleFileName : FileName
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
-namespace Custom.AspNet.Filesystem.Files
+namespace Sherden.AspNet.Filesystem.Files
 {
     public class SimpleFile : IAspFile
     {

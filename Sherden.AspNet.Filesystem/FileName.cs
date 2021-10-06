@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
-namespace Custom.AspNet.Filesystem
+namespace Sherden.AspNet.Filesystem
 {
     public abstract class FileName
     {

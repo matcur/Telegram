@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Custom.AspNet.Filesystem.Files;
 using Microsoft.AspNetCore.Http;
+using Sherden.AspNet.Filesystem.Files;
 
-namespace Custom.AspNet.Filesystem.FileCollections
+namespace Sherden.AspNet.Filesystem.FileCollections
 {
     public class FileCollection : IAspFiles
     {

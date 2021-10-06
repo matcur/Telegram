@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Custom.AspNet.Filesystem.FileNames;
 using Microsoft.AspNetCore.Http;
+using Sherden.AspNet.Filesystem.FileNames;
 
-namespace Custom.AspNet.Filesystem.Files
+namespace Sherden.AspNet.Filesystem.Files
 {
     public class RandomFile : IAspFile
     {

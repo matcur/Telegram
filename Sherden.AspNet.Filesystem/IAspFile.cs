@@ -1,4 +1,4 @@
-﻿namespace Custom.AspNet.Filesystem
+﻿namespace Sherden.AspNet.Filesystem
 {
     public interface IAspFile
     {

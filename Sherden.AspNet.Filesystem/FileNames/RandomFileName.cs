@@ -1,4 +1,4 @@
-namespace Custom.AspNet.Filesystem.FileNames
+namespace Sherden.AspNet.Filesystem.FileNames
 {
     public class RandomFileName : FileName
     {

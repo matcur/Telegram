@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Custom.AspNet.Filesystem
+namespace Sherden.AspNet.Filesystem
 {
     public class RandomString
     {

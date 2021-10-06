@@ -1,8 +1,8 @@
 using System.IO;
-using Custom.AspNet.Filesystem.Files;
 using Microsoft.Extensions.DependencyInjection;
+using Sherden.AspNet.Filesystem.Files;
 
-namespace Custom.AspNet.Filesystem
+namespace Sherden.AspNet.Filesystem
 {
     public static class ServiceExtension
     {
