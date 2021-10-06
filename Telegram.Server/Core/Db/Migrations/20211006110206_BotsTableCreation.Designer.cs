@@ -9,8 +9,8 @@ using Telegram.Server.Core.Db;
 namespace Telegram.Server.Core.Db.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20211003125745_AddChatTypeColumn")]
-    partial class AddChatTypeColumn
+    [Migration("20211006110206_BotsTableCreation")]
+    partial class BotsTableCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,24 @@ namespace Telegram.Server.Core.Db.Migrations
                     b.ToTable("RoleUser");
                 });
 
+            modelBuilder.Entity("Telegram.Server.Core.Db.Models.Bot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServerUrl")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bots");
+                });
+
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.Chat", b =>
                 {
                     b.Property<int>("Id")
@@ -81,12 +99,24 @@ namespace Telegram.Server.Core.Db.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("Telegram.Server.Core.Db.Models.ChatBot", b =>
+                {
+                    b.Property<int>("BotId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("BotId", "ChatId");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("ChatBot");
                 });
 
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.ChatUser", b =>
@@ -262,6 +292,25 @@ namespace Telegram.Server.Core.Db.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Telegram.Server.Core.Db.Models.ChatBot", b =>
+                {
+                    b.HasOne("Telegram.Server.Core.Db.Models.Bot", "Bot")
+                        .WithMany("Chats")
+                        .HasForeignKey("BotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Telegram.Server.Core.Db.Models.Chat", "Chat")
+                        .WithMany("Bots")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bot");
+
+                    b.Navigation("Chat");
+                });
+
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.ChatUser", b =>
                 {
                     b.HasOne("Telegram.Server.Core.Db.Models.Chat", "Chat")
@@ -322,8 +371,15 @@ namespace Telegram.Server.Core.Db.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("Telegram.Server.Core.Db.Models.Bot", b =>
+                {
+                    b.Navigation("Chats");
+                });
+
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.Chat", b =>
                 {
+                    b.Navigation("Bots");
+
                     b.Navigation("Members");
 
                     b.Navigation("Messages");
