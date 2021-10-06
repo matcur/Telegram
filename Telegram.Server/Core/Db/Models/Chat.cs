@@ -27,9 +27,6 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<Role> Roles { get; set; } = new List<Role>();
 
-        [DefaultValue(ChatType.Conversation)]
-        public ChatType Type { get; set; }
-
         public Chat() { }
         
         public Chat(ChatMap map)
