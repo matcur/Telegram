@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using Telegram.Server.Core.Db.Models;
+using Telegram.Server.Core.Domain;
 
 namespace Telegram.Server.Core.Db
 {
@@ -17,6 +18,8 @@ namespace Telegram.Server.Core.Db
         public DbSet<Message> Messages { get; set; }
 
         public DbSet<Content> Contents { get; set; }
+
+        public DbSet<Bot> Bots { get; set; }
 
         public AppDb(DbContextOptions options) : base(options)
         {
@@ -35,6 +38,8 @@ namespace Telegram.Server.Core.Db
             
             modelBuilder.Entity<ChatUser>()
                 .HasKey(nameof(ChatUser.UserId), nameof(ChatUser.ChatId));
+            modelBuilder.Entity<ChatBot>()
+                .HasKey(nameof(ChatBot.BotId), nameof(ChatBot.ChatId));
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

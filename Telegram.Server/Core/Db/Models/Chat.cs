@@ -25,6 +25,8 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<ChatUser> Members { get; set; } = new List<ChatUser>();
 
+        public List<ChatBot> Bots { get; set; }
+
         public List<Role> Roles { get; set; } = new List<Role>();
 
         public Chat() { }
