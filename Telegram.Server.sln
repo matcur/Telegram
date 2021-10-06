@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Telegram.Server", "Telegram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sherden.AspNet.Filesystem", "Sherden.AspNet.Filesystem\Sherden.AspNet.Filesystem.csproj", "{7469F12B-08E8-44D6-875E-75038C9E8DAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "Caching\Caching.csproj", "{B9340CA4-1061-4680-9964-7DC76F3A8342}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sherden.Caching", "Sherden.Caching\Sherden.Caching.csproj", "{B9340CA4-1061-4680-9964-7DC76F3A8342}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

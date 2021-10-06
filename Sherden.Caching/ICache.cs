@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Caching
+namespace Sherden.Caching
 {
     public interface ICache<T>
     {

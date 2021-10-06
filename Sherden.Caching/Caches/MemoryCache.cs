@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Caching.Caches
+namespace Sherden.Caching.Caches
 {
     public class MemoryCache<T> : ICache<T>
     {
