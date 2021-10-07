@@ -6,7 +6,6 @@ namespace Telegram.Server.Core.Db.Models
 {
     public class Content
     {
-
         [Key]
         public int Id { get; set; }
 
