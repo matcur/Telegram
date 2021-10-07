@@ -9,14 +9,11 @@ namespace Telegram.Server.Core.Domain.Bots
     {
         private readonly Bot _bot;
 
-        private readonly int _chatId;
-
         private readonly HttpClient _http;
 
-        public RemoteBot(Bot bot, int chatId)
+        public RemoteBot(Bot bot)
         {
             _bot = bot;
-            _chatId = chatId;
             _http = new HttpClient();
         }
 
@@ -26,7 +23,7 @@ namespace Telegram.Server.Core.Domain.Bots
             
             var form = new MultipartFormDataContent();
             form.Add(new StringContent(command), "command");
-            form.Add(new StringContent(_chatId.ToString()), "chatId");
+            form.Add(new StringContent(message.ChatId.ToString()), "chatId");
 
             await _http.PostAsync(_bot.ServerUrl, form);
         }

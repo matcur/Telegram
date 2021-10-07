@@ -35,7 +35,7 @@ namespace Telegram.Server.Core.Domain.Bots
             var bots = new List<RemoteBot>();
             foreach (var dbBot in dbBots)
             {
-                bots.Add(new RemoteBot(dbBot, chatId));
+                bots.Add(new RemoteBot(dbBot));
             }
             
             return bots;
