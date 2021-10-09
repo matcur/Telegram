@@ -10,6 +10,7 @@ export class NewMessageState implements MessageState {
     private dispatch: Dispatch<AnyAction>,
     private currentUser: User,
     private chatId: number,
+    private emitMessage: (chatId: number, message: string) => void
   ) { }
 
   async save(data: FormData, content: Content[]) {
@@ -22,5 +23,6 @@ export class NewMessageState implements MessageState {
     this.dispatch(
       addMessage({chatId: id, message})
     )
+    this.emitMessage(id, JSON.stringify(message))
   }
 }
