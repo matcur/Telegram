@@ -29,6 +29,12 @@ const authorizationSlice = createSlice({
 
       if (chat !== undefined) {
         chat.messages.push(payload.message)
+      }
+    },
+    setLastMessage(state, {payload}: PayloadAction<{chatId: number, message: Message}>) {
+      const chat = selectChats(state).find(c => c.id === payload.chatId)
+
+      if (chat !== undefined) {
         chat.lastMessage = payload.message
       }
     },
@@ -43,7 +49,7 @@ const authorizationSlice = createSlice({
   }
 })
 
-export const {authorize, addChat, addChats, addMessages, addMessage} = authorizationSlice.actions
+export const {authorize, addChat, addChats, addMessages, addMessage, setLastMessage} = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer
 
@@ -63,4 +69,8 @@ export const detailChat = (state: RootState, id: number) => {
 
 export const selectChats = (state: State) => {
   return state.currentUser.chats
+}
+
+export const selectCurrentUserId = (state: RootState) => {
+  return state.authorization.currentUser.id
 }
