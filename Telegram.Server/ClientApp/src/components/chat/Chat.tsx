@@ -12,22 +12,31 @@ import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
-import {addMessages, chatMessages} from "app/slices/authorizationSlice";
+import {addMessage, addMessages, chatMessages} from "app/slices/authorizationSlice";
+import {useWebhook} from "../../hooks/useWebhook";
 
 type Props = {
   chat: ChatModel
 }
 
+const bus = {currentUserId: -1}
+
 export const Chat: FC<Props> = ({chat}: Props) => {
   const id = chat.id
-  const dispatch = useAppDispatch()
-  const currentUser = useAppSelector(state => state.authorization.currentUser)
-  const newMessageState = new NewMessageState(dispatch, currentUser, chat.id)
-  
-  const messages = useAppSelector(state => chatMessages(state, id))
   const input = useFormInput()
-  const [inputState, setInputState] = useState<MessageState>(newMessageState)
+  const dispatch = useAppDispatch()
+  const messagesHook = useWebhook('chats')
   const [loaded, setLoaded] = useState(false)
+  const messages = useAppSelector(state => chatMessages(state, id))
+  const currentUser = useAppSelector(state => state.authorization.currentUser)
+  bus.currentUserId = currentUser.id
+
+  const emitMessage = (chatId: number, message: string) => {
+    messagesHook?.send('EmitMessage', chatId, message)
+  }
+
+  const newMessageState = new NewMessageState(dispatch, currentUser, chat.id, emitMessage)
+  const [inputState, setInputState] = useState<MessageState>(newMessageState)
 
   const onSubmit = (data: FormData, content: Content[]) => {
     inputState.save(data, content)
@@ -38,6 +47,21 @@ export const Chat: FC<Props> = ({chat}: Props) => {
       new EditingMessageState(message, setInputState, dispatch, newMessageState)
     )
   }
+  
+  useEffect(() => {
+    messagesHook?.on('ReceiveMessage', (chatId: number, messageJson: string) => {
+      const message = JSON.parse(messageJson) as Message
+
+      if (bus.currentUserId === message.author.id) {
+        return
+      }
+      dispatch(addMessage({chatId, message}))
+    })
+  }, [messagesHook])
+  
+  useEffect(() => {
+    setInputState(new NewMessageState(dispatch, currentUser, chat.id, emitMessage))
+  }, [messagesHook])
 
   useEffect(() => {
     if (messages.length !== 0) {
@@ -54,6 +78,10 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     }
 
     load()
+  }, [chat])
+
+  useEffect(() => {
+    setInputState(newMessageState)
   }, [chat])
 
   return (
