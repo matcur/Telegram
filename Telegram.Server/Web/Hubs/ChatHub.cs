@@ -7,7 +7,7 @@ namespace Telegram.Server.Web.Hubs
     {
         public async Task EmitMessage(int chatId, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", chatId, message);
+            await Clients.Others.SendAsync("ReceiveMessage", chatId, message);
         }
     }
 }
