@@ -1,12 +1,12 @@
 export class ApiClient {
-  private readonly baseUri = 'https://localhost:5001/api/'
+  private readonly host = host
 
   constructor(version: string = '1.0') {
-    this.baseUri += (version + '/')
+    this.host += (version + '/')
   }
 
   async get<TResult>(resource: string, requestInit: RequestInit = {}) {
-    return await fetch(this.baseUri + resource, requestInit)
+    return await fetch(this.host + resource, requestInit)
       .then(res => res.json() as Promise<TResult>)
   }
 
@@ -17,7 +17,7 @@ export class ApiClient {
       )
     }
 
-    return await fetch(this.baseUri + resource, {
+    return await fetch(this.host + resource, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -30,7 +30,7 @@ export class ApiClient {
     return new Promise<TResult>((res, rej) => {
       const request = new XMLHttpRequest();
 
-      request.open(method, this.baseUri + resource);
+      request.open(method, this.host + resource);
       request.send(data);
 
       request.onload = () => res(JSON.parse(request.response))
@@ -38,3 +38,5 @@ export class ApiClient {
     })
   }
 }
+
+export const host = 'https://localhost:5001/api/'
