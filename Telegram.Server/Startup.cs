@@ -116,7 +116,7 @@ namespace Telegram.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/chats");
+                endpoints.MapHub<ChatHub>("/api/chats");
             });
 
             app.UseSpa(spa =>
