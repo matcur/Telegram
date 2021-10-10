@@ -4,6 +4,7 @@ import {Dispatch} from "react";
 import {AnyAction} from "@reduxjs/toolkit";
 import {ChatApi} from "api/ChatApi";
 import {addMessage} from "app/slices/authorizationSlice";
+import {emittingMessage} from "../../utils/emittingMessage";
 
 export class NewMessageState implements MessageState {
   constructor(
@@ -23,6 +24,6 @@ export class NewMessageState implements MessageState {
     this.dispatch(
       addMessage({chatId: id, message})
     )
-    this.emitMessage(id, JSON.stringify(message))
+    this.emitMessage(id, JSON.stringify(emittingMessage(message)))
   }
 }
