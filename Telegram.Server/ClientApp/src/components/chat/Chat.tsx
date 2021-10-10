@@ -14,6 +14,7 @@ import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
 import {addMessage, addMessages, chatMessages} from "app/slices/authorizationSlice";
 import {useWebhook} from "../../hooks/useWebhook";
+import {useArray} from "../../hooks/useArray";
 
 type Props = {
   chat: ChatModel
@@ -24,6 +25,7 @@ const bus = {currentUserId: -1}
 export const Chat: FC<Props> = ({chat}: Props) => {
   const id = chat.id
   const input = useFormInput()
+  const loadedChatIds = useArray()
   const dispatch = useAppDispatch()
   const messagesHook = useWebhook('chats')
   const [loaded, setLoaded] = useState(false)
@@ -55,7 +57,10 @@ export const Chat: FC<Props> = ({chat}: Props) => {
       if (bus.currentUserId === message.author.id) {
         return
       }
-      dispatch(addMessage({chatId, message}))
+      
+      if (loadedChatIds.value.includes(chatId)) {
+        dispatch(addMessage({chatId, message}))
+      }
     })
   }, [messagesHook])
   
@@ -82,6 +87,10 @@ export const Chat: FC<Props> = ({chat}: Props) => {
 
   useEffect(() => {
     setInputState(newMessageState)
+  }, [chat])
+
+  useEffect(() => {
+    loadedChatIds.add(id)
   }, [chat])
 
   return (
