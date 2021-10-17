@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Telegram.Server.Core.Auth.Security;
@@ -19,9 +20,12 @@ namespace Telegram.Server.Core.Auth
         private readonly DbSet<User> _users;
         
         private readonly DbSet<Code> _codes;
+        
+        private readonly AppDb _db;
 
         public UserIdentity(AppDb db, IAuthorizationToken authorizationToken, SecurityTokenHandler tokenHandler)
         {
+            _db = db;
             _authorizationToken = authorizationToken;
             _tokenHandler = tokenHandler;
             _users = db.Users;
@@ -47,6 +51,20 @@ namespace Telegram.Server.Core.Auth
             }
 
             throw new Exception($"User with id = {userId} not found");
+        }
+
+        public async void ForgotCode(string value, int userId)
+        {
+            var code = await _codes.FirstOrDefaultAsync(
+                c => c.Value == value && c.UserId == userId
+            );
+            if (code == null)
+            {
+                return;
+            }
+
+            _codes.Remove(code);
+            await _db.SaveChangesAsync();
         }
 
         private ClaimsIdentity Claims(int userId, string role)
