@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
@@ -79,12 +80,12 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/verification/authorization-token")]
-        public IActionResult AuthorizationToken([FromQuery]string value, [FromQuery]int userId)
+        public async Task<IActionResult> AuthorizationToken([FromQuery]string value, [FromQuery]int userId)
         {
             if (_identity.ValidCode(value, userId))
             {
                 var token = _identity.CreateToken(userId, "simpleUser");
-                _identity.ForgotCode(value, userId);
+                await _identity.ForgotCode(value, userId);
                 
                 return Json(new RequestResult<string>(true, token, ""));
             }

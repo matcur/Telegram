@@ -53,7 +53,7 @@ namespace Telegram.Server.Core.Auth
             throw new Exception($"User with id = {userId} not found");
         }
 
-        public async void ForgotCode(string value, int userId)
+        public async Task ForgotCode(string value, int userId)
         {
             var code = await _codes.FirstOrDefaultAsync(
                 c => c.Value == value && c.UserId == userId
