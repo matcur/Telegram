@@ -83,7 +83,9 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             if (_identity.ValidCode(value, userId))
             {
-                return Json(new RequestResult<string>(true, _identity.CreateToken(userId, "simpleUser"), ""));
+                var token = _identity.CreateToken(userId, "simpleUser");
+                
+                return Json(new RequestResult<string>(true, token, ""));
             }
 
             return Json(new RequestResult(true, false));
