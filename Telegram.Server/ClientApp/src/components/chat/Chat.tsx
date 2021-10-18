@@ -4,7 +4,6 @@ import {ChatMessages} from "components/chat/ChatMessages";
 import {useAppDispatch, useAppSelector} from "app/hooks";
 import {Chat as ChatModel, Content, Message} from "models";
 import {LoadingChat} from "./LoadingChat";
-import {nullMessage} from "nullables";
 import {ChatHeader} from "components/chat/ChatHeader";
 import {useFormInput} from "hooks/useFormInput";
 import {textContent} from "utils/textContent";
@@ -15,6 +14,7 @@ import {ChatApi} from "api/ChatApi";
 import {addMessage, addMessages, chatMessages} from "app/slices/authorizationSlice";
 import {useWebhook} from "../../hooks/useWebhook";
 import {useArray} from "../../hooks/useArray";
+import {MessagesApi} from "../../api/MessagesApi";
 
 type Props = {
   chat: ChatModel
@@ -38,7 +38,9 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     messagesHook?.send('EmitMessage', chatId, message)
   }
 
-  const newMessageState = new NewMessageState(dispatch, currentUser, chat.id, emitMessage, authorizedToken)
+  const newMessageState = new NewMessageState(
+    dispatch, currentUser, chat.id, emitMessage, new MessagesApi(authorizedToken)
+  )
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
 
   const onSubmit = (data: FormData, content: Content[]) => {
@@ -67,7 +69,7 @@ export const Chat: FC<Props> = ({chat}: Props) => {
   
   useEffect(() => {
     setInputState(new NewMessageState(
-      dispatch, currentUser, chat.id, emitMessage, authorizedToken
+      dispatch, currentUser, chat.id, emitMessage, new MessagesApi(authorizedToken)
     ))
   }, [messagesHook])
 
@@ -78,7 +80,6 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     }
 
     const load = async () => {
-      //Extract chatApi in variable
       const response = await new ChatApi(id, authorizedToken).messages(0, 10)
       const messages = response.result
       
