@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
@@ -12,6 +13,7 @@ using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Web.Controllers.Api
 {
+    [Authorize]
     public class MessageController : Controller
     {
         private readonly AppDb _db;
@@ -41,6 +43,7 @@ namespace Telegram.Server.Web.Controllers.Api
             }
 
             var message = new Message(map);
+            message.AuthorId = int.Parse(User.Identity.Name);
             _db.Add(message);
             await _db.SaveChangesAsync();
             
