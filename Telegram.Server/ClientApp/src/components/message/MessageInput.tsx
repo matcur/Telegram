@@ -1,4 +1,4 @@
-import React, {createRef, FC} from 'react'
+import React, {createRef, FC, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -6,6 +6,8 @@ import {ReactComponent as Microphone} from 'public/svgs/microphone.svg'
 import {useForm} from "react-hook-form";
 import {Content} from "models";
 import {useAppSelector} from "../../app/hooks";
+import {FileInput} from "../form/FileInput";
+import {FilesApi} from "../../api/FilesApi";
 
 type Props = {
   onSubmitting: (data: FormData, content: Content[]) => void
@@ -47,13 +49,24 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
       content.push({type: 'Image', value: '', displayOrder: 10000})
     }
   }
+  
+  const loadFile = async (input: HTMLInputElement) => {
+    const loadingFiles = input.files
+    if (loadingFiles == null) {
+      return
+    }
+    
+    const loadedFiles = await new FilesApi().upload("files", loadingFiles)
+  }
 
   return (
     <form
       className="message-form"
       onSubmit={handleSubmit(onSubmit)}
       ref={form}>
-      <PaperClip/>
+      <FileInput onSelected={loadFile}>
+        <PaperClip/>
+      </FileInput>
       <input
         type="file"
         hidden={true}
