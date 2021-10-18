@@ -1,4 +1,4 @@
-import React, {createRef, FC, useState} from 'react'
+import React, {createRef, FC} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -43,7 +43,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
     content.push({type: 'Text', value: textInput.value, displayOrder: 1000})
   }
   
-  const loadFile = async (input: HTMLInputElement) => {
+  const loadFiles = async (input: HTMLInputElement) => {
     const loadingFiles = input.files
     if (loadingFiles == null) {
       return
@@ -57,7 +57,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
       className="message-form"
       onSubmit={handleSubmit(onSubmit)}
       ref={form}>
-      <FileInput onSelected={loadFile}>
+      <FileInput onSelected={loadFiles}>
         <PaperClip/>
       </FileInput>
       <input
