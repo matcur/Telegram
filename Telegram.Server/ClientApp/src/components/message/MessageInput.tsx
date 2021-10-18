@@ -24,30 +24,23 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
 
-  const onSubmit = (data: Form) => {
-    const files = data.files
+  const onSubmit = () => {
     const form = new FormData()
     const content: Content[] = []
 
-    seedForm(form, data, content, files);
+    seedForm(form, content);
 
     onSubmitting(form, content)
     textInput.onChange('')
   }
 
   // Todo: use toFormData function
-  const seedForm = (form: FormData, data: Form, content: Content[], files: FileList) => {
+  const seedForm = (form: FormData, content: Content[]) => {
     form.append('chatId', chatId.toString())
     form.append('authorId', currentUser.id.toString())
     form.append('content[0].type', 'Text')
     form.append('content[0].value', textInput.value)
     content.push({type: 'Text', value: textInput.value, displayOrder: 1000})
-    for (let i = 0; i < files.length; i++) {
-      form.append(`content[${i + 1}].type`, 'Image')
-      form.append(`content[${i + 1}].value`, files[i])
-      // make input with auto load files
-      content.push({type: 'Image', value: '', displayOrder: 10000})
-    }
   }
   
   const loadFile = async (input: HTMLInputElement) => {
