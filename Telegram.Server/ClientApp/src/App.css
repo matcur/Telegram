@@ -1060,10 +1060,6 @@ input:checked + .fuck:before {
     padding-top: 20px;
 }
 
-.image-input-wrapper {
-    margin-right: 30px;
-}
-
 .image-input {
     width: 80px;
     height: 80px;
