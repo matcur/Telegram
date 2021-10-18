@@ -18,11 +18,4 @@ export class ChatApi {
       `chats/${this.id}/messages?offset=${offset}&count=${count}`
     )
   }
-
-  async addMessage(data: FormData) {
-    return await this.api.post<Message>(
-      `messages/create`,
-      data
-    )
-  }
 }
