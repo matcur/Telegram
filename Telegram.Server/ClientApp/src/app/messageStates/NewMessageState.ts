@@ -11,13 +11,14 @@ export class NewMessageState implements MessageState {
     private dispatch: Dispatch<AnyAction>,
     private currentUser: User,
     private chatId: number,
-    private emitMessage: (chatId: number, message: string) => void
+    private emitMessage: (chatId: number, message: string) => void,
+    private authorizedToken: string,
   ) { }
 
   async save(data: FormData, content: Content[]) {
     const id = this.chatId;
 
-    const response = await new ChatApi(id).addMessage(data)
+    const response = await new ChatApi(id, this.authorizedToken).addMessage(data)
     const message = response.result
     message.author = this.currentUser
     

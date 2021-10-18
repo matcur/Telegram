@@ -1,7 +1,10 @@
 export class ApiClient {
   private readonly host = host
+  
+  private readonly headers: Record<string, string>;
 
-  constructor(version: string = '1.0') {
+  constructor(version: string = '1.0', headers: Record<string, string> = {}) {
+    this.headers = headers;
     this.host += (version + '/')
   }
 
@@ -21,6 +24,7 @@ export class ApiClient {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
+        ...this.headers,
       },
       body: JSON.stringify(body),
     }).then(res => res.json() as Promise<{success: boolean, result: TResult}>)
@@ -31,6 +35,12 @@ export class ApiClient {
       const request = new XMLHttpRequest();
 
       request.open(method, this.host + resource);
+      
+      const keys = Object.keys(this.headers)
+      keys.forEach(key => {
+        request.setRequestHeader(key, this.headers[key])
+      })
+      
       request.send(data);
 
       request.onload = () => res(JSON.parse(request.response))

@@ -31,13 +31,14 @@ export const Chat: FC<Props> = ({chat}: Props) => {
   const [loaded, setLoaded] = useState(false)
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
+  const authorizedToken = useAppSelector(state => state.authorization.token)
   bus.currentUserId = currentUser.id
 
   const emitMessage = (chatId: number, message: string) => {
     messagesHook?.send('EmitMessage', chatId, message)
   }
 
-  const newMessageState = new NewMessageState(dispatch, currentUser, chat.id, emitMessage)
+  const newMessageState = new NewMessageState(dispatch, currentUser, chat.id, emitMessage, authorizedToken)
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
 
   const onSubmit = (data: FormData, content: Content[]) => {
@@ -65,7 +66,9 @@ export const Chat: FC<Props> = ({chat}: Props) => {
   }, [messagesHook])
   
   useEffect(() => {
-    setInputState(new NewMessageState(dispatch, currentUser, chat.id, emitMessage))
+    setInputState(new NewMessageState(
+      dispatch, currentUser, chat.id, emitMessage, authorizedToken
+    ))
   }, [messagesHook])
 
   useEffect(() => {
@@ -75,7 +78,8 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     }
 
     const load = async () => {
-      const response = await new ChatApi(id).messages(0, 10)
+      //Extract chatApi in variable
+      const response = await new ChatApi(id, authorizedToken).messages(0, 10)
       const messages = response.result
       
       dispatch(addMessages({chatId: id, messages}))
