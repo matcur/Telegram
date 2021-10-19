@@ -59,11 +59,9 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
           <div className="input-line"/>
         </div>
         <p style={{color: 'red'}}>{wrongCodeMessage}</p>
-        <button
-          type="submit"
-          className="btn btn-primary login-form-btn">
+        <div className="btn btn-primary login-form-btn">
           NEXT
-        </button>
+        </div>
       </form>
     </div>
   )
