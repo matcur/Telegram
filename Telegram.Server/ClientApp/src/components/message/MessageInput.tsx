@@ -93,7 +93,10 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
   }
   
   useEffect(() => {
-    setChatData(chats.item(chatId))
+    const chatData = chats.item(chatId)
+    
+    setChatData(chatData)
+    textInput.onChange(chatData.currentMessage.text)
   }, [chatId])
 
   return (
