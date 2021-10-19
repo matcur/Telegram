@@ -1,4 +1,4 @@
-import React, {createRef, FC, useEffect, useState} from 'react'
+import React, {createRef, FC, useContext, useEffect, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -8,6 +8,8 @@ import {Content} from "models";
 import {useAppSelector} from "../../app/hooks";
 import {FileInput} from "../form/FileInput";
 import {FilesApi} from "../../api/FilesApi";
+import {UpLayerContext} from "../../contexts/UpLayerContext";
+import {RichMessageForm} from "../forms/RichMessageForm";
 
 type Props = {
   onSubmitting: (data: FormData, content: Content[]) => void
@@ -58,24 +60,49 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
   const [chatData, setChatData] = useState(chats.item(chatId))
+  const upLayer = useContext(UpLayerContext)
+  
+  const showDetailMessageForm = (messageText: string, filePaths: string[]) => {
+    upLayer.setVisible(true)
+    upLayer.setCentralElement(
+      <RichMessageForm 
+        filePaths={filePaths}
+        messageText={textInput.value}
+        onSend={onDetailSubmit}
+      />
+    )
+  }
 
   const onSubmit = () => {
+    onDetailSubmit(textInput.value, chatData.currentMessage.files)
+  }
+
+  const onDetailSubmit = (messageText: string, filePaths: string[]) => {
     const form = new FormData()
     const content: Content[] = []
 
-    seedForm(form, content);
+    seedForm(form, messageText, filePaths)
 
     onSubmitting(form, content)
     textInput.onChange('')
+    
+    upLayer.setVisible(false)
+    upLayer.setCentralElement(<div/>)
   }
 
   // Todo: use toFormData function
-  const seedForm = (form: FormData, content: Content[]) => {
+  const seedForm = (form: FormData, messageText: string, filePaths: string[]) => {
     form.append('chatId', chatId.toString())
     form.append('authorId', currentUser.id.toString())
     form.append('content[0].type', 'Text')
-    form.append('content[0].value', textInput.value)
-    content.push({type: 'Text', value: textInput.value, displayOrder: 1000})
+    form.append('content[0].value', messageText)
+    
+    filePaths.forEach((path, key) => {
+      const index = key + 1;
+      
+      form.append(`content[${index}].type`, 'Image')
+      form.append(`content[${index}].value`, path)
+    })
   }
   
   const loadFiles = async (input: HTMLInputElement) => {
@@ -85,6 +112,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
     }
     
     const loadedFiles = await new FilesApi().upload("files", loadingFiles)
+    showDetailMessageForm(input.value, loadedFiles.result)
   }
   
   const onTextChange = (e: React.FormEvent<HTMLInputElement>) => {
