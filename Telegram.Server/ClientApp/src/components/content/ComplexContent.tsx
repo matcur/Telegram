@@ -19,11 +19,10 @@ const contentComponent = (content: Content, key: number) => {
 }
 
 export const ComplexContent: FC<Props> = ({content}: Props) => {
-  const compare = (a: Content, b: Content) => a.displayOrder - b.displayOrder
-
   return (
     <div className="complex-content">
-      {content.sort(compare).map((c, key) => contentComponent(c, key))}
+      {content
+        .map((c, key) => contentComponent(c, key))}
     </div>
   )
 }
