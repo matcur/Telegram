@@ -37,7 +37,6 @@ export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltrati
   const receiveMessage = (chatId: number, messageJson: string) => {
     const message = JSON.parse(messageJson) as Message
 
-    console.log('received')
     dispatch(setLastMessage({chatId, message}))
   }
 
