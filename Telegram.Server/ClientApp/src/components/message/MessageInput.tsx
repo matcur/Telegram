@@ -1,4 +1,4 @@
-import React, {createRef, FC} from 'react'
+import React, {createRef, FC, useEffect, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -19,10 +19,45 @@ type Form = {
   files: FileList
 }
 
+type ChatData = {
+  id: number
+  currentMessage: {text: string, files: string[]}
+}
+
+const chats = {
+  items: [] as ChatData[],
+  item(id: number) {
+    if (!this.exists(id)) {
+      this.add(id)
+    }
+    
+    return this.items.find(i => i.id === id) as ChatData
+  },
+  exists(id: number) {
+    return this.items.find(i => i.id === id) !== undefined
+  },
+  add(id: number) {
+    this.items.push({id, currentMessage: {text: '', files: []}})
+  },
+  changeText(text: string, id: number) {
+    const chat = this.items.find(i => i.id === id)
+    if (chat !== undefined) {
+      chat.currentMessage.text = text
+    }
+  },
+  addFile(path: string, id: number) {
+    const chat = this.items.find(i => i.id === id)
+    if (chat !== undefined) {
+      chat.currentMessage.files.push(path)
+    }
+  }
+}
+
 export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
+  const [chatData, setChatData] = useState(chats.item(chatId))
 
   const onSubmit = () => {
     const form = new FormData()
@@ -51,6 +86,15 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
     
     const loadedFiles = await new FilesApi().upload("files", loadingFiles)
   }
+  
+  const onTextChange = (e: React.FormEvent<HTMLInputElement>) => {
+    textInput.onChange(e)
+    chats.changeText(e.currentTarget.value, chatId)
+  }
+  
+  useEffect(() => {
+    setChatData(chats.item(chatId))
+  }, [chatId])
 
   return (
     <form
@@ -68,7 +112,8 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
         type="text"
         className="clear-input message-input"
         placeholder="Write a message..."
-        {...textInput}/>
+        value={textInput.value}
+        onChange={onTextChange}/>
       <Command/>
       <Smile/>
       <Microphone/>
