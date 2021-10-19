@@ -11,7 +11,7 @@ namespace Telegram.Server.Core.Auth
         
         public const string EncryptionKey = "THISISTHEREALLIFE12345";
         
-        public const int LifeTimeMinutes = 1;
+        public const int LifeTimeMinutes = 1 * 60 * 24 * 7;
 
         public static readonly SecurityKey SecurityKey = new SymmetricSecurityKey(
             Encoding.ASCII.GetBytes(EncryptionKey)
