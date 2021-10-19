@@ -1,6 +1,6 @@
 # Telegram Client
 
-Телеграм клиент на WPF и Asp.Net Core.
+Телеграм клиент на React и Asp.Net Core.
 
 # Реализуемые возможности 
 
