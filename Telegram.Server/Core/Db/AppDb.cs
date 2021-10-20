@@ -40,6 +40,10 @@ namespace Telegram.Server.Core.Db
                 .HasKey(nameof(ChatUser.UserId), nameof(ChatUser.ChatId));
             modelBuilder.Entity<ChatBot>()
                 .HasKey(nameof(ChatBot.BotId), nameof(ChatBot.ChatId));
+
+            modelBuilder.Entity<Message>()
+                .Property(m => m.CreationDate)
+                .HasDefaultValueSql("NOW()");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

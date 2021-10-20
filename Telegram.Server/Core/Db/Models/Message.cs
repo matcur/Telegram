@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace Telegram.Server.Core.Db.Models
 
         [ForeignKey("Author")]
         public int AuthorId { get; set; }
+
+        public DateTime CreationDate { get; set; }
 
         public Chat Chat { get; set; }
 
