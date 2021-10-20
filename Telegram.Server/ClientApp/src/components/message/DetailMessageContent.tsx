@@ -7,11 +7,13 @@ type Props = {
 }
 
 export const DetailMessageContent: FC<Props> = ({message}: Props) => {
+  const creationDate = new Date(message.creationDate)
+  
   return (
     <div className="message-content">
       <ComplexContent content={message.content}/>
       <div className="message-created-at">
-        {message.creationDate}
+        {`${creationDate.getHours()}:${creationDate.getMinutes()}`}
       </div>
     </div>
   )
