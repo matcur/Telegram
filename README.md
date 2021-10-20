@@ -25,5 +25,5 @@
    docker-compose --project-name=telegram_server --file=docker-compose.yml up -d
 3) Запустить приложение командой<br/>
    dotnet restore && dotnet build && dotnet run
-4) Перейти по ссылке <br/>
+4) Перейти по ссылке<br/>
    https://localhost:5001/start
