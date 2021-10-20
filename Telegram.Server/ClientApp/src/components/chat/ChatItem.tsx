@@ -4,6 +4,7 @@ import {Chat} from "models";
 import {nullMessage} from "nullables";
 import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
+import {readableDate} from "../../utils/datetime/readableDate";
 
 type Props = {
   chat: Chat
@@ -30,7 +31,7 @@ export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
         </div>
       </div>
       <div className="chat-item-right-part">
-        <div className="last-message-date">{lastMessage.creationDate}</div>
+        <div className="last-message-date">{lastMessage.creationDate && readableDate(lastMessage.creationDate)}</div>
         <div className="unread-messages-count">2344</div>
       </div>
     </div>
