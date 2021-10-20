@@ -698,6 +698,7 @@ a {
 }
 
 .message-author {
+    display: none;
     color: #9D8BF2;
     font-size: 14px;
 }
@@ -723,6 +724,11 @@ a {
 
 .text-content {
     margin-top: 4px;
+}
+
+.first-in-row-message .message-author,
+.single-message .message-author {
+    display: block;
 }
 
 .previous-in-row-message,
