@@ -11,8 +11,6 @@ namespace Telegram.Server.Core.Db.Models
 
         public string Value { get; set; }
 
-        public bool Entered { get; set; } = false;
-
         [ForeignKey("User")]
         public int UserId { get; set; }
 

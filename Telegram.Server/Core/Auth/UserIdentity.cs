@@ -36,8 +36,7 @@ namespace Telegram.Server.Core.Auth
         {
             return _codes.Any(
                 c => code == c.Value &&
-                     c.UserId == userId &&
-                     !c.Entered
+                     c.UserId == userId
             );
         }
 

@@ -13,7 +13,6 @@ namespace Telegram.Server.Core.Mapping
         public CodeMap(Code code)
         {
             Value = code.Value;
-            Entered = code.Entered;
         }
     }
 }
