@@ -538,7 +538,7 @@ a {
 
 .chats {
     position: relative;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .scrollbar {
