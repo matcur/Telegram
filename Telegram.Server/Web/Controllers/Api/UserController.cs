@@ -48,7 +48,9 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/user/phone/{number}")]
         public IActionResult ByPhone([FromRoute]string number)
         {
-            var user = _users.FirstOrDefault(u => u.Phone.Number == number);
+            var user = _users
+                .Include(u => u.Phone)
+                .FirstOrDefault(u => u.Phone.Number == number);
             if (user == null)
             {
                 return Json(
