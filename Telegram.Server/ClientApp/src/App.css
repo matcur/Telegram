@@ -795,12 +795,13 @@ a {
     height: 100vh;
     width: 100vw;
     background: rgba(0, 0, 0, 0);
+    transition: .4s;
+    transition-timing-function: ease-in-out;
 }
 
 .show-up-layer {
     z-index: 100;
     background: rgba(0, 0, 0, .3);
-    transition: background .3s;
 }
 
 .saved-messages-icon {
