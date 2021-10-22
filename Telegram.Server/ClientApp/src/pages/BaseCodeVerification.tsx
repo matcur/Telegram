@@ -37,7 +37,7 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
     code.onChange(e)
     setWrongMessage('')
   }
-  const onNextClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onNextClick = (e: FormEvent) => {
     e.preventDefault()
     toIndex(code.value)
   }
@@ -45,7 +45,7 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
   return (
     <div className="page code-verification-page">
       <PageNavigation onBackClick={toLogin}/>
-      <form className="login-form">
+      <form className="login-form" onSubmit={onNextClick}>
         <div className="form-title">{phoneNumber}</div>
         <p className="phone-caption">
           {title}
