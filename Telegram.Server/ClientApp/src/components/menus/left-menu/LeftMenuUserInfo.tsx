@@ -9,7 +9,7 @@ export const LeftMenuUserInfo = () => {
   return (
     <div className="left-menu-user-info">
       <div className="df jcsb aic top-part">
-        <img className="circle middle-avatar" src={cat} alt="user-avatar"/>
+        <img className="circle middle-avatar" src={currentUser.avatarUrl} alt="user-avatar"/>
         <div className="circle saved-messages">
           <Caret/>
         </div>
