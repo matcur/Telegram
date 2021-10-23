@@ -5,9 +5,10 @@ type Props = {
   onSelected: (e: HTMLInputElement) => void
   thumbnail: string
   name?: string
+  className?: string
 }
 
-export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files'}) => {
+export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files', className = 'image-input'}) => {
   const input = createRef<HTMLInputElement>()
 
   const onClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -21,7 +22,8 @@ export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files'}) =
       <img
         src={thumbnail? thumbnail: cat}
         alt=""
-        className="circle image-input"
+        className={"circle " + className}
+        style={{cursor: "pointer"}}
         onClick={onClick}/>
       <input
         ref={input}
