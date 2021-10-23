@@ -2,18 +2,23 @@ import {ImageInput} from "../form/ImageInput";
 import React, {useContext, useState} from "react";
 import {useFormFiles} from "../../hooks/useFormFiles";
 import {Item} from "../menus/left-menu/LeftMenuItem";
-import {useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {UpLayerContext} from "../../contexts/UpLayerContext";
+import {changeAvatar} from "../../app/slices/authorizationSlice";
 
 export const SettingsForm = () => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const [avatar, setAvatar] = useState(currentUser.avatarUrl)
   const files = useFormFiles()
   const upLayer = useContext(UpLayerContext)
+  const dispatch = useAppDispatch()
   
   const loadImage = async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
-    setAvatar(urls[0])
+    
+    const newAvatar = urls[0]
+    setAvatar(newAvatar)
+    dispatch(changeAvatar(newAvatar))
   }
   const menuItem = (item: Item) => {
     return (
