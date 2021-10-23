@@ -5,9 +5,11 @@ import {Item} from "../menus/left-menu/LeftMenuItem";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {UpLayerContext} from "../../contexts/UpLayerContext";
 import {changeAvatar} from "../../app/slices/authorizationSlice";
+import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 
 export const SettingsForm = () => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
+  const token = useAppSelector(state => state.authorization.token)
   const [avatar, setAvatar] = useState(currentUser.avatarUrl)
   const files = useFormFiles()
   const upLayer = useContext(UpLayerContext)
@@ -18,7 +20,9 @@ export const SettingsForm = () => {
     
     const newAvatar = urls[0]
     setAvatar(newAvatar)
+    
     dispatch(changeAvatar(newAvatar))
+    new AuthorizedUserApi(token).changeAvatar(newAvatar)
   }
   const menuItem = (item: Item) => {
     return (
