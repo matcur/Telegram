@@ -9,7 +9,7 @@ export class ApiClient {
   }
 
   async get<TResult>(resource: string) {
-    return await fetch(this.host + resource)
+    return await fetch(this.host + resource, {headers: this.headers})
       .then(res => res.json() as Promise<TResult>)
   }
 
