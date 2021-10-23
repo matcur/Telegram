@@ -33,11 +33,11 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpPost]
         [Route("api/1.0/authorized-user/avatar")]
-        public IActionResult ChangeAvatar([FromQuery]string avatarUri)
+        public IActionResult ChangeAvatar([FromQuery]string uri)
         {
             var user = _users.First(u => u.Id == UserId());
 
-            user.AvatarUrl = avatarUri;
+            user.AvatarUrl = uri;
             _db.Update(user);
 
             return Ok();
