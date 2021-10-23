@@ -1197,14 +1197,11 @@ input:checked + .fuck:before {
     padding-left: 0;
 }
 
-.new-group-form__menu {
-    padding-left: 20px;
-}
 .new-group-form__item {
     font-size: 15px;
     font-weight: 400;
     color: #ccc;
-    padding: 11px 0;
+    padding: 11px 20px;
     transition: background .2s;
 }
 
