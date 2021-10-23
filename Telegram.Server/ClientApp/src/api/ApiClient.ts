@@ -8,8 +8,8 @@ export class ApiClient {
     this.host += (version + '/')
   }
 
-  async get<TResult>(resource: string, requestInit: RequestInit = {}) {
-    return await fetch(this.host + resource, requestInit)
+  async get<TResult>(resource: string) {
+    return await fetch(this.host + resource)
       .then(res => res.json() as Promise<TResult>)
   }
 
