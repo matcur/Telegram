@@ -1203,6 +1203,7 @@ input:checked + .fuck:before {
     color: #ccc;
     padding: 11px 20px;
     transition: background .2s;
+    cursor: pointer;
 }
 
 .new-group-form__item:hover {
