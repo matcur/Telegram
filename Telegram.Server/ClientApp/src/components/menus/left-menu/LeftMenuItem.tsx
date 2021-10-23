@@ -6,7 +6,7 @@ type Props = {
 
 export type Item = {
   name: string
-  icon: ReactElement
+  icon?: ReactElement
   additionalElement?: ReactElement
   onClick?: () => void
 }
