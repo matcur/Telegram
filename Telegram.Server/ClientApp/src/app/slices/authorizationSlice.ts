@@ -45,11 +45,14 @@ const authorizationSlice = createSlice({
       }
 
       payload.messages.forEach(m => chat.messages.push(m))
+    },
+    changeAvatar(state, {payload}: PayloadAction<string>) {
+      state.currentUser.avatarUrl = payload
     }
   }
 })
 
-export const {authorize, addChat, addChats, addMessages, addMessage, setLastMessage} = authorizationSlice.actions
+export const {authorize, addChat, addChats, addMessages, addMessage, setLastMessage, changeAvatar} = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer
 
