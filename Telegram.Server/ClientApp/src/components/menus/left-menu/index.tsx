@@ -11,6 +11,7 @@ import {Toggler} from "components/form/Toggler";
 import {NewGroupForm} from "components/forms/NewGroupForm";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import {LeftMenuContext} from "contexts/LeftMenuContext";
+import {SettingsForm} from "../../forms/SettingsForm";
 
 type Props = {
   visible: boolean
@@ -29,7 +30,7 @@ export const LeftMenu = ({visible}: Props) => {
     {name: 'New Channel', icon: <SpeakerIcon/>},
     {name: 'Contacts', icon: <PersonIcon/>},
     {name: 'Calls', icon: <PhoneIcon/>},
-    {name: 'Settings', icon: <GearIcon/>},
+    {name: 'Settings', icon: <GearIcon/>, onClick: () => showForm(<SettingsForm/>)},
     {name: 'Night Mode', icon: <MoonIcon/>, additionalElement: <Toggler/>},
   ]
 
