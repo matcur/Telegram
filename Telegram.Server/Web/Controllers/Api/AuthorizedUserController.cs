@@ -39,6 +39,7 @@ namespace Telegram.Server.Web.Controllers.Api
 
             user.AvatarUrl = uri;
             _db.Update(user);
+            _db.SaveChanges();
 
             return Ok();
         }
