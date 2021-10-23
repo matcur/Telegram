@@ -17,7 +17,7 @@ export const SettingsForm = () => {
   }
   const menuItem = (item: Item) => {
     return (
-      <li className="new-group-form__item">
+      <li className="settings-form__item">
         {item.name}
       </li>
     )

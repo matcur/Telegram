@@ -1197,7 +1197,7 @@ input:checked + .fuck:before {
     padding-left: 0;
 }
 
-.new-group-form__item {
+.settings-form__item {
     font-size: 15px;
     font-weight: 400;
     color: #ccc;
@@ -1206,7 +1206,7 @@ input:checked + .fuck:before {
     cursor: pointer;
 }
 
-.new-group-form__item:hover {
+.settings-form__item:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
