@@ -1,4 +1,4 @@
-import React, {createRef, FC} from 'react'
+import React, {createRef, FC, forwardRef, RefObject} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   className?: string
 }
 
-export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files', className = 'image-input'}) => {
+export const ImageInput = forwardRef<HTMLImageElement, Props>(({onSelected, thumbnail, name = 'files', className = 'image-input'}, ref) => {
   const input = createRef<HTMLInputElement>()
 
   const onClick = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -24,7 +24,8 @@ export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files', cl
         alt=""
         className={"circle " + className}
         style={{cursor: "pointer"}}
-        onClick={onClick}/>
+        onClick={onClick}
+        ref={ref}/>
       <input
         ref={input}
         type="file"
@@ -33,4 +34,4 @@ export const ImageInput: FC<Props> = ({onSelected, thumbnail, name = 'files', cl
         onChange={() => onSelected(input.current!)}/>
     </div>
   )
-}
+})
