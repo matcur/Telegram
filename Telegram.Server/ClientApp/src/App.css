@@ -1219,4 +1219,24 @@ input:checked + .fuck:before {
 .settings-form__avatar-input {
     padding: 0 20px 10px 20px;
 }
+.new-avatar {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.new-avatar:hover .new-avatar__camera{
+    bottom: 0;
+}
+.new-avatar__camera {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    bottom: -100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: bottom .3s;
+}
 /*# sourceMappingURL=style.css.map */

@@ -1,11 +1,12 @@
 import {ImageInput} from "../form/ImageInput";
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {useFormFiles} from "../../hooks/useFormFiles";
 import {Item} from "../menus/left-menu/LeftMenuItem";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {UpLayerContext} from "../../contexts/UpLayerContext";
 import {changeAvatar} from "../../app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
+import {ReactComponent as CameraIcon} from "public/svgs/camera.svg";
 
 export const SettingsForm = () => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
@@ -13,6 +14,7 @@ export const SettingsForm = () => {
   const [avatar, setAvatar] = useState(currentUser.avatarUrl)
   const files = useFormFiles()
   const upLayer = useContext(UpLayerContext)
+  const avatarRef = useRef<HTMLImageElement>(null)
   const dispatch = useAppDispatch()
   
   const loadImage = async (input: HTMLInputElement) => {
@@ -34,6 +36,12 @@ export const SettingsForm = () => {
   const hideUpLayer = () => {
     upLayer.setVisible(false)
     upLayer.setCentralElement(<div/>)
+  }
+  const onAvatarClick = () => {
+    const current = avatarRef.current;
+    if (current !== null) {
+      current.click()
+    }
   }
   
   const menuItems: Item[] = [
@@ -57,11 +65,20 @@ export const SettingsForm = () => {
       </div>
       <div className="settings-form__avatar-input">
         <div className="df aic">
-          <ImageInput
-            onSelected={loadImage}
-            thumbnail={avatar}
-            className={'big-avatar'}  
-          />
+          <div 
+            className="new-avatar"
+            onClick={onAvatarClick}  
+          >
+            <div className="new-avatar__camera">
+              <CameraIcon style={{width: '30px', height: '20px', fill: '#fff'}}/>
+            </div>
+            <ImageInput
+              ref={avatarRef}
+              onSelected={loadImage}
+              thumbnail={avatar}
+              className={'big-avatar'}
+            />
+          </div>
           <div className="settings-form__user-info">
             <div className="user-name middle-name">
               {currentUser.firstName} {currentUser.lastName}
