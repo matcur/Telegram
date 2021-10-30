@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace Sherden.AspNet.Filesystem.FileNames
 {
-    public class SimpleFileName : FileName
+    public class ConstFileName : FileName
     {
         private readonly string _value;
 
-        public SimpleFileName(string value)
+        public ConstFileName(string value)
         {
             _value = value;
         }
