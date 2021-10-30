@@ -27,24 +27,8 @@ namespace Sherden.AspNet.Filesystem.Files
         
         public string Save()
         {
-            string path;
-            var @try = 0;
-            do
-            {
-                var name = _fileName.Value(_source);
-                path = Path.Combine(_folder, name);
-
-                @try++;
-                if (@try > 50)
-                {
-                    throw new Exception(
-                        $"Can't get free file name. Probably {_fileName.GetType()} always returns the same value."
-                    );
-                }
-            } while (File.Exists(path));
-
             return new SimpleFile(
-                _source, path
+                _source, RelativePath(_folder)
             ).Save();
         }
 
@@ -55,6 +39,27 @@ namespace Sherden.AspNet.Filesystem.Files
             new SimpleFile(
                 _source, Path.Combine(_folder, name)
             ).Remove();
+        }
+
+        private string RelativePath(string folder)
+        {
+            string path;
+            var @try = 0;
+            do
+            {
+                var name = _fileName.Value(_source);
+                path = Path.Combine(folder, name);
+
+                @try++;
+                if (@try > 50)
+                {
+                    throw new Exception(
+                        $"Can't get free file name. Probably {_fileName.GetType()} always returns the same value."
+                    );
+                }
+            } while (File.Exists(path));
+
+            return path;
         }
     }
 }
