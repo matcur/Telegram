@@ -20,6 +20,12 @@ namespace Sherden.AspNet.Filesystem.Files
 
         }
 
+        public PublicFile(string path)
+            : this(new SimpleFile(Path.Combine("wwwroot", path)))
+        {
+
+        }
+
         public PublicFile(IAspFile source)
         {
             _source = source;

@@ -38,6 +38,12 @@ namespace Sherden.AspNet.Filesystem.Files
 
         }
 
+        public ApplicationFile(string path)
+            : this(new SimpleFile(Path.Combine(Root, path)))
+        {
+
+        }
+
         public ApplicationFile(IAspFile source)
         {
             _source = source;

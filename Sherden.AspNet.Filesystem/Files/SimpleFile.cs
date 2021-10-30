@@ -16,6 +16,12 @@ namespace Sherden.AspNet.Filesystem.Files
 
         }
 
+        public SimpleFile(string path)
+            : this(new NullFormFile(), path)
+        {
+
+        }
+
         public SimpleFile(IFormFile source, string path)
         {
             _source = source;
