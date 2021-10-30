@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sherden.AspNet.Filesystem.FileCollections;
 using Sherden.AspNet.Filesystem.Files;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,18 @@ namespace Telegram.Server.Web.Controllers.Api
             var path = new FileCollection(files, "files").Save();
 
             return Json(new RequestResult(true, path));
+        }
+        
+        [HttpPost]
+        [Route("api/1.0/remove-files")]
+        public IActionResult Remove(IEnumerable<string> files)
+        {
+            foreach (var file in files)
+            {
+                new PublicFile(file).Remove();
+            }
+
+            return Json(new RequestResult(true));
         }
     }
 }
