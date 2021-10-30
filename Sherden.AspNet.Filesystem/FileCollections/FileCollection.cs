@@ -9,15 +9,15 @@ namespace Sherden.AspNet.Filesystem.FileCollections
     {
         private readonly IEnumerable<IFormFile> _files;
         
-        private readonly Func<IFormFile, string> _fileCreation;
+        private readonly Func<IFormFile, IAspFile> _fileCreation;
 
         public FileCollection(IEnumerable<IFormFile> files, string folder)
-            : this(files, file => new PublicFile(file, folder).Save())
+            : this(files, file => new PublicFile(file, folder))
         {
 
         }
 
-        public FileCollection(IEnumerable<IFormFile> files, Func<IFormFile, string> fileCreation)
+        public FileCollection(IEnumerable<IFormFile> files, Func<IFormFile, IAspFile> fileCreation)
         {
             _files = files;
             _fileCreation = fileCreation;
@@ -28,7 +28,7 @@ namespace Sherden.AspNet.Filesystem.FileCollections
             var paths = new List<string>();
             foreach (var file in _files)
             {
-                paths.Add(_fileCreation.Invoke(file));
+                paths.Add(_fileCreation.Invoke(file).Save());
             }
 
             return paths;
