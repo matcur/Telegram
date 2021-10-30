@@ -26,9 +26,7 @@ namespace Sherden.AspNet.Filesystem.Files
         {
             using (var stream = File.Create(_path))
             {
-                _source.CopyTo(
-                    stream
-                );
+                _source.CopyTo(stream);
             }
 
             return _path;
