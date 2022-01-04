@@ -14,14 +14,22 @@ export class ApiClient {
   }
 
   async post<TResult>(resource: string, body: FormData | any = {}) {
+    return this.request<TResult>('POST', resource, body)
+  }
+
+  async put<TResult>(resource: string, body: FormData | any = {}) {
+    return this.request<TResult>('PUT', resource, body)
+  }
+  
+  async request<TResult>(method: string, resource: string, body: FormData | any = {}) {
     if (body instanceof FormData) {
       return await this.sendXmlHttpRequest<{success: boolean, result: TResult}>(
-        resource, body, 'POST'
+          resource, body, method
       )
     }
 
     return await fetch(this.host + resource, {
-      method: 'POST',
+      method: method,
       headers: {
         'Accept': 'application/json',
         ...this.headers,
