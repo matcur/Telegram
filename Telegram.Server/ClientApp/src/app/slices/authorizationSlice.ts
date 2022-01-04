@@ -58,6 +58,10 @@ const authorizationSlice = createSlice({
       const messages = chat.messages;
       const i = messages.findIndex(m => m.id === updatedMessage.id)
       messages.splice(i, 1, updatedMessage)
+      
+      if (i + 1 === messages.length) {
+        chat.lastMessage = updatedMessage
+      }
     }
   }
 })
