@@ -15,6 +15,7 @@ import {addMessage, addMessages, chatMessages} from "app/slices/authorizationSli
 import {useWebhook} from "../../hooks/useWebhook";
 import {useArray} from "../../hooks/useArray";
 import {MessagesApi} from "../../api/MessagesApi";
+import {sameUsers} from "../../utils/sameUsers";
 
 type Props = {
   chat: ChatModel
@@ -47,9 +48,13 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     inputState.save(data, content)
   }
   const editMessage = (message: Message) => {
+    if (!sameUsers(message.author, currentUser)) {
+      return
+    }
+    
     input.onChange(textContent(message))
     setInputState(
-      new EditingMessageState(message, setInputState, dispatch, newMessageState)
+      new EditingMessageState(message, setInputState, dispatch, newMessageState, new MessagesApi(authorizedToken))
     )
   }
   

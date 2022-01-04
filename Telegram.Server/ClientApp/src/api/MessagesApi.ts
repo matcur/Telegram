@@ -1,5 +1,6 @@
 import {ApiClient} from "./ApiClient";
 import {Message} from "../models";
+import {toFormData} from "../utils/toFormData";
 
 export class MessagesApi {
   private readonly api: ApiClient
@@ -14,6 +15,13 @@ export class MessagesApi {
     return await this.api.post<Message>(
       `messages/create`,
       data
+    )
+  }
+
+  async update(id: number, message: FormData) {
+    return await this.api.put<Message>(
+        `messages/${id}`,
+        message
     )
   }
 }

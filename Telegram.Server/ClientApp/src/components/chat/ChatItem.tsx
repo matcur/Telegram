@@ -27,7 +27,7 @@ export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
         </div>
         <div className="last-message">
           <span className="last-message-user-name">{lastMessage.author.firstName}: </span>
-          <ShortMessageContent content={lastMessage.content}/>
+          <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
         </div>
       </div>
       <div className="chat-item-right-part">

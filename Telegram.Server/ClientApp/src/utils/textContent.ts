@@ -5,7 +5,7 @@ export const textContent = (message: Message | Content[]) => {
   if (Array.isArray(message)) {
     content = message
   } else {
-    content = message.content
+    content = message.contentMessages.map(c => c.content)
   }
 
   return content.find(m => m.type === 'Text')?.value ?? ''

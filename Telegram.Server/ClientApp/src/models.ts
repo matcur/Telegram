@@ -17,7 +17,7 @@ export type Content = {
 export type Message = {
   id: number
   author: User
-  content: Content[]
+  contentMessages: {content: Content}[]
   chatId: number
   creationDate: string
 }

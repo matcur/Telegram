@@ -24,19 +24,10 @@ const chatsSlice = createSlice({
     },
     remove(state, {payload}: PayloadAction<Chat>) {
       removeFrom(state.list, payload)
-    },
-    updateMessage(state, {payload}: PayloadAction<{chatId: number, message: Message}>) {
-      const chat = state.list.find(c => c.id === payload.chatId)
-      if (chat === undefined) {
-        return
-      }
-
-      removeFrom(chat.messages, payload.message)
-      chat.messages.push(payload.message)
     }
   }
 })
 
-export const { addChatRange, remove, updateMessage } = chatsSlice.actions
+export const { addChatRange, remove } = chatsSlice.actions
 
 export const chatsReducer = chatsSlice.reducer

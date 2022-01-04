@@ -5,7 +5,7 @@ export const emittingMessage = (message: Message) => {
   return {
     id: message.id,
     author: {...message.author, chats: []},
-    content: message.content,
+    content: message.contentMessages,
     chatId: message.chatId,
     creationDate: message.creationDate,
   }

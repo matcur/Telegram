@@ -1,27 +1,30 @@
 import {MessageState} from "app/messageStates/MessageState";
 import {Content, Message} from "models";
-import {Dispatch} from "react";
 import {AnyAction} from "@reduxjs/toolkit";
-import {updateMessage} from "app/slices/chatsSlice";
-import {withTextContent} from "utils/withTextContent";
-import {textContent} from "utils/textContent";
+import {updateMessage} from "app/slices/authorizationSlice";
+import {MessagesApi} from "../../api/MessagesApi";
 
 export class EditingMessageState implements MessageState {
   constructor(
-    private message: Message,
-    private setState: (state: MessageState) => void,
-    private dispatch: Dispatch<AnyAction>,
-    private afterSubmitState: MessageState
-  ) { }
+      private message: Message,
+      private setState: (state: MessageState) => void,
+      private dispatch: React.Dispatch<AnyAction>,
+      private afterSubmitState: MessageState,
+      private messages: MessagesApi) { }
 
-  save(data: FormData, content: Content[]) {
+  async save(data: FormData, content: Content[]) {
     this.setState(this.afterSubmitState)
 
-    const message = this.message
+    const id = this.message.id;
+    data.append("id", id.toString())
+
+    const response = await this.messages.update(id, data)
+    const message = response.result
+    
     this.dispatch(
       updateMessage({
         chatId: message.chatId,
-        message: withTextContent(message, textContent(content))
+        updatedMessage: message
       })
     )
   }

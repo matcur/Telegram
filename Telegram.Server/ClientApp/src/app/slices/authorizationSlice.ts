@@ -48,11 +48,21 @@ const authorizationSlice = createSlice({
     },
     changeAvatar(state, {payload}: PayloadAction<string>) {
       state.currentUser.avatarUrl = payload
+    },
+    updateMessage(state, {payload: {chatId, updatedMessage}}: PayloadAction<{chatId: number, updatedMessage: Message}>) {
+      const chat = state.currentUser.chats.find(c => c.id === chatId)
+      if (chat === undefined) {
+        return
+      }
+
+      const messages = chat.messages;
+      const i = messages.findIndex(m => m.id === updatedMessage.id)
+      messages.splice(i, 1, updatedMessage)
     }
   }
 })
 
-export const {authorize, addChat, addChats, addMessages, addMessage, setLastMessage, changeAvatar} = authorizationSlice.actions
+export const {authorize, addChat, addChats, addMessages, addMessage, setLastMessage, changeAvatar, updateMessage} = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer
 
