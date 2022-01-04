@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Telegram.Server.Core.Db;
@@ -9,9 +10,10 @@ using Telegram.Server.Core.Db;
 namespace Telegram.Server.Core.Db.Migrations
 {
     [DbContext(typeof(AppDb))]
-    partial class AppDbModelSnapshot : ModelSnapshot
+    [Migration("20220103171136_AddContentMessage")]
+    partial class AddContentMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,13 +332,13 @@ namespace Telegram.Server.Core.Db.Migrations
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.ContentMessage", b =>
                 {
                     b.HasOne("Telegram.Server.Core.Db.Models.Content", "Content")
-                        .WithMany("ContentMessages")
+                        .WithMany("Messages")
                         .HasForeignKey("ContentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Telegram.Server.Core.Db.Models.Message", "Message")
-                        .WithMany("ContentMessages")
+                        .WithMany("Content")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -392,12 +394,12 @@ namespace Telegram.Server.Core.Db.Migrations
 
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.Content", b =>
                 {
-                    b.Navigation("ContentMessages");
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.Message", b =>
                 {
-                    b.Navigation("ContentMessages");
+                    b.Navigation("Content");
                 });
 
             modelBuilder.Entity("Telegram.Server.Core.Db.Models.User", b =>

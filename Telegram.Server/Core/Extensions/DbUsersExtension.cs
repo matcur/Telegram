@@ -17,7 +17,8 @@ namespace Telegram.Server.Core.Extensions
                 .ThenInclude(m => m.Author)
                 .Include(u => u.Chats)
                 .ThenInclude(c => c.Chat.Messages)
-                .ThenInclude(m => m.Content)
+                .ThenInclude(m => m.ContentMessages)
+                .ThenInclude(c => c.Content)
                 .Select(u => u.Chats.Select(c => new Chat
                 {
                     Id = c.Chat.Id,

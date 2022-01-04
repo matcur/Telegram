@@ -24,7 +24,7 @@ namespace Telegram.Server.Core.Db.Models
 
         public User Author { get; set; }
 
-        public List<Content> Content { get; set; }
+        public List<ContentMessage> ContentMessages { get; set; } = new List<ContentMessage>();
 
         public Message() { }
         
@@ -32,7 +32,22 @@ namespace Telegram.Server.Core.Db.Models
         {
             AuthorId = map.AuthorId;
             ChatId = map.ChatId;
-            Content = map.Content.Select(c => new Content(c)).ToList();
+            ContentMessages = map.Content.Select(c => new ContentMessage
+            {
+                Content = new Content(c),
+                Message = this,
+            }).ToList();
+        }
+        
+        public Message(UpdateMessageMap map)
+        {
+            ChatId = map.ChatId;
+            AuthorId = map.AuthorId;
+            ContentMessages = map.Content.Select(c => new ContentMessage
+            {
+                Content = new Content(c),
+                Message = this,
+            }).ToList();
         }
     }
 }

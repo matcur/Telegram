@@ -40,6 +40,8 @@ namespace Telegram.Server.Core.Db
                 .HasKey(nameof(ChatUser.UserId), nameof(ChatUser.ChatId));
             modelBuilder.Entity<ChatBot>()
                 .HasKey(nameof(ChatBot.BotId), nameof(ChatBot.ChatId));
+            modelBuilder.Entity<ContentMessage>()
+                .HasKey(nameof(ContentMessage.ContentId), nameof(ContentMessage.MessageId));
 
             modelBuilder.Entity<Message>()
                 .Property(m => m.CreationDate)

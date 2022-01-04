@@ -7,7 +7,7 @@ namespace Telegram.Server.Core.Db.Extensions
     {
         public static Content ContentByType(this Message message, ContentType type)
         {
-            return message.Content.Find(c => c.Type == type);
+            return message.ContentMessages.Find(c => c.Content.Type == type).Content;
         }
     }
 }

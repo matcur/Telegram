@@ -14,13 +14,13 @@ namespace Telegram.Server.Web.Controllers.Api
 {
     public class ChatController : Controller
     {
-        private AppDb _db;
+        private readonly AppDb _db;
 
-        private DbSet<Chat> _chats;
+        private readonly DbSet<Chat> _chats;
         
-        private DbSet<User> _users;
+        private readonly DbSet<User> _users;
 
-        private DbSet<Message> _messages;
+        private readonly DbSet<Message> _messages;
 
         public ChatController(AppDb appDb)
         {

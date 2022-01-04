@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +20,19 @@ namespace Telegram.Server.Web.Controllers.Api
         private readonly AppDb _db;
         
         private readonly DbSet<Chat> _chats;
-        
+
         private readonly IDomainBot _bot;
+
+        private readonly DbSet<Message> _messages;
         
+        private readonly DbSet<Content> _contents;
+
         public MessageController(AppDb db)
         {
             _db = db;
             _chats = db.Chats;
+            _messages = db.Messages;
+            _contents = db.Contents;
             _bot = new ChatBots(db);
         }
         
@@ -48,6 +55,35 @@ namespace Telegram.Server.Web.Controllers.Api
             await _db.SaveChangesAsync();
             
             await _bot.Act(message);
+
+            return Json(new RequestResult(true, message));
+        }
+
+        [HttpPut]
+        [ModelValidation]
+        [Route("api/1.0/messages/{id:int}")]
+        public IActionResult Update([FromRoute]int id, [FromForm]List<ContentMap> content)
+        {
+            var message = _messages
+                .Include(m => m.ContentMessages)
+                .ThenInclude(c => c.Content)
+                .Include(m => m.Author)
+                .FirstOrDefault(m => m.Id == id);
+            if (message == null)
+            {
+                return Json(new RequestResult(
+                    false, $"Message with id = {id} doesn't exist"
+                ));
+            }
+
+            _contents.RemoveRange(message.ContentMessages.Select(c => c.Content));
+            message.ContentMessages.AddRange(content.Select(c => new ContentMessage
+            {
+                Content = new Content(c),
+                Message = message,
+            }));
+
+            _db.SaveChanges();
 
             return Json(new RequestResult(true, message));
         }

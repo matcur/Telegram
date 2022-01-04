@@ -13,7 +13,7 @@ namespace Telegram.Server.Core.Db.Models
 
         public ContentType Type { get; set; }
 
-        public List<Message> Messages { get; set; }
+        public List<ContentMessage> ContentMessages { get; set; } = new List<ContentMessage>();
 
         public Content() { }
 
