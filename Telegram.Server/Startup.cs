@@ -84,7 +84,7 @@ namespace Telegram.Server
             services.AddTransient<UserIdentity>();
             
             services.AddSpaStaticFiles(
-                configuration => configuration.RootPath = "ClientApp/build"
+                configuration => configuration.RootPath = "wwwroot"
             );
         }
 
