@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Telegram.Server.Core.Db.Models;
 
 namespace Telegram.Server.Core.Mapping
 {
@@ -8,6 +9,6 @@ namespace Telegram.Server.Core.Mapping
 
         public int AuthorId { get; set; }
 
-        public List<ContentMap> Content { get; set; }
+        public List<ContentMessage> ContentMessages { get; set; }
     }
 }

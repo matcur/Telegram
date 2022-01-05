@@ -32,11 +32,7 @@ namespace Telegram.Server.Core.Db.Models
         {
             AuthorId = map.AuthorId;
             ChatId = map.ChatId;
-            ContentMessages = map.Content.Select(c => new ContentMessage
-            {
-                Content = new Content(c),
-                Message = this,
-            }).ToList();
+            ContentMessages = map.ContentMessages;
         }
         
         public Message(UpdateMessageMap map)

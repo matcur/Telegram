@@ -94,14 +94,14 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
   const seedForm = (form: FormData, messageText: string, filePaths: string[]) => {
     form.append('chatId', chatId.toString())
     form.append('authorId', currentUser.id.toString())
-    form.append('content[0].type', 'Text')
-    form.append('content[0].value', messageText)
+    form.append('contentMessages[0].content.type', 'Text')
+    form.append('contentMessages[0].content.value', messageText)
     
     filePaths.forEach((path, key) => {
       const index = key + 1;
       
-      form.append(`content[${index}].type`, 'Image')
-      form.append(`content[${index}].value`, path)
+      form.append(`contentMessages[${index}].content.type`, 'Image')
+      form.append(`contentMessages[${index}].content.value`, path)
     })
   }
   
