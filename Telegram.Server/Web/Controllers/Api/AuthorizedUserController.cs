@@ -23,6 +23,15 @@ namespace Telegram.Server.Web.Controllers.Api
         }
 
         [HttpGet]
+        [Route("api/1.0/authorized-user")]
+        public IActionResult AuthorizedUser()
+        {
+            var result = _users.Find(UserId());
+
+            return Json(new RequestResult(true, result));
+        }
+
+        [HttpGet]
         [Route("api/1.0/authorized-user/chats")]
         public IActionResult Chats([FromQuery]int count, [FromQuery]int offset = 0)
         {
