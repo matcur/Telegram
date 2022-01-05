@@ -62,7 +62,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [HttpPut]
         [ModelValidation]
         [Route("api/1.0/messages/{id:int}")]
-        public IActionResult Update([FromRoute]int id, [FromForm]List<ContentMap> content)
+        public IActionResult Update([FromRoute]int id, [FromForm]UpdateMessageMap map)
         {
             var message = _messages
                 .Include(m => m.ContentMessages)
@@ -77,11 +77,7 @@ namespace Telegram.Server.Web.Controllers.Api
             }
 
             _contents.RemoveRange(message.ContentMessages.Select(c => c.Content));
-            message.ContentMessages.AddRange(content.Select(c => new ContentMessage
-            {
-                Content = new Content(c),
-                Message = message,
-            }));
+            message.ContentMessages.AddRange(map.ContentMessages);
 
             _db.SaveChanges();
 

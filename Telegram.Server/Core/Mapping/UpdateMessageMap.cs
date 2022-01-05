@@ -11,6 +11,6 @@ namespace Telegram.Server.Core.Mapping
 
         public int AuthorId { get; set; }
 
-        public List<ContentMap> Content { get; set; }
+        public List<ContentMessage> ContentMessages { get; set; }
     }
 }
