@@ -19,10 +19,8 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
   const code = useFormInput('607810')
   const [wrongCodeMessage, setWrongMessage] = useState('')
 
-  const codes = new CodesApi()
-
   const toIndex = async (enteredCode: string) => {
-    const response = await codes.valid({value: enteredCode, userId})
+    const response = await new CodesApi().valid({value: enteredCode, userId})
     if (response.result) {
       await authenticate(phoneNumber, enteredCode)
       history.push('/')

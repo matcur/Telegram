@@ -1,5 +1,5 @@
 import {ApiClient} from "api/ApiClient";
-import {Chat} from "models";
+import {Chat, User} from "models";
 
 export class AuthorizedUserApi {
   readonly api: ApiClient
@@ -8,6 +8,10 @@ export class AuthorizedUserApi {
     this.api = new ApiClient('1.0', {
       Authorization: `Bearer ${token}`
     })
+  }
+  
+  authorizedUser(): Promise<{success: boolean, result: User}> {
+    return this.api.get('authorized-user')
   }
 
   async chats(): Promise<{success: boolean, result: Chat[]}> {
