@@ -4,7 +4,6 @@ import {LeftMenu} from "components/menus/left-menu";
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {Chat} from "components/chat/Chat";
 import {nullChat} from "nullables";
-import {useRequireAuthentication} from "hooks/useRequireAuthentication";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import { LeftMenuContext } from 'contexts/LeftMenuContext';
 
@@ -13,7 +12,6 @@ export const Index = () => {
   const [upLayerVisible, setUpLayerVisible] = useState(false)
   const [leftMenuVisible, setLeftMenuVisible] = useState(false)
   const [centralElement, setCentralElement] = useState(<div/>)
-  useRequireAuthentication('/login?phoneNumber=89545672654')
 
   const hideUpLayer = () => {
     setLeftMenuVisible(false)
