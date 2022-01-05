@@ -13,7 +13,6 @@ type Props = {
 }
 
 export const ChatMessages: FC<Props> = ({messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
-  const currentUser = useAppSelector(state => state.authorization.currentUser)
   const scrollBarRef = createRef<HTMLDivElement>()
 
   const makeMessages = (messages: Message[]) => {
@@ -40,22 +39,6 @@ export const ChatMessages: FC<Props> = ({messages, onMessageDoubleClick, loadPre
       loadPreviousMessages()
     }
   }
-
-  useEffect(() => {
-    const scrollBar = scrollBarRef.current
-    if (scrollBar === null) {
-      return
-    }
-
-    const height = scrollBar.scrollHeight
-    const actualOffset = scrollBar.scrollTop + scrollBar.offsetTop + scrollBar.clientHeight
-    if (
-      actualOffset + 60 > height ||
-      sameUsers(currentUser, lastIn(messages, nullMessage).author)
-    ) {
-      scrollBar.scrollTo({top: height})
-    }
-  }, [messages])
 
   return (
     <div
