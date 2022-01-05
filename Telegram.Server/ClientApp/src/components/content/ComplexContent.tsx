@@ -21,8 +21,7 @@ const contentComponent = (content: Content, key: number) => {
 export const ComplexContent: FC<Props> = ({content}: Props) => {
   return (
     <div className="complex-content">
-      {content
-        .map((c, key) => contentComponent(c, key))}
+      {content.map(contentComponent)}
     </div>
   )
 }

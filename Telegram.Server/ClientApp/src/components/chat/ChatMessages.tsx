@@ -9,9 +9,10 @@ import {lastIn} from "utils/lastIn";
 type Props = {
   messages: Message[]
   onMessageDoubleClick: (message: Message) => void
+  loadPreviousMessages: () => void
 }
 
-export const ChatMessages: FC<Props> = ({messages, onMessageDoubleClick}: Props) => {
+export const ChatMessages: FC<Props> = ({messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const scrollBarRef = createRef<HTMLDivElement>()
 
@@ -27,6 +28,17 @@ export const ChatMessages: FC<Props> = ({messages, onMessageDoubleClick}: Props)
         message={message}
         nextAuthor={next.author}/>
     })
+  }
+  const onScroll = () => {
+    const scrollBar = scrollBarRef.current
+    if (scrollBar === null) {
+      return
+    }
+
+    const top = scrollBar.scrollTop
+    if (top < 30) {
+      loadPreviousMessages()
+    }
   }
 
   useEffect(() => {
@@ -48,7 +60,8 @@ export const ChatMessages: FC<Props> = ({messages, onMessageDoubleClick}: Props)
   return (
     <div
       ref={scrollBarRef}
-      className="chat-messages scrollbar">
+      className="chat-messages scrollbar"
+      onScroll={onScroll}>
       {makeMessages(messages)}
     </div>
   )

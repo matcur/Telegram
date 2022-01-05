@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useCallback, useEffect, useState} from 'react'
 import {MessageInput} from "components/message/MessageInput";
 import {ChatMessages} from "components/chat/ChatMessages";
 import {useAppDispatch, useAppSelector} from "app/hooks";
@@ -11,11 +11,12 @@ import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
-import {addMessage, addMessages, chatMessages} from "app/slices/authorizationSlice";
+import {addMessage, addMessages, chatMessages, addPreviousMessages} from "app/slices/authorizationSlice";
 import {useWebhook} from "../../hooks/useWebhook";
 import {useArray} from "../../hooks/useArray";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
+import {debounce} from "../../utils/debounce";
 
 type Props = {
   chat: ChatModel
@@ -34,6 +35,15 @@ export const Chat: FC<Props> = ({chat}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const authorizedToken = useAppSelector(state => state.authorization.token)
   bus.currentUserId = currentUser.id
+  const loadPreviousMessages = useCallback(debounce(() => {
+    (new ChatApi(id, authorizedToken))
+      .messages(messages.length, 10)
+      .then(res => res.result)
+      .then(messages => dispatch(addPreviousMessages({
+        messages,
+        chatId: id
+      })))
+  }, 200), [chat, messages])
 
   const emitMessage = (chatId: number, message: string) => {
     messagesHook?.send('EmitMessage', chatId, message)
@@ -53,9 +63,9 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     }
     
     input.onChange(textContent(message))
-    setInputState(
-      new EditingMessageState(message, setInputState, dispatch, newMessageState, new MessagesApi(authorizedToken))
-    )
+    setInputState(new EditingMessageState(
+      message, setInputState, dispatch, newMessageState, new MessagesApi(authorizedToken)
+    ))
   }
   
   useEffect(() => {
@@ -110,7 +120,8 @@ export const Chat: FC<Props> = ({chat}: Props) => {
         loaded? (<>
           <ChatMessages
             onMessageDoubleClick={editMessage}
-            messages={messages}/>
+            messages={messages}
+            loadPreviousMessages={loadPreviousMessages}/>
           <MessageInput
             textInput={input}
             onSubmitting={onSubmit}

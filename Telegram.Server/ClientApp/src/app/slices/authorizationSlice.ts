@@ -48,6 +48,14 @@ const authorizationSlice = createSlice({
 
       payload.messages.forEach(m => chat.messages.push(m))
     },
+    addPreviousMessages(state, {payload}: PayloadAction<{chatId: number, messages: Message[]}>) {
+      const chat = selectChats(state).find(c => c.id === payload.chatId)
+      if (chat === undefined) {
+        return
+      }
+      
+      chat.messages.splice(0, 0, ...payload.messages)
+    },
     changeAvatar(state, {payload}: PayloadAction<string>) {
       state.currentUser.avatarUrl = payload
     },
@@ -68,7 +76,17 @@ const authorizationSlice = createSlice({
   }
 })
 
-export const {authorize, addChat, addChats, addMessages, addMessage, setLastMessage, changeAvatar, updateMessage} = authorizationSlice.actions
+export const {
+  authorize,
+  addChat,
+  addChats,
+  addMessages,
+  addMessage,
+  setLastMessage,
+  changeAvatar,
+  updateMessage,
+  addPreviousMessages,
+} = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer
 
