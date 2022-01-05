@@ -57,4 +57,4 @@ export class ApiClient {
   }
 }
 
-export const host = 'https://localhost:5001/api/'
+export const host = '/api/'
