@@ -31,7 +31,6 @@ export const Chat: FC<Props> = ({chat}: Props) => {
   const dispatch = useAppDispatch()
   const messagesHook = useWebhook('chats')
   const [loaded, setLoaded] = useState(false)
-  const [inputState, setInputState] = useState<MessageState>(newMessageState)
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const authorizedToken = useAppSelector(state => state.authorization.token)
@@ -50,10 +49,11 @@ export const Chat: FC<Props> = ({chat}: Props) => {
     messagesHook?.send('EmitMessage', chatId, message)
   }
 
-  const newMessageState = new NewMessageState(
-    dispatch, currentUser, chat.id, emitMessage, new MessagesApi(authorizedToken)
-  )
-
+  const [newMessageState, ] = useState(() => new NewMessageState(
+    dispatch, currentUser, id, emitMessage, new MessagesApi(authorizedToken)
+  ))
+  const [inputState, setInputState] = useState<MessageState>(newMessageState)
+  
   const onSubmit = (data: FormData, content: Content[]) => {
     inputState.save(data, content)
   }
