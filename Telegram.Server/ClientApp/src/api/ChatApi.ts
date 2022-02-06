@@ -1,5 +1,6 @@
-import {ApiClient} from "./ApiClient";
+import {ApiClient, host} from "./ApiClient";
 import {Message} from "models";
+import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 
 export class ChatApi {
   private readonly id: number

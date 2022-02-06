@@ -1,5 +1,5 @@
 import {MessageState} from "app/messageStates/MessageState";
-import {Content, User} from "models";
+import {Content, Message, User} from "models";
 import {Dispatch} from "react";
 import {AnyAction} from "@reduxjs/toolkit";
 import {addMessage} from "app/slices/authorizationSlice";
@@ -11,7 +11,7 @@ export class NewMessageState implements MessageState {
     private dispatch: Dispatch<AnyAction>,
     private currentUser: User,
     private chatId: number,
-    private emitMessage: (chatId: number, message: string) => void,
+    private emitMessage: (message: Message) => void,
     private messages: MessagesApi
   ) { }
 
@@ -25,6 +25,6 @@ export class NewMessageState implements MessageState {
     this.dispatch(
       addMessage({chatId: id, message})
     )
-    this.emitMessage(id, JSON.stringify(emittingMessage(message)))
+    this.emitMessage(message)
   }
 }

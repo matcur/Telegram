@@ -1,46 +1,15 @@
 import React, {FC, useEffect} from 'react'
 import {Chat, Message} from "models";
-import {useAppDispatch, useAppSelector} from "app/hooks";
 import { ChatItem } from './ChatItem';
-import {addChats, setLastMessage, addMessage} from "app/slices/authorizationSlice";
-import {AuthorizedUserApi} from "api/AuthorizedUserApi";
-import {useWebhook} from "../../hooks/useWebhook";
 
 type Props = {
   selectedChat: Chat
   onChatSelected: (chat: Chat) => void
   chatsFiltration: (chat: Chat) => boolean
+  chats: Chat[]
 }
 
-export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltration}: Props) => {
-  const currentUser = useAppSelector(state => state.authorization.currentUser)
-  const token = useAppSelector(state => state.authorization.token)
-  const chatsWebhook = useWebhook('chats', [])
-  const dispatch = useAppDispatch()
-  const chats = currentUser.chats
-  
-  useEffect(() => {
-    const load = async() => {
-      const response = await new AuthorizedUserApi(token).chats()
-      dispatch(addChats(response.result))
-    }
-
-    load()
-  }, [])
-  
-  useEffect(() => {
-    chatsWebhook?.on('ReceiveMessage', receiveMessage)
-  }, [chatsWebhook])
-
-  const receiveMessage = (chatId: number, messageJson: string) => {
-    const message = JSON.parse(messageJson) as Message
-
-    dispatch(setLastMessage({chatId, message}))
-    if (message.author.id !== currentUser.id) {
-      dispatch(addMessage({chatId, message}))
-    }
-  }
-
+export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltration, chats}: Props) => {
   const makeChat = (chat: Chat) => {
     return <ChatItem
       key={chat.id}

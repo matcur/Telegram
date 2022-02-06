@@ -20,16 +20,16 @@ import {debounce} from "../../utils/debounce";
 
 type Props = {
   chat: ChatModel
+  emitMessage: (message: Message) => void
 }
 
 const bus = {currentUserId: -1}
 
-export const Chat: FC<Props> = ({chat}: Props) => {
+export const Chat: FC<Props> = ({chat, emitMessage}: Props) => {
   const id = chat.id
   const input = useFormInput()
   const loadedChatIds = useArray()
   const dispatch = useAppDispatch()
-  const messagesHook = useWebhook('chats')
   const [loaded, setLoaded] = useState(false)
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
@@ -44,10 +44,6 @@ export const Chat: FC<Props> = ({chat}: Props) => {
         chatId: id
       })))
   }, 200), [chat, messages])
-
-  const emitMessage = (chatId: number, message: string) => {
-    messagesHook?.send('EmitMessage', chatId, message)
-  }
 
   const [newMessageState, ] = useState(() => new NewMessageState(
     dispatch, currentUser, id, emitMessage, new MessagesApi(authorizedToken)
@@ -67,26 +63,6 @@ export const Chat: FC<Props> = ({chat}: Props) => {
       message, setInputState, dispatch, newMessageState, new MessagesApi(authorizedToken)
     ))
   }
-  
-  useEffect(() => {
-    messagesHook?.on('ReceiveMessage', (chatId: number, messageJson: string) => {
-      const message = JSON.parse(messageJson) as Message
-
-      if (bus.currentUserId === message.author.id) {
-        return
-      }
-      
-      if (loadedChatIds.value.includes(chatId)) {
-        dispatch(addMessage({chatId, message}))
-      }
-    })
-  }, [messagesHook])
-  
-  useEffect(() => {
-    setInputState(new NewMessageState(
-      dispatch, currentUser, chat.id, emitMessage, new MessagesApi(authorizedToken)
-    ))
-  }, [messagesHook])
 
   useEffect(() => {
     if (messages.length !== 0) {

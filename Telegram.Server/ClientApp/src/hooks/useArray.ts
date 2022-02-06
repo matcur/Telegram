@@ -3,7 +3,10 @@ import {useState} from "react";
 export const useArray = <T>(...initialValue: T[]) => {
   const [array, setArray] = useState<T[]>(initialValue)
 
-  const add = (item: T) => {
+  const add = (item: T | T[]) => {
+    if (Array.isArray(item)) {
+      return setArray([...array, ...item])
+    }
     setArray([...array, item])
   }
   const remove = (item: T) => {

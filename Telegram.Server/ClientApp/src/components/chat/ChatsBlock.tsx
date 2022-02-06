@@ -5,13 +5,15 @@ import {Chat} from "models";
 import {useFormInput} from "hooks/useFormInput";
 import {useSetLeftMenuVisible} from "hooks/useSetLeftMenuVisible";
 import {Burger} from "components/icons/Burger";
+import {ChatWebhooks} from "../../app/chat/ChatWebhooks";
 
 type Props = {
   onChatSelected: (chat: Chat) => void
   selectedChat: Chat
+  chats: Chat[]
 }
 
-export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat}: Props) => {
+export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats}: Props) => {
   const search = useFormInput('')
   const setLeftMenuVisible = useSetLeftMenuVisible()
 
@@ -32,7 +34,8 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat}: Props) => 
       <ChatList
         chatsFiltration={filtration}
         selectedChat={selectedChat}
-        onChatSelected={onChatSelected}/>
+        onChatSelected={onChatSelected}
+        chats={chats}/>
     </div>
   )
 }
