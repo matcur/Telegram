@@ -5,7 +5,7 @@ import {Chat} from "models";
 import {useFormInput} from "hooks/useFormInput";
 import {useSetLeftMenuVisible} from "hooks/useSetLeftMenuVisible";
 import {Burger} from "components/icons/Burger";
-import {ChatWebhooks} from "../../app/chat/ChatWebhooks";
+import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
 
 type Props = {
   onChatSelected: (chat: Chat) => void

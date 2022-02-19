@@ -2,7 +2,7 @@ import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {host} from "../../api/ApiClient";
 import {Message} from "../../models";
 
-export class ChatWebhook {
+export class ChatWebsocket {
   private webhook: HubConnection | undefined
   
   private readonly chatId: number;

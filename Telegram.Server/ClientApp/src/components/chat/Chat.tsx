@@ -17,17 +17,17 @@ import {useArray} from "../../hooks/useArray";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
 import {debounce} from "../../utils/debounce";
-import {ChatWebhook} from "../../app/chat/ChatWebhook";
+import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 
 type Props = {
   chat: ChatModel
   emitMessage: (message: Message) => void
-  webhook: ChatWebhook
+  websocket: ChatWebsocket
 }
 
 const bus = {currentUserId: -1}
 
-export const Chat: FC<Props> = ({chat, emitMessage, webhook}: Props) => {
+export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
   const id = chat.id
   const input = useFormInput()
   const loadedChatIds = useArray()
@@ -103,7 +103,7 @@ export const Chat: FC<Props> = ({chat, emitMessage, webhook}: Props) => {
             onMessageDoubleClick={tryEditMessage}
             messages={messages}
             loadPreviousMessages={loadPreviousMessages}
-            webhook={webhook}/>
+            websocket={websocket}/>
           <MessageInput
             textInput={input}
             onSubmitting={onSubmit}

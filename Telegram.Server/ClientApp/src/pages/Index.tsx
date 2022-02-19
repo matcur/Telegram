@@ -3,7 +3,7 @@ import {UpLayer} from "components/UpLayer";
 import {LeftMenu} from "components/menus/left-menu";
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {Chat} from "components/chat/Chat";
-import {nullChat, nullChatWebhook} from "nullables";
+import {nullChat, nullChatWebsocket} from "nullables";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import { LeftMenuContext } from 'contexts/LeftMenuContext';
 import {useArray} from "../hooks/useArray";
@@ -13,9 +13,9 @@ import {Message} from "../models";
 import {addChats, addMessage, setLastMessage} from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";
 import {host} from "../api/ApiClient";
-import {ChatWebhooks} from "../app/chat/ChatWebhooks";
+import {ChatWebsockets} from "../app/chat/ChatWebsockets";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
-import {ChatWebhook} from "../app/chat/ChatWebhook";
+import {ChatWebsocket} from "../app/chat/ChatWebsocket";
 
 export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
@@ -25,8 +25,8 @@ export const Index = () => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const chats = currentUser.chats
   const token = useAppSelector(state => state.authorization.token)
-  const [chatWebhooks] = useState(() => new ChatWebhooks())
-  const [chatWebhook, setChatWebhook] = useState<ChatWebhook>(() => nullChatWebhook)
+  const [chatWebsockets] = useState(() => new ChatWebsockets())
+  const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(() => nullChatWebsocket)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const Index = () => {
       const response = await new AuthorizedUserApi(token).chats()
       dispatch(addChats(response.result))
       response.result.forEach(async c => {
-        const hook = await chatWebhooks.get(c.id)
+        const hook = await chatWebsockets.get(c.id)
         hook.onMessageAdded(receiveMessage)
       })
     }
@@ -44,8 +44,8 @@ export const Index = () => {
   
   useEffect(() => {
     const load = async () => {
-      const webhook = await chatWebhooks.get(selectedChat.id)
-      setChatWebhook(webhook)
+      const webhook = await chatWebsockets.get(selectedChat.id)
+      setChatWebsocket(webhook)
     }
     
     load()
@@ -59,7 +59,7 @@ export const Index = () => {
     }
   }
   const emitMessage = async (message: Message) => {
-    const webhook = await chatWebhooks.get(message.chatId)
+    const webhook = await chatWebsockets.get(message.chatId)
     webhook.emitMessage(message)
   }
   
@@ -88,7 +88,7 @@ export const Index = () => {
               <Chat
                 chat={selectedChat}
                 emitMessage={emitMessage}
-                webhook={chatWebhook}/>
+                websocket={chatWebsocket}/>
           }
         </div>
       </LeftMenuContext.Provider>

@@ -1,7 +1,7 @@
-import {ChatWebhook} from "./ChatWebhook";
+import {ChatWebsocket} from "./ChatWebsocket";
 
-export class ChatWebhooks {
-  private items: ChatWebhook[] = []
+export class ChatWebsockets {
+  private items: ChatWebsocket[] = []
 
   async get(chatId: number) {
     const chatWebhook = this.items[chatId];
@@ -13,7 +13,7 @@ export class ChatWebhooks {
   }
 
   private async startWebhook(chatId: number) {
-    const webhook = new ChatWebhook(chatId)
+    const webhook = new ChatWebsocket(chatId)
     this.items[chatId] = webhook
     await webhook.start()
 

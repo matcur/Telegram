@@ -5,18 +5,18 @@ import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
 import {sameUsers} from "utils/sameUsers";
 import {lastIn} from "utils/lastIn";
-import {ChatWebhook} from "../../app/chat/ChatWebhook";
+import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 
 type Props = {
   messages: Message[]
   onMessageDoubleClick: (message: Message) => void
   loadPreviousMessages: () => void
-  webhook: ChatWebhook
+  websocket: ChatWebsocket
 }
 
 const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivElement>}
 
-export const ChatMessages: FC<Props> = ({webhook, messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
+export const ChatMessages: FC<Props> = ({websocket, messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
   const scrollBarRef = createRef<HTMLDivElement>()
   bus.scrollBarRef = scrollBarRef
 
@@ -57,9 +57,9 @@ export const ChatMessages: FC<Props> = ({webhook, messages, onMessageDoubleClick
   }
 
   useEffect(() => {
-    webhook.onMessageAdded(onMessageAdded)
-    return () => webhook.removeMessageAdded(onMessageAdded)
-  }, [webhook])
+    websocket.onMessageAdded(onMessageAdded)
+    return () => websocket.removeMessageAdded(onMessageAdded)
+  }, [websocket])
 
   return (
     <div
