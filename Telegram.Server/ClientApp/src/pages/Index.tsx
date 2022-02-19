@@ -20,7 +20,7 @@ export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
   const [upLayerVisible, setUpLayerVisible] = useState(false)
   const [leftMenuVisible, setLeftMenuVisible] = useState(false)
-  const [centralElement, setCentralElement] = useState(<div/>)
+  const [centralElement, setCentralElement] = useState(() => <div/>)
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const chats = currentUser.chats
   const token = useAppSelector(state => state.authorization.token)
