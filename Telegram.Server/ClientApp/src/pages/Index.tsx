@@ -3,7 +3,7 @@ import {UpLayer} from "components/UpLayer";
 import {LeftMenu} from "components/menus/left-menu";
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {Chat} from "components/chat/Chat";
-import {nullChat} from "nullables";
+import {nullChat, nullChatWebhook} from "nullables";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import { LeftMenuContext } from 'contexts/LeftMenuContext';
 import {useArray} from "../hooks/useArray";
@@ -15,6 +15,7 @@ import {useDispatch} from "react-redux";
 import {host} from "../api/ApiClient";
 import {ChatWebhooks} from "../app/chat/ChatWebhooks";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
+import {ChatWebhook} from "../app/chat/ChatWebhook";
 
 export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
@@ -25,6 +26,7 @@ export const Index = () => {
   const chats = currentUser.chats
   const token = useAppSelector(state => state.authorization.token)
   const [chatWebhooks] = useState(() => new ChatWebhooks())
+  const [chatWebhook, setChatWebhook] = useState<ChatWebhook>(() => nullChatWebhook)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -39,9 +41,19 @@ export const Index = () => {
 
     load()
   }, [])
+  
+  useEffect(() => {
+    const load = async () => {
+      const webhook = await chatWebhooks.get(selectedChat.id)
+      setChatWebhook(webhook)
+    }
+    
+    load()
+  }, [selectedChat])
 
   const receiveMessage = (message: Message) => {
     dispatch(setLastMessage({chatId: message.chatId, message}))
+    debugger
     if (message.author.id !== currentUser.id) {
       dispatch(addMessage({chatId: message.chatId, message}))
     }
@@ -75,7 +87,8 @@ export const Index = () => {
               <></>:
               <Chat
                 chat={selectedChat}
-                emitMessage={emitMessage}/>
+                emitMessage={emitMessage}
+                webhook={chatWebhook}/>
           }
         </div>
       </LeftMenuContext.Provider>

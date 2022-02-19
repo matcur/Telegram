@@ -29,6 +29,12 @@ export class ChatWebhook {
       callback(message)
     })
   }
+  
+  removeMessageAdded(callback: (message: Message) => void) {
+    this.ensureWebhook()
+
+    this.webhook?.off("ReceiveMessage", callback)
+  }
 
   emitMessage(message: Message) {
     this.ensureWebhook()

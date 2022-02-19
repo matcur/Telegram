@@ -1,4 +1,7 @@
 import {Chat, Message, User} from "models";
+import {ChatWebhook} from "./app/chat/ChatWebhook";
+import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
+import {host} from "./api/ApiClient";
 
 export const nullUser: User = {
   id: -1,
@@ -23,3 +26,11 @@ export const nullChat: Chat = {
   messages: [],
   members: [],
 }
+
+export const nullChatWebhook = {
+  chatId: -1,
+  async start() {},
+  onMessageAdded() {},
+  removeMessageAdded() {},
+  emitMessage() {},
+} as unknown as ChatWebhook
