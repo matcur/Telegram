@@ -1,7 +1,7 @@
 export const throttle = (f: (...args: any[]) => void, ms: number) => {
     let can = true
     let called = false
-    let lastArgs = []
+    let lastArgs: any[] = []
     let wrap = (...args: any[]) => {
         lastArgs = args
         if (can) {
