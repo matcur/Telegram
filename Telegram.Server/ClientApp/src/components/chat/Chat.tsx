@@ -53,11 +53,14 @@ export const Chat: FC<Props> = ({chat, emitMessage}: Props) => {
   const onSubmit = (data: FormData, content: Content[]) => {
     inputState.save(data, content)
   }
-  const editMessage = (message: Message) => {
+  const tryEditMessage = (message: Message) => {
     if (!sameUsers(message.author, currentUser)) {
       return
     }
     
+    editMessage(message)
+  }
+  const editMessage = (message: Message) => {
     input.onChange(textContent(message))
     setInputState(new EditingMessageState(
       message, setInputState, dispatch, newMessageState, new MessagesApi(authorizedToken)
@@ -95,7 +98,7 @@ export const Chat: FC<Props> = ({chat, emitMessage}: Props) => {
       {
         loaded? (<>
           <ChatMessages
-            onMessageDoubleClick={editMessage}
+            onMessageDoubleClick={tryEditMessage}
             messages={messages}
             loadPreviousMessages={loadPreviousMessages}/>
           <MessageInput
