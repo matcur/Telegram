@@ -1,16 +1,18 @@
 export class ApiClient {
   private readonly host = host
   
-  private readonly headers: Record<string, string>;
+  private readonly headers: Record<string, string>
+  
+  private readonly version: string
 
   constructor(version: string = '1.0', headers: Record<string, string> = {}) {
     this.headers = headers;
     this.host += (version + '/')
+    this.version = version
   }
 
   async get<TResult>(resource: string) {
-    return await fetch(this.host + resource, {headers: this.headers})
-      .then(res => res.json() as Promise<TResult>)
+    return this.request<TResult>('GET', resource)
   }
 
   async post<TResult>(resource: string, body: FormData | any = {}) {
@@ -54,6 +56,10 @@ export class ApiClient {
       request.onload = () => res(JSON.parse(request.response))
       request.onerror = () => rej('error occurred')
     })
+  }
+  
+  withHeaders(headers: Record<string, string>) {
+    return new ApiClient(this.version, {...this.headers, ...headers})
   }
 }
 
