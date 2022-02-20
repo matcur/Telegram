@@ -51,7 +51,9 @@ export const ChatMessages: FC<Props> = ({websocket, messages, onMessageDoubleCli
     const scroll = bus.scrollBarRef.current!
     const topOffset = scroll.scrollTop
     const scrollHeight = scroll.scrollHeight
-    if (scrollHeight - topOffset < 300) {
+    const lastMessageHeight = scroll.lastElementChild?.clientHeight ?? 0
+    const diff = scrollHeight - topOffset - scroll.clientHeight
+    if (diff < (lastMessageHeight + 40)) {
       scrollToBottom()
     }
   }
