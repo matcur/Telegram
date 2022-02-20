@@ -15,7 +15,7 @@ export class ChatApi {
   }
   
   async messages(offset: number, count: number) {
-    return await this.api.get<{success: boolean, result: Message[]}>(
+    return await this.api.get<Message[]>(
       `chats/${this.id}/messages?offset=${offset}&count=${count}`
     )
   }
