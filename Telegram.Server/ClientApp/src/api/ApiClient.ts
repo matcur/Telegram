@@ -12,7 +12,13 @@ export class ApiClient {
   }
 
   async get<TResult>(resource: string) {
-    return this.request<TResult>('GET', resource)
+    return await fetch(this.host + resource, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        ...this.headers,
+      },
+    }).then(res => res.json() as Promise<{success: boolean, result: TResult}>)
   }
 
   async post<TResult>(resource: string, body: FormData | any = {}) {
