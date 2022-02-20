@@ -72,8 +72,13 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
       />
     )
   }
-
+  const hasContent = () => {
+    return textInput.value !== "" || chatData.currentMessage.files.length !== 0
+  }
   const onSubmit = () => {
+    if (!hasContent()) {
+      return
+    }
     onDetailSubmit(textInput.value, chatData.currentMessage.files)
   }
 
