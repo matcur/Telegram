@@ -18,6 +18,8 @@ type Props = {
 
 const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivElement>}
 
+const loadPreviousMessageOffset = 15
+
 export const ChatMessages: FC<Props> = ({chatLoaded, chat, websocket, messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
   const scrollBarRef = createRef<HTMLDivElement>()
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
@@ -52,7 +54,7 @@ export const ChatMessages: FC<Props> = ({chatLoaded, chat, websocket, messages, 
       ...lastScrollTops,
       [chat.id]: top
     })
-    if (top < 30 && messages.length) {
+    if (top < loadPreviousMessageOffset && messages.length) {
       loadPreviousMessages()
     }
   }
