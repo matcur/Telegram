@@ -70,6 +70,10 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
   }
 
   useEffect(() => {
+    setLoaded(false)
+  }, [chat])
+
+  useEffect(() => {
     if (messages.length !== 0) {
       setLoaded(true)
       return
@@ -100,6 +104,8 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
       {
         loaded? (<>
           <ChatMessages
+            chat={chat}
+            chatLoaded={loaded}
             onMessageDoubleClick={tryEditMessage}
             messages={messages}
             loadPreviousMessages={loadPreviousMessages}

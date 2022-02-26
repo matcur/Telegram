@@ -1,5 +1,5 @@
-import React, {createRef, FC, RefObject, useEffect} from 'react'
-import {Message} from "models";
+import React, {createRef, FC, RefObject, useEffect, useState} from 'react'
+import {Chat, Message} from "models";
 import {useAppSelector} from "app/hooks";
 import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
@@ -12,12 +12,15 @@ type Props = {
   onMessageDoubleClick: (message: Message) => void
   loadPreviousMessages: () => void
   websocket: ChatWebsocket
+  chat: Chat
+  chatLoaded: boolean
 }
 
 const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivElement>}
 
-export const ChatMessages: FC<Props> = ({websocket, messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
+export const ChatMessages: FC<Props> = ({chatLoaded, chat, websocket, messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
   const scrollBarRef = createRef<HTMLDivElement>()
+  const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
   bus.scrollBarRef = scrollBarRef
 
   const makeMessages = (messages: Message[]) => {
@@ -33,17 +36,23 @@ export const ChatMessages: FC<Props> = ({websocket, messages, onMessageDoubleCli
         nextAuthor={next.author}/>
     })
   }
+  const scrollTo = (top: number) => {
+    const scroll = bus.scrollBarRef.current!
+    scroll.scrollTo({top: top})
+  }
   const scrollToBottom = () => {
     const scrollBar = bus.scrollBarRef.current!
-    
-    const scrollHeight = scrollBar.scrollHeight
-    scrollBar.scrollTo({top: scrollHeight})
+    scrollTo(scrollBar.scrollHeight)
   }
   const onScroll = () => {
-    const scrollBar = bus.scrollBarRef.current!
+    const scroll = bus.scrollBarRef.current!
 
-    const top = scrollBar.scrollTop
-    if (top < 30) {
+    const top = scroll.scrollTop
+    setLastScrollTops({
+      ...lastScrollTops,
+      [chat.id]: top
+    })
+    if (top < 30 && messages.length) {
       loadPreviousMessages()
     }
   }
@@ -62,6 +71,19 @@ export const ChatMessages: FC<Props> = ({websocket, messages, onMessageDoubleCli
     websocket.onMessageAdded(onMessageAdded)
     return () => websocket.removeMessageAdded(onMessageAdded)
   }, [websocket])
+  
+  useEffect(() => {
+    if (!chatLoaded) {
+      return
+    }
+
+    const lastTopOffset = lastScrollTops[chat.id]
+    if (lastTopOffset || lastTopOffset === 0) {
+      scrollTo(lastTopOffset)
+    } else {
+      scrollToBottom()
+    }
+  }, [chat, chatLoaded])
 
   return (
     <div
