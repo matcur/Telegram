@@ -459,6 +459,8 @@ a {
 }
 
 .last-message-content {
+    display: flex;
+    align-items: center;
     margin-left: 5px;
     color: #91A3B5;
     text-overflow: ellipsis;
