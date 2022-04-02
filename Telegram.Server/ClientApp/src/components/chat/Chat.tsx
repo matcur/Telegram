@@ -47,14 +47,16 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
       })))
   }, 200), [chat, messages])
 
-  const [newMessageState, ] = useState(() => new NewMessageState(
-    dispatch, currentUser, id, emitMessage, new MessagesApi(authorizedToken)
-  ))
+  const newMessageState = () => {
+    return new NewMessageState(
+      dispatch, currentUser, id, emitMessage, new MessagesApi(authorizedToken)
+    )
+  }
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   
   const onSubmit = (data: FormData, content: Content[]) => {
     inputState.save(data, content)
-    setInputState(newMessageState)
+    setInputState(newMessageState())
     input.onChange('')
   }
   const tryEditMessage = (message: Message) => {
@@ -67,7 +69,7 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
   const editMessage = (message: Message) => {
     input.onChange(textContent(message))
     setInputState(new EditingMessageState(
-      message, setInputState, dispatch, newMessageState, new MessagesApi(authorizedToken)
+      message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizedToken)
     ))
   }
 
@@ -93,7 +95,7 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
   }, [chat])
 
   useEffect(() => {
-    setInputState(newMessageState)
+    setInputState(newMessageState())
   }, [chat])
 
   return (
