@@ -31,7 +31,6 @@ const bus = {currentUserId: -1}
 export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
   const id = chat.id
   const input = useFormInput()
-  const loadedChatIds = useArray()
   const dispatch = useAppDispatch()
   const [loaded, setLoaded] = useState(false)
   const messages = useAppSelector(state => chatMessages(state, id))
@@ -55,6 +54,8 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
   
   const onSubmit = (data: FormData, content: Content[]) => {
     inputState.save(data, content)
+    setInputState(newMessageState)
+    input.onChange('')
   }
   const tryEditMessage = (message: Message) => {
     if (!sameUsers(message.author, currentUser)) {
@@ -93,10 +94,6 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
 
   useEffect(() => {
     setInputState(newMessageState)
-  }, [chat])
-
-  useEffect(() => {
-    loadedChatIds.add(id)
   }, [chat])
 
   return (
