@@ -18,6 +18,7 @@ import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
 import {debounce} from "../../utils/debounce";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {MessageScroll} from "./MessageScroll";
 
 type Props = {
   chat: ChatModel
@@ -103,13 +104,16 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
       <ChatHeader chat={chat}/>
       {
         loaded? (<>
-          <ChatMessages
-            chat={chat}
-            chatLoaded={loaded}
-            onMessageDoubleClick={tryEditMessage}
+          <MessageScroll
             messages={messages}
             loadPreviousMessages={loadPreviousMessages}
-            websocket={websocket}/>
+            websocket={websocket}
+            chat={chat}
+            chatLoaded={loaded}>
+            <ChatMessages
+              onMessageDoubleClick={tryEditMessage}
+              messages={messages}/>
+          </MessageScroll>
           <MessageInput
             textInput={input}
             onSubmitting={onSubmit}
