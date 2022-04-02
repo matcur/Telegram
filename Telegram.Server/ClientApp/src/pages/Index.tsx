@@ -34,7 +34,7 @@ export const Index = () => {
       const response = await new AuthorizedUserApi(token).chats()
       dispatch(addChats(response.result))
       response.result.forEach(async c => {
-        const hook = await chatWebsockets.get(c.id)
+        const hook = await chatWebsockets.get(c.id, token)
         hook.onMessageAdded(receiveMessage)
       })
     }
@@ -44,11 +44,13 @@ export const Index = () => {
   
   useEffect(() => {
     const load = async () => {
-      const webhook = await chatWebsockets.get(selectedChat.id)
+      const webhook = await chatWebsockets.get(selectedChat.id, token)
       setChatWebsocket(webhook)
     }
     
-    load()
+    if (selectedChat !== nullChat) {
+      load()
+    }
   }, [selectedChat])
 
   const receiveMessage = (message: Message) => {
@@ -59,7 +61,7 @@ export const Index = () => {
     }
   }
   const emitMessage = async (message: Message) => {
-    const webhook = await chatWebsockets.get(message.chatId)
+    const webhook = await chatWebsockets.get(message.chatId, token)
     webhook.emitMessage(message)
   }
   

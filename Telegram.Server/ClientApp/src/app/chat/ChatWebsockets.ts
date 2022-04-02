@@ -3,17 +3,17 @@ import {ChatWebsocket} from "./ChatWebsocket";
 export class ChatWebsockets {
   private items: ChatWebsocket[] = []
 
-  async get(chatId: number) {
+  async get(chatId: number, authorizeToken: string) {
     const chatWebhook = this.items[chatId];
     if (!chatWebhook) {
-      return await this.startWebhook(chatId)
+      return await this.startWebhook(chatId, authorizeToken)
     }
     
     return chatWebhook 
   }
 
-  private async startWebhook(chatId: number) {
-    const webhook = new ChatWebsocket(chatId)
+  private async startWebhook(chatId: number, authorizeToken: string) {
+    const webhook = new ChatWebsocket(chatId, authorizeToken)
     this.items[chatId] = webhook
     await webhook.start()
 

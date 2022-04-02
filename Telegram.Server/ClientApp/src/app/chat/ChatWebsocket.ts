@@ -7,13 +7,18 @@ export class ChatWebsocket {
   
   private readonly chatId: number;
   
-  constructor(chatId: number) {
+  private readonly authorizeToken: string;
+  
+  constructor(chatId: number, authorizeToken: string) {
     this.chatId = chatId;
+    this.authorizeToken = authorizeToken;
   }
 
   async start() {
     const webhook = new HubConnectionBuilder()
-      .withUrl(`${host}chats?chatId=${this.chatId}`)
+      .withUrl(`/hubs/chats?chatId=${this.chatId}`, {
+        accessTokenFactory: () => this.authorizeToken,
+      })
       .withAutomaticReconnect()
       .build()
 

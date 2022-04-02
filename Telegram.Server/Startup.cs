@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Web.Hubs;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Sherden.AspNet.Filesystem;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -22,12 +24,14 @@ namespace Telegram.Server
 {
     public class Startup
     {
+        public const string HubsRoutePrefix = "/hubs";
+        
         public IConfiguration Configuration { get; }
      
         private readonly IWebHostEnvironment _environment;
 
         private const string DefaultCors = "defaultCors";
-
+        
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _environment = environment;
@@ -58,6 +62,21 @@ namespace Telegram.Server
                             ValidAudience = AuthorizationOptions.Audience,
                             ValidateLifetime = true,
                             IssuerSigningKey = AuthorizationOptions.SecurityKey,
+                        };
+                        options.Events = new JwtBearerEvents
+                        {
+                            OnMessageReceived = context =>
+                            {
+                                var request = context.HttpContext.Request;
+                                if (request.Path.StartsWithSegments(HubsRoutePrefix,
+                                        StringComparison.OrdinalIgnoreCase) &&
+                                    request.Query.TryGetValue("access_token", out var authorizeToken))
+                                {
+                                    context.Token = authorizeToken;
+                                }
+
+                                return Task.CompletedTask;
+                            }
                         };
                     });
             services.AddMvc()
@@ -120,7 +139,7 @@ namespace Telegram.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/api/chats");
+                endpoints.MapHub<ChatHub>($"{HubsRoutePrefix}/chats");
             });
 
             app.UseSpa(spa =>

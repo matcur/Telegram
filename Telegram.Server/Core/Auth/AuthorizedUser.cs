@@ -1,6 +1,9 @@
 using System;
-using System.Security.Claims;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Telegram.Server.Core.Db;
+using Telegram.Server.Core.Db.Models;
 
 namespace Telegram.Server.Core.Auth
 {
@@ -8,9 +11,12 @@ namespace Telegram.Server.Core.Auth
     {
         private readonly HttpContext _httpContext;
 
-        public AuthorizedUser(IHttpContextAccessor httpContext)
+        private readonly DbSet<User> _users;
+
+        public AuthorizedUser(IHttpContextAccessor httpContext, AppDb db)
         {
             _httpContext = httpContext.HttpContext;
+            _users = db.Users;
         }
 
         public int Id()
@@ -27,6 +33,13 @@ namespace Telegram.Server.Core.Auth
             }
 
             return result;
+        }
+
+        public bool MemberOf(int chatId)
+        {
+            return _users
+                .Where(u => u.Id == Id())
+                .Any(u => u.Chats.Any(c => c.ChatId == chatId));
         }
     }
 }
