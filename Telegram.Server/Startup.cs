@@ -12,8 +12,10 @@ using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Web.Hubs;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 using Sherden.AspNet.Filesystem;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 
 namespace Telegram.Server
@@ -82,6 +84,8 @@ namespace Telegram.Server
             });
             services.AddTransient<SecurityTokenHandler, JwtSecurityTokenHandler>();
             services.AddTransient<UserIdentity>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<AuthorizedUser>();
             
             services.AddSpaStaticFiles(
                 configuration => configuration.RootPath = "wwwroot"
