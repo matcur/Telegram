@@ -80,6 +80,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
       return
     }
     onDetailSubmit(textInput.value, chatData.currentMessage.files)
+    chatData.currentMessage.text = "";
   }
 
   const onDetailSubmit = (messageText: string, filePaths: string[]) => {
@@ -89,10 +90,10 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
     seedForm(form, messageText, filePaths)
 
     onSubmitting(form, content)
-    textInput.onChange('')
     
     upLayer.setVisible(false)
     upLayer.setCentralElement(<div/>)
+    chatData.currentMessage.text = "";
   }
 
   // Todo: use toFormData function
