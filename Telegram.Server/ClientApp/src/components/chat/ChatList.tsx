@@ -14,7 +14,7 @@ export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltrati
     return <ChatItem
       key={chat.id}
       chat={chat}
-      className={chat === selectedChat? 'selected-chat': ''}
+      className={chat.id === selectedChat.id? 'selected-chat': ''}
       onClick={onChatSelected}/>
   }
 
