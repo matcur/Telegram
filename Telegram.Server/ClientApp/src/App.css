@@ -7,6 +7,7 @@ body {
     font-family: 'Roboto', sans-serif;
     color: #fff;
     overflow: hidden;
+    font-size: 14px;
 }
 
 .clear-input {
@@ -1240,5 +1241,19 @@ input:checked + .fuck:before {
     bottom: -100%;
     background: rgba(0, 0, 0, 0.5);
     transition: bottom .3s;
+}
+.date-delimiter {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.date-value {
+    display: flex;
+    align-items: center;
+    height: 27px;
+    padding: 0 15px;
+    background: #1E2C3A;
+    border-radius: 13px;
+    font-size: 15px;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,4 +1,4 @@
-import React, {createRef, FC, RefObject, useEffect, useState} from 'react'
+import React, {createRef, FC, ReactElement, RefObject, useEffect, useState} from 'react'
 import {Chat, Message} from "models";
 import {useAppSelector} from "app/hooks";
 import {ChatMessage} from "./ChatMessage";
@@ -6,6 +6,7 @@ import {nullMessage} from "nullables";
 import {sameUsers} from "utils/sameUsers";
 import {lastIn} from "utils/lastIn";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {inSameDay} from "../../utils/datetime/inSameDay";
 
 type Props = {
   messages: Message[]
@@ -19,6 +20,7 @@ type Props = {
 const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivElement>}
 
 const loadPreviousMessageOffset = 15
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 export const ChatMessages: FC<Props> = ({chatLoaded, chat, websocket, messages, onMessageDoubleClick, loadPreviousMessages}: Props) => {
   const scrollBarRef = createRef<HTMLDivElement>()
@@ -26,17 +28,29 @@ export const ChatMessages: FC<Props> = ({chatLoaded, chat, websocket, messages, 
   bus.scrollBarRef = scrollBarRef
 
   const makeMessages = (messages: Message[]) => {
-    return messages.map((message, i) => {
+    const result: ReactElement[] = [];
+    let key = 0;
+    messages.forEach((current, i) => {
       const previous = i === 0? nullMessage: messages[i - 1]
       const next = i + 1 === messages.length? nullMessage: messages[i + 1]
-
-      return <ChatMessage
-        onDoubleClick={onMessageDoubleClick}
-        key={i}
-        previousAuthor={previous.author}
-        message={message}
-        nextAuthor={next.author}/>
+      const sameDay = inSameDay(new Date(current.creationDate), new Date(next.creationDate))
+      const showDate = !sameDay && next !== nullMessage
+      const nextDate = new Date(next.creationDate)
+      result.push(<ChatMessage
+          key={key++}
+          onDoubleClick={onMessageDoubleClick}
+          previousAuthor={previous.author}
+          message={current}
+          nextAuthor={next.author}
+      />)
+      if (showDate) {
+        result.push(<div key={key++} className="date-delimiter">
+          <div className="date-value">{`${months[nextDate.getMonth()]} ${nextDate.getDate()}`}</div>
+        </div>)
+      }
     })
+
+    return result;
   }
   const scrollTo = (top: number) => {
     const scroll = bus.scrollBarRef.current!
@@ -47,7 +61,10 @@ export const ChatMessages: FC<Props> = ({chatLoaded, chat, websocket, messages, 
     scrollTo(scrollBar.scrollHeight)
   }
   const onScroll = () => {
-    const scroll = bus.scrollBarRef.current!
+    const scroll = bus.scrollBarRef.current
+    if (!scroll) {
+      return
+    }
 
     const top = scroll.scrollTop
     setLastScrollTops({
