@@ -75,6 +75,7 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
   const hasContent = () => {
     return textInput.value !== "" || chatData.currentMessage.files.length !== 0
   }
+  // TODO think something
   const onSubmit = () => {
     if (!hasContent()) {
       return
@@ -88,7 +89,6 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
     const content: Content[] = []
 
     seedForm(form, messageText, filePaths)
-
     onSubmitting(form, content)
     
     upLayer.setVisible(false)
