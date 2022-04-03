@@ -11,7 +11,6 @@ export class NewMessageState implements MessageState {
     private dispatch: Dispatch<AnyAction>,
     private currentUser: User,
     private chatId: number,
-    private emitMessage: (message: Message) => void,
     private messages: MessagesApi
   ) { }
 

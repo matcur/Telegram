@@ -59,10 +59,6 @@ export const Index = () => {
       dispatch(addMessage({chatId: message.chatId, message}))
     }
   }
-  const emitMessage = async (message: Message) => {
-    const webhook = await chatWebsockets.get(message.chatId, token)
-    webhook.emitMessage(message)
-  }
   
   const hideUpLayer = () => {
     setLeftMenuVisible(false)
@@ -88,7 +84,6 @@ export const Index = () => {
               <></>:
               <Chat
                 chat={selectedChat}
-                emitMessage={emitMessage}
                 websocket={chatWebsocket}/>
           }
         </div>

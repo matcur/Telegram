@@ -1,5 +1,4 @@
 import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
-import {host} from "../../api/ApiClient";
 import {Message} from "../../models";
 
 export class ChatWebsocket {
@@ -30,8 +29,7 @@ export class ChatWebsocket {
     this.ensureWebhook()
 
     this.webhook?.on("ReceiveMessage", (messageJson: string) => {
-      const message = JSON.parse(messageJson) as Message
-      callback(message)
+      callback(JSON.parse(messageJson) as Message)
     })
   }
   

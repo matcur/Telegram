@@ -11,9 +11,7 @@ import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
-import {addMessage, addMessages, chatMessages, addPreviousMessages} from "app/slices/authorizationSlice";
-import {useWebhook} from "../../hooks/useWebhook";
-import {useArray} from "../../hooks/useArray";
+import {addMessages, chatMessages, addPreviousMessages} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
 import {debounce} from "../../utils/debounce";
@@ -22,13 +20,12 @@ import {MessageScroll} from "./MessageScroll";
 
 type Props = {
   chat: ChatModel
-  emitMessage: (message: Message) => void
   websocket: ChatWebsocket
 }
 
 const bus = {currentUserId: -1}
 
-export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
+export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   const id = chat.id
   const input = useFormInput()
   const dispatch = useAppDispatch()
@@ -49,7 +46,7 @@ export const Chat: FC<Props> = ({chat, emitMessage, websocket}: Props) => {
 
   const newMessageState = () => {
     return new NewMessageState(
-      dispatch, currentUser, id, emitMessage, new MessagesApi(authorizedToken)
+      dispatch, currentUser, id, new MessagesApi(authorizedToken)
     )
   }
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
