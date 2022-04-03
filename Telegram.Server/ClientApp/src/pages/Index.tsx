@@ -55,9 +55,7 @@ export const Index = () => {
 
   const receiveMessage = (message: Message) => {
     dispatch(setLastMessage({chatId: message.chatId, message}))
-    if (message.author.id !== currentUser.id) {
-      dispatch(addMessage({chatId: message.chatId, message}))
-    }
+    dispatch(addMessage({chatId: message.chatId, message}))
   }
   
   const hideUpLayer = () => {

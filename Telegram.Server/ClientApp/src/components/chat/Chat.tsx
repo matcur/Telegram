@@ -45,9 +45,7 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   }, 200), [chat, messages])
 
   const newMessageState = () => {
-    return new NewMessageState(
-      dispatch, currentUser, id, new MessagesApi(authorizedToken)
-    )
+    return new NewMessageState(new MessagesApi(authorizedToken))
   }
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   
