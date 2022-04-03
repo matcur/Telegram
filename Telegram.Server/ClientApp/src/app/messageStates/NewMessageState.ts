@@ -25,6 +25,5 @@ export class NewMessageState implements MessageState {
     this.dispatch(
       addMessage({chatId: id, message})
     )
-    this.emitMessage(message)
   }
 }

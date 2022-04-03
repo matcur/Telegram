@@ -3,7 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Telegram.Server.Core;
 using Telegram.Server.Core.Attributes.Model;
 using Telegram.Server.Core.Db;
@@ -11,6 +14,7 @@ using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Domain;
 using Telegram.Server.Core.Domain.Bots;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server.Web.Controllers.Api
 {
@@ -19,6 +23,8 @@ namespace Telegram.Server.Web.Controllers.Api
     {
         private readonly AppDb _db;
         
+        private readonly IHubContext<ChatHub> _chatHub;
+
         private readonly DbSet<Chat> _chats;
 
         private readonly IDomainBot _bot;
@@ -26,13 +32,17 @@ namespace Telegram.Server.Web.Controllers.Api
         private readonly DbSet<Message> _messages;
         
         private readonly DbSet<Content> _contents;
+        
+        private readonly DbSet<User> _users;
 
-        public MessageController(AppDb db)
+        public MessageController(AppDb db, IHubContext<ChatHub> chatHub)
         {
             _db = db;
+            _chatHub = chatHub;
             _chats = db.Chats;
             _messages = db.Messages;
             _contents = db.Contents;
+            _users = db.Users;
             _bot = new ChatBots(db);
         }
         
@@ -50,11 +60,18 @@ namespace Telegram.Server.Web.Controllers.Api
             }
 
             var message = new Message(map);
-            message.AuthorId = int.Parse(User.Identity.Name);
+            var currentUserId = int.Parse(User.Identity.Name);
+            message.Author = _users.Find(currentUserId);
             _db.Add(message);
             await _db.SaveChangesAsync();
-            
-            await _bot.Act(message);
+            _chatHub.Clients
+                .Group(chat.Id.ToString())
+                .SendAsync("ReceiveMessage", JsonConvert.SerializeObject(message, new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                }));
+            _bot.Act(message);
 
             return Json(new RequestResult(true, message));
         }
