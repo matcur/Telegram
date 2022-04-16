@@ -4,8 +4,8 @@ import {Chat, User} from "models";
 export class AuthorizedUserApi {
   readonly api: ApiClient
 
-  constructor(token: string) {
-    this.api = new ApiClient('1.0', {
+  constructor(token: string, api: ApiClient = new ApiClient()) {
+    this.api = api.withHeaders({
       Authorization: `Bearer ${token}`
     })
   }
