@@ -23,8 +23,6 @@ type Props = {
   websocket: ChatWebsocket
 }
 
-const bus = {currentUserId: -1}
-
 export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   const id = chat.id
   const input = useFormInput()
@@ -33,7 +31,6 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const authorizedToken = useAppSelector(state => state.authorization.token)
-  bus.currentUserId = currentUser.id
   const loadPreviousMessages = useCallback(debounce(() => {
     (new ChatApi(id, authorizedToken))
       .messages(messages.length, 10)
