@@ -9,11 +9,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Telegram.Server.Core;
 using Telegram.Server.Core.Attributes.Model;
+using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Domain;
 using Telegram.Server.Core.Domain.Bots;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Core.Services.Hubs;
 using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server.Web.Controllers.Api
@@ -23,7 +25,9 @@ namespace Telegram.Server.Web.Controllers.Api
     {
         private readonly AppDb _db;
         
-        private readonly IHubContext<ChatHub> _chatHub;
+        private readonly ChatHubService _chatHub;
+        
+        private readonly AuthorizedUser _authorizedUser;
 
         private readonly DbSet<Chat> _chats;
 
@@ -35,10 +39,11 @@ namespace Telegram.Server.Web.Controllers.Api
         
         private readonly DbSet<User> _users;
 
-        public MessageController(AppDb db, IHubContext<ChatHub> chatHub)
+        public MessageController(AppDb db, ChatHubService chatHub, AuthorizedUser authorizedUser)
         {
             _db = db;
             _chatHub = chatHub;
+            _authorizedUser = authorizedUser;
             _chats = db.Chats;
             _messages = db.Messages;
             _contents = db.Contents;
@@ -51,8 +56,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/messages/create")]
         public async Task<IActionResult> Add([FromForm]MessageMap map)
         {
-            var chat = _chats.FirstOrDefault(c => c.Id == map.ChatId);
-            if (chat == null)
+            if (!_chats.Any(c => c.Id == map.ChatId))
             {
                 return Json(new RequestResult(
                     false, $"Chat with id = {map.ChatId} doesn't exist"
@@ -60,17 +64,10 @@ namespace Telegram.Server.Web.Controllers.Api
             }
 
             var message = new Message(map);
-            var currentUserId = int.Parse(User.Identity.Name);
-            message.Author = _users.Find(currentUserId);
-            _db.Add(message);
+            message.Author = await _users.FindAsync(_authorizedUser.Id());
+            await _messages.AddAsync(message);
             await _db.SaveChangesAsync();
-            _chatHub.Clients
-                .Group(chat.Id.ToString())
-                .SendAsync("ReceiveMessage", JsonConvert.SerializeObject(message, new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                }));
+            _chatHub.EmitMessage(message);
             _bot.Act(message);
 
             return Json(new RequestResult(true, message));
