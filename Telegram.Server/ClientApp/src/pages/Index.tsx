@@ -19,9 +19,6 @@ import {ChatWebsocket} from "../app/chat/ChatWebsocket";
 
 export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
-  const [upLayerVisible, setUpLayerVisible] = useState(false)
-  const [leftMenuVisible, setLeftMenuVisible] = useState(false)
-  const [centralElement, setCentralElement] = useState(() => <div/>)
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const chats = currentUser.chats
   const token = useAppSelector(state => state.authorization.token)
@@ -57,35 +54,20 @@ export const Index = () => {
     dispatch(setLastMessage({chatId: message.chatId, message}))
     dispatch(addMessage({chatId: message.chatId, message}))
   }
-  
-  const hideUpLayer = () => {
-    setLeftMenuVisible(false)
-    setUpLayerVisible(false)
-    setCentralElement(<div/>)
-  }
 
   return (
-    <UpLayerContext.Provider value={{setVisible: setUpLayerVisible, setCentralElement, hide: hideUpLayer}}>
-      <LeftMenuContext.Provider value={{setVisible: setLeftMenuVisible}}>
-        <div className="index">
-          <UpLayer
-            visible={upLayerVisible}
-            leftElement={<LeftMenu visible={leftMenuVisible}/>}
-            centerElement={centralElement}
-            onClick={hideUpLayer}/>
-          <ChatsBlock
-            selectedChat={selectedChat}
-            onChatSelected={setSelectedChat}
-            chats={chats}/>
-          {
-            selectedChat === nullChat? 
-              <></>:
-              <Chat
-                chat={selectedChat}
-                websocket={chatWebsocket}/>
-          }
-        </div>
-      </LeftMenuContext.Provider>
-    </UpLayerContext.Provider>
+    <div className="index">
+      <ChatsBlock
+        selectedChat={selectedChat}
+        onChatSelected={setSelectedChat}
+        chats={chats}/>
+      {
+        selectedChat === nullChat? 
+          <></>:
+          <Chat
+            chat={selectedChat}
+            websocket={chatWebsocket}/>
+      }
+    </div>
   )
 }
