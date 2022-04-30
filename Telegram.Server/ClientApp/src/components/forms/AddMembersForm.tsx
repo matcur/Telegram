@@ -10,9 +10,10 @@ import {useArray} from "hooks/useArray";
 
 type Props = {
   onCreateClick: (users: User[]) => void
+  hide: () => void
 }
 
-export const AddMembersForm: FC<Props> = ({onCreateClick}) => {
+export const AddMembersForm: FC<Props> = ({onCreateClick, hide}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const search = useFormInput()
   const selectedFriends = useArray<User>()
@@ -43,7 +44,9 @@ export const AddMembersForm: FC<Props> = ({onCreateClick}) => {
         {filtered?.map(friendInfo)}
       </div>
       <div className="form-buttons add-members-buttons">
-        <FormButton name="Cancel"/>
+        <FormButton 
+          name="Cancel"
+          onClick={hide}/>
         <FormButton
           name="Create"
           onClick={() => onCreateClick(selectedFriends.value)}/>

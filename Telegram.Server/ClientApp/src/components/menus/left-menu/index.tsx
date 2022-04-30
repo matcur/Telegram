@@ -1,6 +1,6 @@
 import React, {ReactElement, useContext} from 'react'
 import {LeftMenuUserInfo} from "./LeftMenuUserInfo";
-import {Item, LeftMenuItem} from "./LeftMenuItem";
+import {LeftMenuItem} from "./LeftMenuItem";
 import {ReactComponent as PeopleIcon} from "public/svgs/people.svg";
 import {ReactComponent as SpeakerIcon} from "public/svgs/speacker.svg";
 import {ReactComponent as PhoneIcon} from "public/svgs/phone.svg";
@@ -18,19 +18,12 @@ type Props = {
 }
 
 export const LeftMenu = ({visible}: Props) => {
-  const layerContext = useContext(UpLayerContext)
-  const menuContext = useContext(LeftMenuContext)
-
-  const showForm = (form: ReactElement) => {
-    menuContext.setVisible(false)
-    layerContext.setCentralElement(form)
-  }
-  const items: Item[] = [
-    {name: 'New Group', icon: <PeopleIcon/>, onClick: () => showForm(<NewGroupForm/>)},
+  const items = [
+    {name: 'New Group', icon: <PeopleIcon/>, getCentralElement: (hide: () => void) => <NewGroupForm hide={hide}/>},
     {name: 'New Channel', icon: <SpeakerIcon/>},
     {name: 'Contacts', icon: <PersonIcon/>},
     {name: 'Calls', icon: <PhoneIcon/>},
-    {name: 'Settings', icon: <GearIcon/>, onClick: () => showForm(<SettingsForm/>)},
+    {name: 'Settings', icon: <GearIcon/>, getCentralElement: (hide: () => void) => <SettingsForm hide={hide}/>},
     {name: 'Night Mode', icon: <MoonIcon/>, additionalElement: <Toggler/>},
   ]
 
@@ -38,7 +31,14 @@ export const LeftMenu = ({visible}: Props) => {
     <div className={'left-menu' + (visible? ' show-left-menu': '')}>
       <LeftMenuUserInfo/>
       <div className="left-menu-options">
-        {items.map((i, key) => <LeftMenuItem key={key} item={i}/>)}
+        {items.map((i, key) => (
+          <LeftMenuItem
+            key={key}
+            name={i.name}
+            icon={i.icon}
+            getCentralElement={i.getCentralElement}
+          />
+        ))}
       </div>
       <div className="left-menu-app-info">
         <strong>Telegram Desktop</strong>

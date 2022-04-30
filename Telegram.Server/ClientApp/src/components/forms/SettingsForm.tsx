@@ -1,19 +1,20 @@
 import {ImageInput} from "../form/ImageInput";
-import React, {useContext, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {useFormFiles} from "../../hooks/useFormFiles";
-import {Item} from "../menus/left-menu/LeftMenuItem";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {UpLayerContext} from "../../contexts/UpLayerContext";
 import {changeAvatar} from "../../app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {ReactComponent as CameraIcon} from "public/svgs/camera.svg";
 
-export const SettingsForm = () => {
+type Props = {
+  hide: () => void
+}
+
+export const SettingsForm = ({hide}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const token = useAppSelector(state => state.authorization.token)
   const [avatar, setAvatar] = useState(currentUser.avatarUrl)
   const files = useFormFiles()
-  const upLayer = useContext(UpLayerContext)
   const avatarRef = useRef<HTMLImageElement>(null)
   const dispatch = useAppDispatch()
   
@@ -26,16 +27,12 @@ export const SettingsForm = () => {
     dispatch(changeAvatar(newAvatar))
     new AuthorizedUserApi(token).changeAvatar(newAvatar)
   }
-  const menuItem = (item: Item) => {
+  const menuItem = (item: {name: string}) => {
     return (
       <li className="settings-form__item">
         {item.name}
       </li>
     )
-  }
-  const hideUpLayer = () => {
-    upLayer.setVisible(false)
-    upLayer.setCentralElement(<div/>)
   }
   const onAvatarClick = () => {
     const current = avatarRef.current;
@@ -44,7 +41,7 @@ export const SettingsForm = () => {
     }
   }
   
-  const menuItems: Item[] = [
+  const menuItems: {name: string}[] = [
     {name: 'Edit profile'},
     {name: 'Notifications'},
     {name: 'Privacy and Security'},
@@ -60,7 +57,7 @@ export const SettingsForm = () => {
         <span className="form-title settings-title">Settings</span>
         <a 
           className="close settings-form-close"
-          onClick={hideUpLayer}
+          onClick={hide}
         />
       </div>
       <div className="settings-form__avatar-input">

@@ -10,18 +10,21 @@ import {ChatsApi} from "../../api/ChatsApi";
 import {addChat} from "../../app/slices/authorizationSlice";
 import {User} from "../../models";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useCentralPosition} from "../../hooks/useCentralPosition";
 
 type Props = {
   initName?: string
   initIcon?: string
+  hide: () => void
 }
 
-export const NewGroupForm: FC<Props> = ({initName = '', initIcon = ''}) => {
+export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const upLayer = useContext(UpLayerContext)
   const [name, setName] = useState(initName)
   const [nameEntered, setNameEntered] = useState(false)
   const [icon, setIcon] = useState(initIcon)
+  const form = useCentralPosition()
   const files = useFormFiles()
   const dispatch = useAppDispatch()
 
@@ -46,12 +49,11 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = ''}) => {
     const urls = await files.upload(input)
     setIcon(urls[0])
   }
-  const hideUpLayer = () => {
-    upLayer.setVisible(false)
-    upLayer.setCentralElement(<div/>)
-  }
   const showNextStep = () => {
-    upLayer.setCentralElement(<AddMembersForm onCreateClick={onCreate}/>)
+    form.show(<AddMembersForm
+      onCreateClick={onCreate}
+      hide={form.hide}
+    />)
   }
   const formValid = () => name !== ''
   const onNextClick = () => {
@@ -80,7 +82,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = ''}) => {
       <div className="form-buttons">
         <FormButton
           name="Cancel"
-          onClick={hideUpLayer}/>
+          onClick={hide}/>
         <FormButton
           name="Next"
           onClick={onNextClick}/>

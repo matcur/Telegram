@@ -1,4 +1,4 @@
-import React, {createRef, FC, useContext, useEffect, useState} from 'react'
+import React, {createRef, FC, useEffect, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -8,8 +8,8 @@ import {Content} from "models";
 import {useAppSelector} from "../../app/hooks";
 import {FileInput} from "../form/FileInput";
 import {FilesApi} from "../../api/FilesApi";
-import {UpLayerContext} from "../../contexts/UpLayerContext";
 import {RichMessageForm} from "../forms/RichMessageForm";
+import {useCentralPosition} from "../../hooks/useCentralPosition";
 
 type Props = {
   onSubmitting: (data: FormData, content: Content[]) => void
@@ -60,12 +60,11 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
   const [chatData, setChatData] = useState(chats.item(chatId))
-  const upLayer = useContext(UpLayerContext)
+  const centralPosition = useCentralPosition();
   
   const showDetailMessageForm = (messageText: string, filePaths: string[]) => {
-    upLayer.setVisible(true)
-    upLayer.setCentralElement(
-      <RichMessageForm 
+    centralPosition.show(
+      <RichMessageForm
         filePaths={filePaths}
         messageText={textInput.value}
         onSend={onDetailSubmit}
@@ -90,9 +89,8 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
 
     seedForm(form, messageText, filePaths)
     onSubmitting(form, content)
-    
-    upLayer.setVisible(false)
-    upLayer.setCentralElement(<div/>)
+
+    centralPosition.hide()
     chatData.currentMessage.text = "";
   }
 

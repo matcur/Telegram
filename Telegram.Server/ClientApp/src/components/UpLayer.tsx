@@ -1,13 +1,18 @@
-import React, {ReactElement} from 'react'
+import React, {ReactElement, useState} from 'react'
+import {empty} from "../utils/array/empty";
 
 type Props = {
-  visible: boolean
   onClick: () => void
   leftElement: ReactElement
-  centerElement?: ReactElement
+  leftElementVisible: boolean
+  centerElements?: ReactElement[]
 }
 
-export const UpLayer = ({leftElement, centerElement, onClick, visible}: Props) => {
+const centralElementZIndex = 1000;
+
+export const UpLayer = ({leftElement, leftElementVisible, centerElements = [], onClick}: Props) => {
+  const visible = leftElementVisible || !empty(centerElements)
+  
   return (
     <div
       className={'up-layer' + (visible? ' show-up-layer': '')}
@@ -20,7 +25,9 @@ export const UpLayer = ({leftElement, centerElement, onClick, visible}: Props) =
       <div
         className="center-element"
         onClick={e => e.stopPropagation()}>
-        {centerElement}
+        {centerElements.map((element, i) =>
+          <div style={{zIndex: centralElementZIndex + i, position: "absolute"}}>{element}</div>
+        )}
       </div>
     </div>
   )
