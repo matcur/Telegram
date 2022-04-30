@@ -24,6 +24,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const [name, setName] = useState(initName)
   const [nameEntered, setNameEntered] = useState(false)
   const [icon, setIcon] = useState(initIcon)
+  const [nextClicked, setNextClicked] = useState(false)
   const form = useCentralPosition()
   const files = useFormFiles()
   const dispatch = useAppDispatch()
@@ -57,6 +58,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   }
   const formValid = () => name !== ''
   const onNextClick = () => {
+    setNextClicked(true)
     if (formValid()) {
       showNextStep()
     }
@@ -76,7 +78,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
           <TextInput
             label="Group Name"
             input={{value: name, onChange: onNameChange}}
-            className={formValid() || !nameEntered? '': 'invalid-group'}/>
+            className={formValid() || (!nameEntered && !nextClicked)? '': 'invalid-group'}/>
         </div>
       </div>
       <div className="form-buttons">
