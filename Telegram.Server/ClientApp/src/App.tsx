@@ -35,6 +35,11 @@ const App = () => {
       })
     }
   }
+  const removeLastCentralElement = () => {
+    const result = [...centralElements]
+    result.splice(result.length - 1, 1)
+    setCentralElements(result)
+  }
   
   return (
     <div className="App">
@@ -44,7 +49,7 @@ const App = () => {
             leftElementVisible={leftMenuVisible}
             leftElement={<LeftMenu visible={leftMenuVisible}/>}
             centerElements={centralElements}
-            onClick={hideUpLayer}/>
+            onClick={removeLastCentralElement}/>
           <BrowserRouter>
             <AuthenticatedHandler>
               <Switch>
