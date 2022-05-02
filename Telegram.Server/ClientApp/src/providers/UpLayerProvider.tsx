@@ -3,6 +3,7 @@ import {UpLayerContext} from "../contexts/UpLayerContext";
 import {LeftMenuContext} from "../contexts/LeftMenuContext";
 import {UpLayer} from "../components/UpLayer";
 import {LeftMenu} from "../components/menus/left-menu";
+import {RemoveLastCentralElement} from "../utils/functions";
 
 export const UpLayerProvider: FC = ({children}) => {
   const [leftMenuVisible, setLeftMenuVisible] = useState(false)
@@ -17,7 +18,7 @@ export const UpLayerProvider: FC = ({children}) => {
     setCentralElements([...centralElements, newElement])
     setLeftMenuVisible(false)
 
-    return () => {
+    return (() => {
       setCentralElements(elements => {
         const result = [...elements];
         const elementIndex = elements.indexOf(newElement)
@@ -28,7 +29,7 @@ export const UpLayerProvider: FC = ({children}) => {
 
         return result;
       })
-    }
+    }) as RemoveLastCentralElement
   }
   const removeLastCentralElement = () => {
     setCentralElements(elements => {
