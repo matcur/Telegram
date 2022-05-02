@@ -34,9 +34,13 @@ export const UpLayerProvider: FC = ({children}) => {
     setCentralElements(elements => {
       const result = [...elements]
       result.splice(result.length - 1, 1)
-      
+
       return result
     })
+  }
+  const onClick = () => {
+    removeLastCentralElement()
+    setLeftMenuVisible(false)
   }
   
   return (
@@ -46,7 +50,7 @@ export const UpLayerProvider: FC = ({children}) => {
           leftElementVisible={leftMenuVisible}
           leftElement={<LeftMenu visible={leftMenuVisible}/>}
           centerElements={centralElements}
-          onClick={removeLastCentralElement}/>
+          onClick={onClick}/>
         {children}
       </LeftMenuContext.Provider>
     </UpLayerContext.Provider>
