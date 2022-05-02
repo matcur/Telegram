@@ -7,7 +7,7 @@ export class NewMessageState implements MessageState {
     private messages: MessagesApi,
   ) { }
 
-  save(data: FormData, content: Content[]) {
+  save(data: FormData) {
     this.messages.add(data)
   }
 }

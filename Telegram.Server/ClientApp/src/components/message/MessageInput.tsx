@@ -4,7 +4,6 @@ import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
 import {ReactComponent as Microphone} from 'public/svgs/microphone.svg'
 import {useForm} from "react-hook-form";
-import {Content} from "models";
 import {useAppSelector} from "../../app/hooks";
 import {FileInput} from "../form/FileInput";
 import {FilesApi} from "../../api/FilesApi";
@@ -12,7 +11,7 @@ import {RichMessageForm} from "../forms/RichMessageForm";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
 
 type Props = {
-  onSubmitting: (data: FormData, content: Content[]) => void
+  onSubmitting: (data: FormData) => void
   textInput: {value: string, onChange: (e: React.FormEvent<HTMLInputElement> | string) => void}
   chatId: number
 }
@@ -85,10 +84,9 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
 
   const onDetailSubmit = (messageText: string, filePaths: string[]) => {
     const form = new FormData()
-    const content: Content[] = []
 
     seedForm(form, messageText, filePaths)
-    onSubmitting(form, content)
+    onSubmitting(form)
 
     centralPosition.hide()
     chatData.currentMessage.text = "";

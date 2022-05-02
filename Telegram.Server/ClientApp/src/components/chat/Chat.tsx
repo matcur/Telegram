@@ -46,8 +46,8 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   }
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   
-  const onSubmit = (data: FormData, content: Content[]) => {
-    inputState.save(data, content)
+  const onSubmit = (data: FormData) => {
+    inputState.save(data)
     setInputState(newMessageState())
     input.onChange('')
   }

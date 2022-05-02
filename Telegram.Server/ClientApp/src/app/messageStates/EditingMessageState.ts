@@ -12,7 +12,7 @@ export class EditingMessageState implements MessageState {
       private afterSubmitState: MessageState,
       private messages: MessagesApi) { }
 
-  async save(data: FormData, content: Content[]) {
+  async save(data: FormData) {
     this.setState(this.afterSubmitState)
 
     const id = this.message.id;
