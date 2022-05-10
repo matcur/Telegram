@@ -1,11 +1,7 @@
-import React, {createRef, FC, ReactElement, RefObject, useEffect, useState} from 'react'
-import {Chat, Message} from "models";
-import {useAppSelector} from "app/hooks";
+import React, {ReactElement} from 'react'
+import {Message} from "models";
 import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
-import {sameUsers} from "utils/sameUsers";
-import {lastIn} from "utils/lastIn";
-import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {inSameDay} from "../../utils/datetime/inSameDay";
 
 type Props = {
