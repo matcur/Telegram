@@ -1,16 +1,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.TypeHandling;
+using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 
-namespace Telegram.Server.Core.Extensions
+namespace Telegram.Server.Core.Services.Controllers
 {
-    public static class DbUsersExtension
+    public class UserService
     {
-        public static IEnumerable<Chat> DetailChats(this DbSet<User> self, int userId, int offset, int count)
+        private readonly DbSet<User> _users;
+
+        private readonly AppDb _db;
+
+        public UserService(AppDb db)
         {
-            return self
+            _db = db;
+            _users = _db.Users;
+        }
+
+        public bool TryFind(int id, out User user)
+        {
+            user = _users.Include(u => u.Phone)
+                .FirstOrDefault(u => u.Id == id);
+
+            return user != null;
+        }
+
+        public bool TryFindByPhone(string number, out User user)
+        {
+            user = _users
+                .Include(u => u.Phone)
+                .FirstOrDefault(u => u.Phone.Number == number);
+
+            return user != null;
+        }
+
+        public IEnumerable<Chat> Chats(int userId, Pagination pagination)
+        {
+            return _users
                 .Where(u => u.Id == userId)
                 .Include(u => u.Chats)
                 .ThenInclude(c => c.Chat.Messages)

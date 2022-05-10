@@ -6,40 +6,36 @@ using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Extensions;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
 {
     public class UserController : Controller
     {
-        private readonly AppDb _db;
+        private readonly UserService _userService;
 
-        private readonly DbSet<User> _users;
-
-        public UserController(AppDb db)
+        public UserController(UserService userService)
         {
-            _db = db;
-            _users = _db.Users;
+            _userService = userService;
         }
 
         [HttpGet]
         [Route("api/1.0/users/{id}")]
         public IActionResult Find([FromRoute]int id)
         {
-            var user = _users.Include(u => u.Phone)
-                            .FirstOrDefault(u => u.Id == id);
-            if (user == null)
+            if (_userService.TryFind(id, out var user))
             {
-                return Json(new RequestResult(false, $"User with id = {id}, not found."));
+                return Json(new RequestResult(true, new UserMap(user)));
             }
 
-            return Json(new RequestResult(true, new UserMap(user)));
+            return NotFound($"User with id = {id}, not found.");
         }
 
         [HttpGet]
         [Route("api/1.0/users/{id:int}/chats")]
         public IActionResult Chats([FromRoute]int id, [FromQuery]int count, [FromQuery]int offset = 0)
         {
-            var result = _users.DetailChats(id, count, offset);
+            var result = _userService.Chats(id, new Pagination(count, offset));
 
             return Json(new RequestResult(true, result));
         }
@@ -48,20 +44,12 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/user/phone/{number}")]
         public IActionResult ByPhone([FromRoute]string number)
         {
-            var user = _users
-                .Include(u => u.Phone)
-                .FirstOrDefault(u => u.Phone.Number == number);
-            if (user == null)
+            if (_userService.TryFindByPhone(number, out var user))
             {
-                return Json(
-                    new RequestResult(
-                        false,
-                        $"User with phone number == {number} is not found"
-                    )
-                );
+                return Json(new RequestResult(true, user));
             }
 
-            return Json(new RequestResult(true, user));
+            return NotFound($"User with phone number == {number} is not found");
         }
     }
 }

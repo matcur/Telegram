@@ -17,6 +17,7 @@ using Sherden.AspNet.Filesystem;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Auth.Security;
 using Telegram.Server.Core.Db;
+using Telegram.Server.Core.Services.Controllers;
 using Telegram.Server.Core.Services.Hubs;
 using Telegram.Server.Web.Hubs;
 
@@ -106,6 +107,8 @@ namespace Telegram.Server
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<AuthorizedUser>();
             services.AddTransient<ChatHubService>();
+            services.AddTransient<UserService>();
+            services.AddTransient<AuthorizedUserService>();
             
             services.AddSpaStaticFiles(
                 configuration => configuration.RootPath = "wwwroot"

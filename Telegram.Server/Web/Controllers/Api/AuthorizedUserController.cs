@@ -1,45 +1,34 @@
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
-using Telegram.Server.Core.Auth;
-using Telegram.Server.Core.Db;
-using Telegram.Server.Core.Db.Models;
-using Telegram.Server.Core.Extensions;
+using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
 {
     [Authorize]
     public class AuthorizedUserController : Controller
     {
-        private readonly AppDb _db;
-        
-        private readonly DbSet<User> _users;
+        private readonly AuthorizedUserService _authorizedUserService;
 
-        private readonly AuthorizedUser _authorizedUser;
-        
-        public AuthorizedUserController(AppDb db, AuthorizedUser authorizedUser)
+        public AuthorizedUserController(AuthorizedUserService authorizedUserService)
         {
-            _db = db;
-            _users = db.Users;
-            _authorizedUser = authorizedUser;
+            _authorizedUserService = authorizedUserService;
         }
 
         [HttpGet]
         [Route("api/1.0/authorized-user")]
         public IActionResult AuthorizedUser()
         {
-            var result = _users.Find(_authorizedUser.Id());
-
-            return Json(new RequestResult(true, result));
+            return Json(new RequestResult(
+                true, _authorizedUserService.Get()
+            ));
         }
 
         [HttpGet]
         [Route("api/1.0/authorized-user/chats")]
         public IActionResult Chats([FromQuery]int count, [FromQuery]int offset = 0)
         {
-            var result = _users.DetailChats(_authorizedUser.Id(), count, offset);
+            var result = _authorizedUserService.Chats(new Pagination(count, offset));
 
             return Json(new RequestResult(true, result));
         }
@@ -48,11 +37,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/authorized-user/avatar")]
         public IActionResult ChangeAvatar([FromQuery]string uri)
         {
-            var user = _users.First(u => u.Id == _authorizedUser.Id());
-
-            user.AvatarUrl = uri;
-            _db.Update(user);
-            _db.SaveChanges();
+            _authorizedUserService.ChangeAvatar(uri);
 
             return Ok();
         }
