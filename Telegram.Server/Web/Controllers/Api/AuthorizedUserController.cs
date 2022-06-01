@@ -19,9 +19,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/authorized-user")]
         public IActionResult AuthorizedUser()
         {
-            return Json(new RequestResult(
-                true, _authorizedUserService.Get()
-            ));
+            return Json(new RequestResult(true, _authorizedUserService.Get()));
         }
 
         [HttpGet]

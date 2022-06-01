@@ -9,56 +9,37 @@ using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
 {
     public class ChatController : Controller
     {
-        private readonly AppDb _db;
-
-        private readonly DbSet<Chat> _chats;
+        private readonly ChatService _chats;
         
-        private readonly DbSet<User> _users;
+        private readonly MessageService _messages;
+        
+        private readonly UserService _users;
 
-        private readonly DbSet<Message> _messages;
-
-        public ChatController(AppDb appDb)
+        public ChatController(ChatService chats, MessageService messages, UserService users)
         {
-            _db = appDb;
-            _chats = appDb.Chats;
-            _users = appDb.Users;
-            _messages = appDb.Messages;
+            _chats = chats;
+            _messages = messages;
+            _users = users;
         }
         
         [HttpGet]
-        [Route("api/1.0/chats/{chatId:int}")]
-        public IActionResult Find([FromRoute]int chatId)
+        [Route("api/1.0/chats/{id:int}")]
+        public async Task<IActionResult> Find([FromRoute]int id)
         {
-            var chat = _chats.FirstOrDefault(c => c.Id == chatId);
-            if (chat == null)
-            {
-                return Json(new RequestResult(false, $"Chat with id = {chatId} does not exists"));
-            }
-
-            return Json(new RequestResult(true, chat));
+            return Json(new RequestResult(true, await _chats.Get(id)));
         }
 
         [HttpGet]
         [Route("api/1.0/chats/{id:int}/messages")]
-        public IActionResult Messages([FromRoute]int id, [FromQuery]int offset, [FromQuery]int count)
+        public async Task<IActionResult> Messages([FromRoute]int id, [FromQuery]int offset, [FromQuery]int count)
         {
-            var chat = _chats.FirstOrDefault(c => c.Id == id);
-            if (chat == null)
-            {
-                return Json(new RequestResult(false, $"Chat with id = {id} does not exists"));
-            }
-
-            var result = _messages
-                .Details(chat)
-                .Skip(offset)
-                .Take(count)
-                .ToList();
-            result.Reverse();
+            var result = await _messages.Filtered(id, offset, count);
 
             return Json(new RequestResult(true, result));
         }
@@ -67,35 +48,14 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/chats/create")]
         public async Task<IActionResult> Create([FromForm]ChatMap map)
         {
-            var chat = new Chat(map);
-            _chats.Add(chat);
-            await _db.SaveChangesAsync();
-
-            return Json(new RequestResult(true, chat));
+            return Json(new RequestResult(true, await _chats.Create(map)));
         }
 
         [HttpPost]
         [Route("api/1.0/chats/{chatId:int}/new-member/{userId:int}")]
         public async Task<IActionResult> AddMember([FromRoute]int chatId, [FromRoute]int userId)
         {
-            // Todo refactor
-            var memberTask = _users.FirstOrDefaultAsync(u => u.Id == userId);
-            var chatTask = _chats.FirstOrDefaultAsync(c => c.Id == chatId);
-
-            var member = await memberTask;
-            var chat = await chatTask;
-            if (member == null)
-            {
-                return Json(new RequestResult(false, $"User with id = {userId} does not exists"));
-            }
-
-            if (chat == null)
-            {
-                return Json(new RequestResult(false, $"Chat with id = {chatId} does not exists"));
-            }
-            
-            chat.Members.Add(new ChatUser(member.Id));
-            _db.SaveChanges();
+            await _chats.AddMember(chatId, userId);
 
             return Json(new RequestResult(true));
         }

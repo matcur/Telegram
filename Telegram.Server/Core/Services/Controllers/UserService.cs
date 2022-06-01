@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
+using Telegram.Server.Core.Exceptions;
 
 namespace Telegram.Server.Core.Services.Controllers
 {
@@ -24,6 +26,18 @@ namespace Telegram.Server.Core.Services.Controllers
                 .FirstOrDefault(u => u.Id == id);
 
             return user != null;
+        }
+
+        public async Task<User> Get(int id)
+        {
+            var chat = await _users.Include(u => u.Phone)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (chat == null)
+            {
+                throw new NotFoundException($"User with id = {id} not found.");
+            }
+
+            return chat;
         }
 
         public bool TryFindByPhone(string number, out User user)
