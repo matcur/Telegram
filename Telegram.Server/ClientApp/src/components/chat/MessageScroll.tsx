@@ -4,27 +4,28 @@ import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 
 type Props = {
   messages: Message[]
-  loadPreviousMessages: () => void
+  loadPreviousMessages: () => Promise<void>
   websocket: ChatWebsocket
   chat: Chat
   chatLoaded: boolean
 }
 
-const loadPreviousMessageOffset = 15
+const loadPreviousMessageOffset = 45
 const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivElement>}
 
 export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages, loadPreviousMessages, children}) => {
   const scrollBarRef = createRef<HTMLDivElement>()
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
+  const [loadingMessages, setLoadingMessages] = useState(false)
   bus.scrollBarRef = scrollBarRef
 
   const scrollTo = (top: number) => {
     const scroll = bus.scrollBarRef.current!
     scroll.scrollTo({top: top})
   }
-  const scrollToBottom = () => {
+  const scrollToBottom = (bottomOffset = 0) => {
     const scrollBar = bus.scrollBarRef.current!
-    scrollTo(scrollBar.scrollHeight)
+    scrollTo(scrollBar.scrollHeight - bottomOffset)
   }
   const onScroll = () => {
     const scroll = bus.scrollBarRef.current
@@ -33,12 +34,18 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
     }
 
     const top = scroll.scrollTop
+    const bottom = scroll.scrollHeight - top
     setLastScrollTops({
       ...lastScrollTops,
       [chat.id]: top
     })
-    if (top < loadPreviousMessageOffset && messages.length) {
+    if (top < loadPreviousMessageOffset && messages.length && !loadingMessages) {
+      setLoadingMessages(true)
       loadPreviousMessages()
+        .then(() => {
+          setLoadingMessages(false)
+          scrollToBottom(bottom)
+        })
     }
   }
   const onMessageAdded = () => {
@@ -63,7 +70,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
     }
 
     const lastTopOffset = lastScrollTops[chat.id]
-    if (lastTopOffset || lastTopOffset === 0) {
+    if (lastTopOffset >= 0) {
       scrollTo(lastTopOffset)
     } else {
       scrollToBottom()

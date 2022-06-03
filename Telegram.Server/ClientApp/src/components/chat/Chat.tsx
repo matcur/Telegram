@@ -31,15 +31,16 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const authorizedToken = useAppSelector(state => state.authorization.token)
-  const loadPreviousMessages = useCallback(debounce(() => {
+  const loadPreviousMessages = useCallback(() => (
     (new ChatApi(id, authorizedToken))
-      .messages(messages.length, 10)
+      .messages(messages.length, 30)
       .then(res => res.result)
       .then(messages => dispatch(addPreviousMessages({
         messages,
         chatId: id
       })))
-  }, 200), [chat, messages])
+      .then(() => {})
+  ), [chat, messages])
 
   const newMessageState = () => {
     return new NewMessageState(new MessagesApi(authorizedToken))
@@ -70,16 +71,13 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   }, [chat])
 
   useEffect(() => {
-    if (messages.length !== 0) {
+    if (messages.length) {
       setLoaded(true)
       return
     }
 
     const load = async () => {
-      const response = await new ChatApi(id, authorizedToken).messages(0, 10)
-      const messages = response.result
-      
-      dispatch(addMessages({chatId: id, messages}))
+      await loadPreviousMessages()
       setLoaded(true)
     }
 
