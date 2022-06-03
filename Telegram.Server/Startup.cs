@@ -108,14 +108,14 @@ namespace Telegram.Server
             services.AddTransient<SecurityTokenHandler, JwtSecurityTokenHandler>();
             services.AddTransient<UserIdentity>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<AuthorizedUser>();
-            services.AddTransient<ChatHubService>();
-            services.AddTransient<UserService>();
-            services.AddTransient<AuthorizedUserService>();
-            services.AddTransient<ChatService>();
-            services.AddTransient<MessageService>();
-            services.AddTransient<ChatBots>();
-            services.AddTransient<MessageAdded>();
+            services.AddScoped<AuthorizedUser>();
+            services.AddScoped<ChatHubService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<AuthorizedUserService>();
+            services.AddScoped<ChatService>();
+            services.AddScoped<MessageService>();
+            services.AddScoped<ChatBots>();
+            services.AddScoped<MessageAdded>();
             
             services.AddSpaStaticFiles(
                 configuration => configuration.RootPath = "wwwroot"

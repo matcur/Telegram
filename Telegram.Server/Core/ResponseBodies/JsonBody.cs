@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,13 +9,13 @@ using Telegram.Server.Core.Exceptions;
 
 namespace Telegram.Server.Core.ResponseBodies
 {
-    public class NotFoundBody
+    public class JsonBody
     {
         public string Message { get; }
         
-        public NotFoundBody(NotFoundException exception) : this(exception.Message) { }
+        public JsonBody(Exception exception) : this(exception.Message) { }
 
-        public NotFoundBody(string message)
+        public JsonBody(string message)
         {
             Message = message;
         }

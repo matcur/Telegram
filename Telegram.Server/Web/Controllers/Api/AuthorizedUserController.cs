@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Server.Core;
@@ -17,9 +18,9 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/authorized-user")]
-        public IActionResult AuthorizedUser()
+        public async Task<IActionResult> AuthorizedUser()
         {
-            return Json(new RequestResult(true, _authorizedUserService.Get()));
+            return Json(new RequestResult(true, await _authorizedUserService.Get()));
         }
 
         [HttpGet]

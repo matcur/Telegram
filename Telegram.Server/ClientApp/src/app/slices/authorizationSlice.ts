@@ -8,7 +8,7 @@ type State = {
   token: string
 }
 
-const initialState = {currentUser: {...nullUser}, token: ''} as State
+const initialState = {currentUser: {...nullUser}, token: localStorage.getItem('app-authorization-token')} as State
 
 const authorizationSlice = createSlice({
   name: 'chats',
@@ -19,6 +19,11 @@ const authorizationSlice = createSlice({
       state.token = payload.token
       
       localStorage.setItem('app-authorization-token', payload.token)
+      localStorage.setItem(`app-authorization-token-user-id-${payload.currentUser.id}`, payload.token)
+    },
+    flushToken(state) {
+      state.token = ""
+      localStorage.setItem('app-authorization-token', "")
     },
     addChat(state, {payload}: PayloadAction<Chat>) {
       state.currentUser.chats.push(payload)
@@ -86,6 +91,7 @@ export const {
   changeAvatar,
   updateMessage,
   addPreviousMessages,
+  flushToken,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

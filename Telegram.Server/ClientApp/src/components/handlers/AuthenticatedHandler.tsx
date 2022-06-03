@@ -1,17 +1,32 @@
 import {FC, useEffect, useState} from "react";
-import {useHistory, useLocation} from "react-router";
+import {useHistory} from "react-router";
 import {useDispatch} from "react-redux";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
-import {authorize} from "../../app/slices/authorizationSlice";
+import {authorize, flushToken} from "../../app/slices/authorizationSlice";
+import {useAppSelector} from "../../app/hooks";
+import {User} from "../../models";
 
 export const AuthenticatedHandler: FC = ({children}) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [loaded, setLoaded] = useState(false)
-  const token = localStorage.getItem('app-authorization-token')
+  const token = useAppSelector(state => state.authorization.token)
+  
+  const onFail = () => {
+    history.push('/start')
+    dispatch(flushToken())
+  }
+  
+  const onSuccess = (currentUser: User) => {
+    dispatch(authorize({
+      currentUser,
+      token
+    }))
+    history.push('/')
+  }
 
   useEffect(() => {
-    if (token === null) {
+    if (!token) {
       history.push('/start')
       setLoaded(true)
       return
@@ -19,14 +34,8 @@ export const AuthenticatedHandler: FC = ({children}) => {
     (new AuthorizedUserApi(token))
       .authorizedUser()
       .then(res => res.result)
-      .then(currentUser => {
-        dispatch(authorize({
-          currentUser,
-          token
-        }))
-        history.push('/')
-      })
-      .catch(() => history.push('/start'))
+      .then(onSuccess)
+      .catch(onFail)
       .finally(() => setLoaded(true))
   }, [])
   
