@@ -3,27 +3,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Telegram.Server.Core.Auth;
+using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Hubs
 {
     [Authorize]
     public class ChatHub : Hub
     {
-        private readonly AuthorizedUser _authorizedUser;
+        private readonly AuthorizedUserService _authorizedUser;
 
-        public ChatHub(AuthorizedUser authorizedUser)
+        public ChatHub(AuthorizedUserService authorizedUser)
         {
             _authorizedUser = authorizedUser;
         }
 
-        public override Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
-            if (!_authorizedUser.MemberOf(ChatId()))
+            if (!await _authorizedUser.MemberOf(ChatId()))
             {
-                throw new Exception($"User with id = {_authorizedUser.Id()} is not member of {ChatId()}");
+                throw new Exception($"You are not member of {ChatId()}");
             }
             
-            return Groups.AddToGroupAsync(Context.ConnectionId, ChatId().ToString());
+            await Groups.AddToGroupAsync(Context.ConnectionId, ChatId().ToString());
         }
 
         public async Task EmitMessage(string message)

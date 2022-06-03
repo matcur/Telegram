@@ -15,6 +15,8 @@ using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Domain;
 using Telegram.Server.Core.Domain.Bots;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Core.Notifications;
+using Telegram.Server.Core.Services.Controllers;
 using Telegram.Server.Core.Services.Hubs;
 using Telegram.Server.Web.Hubs;
 
@@ -23,32 +25,11 @@ namespace Telegram.Server.Web.Controllers.Api
     [Authorize]
     public class MessageController : Controller
     {
-        private readonly AppDb _db;
+        private readonly MessageService _messages;
         
-        private readonly ChatHubService _chatHub;
-        
-        private readonly AuthorizedUser _authorizedUser;
-
-        private readonly DbSet<Chat> _chats;
-
-        private readonly IDomainBot _bot;
-
-        private readonly DbSet<Message> _messages;
-        
-        private readonly DbSet<Content> _contents;
-        
-        private readonly DbSet<User> _users;
-
-        public MessageController(AppDb db, ChatHubService chatHub, AuthorizedUser authorizedUser)
+        public MessageController(MessageService messages)
         {
-            _db = db;
-            _chatHub = chatHub;
-            _authorizedUser = authorizedUser;
-            _chats = db.Chats;
-            _messages = db.Messages;
-            _contents = db.Contents;
-            _users = db.Users;
-            _bot = new ChatBots(db);
+            _messages = messages;
         }
         
         [HttpPost]
@@ -56,44 +37,17 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/messages/create")]
         public async Task<IActionResult> Add([FromForm]MessageMap map)
         {
-            if (!_chats.Any(c => c.Id == map.ChatId))
-            {
-                return Json(new RequestResult(
-                    false, $"Chat with id = {map.ChatId} doesn't exist"
-                ));
-            }
-
-            var message = new Message(map);
-            message.Author = await _users.FindAsync(_authorizedUser.Id());
-            await _messages.AddAsync(message);
-            await _db.SaveChangesAsync();
-            _chatHub.EmitMessage(message);
-            _bot.Act(message);
+            var message = await _messages.Add(map);
 
             return Json(new RequestResult(true, message));
         }
 
         [HttpPut]
         [ModelValidation]
-        [Route("api/1.0/messages/{id:int}")]
-        public IActionResult Update([FromRoute]int id, [FromForm]UpdateMessageMap map)
+        [Route("api/1.0/messages")]
+        public async Task<IActionResult> Update([FromForm]UpdateMessageMap map)
         {
-            var message = _messages
-                .Include(m => m.ContentMessages)
-                .ThenInclude(c => c.Content)
-                .Include(m => m.Author)
-                .FirstOrDefault(m => m.Id == id);
-            if (message == null)
-            {
-                return Json(new RequestResult(
-                    false, $"Message with id = {id} doesn't exist"
-                ));
-            }
-
-            _contents.RemoveRange(message.ContentMessages.Select(c => c.Content));
-            message.ContentMessages.AddRange(map.ContentMessages);
-
-            _db.SaveChanges();
+            var message = await _messages.Update(map);
 
             return Json(new RequestResult(true, message));
         }

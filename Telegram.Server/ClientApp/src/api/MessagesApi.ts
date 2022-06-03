@@ -18,9 +18,9 @@ export class MessagesApi {
     )
   }
 
-  async update(id: number, message: FormData) {
+  async update(message: FormData) {
     return await this.api.put<Message>(
-        `messages/${id}`,
+        "messages",
         message
     )
   }

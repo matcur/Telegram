@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Auth;
@@ -16,19 +18,22 @@ namespace Telegram.Server.Core.Services.Controllers
 
         private readonly UserService _userService;
         
+        private readonly DbSet<Message> _messages;
+
         private readonly AuthorizedUser _authorizedUser;
 
         public AuthorizedUserService(AppDb db, AuthorizedUser authorizedUser, UserService userService)
         {
             _db = db;
             _users = db.Users;
+            _messages = db.Messages;
             _authorizedUser = authorizedUser;
             _userService = userService;
         }
 
-        public User Get()
+        public Task<User> Get()
         {
-            return _users.Find(_authorizedUser.Id());
+            return _users.FirstAsync(u => u.Id == _authorizedUser.Id());
         }
 
         public IEnumerable<Chat> Chats(Pagination pagination)
@@ -45,6 +50,25 @@ namespace Telegram.Server.Core.Services.Controllers
             };
             _db.Entry(user).State = EntityState.Modified;
             _db.SaveChanges();
+        }
+
+        public async Task<bool> MemberOf(int chatId)
+        {
+            return await _users
+                .Where(u => u.Id == _authorizedUser.Id())
+                .AnyAsync(u => u.Chats.Any(c => c.ChatId == chatId));
+        }
+
+        public Task<bool> CanUpdateMessage(int id)
+        {
+            return CreatedMessage(id);
+        }
+
+        public async Task<bool> CreatedMessage(int id)
+        {
+            return await _messages
+                .Where(m => m.Id == id && m.AuthorId == _authorizedUser.Id())
+                .AnyAsync();
         }
     }
 }

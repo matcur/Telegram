@@ -24,7 +24,7 @@ namespace Telegram.Server.Core.Middlewares
             }
             catch (NotFoundException e)
             {
-                var response = context.Response;;
+                var response = context.Response;
                 response.StatusCode = 404;
                 await response.WriteAsync(await new NotFoundBody(e).AsString());
             }
