@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
 import {LeftMenuContext} from "../contexts/LeftMenuContext";
-import {UpLayer} from "../components/UpLayer";
+import {UpLayer} from "../components/up-layer/UpLayer";
 import {LeftMenu} from "../components/menus/left-menu";
 import {RemoveLastCentralElement} from "../utils/functions";
 

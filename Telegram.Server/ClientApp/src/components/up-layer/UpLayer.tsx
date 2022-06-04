@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react'
-import {empty} from "../utils/array/empty";
+import {empty} from "../../utils/array/empty";
 
 type Props = {
   onClick: () => void
