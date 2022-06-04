@@ -51,8 +51,9 @@ export const UpLayerProvider: FC = ({children}) => {
           leftElementVisible={leftMenuVisible}
           leftElement={<LeftMenu visible={leftMenuVisible}/>}
           centerElements={centralElements}
-          onClick={onClick}/>
-        {children}
+          onClick={onClick}>
+          {children}
+        </UpLayer>
       </LeftMenuContext.Provider>
     </UpLayerContext.Provider>
   )
