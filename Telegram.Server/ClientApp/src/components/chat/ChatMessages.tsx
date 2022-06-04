@@ -3,15 +3,17 @@ import {Message} from "models";
 import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
 import {inSameDay} from "../../utils/datetime/inSameDay";
+import {Position} from "../../utils/type";
 
 type Props = {
   messages: Message[]
   onMessageDoubleClick: (message: Message) => void
+  onMessageRightClick: (message: ReactElement) => void
 }
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-export const ChatMessages = ({messages, onMessageDoubleClick}: Props) => {
+export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick}: Props) => {
   const makeMessages = (messages: Message[]) => {
     const result: ReactElement[] = [];
     let key = 0;
@@ -27,6 +29,7 @@ export const ChatMessages = ({messages, onMessageDoubleClick}: Props) => {
           previousAuthor={previous.author}
           message={current}
           nextAuthor={next.author}
+          onRightClick={onMessageRightClick}
       />)
       if (showDate) {
         result.push(<div key={key++} className="date-delimiter">

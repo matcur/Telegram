@@ -11,11 +11,18 @@ type Props = {
 
 const centralElementZIndex = 1000;
 
-export const UpLayer: FC<Props> = ({leftElement, leftElementVisible, centerElements = [], onClick, children}) => {
+export const UpLayer: FC<Props> = ({
+    leftElement,
+    leftElementVisible,
+    centerElements = [],
+    arbitraryElements = [],
+    onClick,
+    children
+  }) => {
   const visible = leftElementVisible || !empty(centerElements)
   
   return (
-    <div>
+    <>
       <div
         className={'up-layer' + (visible? ' show-up-layer': '')}
         onClick={onClick}>
@@ -32,7 +39,8 @@ export const UpLayer: FC<Props> = ({leftElement, leftElementVisible, centerEleme
           )}
         </div>
       </div>
+      {arbitraryElements}
       {children}
-    </div>
+    </>
   )
 }

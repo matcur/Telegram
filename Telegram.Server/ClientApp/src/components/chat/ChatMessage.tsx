@@ -1,26 +1,43 @@
-import React, {FC} from 'react'
+import React, {FC, MouseEvent, ReactElement, useState} from 'react'
 import {Message, User} from "models";
 import {inRowPositionClass} from "utils/inRowPositionClass";
 import {DetailMessageContent} from "components/message/DetailMessageContent";
 import cat from "public/images/index/cat-3.jpg"
 import {useAppSelector} from "app/hooks";
+import {ArbitraryElement} from "../up-layer/ArbitraryElement";
+import {MessageOptions} from "../message/MessageOptions";
 
 type Props = {
   onDoubleClick: (message: Message) => void
+  onRightClick: (element: ReactElement) => void
   previousAuthor: User
   message: Message
   nextAuthor: User
 }
 
-export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick}: Props) => {
+export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const currentAuthor = message.author
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
   const isCurrentUser = currentUser.id === currentAuthor.id;
 
+  function makeOptions(e: React.MouseEvent<HTMLDivElement>) {
+    return <ArbitraryElement
+      position={{left: e.clientX, top: e.clientY}}
+    >
+      <MessageOptions/>
+    </ArbitraryElement>
+  }
+
+  const onContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    onRightClick(makeOptions(e))
+  }
+
   return (
     <div
       onDoubleClick={() => onDoubleClick(message)}
+      onContextMenu={onContextMenu}
       className={[
         "message ",
         inRowPosition,

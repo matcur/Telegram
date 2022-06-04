@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from 'react'
+import React, {FC, ReactElement, useCallback, useEffect, useState} from 'react'
 import {MessageInput} from "components/message/MessageInput";
 import {ChatMessages} from "components/chat/ChatMessages";
 import {useAppDispatch, useAppSelector} from "app/hooks";
@@ -17,6 +17,9 @@ import {sameUsers} from "../../utils/sameUsers";
 import {debounce} from "../../utils/debounce";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {MessageScroll} from "./MessageScroll";
+import {Position} from "../../utils/type";
+import {useArbitraryElement} from "../../hooks/useArbitraryElement";
+import {ArbitraryElement} from "../up-layer/ArbitraryElement";
 
 type Props = {
   chat: ChatModel
@@ -30,9 +33,10 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   const [loaded, setLoaded] = useState(false)
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
-  const authorizedToken = useAppSelector(state => state.authorization.token)
+  const arbitraryElement = useArbitraryElement()
+  const authorizeToken = useAppSelector(state => state.authorization.token)
   const loadPreviousMessages = useCallback(() => (
-    (new ChatApi(id, authorizedToken))
+    (new ChatApi(id, authorizeToken))
       .messages(messages.length, 30)
       .then(res => res.result)
       .then(messages => dispatch(addPreviousMessages({
@@ -43,7 +47,7 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   ), [chat, messages])
 
   const newMessageState = () => {
-    return new NewMessageState(new MessagesApi(authorizedToken))
+    return new NewMessageState(new MessagesApi(authorizeToken))
   }
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   
@@ -59,10 +63,13 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
     
     editMessage(message)
   }
+  const showMessageOptions = (element: ReactElement) => {
+    arbitraryElement.show(element)
+  }
   const editMessage = (message: Message) => {
     input.onChange(textContent(message))
     setInputState(new EditingMessageState(
-      message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizedToken)
+      message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizeToken)
     ))
   }
 
@@ -101,7 +108,9 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
             chatLoaded={loaded}>
             <ChatMessages
               onMessageDoubleClick={tryEditMessage}
-              messages={messages}/>
+              messages={messages}
+              onMessageRightClick={showMessageOptions}
+            />
           </MessageScroll>
           <MessageInput
             textInput={input}
