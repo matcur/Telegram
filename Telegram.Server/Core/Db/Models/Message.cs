@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Storage;
 using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Db.Models
@@ -12,11 +13,14 @@ namespace Telegram.Server.Core.Db.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Chat")]
+        [ForeignKey(nameof(Chat))]
         public int ChatId { get; set; }
 
-        [ForeignKey("Author")]
+        [ForeignKey(nameof(Author))]
         public int AuthorId { get; set; }
+        
+        [ForeignKey(nameof(ReplyTo))]
+        public int? ReplyToId { get; set; }
 
         public DateTime CreationDate { get; set; }
 
@@ -24,15 +28,17 @@ namespace Telegram.Server.Core.Db.Models
 
         public User Author { get; set; }
 
+        public Message ReplyTo { get; set; }
+
         public List<ContentMessage> ContentMessages { get; set; } = new List<ContentMessage>();
 
         public Message() { }
         
         public Message(MessageMap map)
         {
-            AuthorId = map.AuthorId;
             ChatId = map.ChatId;
             ContentMessages = map.ContentMessages;
+            ReplyToId = map.ReplyToId;
         }
         
         public Message(UpdateMessageMap map)

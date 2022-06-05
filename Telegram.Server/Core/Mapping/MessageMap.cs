@@ -7,7 +7,7 @@ namespace Telegram.Server.Core.Mapping
     {
         public int ChatId { get; set; }
 
-        public int AuthorId { get; set; }
+        public int ReplyToId { get; set; }
 
         public List<ContentMessage> ContentMessages { get; set; }
     }

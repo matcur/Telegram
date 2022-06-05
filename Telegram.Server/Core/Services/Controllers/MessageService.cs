@@ -34,6 +34,17 @@ namespace Telegram.Server.Core.Services.Controllers
             _contents = db.Contents;
         }
 
+        public async Task<Message> Get(int id)
+        {
+            var message = await _messages.FirstOrDefaultAsync(m => m.Id == id);
+            if (message == null)
+            {
+                throw new NotFoundException($"Message with id {id} is not found");
+            }
+
+            return message;
+        }
+
         public async Task<IEnumerable<Message>> Filtered(int chaiId, int offset, int count)
         {
             var result = await Details(chaiId)
@@ -60,9 +71,15 @@ namespace Telegram.Server.Core.Services.Controllers
             }
 
             var message = new Message(map);
+            if (map.ReplyToId != 0)
+            {
+                message.ReplyTo = await Get(map.ReplyToId);
+            }
             message.Author = await _authorizedUser.Get();
+            message.AuthorId = message.Author.Id;
             await _messages.AddAsync(message);
             await _db.SaveChangesAsync();
+            
             _messageAdded.Emit(message);
 
             return message;
