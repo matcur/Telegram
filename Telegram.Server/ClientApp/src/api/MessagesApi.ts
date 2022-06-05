@@ -13,14 +13,14 @@ export class MessagesApi {
 
   async add(data: FormData) {
     return await this.api.post<Message>(
-      `messages/create`,
+      'messages/create',
       data
     )
   }
 
   async update(message: FormData) {
     return await this.api.put<Message>(
-        "messages",
+        'messages',
         message
     )
   }

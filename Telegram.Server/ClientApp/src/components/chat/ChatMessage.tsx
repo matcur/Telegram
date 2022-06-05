@@ -10,12 +10,13 @@ import {MessageOptions} from "../message/MessageOptions";
 type Props = {
   onDoubleClick: (message: Message) => void
   onRightClick: (element: ReactElement) => void
+  replyTo(message: Message): void
   previousAuthor: User
   message: Message
   nextAuthor: User
 }
 
-export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick}: Props) => {
+export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick, replyTo}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const currentAuthor = message.author
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
@@ -25,7 +26,10 @@ export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onD
     return <ArbitraryElement
       position={{left: e.clientX, top: e.clientY}}
     >
-      <MessageOptions/>
+      <MessageOptions
+        message={message}
+        onReplyClick={replyTo}
+      />
     </ArbitraryElement>
   }
 

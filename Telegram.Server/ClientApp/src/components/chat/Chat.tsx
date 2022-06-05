@@ -20,6 +20,7 @@ import {MessageScroll} from "./MessageScroll";
 import {Position} from "../../utils/type";
 import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
+import {MessageReply} from "./MessageReply";
 
 type Props = {
   chat: ChatModel
@@ -50,11 +51,13 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
     return new NewMessageState(new MessagesApi(authorizeToken))
   }
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
+  const [reply, setReply] = useState<Message>()
   
   const onSubmit = (data: FormData) => {
     inputState.save(data)
     setInputState(newMessageState())
     input.onChange('')
+    setReply(undefined)
   }
   const tryEditMessage = (message: Message) => {
     if (!sameUsers(message.author, currentUser)) {
@@ -71,6 +74,9 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
     setInputState(new EditingMessageState(
       message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizeToken)
     ))
+  }
+  const replyTo = (message: Message) => {
+    setReply(message)
   }
 
   useEffect(() => {
@@ -110,12 +116,16 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
               onMessageDoubleClick={tryEditMessage}
               messages={messages}
               onMessageRightClick={showMessageOptions}
+              replyTo={replyTo}
             />
           </MessageScroll>
           <MessageInput
             textInput={input}
             onSubmitting={onSubmit}
-            chatId={id}/>
+            chatId={id}
+            reply={reply}
+            replyElement={reply && <MessageReply message={reply} onCloseClick={() => setReply(undefined)}/>}
+          />
         </>)
         : <LoadingChat/>
       }

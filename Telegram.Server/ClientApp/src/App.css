@@ -769,12 +769,13 @@ a {
 }
 
 .message-form {
-    height: 50px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.message-form__content {
+    display: flex;
     align-items: center;
 }
 
@@ -1263,5 +1264,38 @@ input:checked + .fuck:before {
 .arbitrary-element {
     position: absolute;
     z-index: 2000;
+}
+.message-options {
+    width: 190px;
+    padding: 5px 0;
+    background: #17212B;
+    border-radius: 5px;
+}
+.message-option:hover {
+    background: #232E3C;
+    cursor: pointer;
+}
+.message-option {
+    padding: 5px 15px;
+    font-size: 16px;
+}
+.reply-message-content-wrapper {
+    height: 100%;
+    margin-left: 20px;
+}
+.reply-message-content {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.reply-message-user-name {
+    color: #51B3F3;
+    font-size: 14px;
+}
+.replying-message {
+    display: flex;
+    align-items: center;
+    height: 50px;
 }
 /*# sourceMappingURL=style.css.map */

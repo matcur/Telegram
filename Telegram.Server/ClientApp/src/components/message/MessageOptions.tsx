@@ -1,17 +1,17 @@
+import {Message} from "../../models";
+
 type Props = {
+  message: Message
+  onReplyClick(message: Message): void
 }
 
-export const MessageOptions = ({}: Props) => {
+export const MessageOptions = ({message, onReplyClick}: Props) => {
   return (
-    <div style={{whiteSpace: 'nowrap'}}>
-      <div>Options fuck</div>
-      <div>Options fuck</div>
-      <div>Options fuckasdasdasdasd asd asd asdasdas dadasd</div>
-      <div>Options fuck</div>
-      <div>Options fuck</div>
-      <div>Options fuck</div>
-      <div>Options fuck</div>
-      <div>Options fuck</div>
+    <div className="message-options">
+      <div
+        className="message-option"
+        onClick={() => onReplyClick(message)}
+      >Reply</div>
     </div>
   )
 }

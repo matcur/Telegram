@@ -1,4 +1,4 @@
-import React, {createRef, FC, useEffect, useState} from 'react'
+import React, {createRef, FC, ReactElement, useEffect, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -9,8 +9,11 @@ import {FileInput} from "../form/FileInput";
 import {FilesApi} from "../../api/FilesApi";
 import {RichMessageForm} from "../forms/RichMessageForm";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
+import {Message} from "../../models";
 
 type Props = {
+  reply?: Message
+  replyElement?: ReactElement
   onSubmitting: (data: FormData) => void
   textInput: {value: string, onChange: (e: React.FormEvent<HTMLInputElement> | string) => void}
   chatId: number
@@ -54,7 +57,7 @@ const chats = {
   }
 }
 
-export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props) => {
+export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, textInput, chatId}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
@@ -98,7 +101,9 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
     form.append('authorId', currentUser.id.toString())
     form.append('contentMessages[0].content.type', 'Text')
     form.append('contentMessages[0].content.value', messageText)
-    
+
+    reply && form.append('replyToId', reply.id.toString())
+
     filePaths.forEach((path, key) => {
       const index = key + 1;
       
@@ -134,22 +139,27 @@ export const MessageInput: FC<Props> = ({onSubmitting, textInput, chatId}: Props
       className="message-form"
       onSubmit={handleSubmit(onSubmit)}
       ref={form}>
-      <FileInput onSelected={loadFiles}>
-        <PaperClip/>
-      </FileInput>
-      <input
-        type="file"
-        hidden={true}
-        {...register('files')}/>
-      <input
-        type="text"
-        className="clear-input message-input"
-        placeholder="Write a message..."
-        value={textInput.value}
-        onChange={onTextChange}/>
-      <Command/>
-      <Smile/>
-      <Microphone/>
+      <div className="message-form__reply">
+        {replyElement}
+      </div>
+      <div className="message-form__content">
+        <FileInput onSelected={loadFiles}>
+          <PaperClip/>
+        </FileInput>
+        <input
+          type="file"
+          hidden={true}
+          {...register('files')}/>
+        <input
+          type="text"
+          className="clear-input message-input"
+          placeholder="Write a message..."
+          value={textInput.value}
+          onChange={onTextChange}/>
+        <Command/>
+        <Smile/>
+        <Microphone/>
+      </div>
     </form>
   )
 }

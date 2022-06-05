@@ -24,7 +24,7 @@ export const ArbitraryElement: FC<Props> = ({children, position}) => {
     }
     
     setOffset(result)
-  }, [contentSize])
+  }, [contentSize.height, contentSize.width])
   
   useEffect(function onSizeChange() {
     const current = ref.current

@@ -1,6 +1,7 @@
 import React, {FC} from 'react'
 import {User} from "models";
 import cat from "public/images/index/cat-3.jpg";
+import {fullName} from "../../utils/fullName";
 
 type Props = {
   user: User
@@ -19,7 +20,7 @@ export const ShortUserInfo: FC<Props> = ({className = '', user, onClick}) => {
         alt=""
         className="circle user-avatar small-user-avatar"/>
       <div className="short-user-info">
-        <div className="user-name">{user.firstName + " " + user.lastName}</div>
+        <div className="user-name">{fullName(user)}</div>
         <div className="last-seen">last seen yeeeesterday</div>
       </div>
     </div>
