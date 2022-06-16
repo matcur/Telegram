@@ -9,33 +9,21 @@ import {MessageOptions} from "../message/MessageOptions";
 
 type Props = {
   onDoubleClick: (message: Message) => void
-  onRightClick: (element: ReactElement) => void
-  replyTo(message: Message): void
+  onRightClick: (message: Message, event: React.MouseEvent<HTMLDivElement>) => void
   previousAuthor: User
   message: Message
   nextAuthor: User
 }
 
-export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick, replyTo}: Props) => {
+export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const currentAuthor = message.author
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
   const isCurrentUser = currentUser.id === currentAuthor.id;
 
-  function makeOptions(e: React.MouseEvent<HTMLDivElement>) {
-    return <ArbitraryElement
-      position={{left: e.clientX, top: e.clientY}}
-    >
-      <MessageOptions
-        message={message}
-        onReplyClick={replyTo}
-      />
-    </ArbitraryElement>
-  }
-
   const onContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
-    onRightClick(makeOptions(e))
+    onRightClick(message, e)
   }
 
   return (

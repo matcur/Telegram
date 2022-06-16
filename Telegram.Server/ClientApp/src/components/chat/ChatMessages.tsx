@@ -8,13 +8,13 @@ import {Position} from "../../utils/type";
 type Props = {
   messages: Message[]
   onMessageDoubleClick: (message: Message) => void
-  onMessageRightClick: (message: ReactElement) => void
+  onMessageRightClick: (message: Message, event: React.MouseEvent<HTMLDivElement>) => void
   replyTo(message: Message): void
 }
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick, replyTo}: Props) => {
+export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick}: Props) => {
   const makeMessages = (messages: Message[]) => {
     const result: ReactElement[] = [];
     let key = 0;
@@ -31,7 +31,6 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
           message={current}
           nextAuthor={next.author}
           onRightClick={onMessageRightClick}
-          replyTo={replyTo}
       />)
       if (showDate) {
         result.push(<div key={key++} className="date-delimiter">

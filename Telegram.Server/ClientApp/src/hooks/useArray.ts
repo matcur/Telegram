@@ -10,13 +10,14 @@ export const useArray = <T>(...initialValue: T[]) => {
     setArray([...array, item])
   }
   const remove = (item: T) => {
-    setArray(value => {
-      const index = value.indexOf(item)
+    setArray(oldValue => {
+      const newValue = [...oldValue]
+      const index = newValue.indexOf(item)
       if (index > -1) {
-        value.splice(index, 1);
+        newValue.splice(index, 1);
       }
       
-      return value
+      return newValue
     })
   }
 

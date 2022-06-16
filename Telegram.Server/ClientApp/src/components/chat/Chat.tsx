@@ -21,6 +21,7 @@ import {Position} from "../../utils/type";
 import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
 import {MessageReply} from "./MessageReply";
+import {MessageOptions} from "../message/MessageOptions";
 
 type Props = {
   chat: ChatModel
@@ -66,8 +67,21 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
     
     editMessage(message)
   }
-  const showMessageOptions = (element: ReactElement) => {
-    arbitraryElement.show(element)
+  const onMessageRightClick = (message: Message, e: React.MouseEvent<HTMLDivElement>) => {
+    arbitraryElement.show(
+      <ArbitraryElement 
+        position={{left: e.clientX, top: e.clientY}}
+        onOutsideClick={arbitraryElement.hide}
+      >
+        <MessageOptions
+          message={message}
+          onReplyClick={message => {
+            arbitraryElement.hide()
+            replyTo(message)
+          }}
+        />
+      </ArbitraryElement>
+    )
   }
   const editMessage = (message: Message) => {
     input.onChange(textContent(message))
@@ -115,7 +129,7 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
             <ChatMessages
               onMessageDoubleClick={tryEditMessage}
               messages={messages}
-              onMessageRightClick={showMessageOptions}
+              onMessageRightClick={onMessageRightClick}
               replyTo={replyTo}
             />
           </MessageScroll>

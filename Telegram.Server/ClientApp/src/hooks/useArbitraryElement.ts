@@ -13,7 +13,7 @@ class ArbitraryPosition {
   internalHide() {}
 }
 
-export const useArbitraryElement = () => {
+export const useArbitraryElement = (): Omit<ArbitraryPosition, 'internalHide'> => {
   const upLayer = useContext(UpLayerContext)
   const [element] = useState(() => new ArbitraryPosition())
   const [hide, setHide] = useState<RemoveLastCentralElement>(() => () => {})

@@ -1,14 +1,17 @@
-import {FC, useEffect, useRef, useState} from "react";
+import React, {FC, RefObject, useEffect, useRef, useState} from "react";
 import {Position} from "../../utils/type";
+import {useOutsideClick} from "../../hooks/useOutsideClick";
 
 type Props = {
   position: Position
+  onOutsideClick(): void
 }
 
-export const ArbitraryElement: FC<Props> = ({children, position}) => {
+export const ArbitraryElement: FC<Props> = ({children, position, onOutsideClick}) => {
   const [offset, setOffset] = useState(() => ({top: 0, left: 0}))
   const [contentSize, setContentSize] = useState(() => ({width: 0, height: 0}))
   const ref = useRef<HTMLDivElement>(null)
+  useOutsideClick(onOutsideClick, ref)
   
   useEffect(function calculateOffset() {
     const width = document.body.clientWidth
@@ -27,7 +30,7 @@ export const ArbitraryElement: FC<Props> = ({children, position}) => {
   }, [contentSize.height, contentSize.width])
   
   useEffect(function onSizeChange() {
-    const current = ref.current
+    const current = ref && ref.current
     if (!current) return
     
     setContentSize({width: current.clientWidth, height: current.clientHeight})
