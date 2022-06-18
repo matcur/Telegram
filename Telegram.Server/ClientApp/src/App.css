@@ -1279,14 +1279,8 @@ input:checked + .fuck:before {
     padding: 5px 15px;
     font-size: 16px;
 }
-.reply-message-content-wrapper {
-    height: 100%;
-    margin-left: 20px;
-}
 .reply-message-content {
-    height: 100%;
     display: flex;
-    justify-content: space-around;
     flex-direction: column;
 }
 .reply-message-user-name {
@@ -1297,5 +1291,17 @@ input:checked + .fuck:before {
     display: flex;
     align-items: center;
     height: 50px;
+}
+.small-image {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+}
+.reply-to-content {
+    border-left: 2px solid #65B9F4;
+    padding-left: 7px;
+}
+.message-form__reply {
+    margin-left: 20px;
 }
 /*# sourceMappingURL=style.css.map */

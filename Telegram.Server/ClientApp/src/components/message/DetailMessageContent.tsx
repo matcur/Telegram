@@ -11,7 +11,7 @@ export const DetailMessageContent: FC<Props> = ({message}: Props) => {
   
   return (
     <div className="message-content">
-      <ComplexContent content={message.contentMessages.map(c => c.content)}/>
+      <ComplexContent reply={message.replyTo} content={message.contentMessages.map(c => c.content)}/>
       <div className="message-created-at">
         {`${creationDate.getHours()}:${creationDate.getMinutes()}`}
       </div>

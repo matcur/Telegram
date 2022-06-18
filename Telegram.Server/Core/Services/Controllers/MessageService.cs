@@ -36,7 +36,11 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public async Task<Message> Get(int id)
         {
-            var message = await _messages.FirstOrDefaultAsync(m => m.Id == id);
+            var message = await _messages
+                .Include(m => m.Author)
+                .Include(m => m.ContentMessages)
+                .ThenInclude(c => c.Content)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (message == null)
             {
                 throw new NotFoundException($"Message with id {id} is not found");
@@ -71,14 +75,17 @@ namespace Telegram.Server.Core.Services.Controllers
             }
 
             var message = new Message(map);
-            if (map.ReplyToId != 0)
-            {
-                message.ReplyTo = await Get(map.ReplyToId);
-            }
+
+            message.ReplyToId = map.ReplyToId;
             message.Author = await _authorizedUser.Get();
             message.AuthorId = message.Author.Id;
             await _messages.AddAsync(message);
             await _db.SaveChangesAsync();
+            
+            if (map.ReplyToId.HasValue)
+            {
+                message.ReplyTo = await Get(map.ReplyToId.Value);
+            }
             
             _messageAdded.Emit(message);
 
@@ -105,9 +112,9 @@ namespace Telegram.Server.Core.Services.Controllers
             return message;
         }
         
-        private IQueryable<Message> Details(int id)
+        private IQueryable<Message> Details(int chatId)
         {
-            return _messages.Where(m => m.ChatId == id)
+            return _messages.Where(m => m.ChatId == chatId)
                 .Include(m => m.ContentMessages)
                 .ThenInclude(c => c.Content)
                 .Include(m => m.Author)

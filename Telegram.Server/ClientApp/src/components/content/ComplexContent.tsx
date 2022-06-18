@@ -1,27 +1,25 @@
 import React, {FC} from 'react'
-import {Content} from "models";
-import {ImageContent} from "components/content/ImageContent";
-import {TextContent} from "components/content/TextContent";
+import {Content, Message} from "models";
+import {ImagesContent} from "./ImagesContent";
+import {TextContent} from "./TextContent";
+import {ReplyMessageContent} from "../message/ReplyMessageContent";
 
 type Props = {
   content: Content[]
+  reply?: Message
 }
 
-const contentComponent = (content: Content, key: number) => {
-  const factory = {
-    Image: (content: Content, className = '') =>
-      <ImageContent key={key} content={content} className={className}/>,
-    Text: (content: Content, className = '') =>
-      <TextContent key={key} content={content} className={className}/>,
-  }
-
-  return factory[content.type](content)
-}
-
-export const ComplexContent: FC<Props> = ({content}: Props) => {
+export const ComplexContent: FC<Props> = ({content, reply}: Props) => {
+  const images = content.filter(c => c.type === "Image")
+  const text = content.find(c => c.type === "Text")
+  
   return (
     <div className="complex-content">
-      {content.map(contentComponent)}
+      <div className="reply-to-content">
+        {reply && <ReplyMessageContent message={reply}/>}
+      </div>
+      <ImagesContent content={images}/>
+      <TextContent content={text}/>
     </div>
   )
 }
