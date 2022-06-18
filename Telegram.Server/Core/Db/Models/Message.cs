@@ -32,6 +32,8 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<ContentMessage> ContentMessages { get; set; } = new List<ContentMessage>();
 
+        public MessageType Type { get; set; } = MessageType.UserMessage;
+
         public Message() { }
         
         public Message(MessageMap map)
