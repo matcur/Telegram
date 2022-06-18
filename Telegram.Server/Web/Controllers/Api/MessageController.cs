@@ -27,9 +27,12 @@ namespace Telegram.Server.Web.Controllers.Api
     {
         private readonly MessageService _messages;
         
-        public MessageController(MessageService messages)
+        private readonly AuthorizedUserService _authorizedUser;
+
+        public MessageController(MessageService messages, AuthorizedUserService authorizedUser)
         {
             _messages = messages;
+            _authorizedUser = authorizedUser;
         }
         
         [HttpPost]
@@ -37,7 +40,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/messages/create")]
         public async Task<IActionResult> Add([FromForm]MessageMap map)
         {
-            var message = await _messages.Add(map);
+            var message = await _messages.Add(map, await _authorizedUser.Get());
 
             return Json(new RequestResult(true, message));
         }

@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from 'react'
+import React, {FC, useContext, useEffect, useState} from 'react'
 import {FormButton} from "components/form/FormButton";
 import {ImageInput} from "components/form/ImageInput";
 import {TextInput} from "components/form/TextInput";
@@ -11,6 +11,7 @@ import {addChat} from "../../app/slices/authorizationSlice";
 import {User} from "../../models";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
+import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 
 type Props = {
   initName?: string
@@ -28,6 +29,13 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const form = useCentralPosition()
   const files = useFormFiles()
   const dispatch = useAppDispatch()
+  const token = useAppSelector(state => state.authorization.token)
+  const [potentialMembers, setPotentialMembers] = useState<User[]>([])
+  
+  useEffect(() => {
+    new AuthorizedUserApi(token).contacts()
+      .then(res => setPotentialMembers(res as any as User[]))
+  }, [])
 
   const createChat = async (members: User[]) => {
     const chat = {
@@ -54,6 +62,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     form.show(<AddMembersForm
       onCreateClick={onCreate}
       hide={form.hide}
+      potentialMembers={potentialMembers}
     />)
   }
   const formValid = () => name !== ''

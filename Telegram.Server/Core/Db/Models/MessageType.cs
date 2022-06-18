@@ -3,6 +3,6 @@
     public enum MessageType
     {
         UserMessage,
-        Event,
+        NewUserAdded,
     }
 }

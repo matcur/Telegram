@@ -10,15 +10,15 @@ import {useArray} from "hooks/useArray";
 
 type Props = {
   onCreateClick: (users: User[]) => void
+  potentialMembers?: User[]
   hide: () => void
 }
 
-export const AddMembersForm: FC<Props> = ({onCreateClick, hide}) => {
-  const currentUser = useAppSelector(state => state.authorization.currentUser)
+export const AddMembersForm: FC<Props> = ({onCreateClick, hide, potentialMembers = []}) => {
   const search = useFormInput()
   const selectedFriends = useArray<User>()
 
-  const filtered = currentUser.friends?.filter(
+  const filtered = potentialMembers.filter(
     f => like(`${f.firstName} ${f.lastName}`, search.value)
   )
   const friendInfo = (user: User, key: number) => {

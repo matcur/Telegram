@@ -21,4 +21,8 @@ export class AuthorizedUserApi {
   async changeAvatar(uri: string) {
     return await this.api.post(`authorized-user/avatar?uri=${uri}`)
   }
+  
+  async contacts() {
+    return await this.api.get<User[]>('authorized-user/contacts')
+  }
 }

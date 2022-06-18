@@ -70,5 +70,10 @@ namespace Telegram.Server.Core.Services.Controllers
                 }))
                 .First();
         }
+
+        public List<User> All()
+        {
+            return _users.ToList();
+        }
     }
 }

@@ -9,6 +9,7 @@ using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Core.Notifications;
 using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
@@ -20,12 +21,15 @@ namespace Telegram.Server.Web.Controllers.Api
         private readonly MessageService _messages;
         
         private readonly UserService _users;
+        
+        private readonly MessageAdded _messageAdded;
 
-        public ChatController(ChatService chats, MessageService messages, UserService users)
+        public ChatController(ChatService chats, MessageService messages, UserService users, MessageAdded messageAdded)
         {
             _chats = chats;
             _messages = messages;
             _users = users;
+            _messageAdded = messageAdded;
         }
         
         [HttpGet]
@@ -56,6 +60,7 @@ namespace Telegram.Server.Web.Controllers.Api
         public async Task<IActionResult> AddMember([FromRoute]int chatId, [FromRoute]int userId)
         {
             await _chats.AddMember(chatId, userId);
+            await _messages.AddNewUserMessage(chatId, await _users.Get(userId));
 
             return Json(new RequestResult(true));
         }

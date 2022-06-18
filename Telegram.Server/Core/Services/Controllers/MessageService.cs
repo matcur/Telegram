@@ -60,7 +60,12 @@ namespace Telegram.Server.Core.Services.Controllers
             return result;
         }
 
-        public async Task<Message> Add(MessageMap map)
+        public async Task<Message> AddNewUserMessage(int chatId, User user)
+        {
+            return await Add(new MessageMap(chatId, MessageType.NewUserAdded), user);
+        }
+
+        public async Task<Message> Add(MessageMap map, User author)
         {
             // extract to something
             if (!_chats.Exists(map.ChatId))
@@ -77,7 +82,7 @@ namespace Telegram.Server.Core.Services.Controllers
             var message = new Message(map);
 
             message.ReplyToId = map.ReplyToId;
-            message.Author = await _authorizedUser.Get();
+            message.Author = author;
             message.AuthorId = message.Author.Id;
             await _messages.AddAsync(message);
             await _db.SaveChangesAsync();

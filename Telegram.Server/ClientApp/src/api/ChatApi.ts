@@ -19,4 +19,8 @@ export class ChatApi {
       `chats/${this.id}/messages?offset=${offset}&count=${count}`
     )
   }
+  
+  async addMember(userId: number) {
+    return await this.api.post(`chats/${this.id}/new-member/${userId}`)
+  }
 }

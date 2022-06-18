@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Telegram.Server.Core;
 using Telegram.Server.Core.Services.Controllers;
 
@@ -32,7 +33,14 @@ namespace Telegram.Server.Web.Controllers.Api
             return Json(new RequestResult(true, result));
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Route("api/1.0/authorized-user/contacts")]
+        public async Task<IActionResult> Contacts()
+        {
+            return Json(await _authorizedUserService.Contacts());
+        }
+
+        [HttpGet]
         [Route("api/1.0/authorized-user/avatar")]
         public IActionResult ChangeAvatar([FromQuery]string uri)
         {

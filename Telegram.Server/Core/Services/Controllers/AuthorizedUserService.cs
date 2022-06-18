@@ -61,14 +61,19 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public Task<bool> CanUpdateMessage(int id)
         {
-            return CreatedMessage(id);
+            return IsMessageAuthor(id);
         }
 
-        public async Task<bool> CreatedMessage(int id)
+        public async Task<bool> IsMessageAuthor(int id)
         {
             return await _messages
                 .Where(m => m.Id == id && m.AuthorId == _authorizedUser.Id())
                 .AnyAsync();
+        }
+
+        public Task<List<User>> Contacts()
+        {
+            return _users.Take(10).ToListAsync();
         }
     }
 }

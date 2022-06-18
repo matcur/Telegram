@@ -20,6 +20,13 @@ namespace Telegram.Server.Web.Controllers.Api
         }
 
         [HttpGet]
+        [Route("api/1.0/users")]
+        public IActionResult All()
+        {
+            return Json(_userService.All());
+        }
+
+        [HttpGet]
         [Route("api/1.0/users/{id}")]
         public IActionResult Find([FromRoute]int id)
         {
