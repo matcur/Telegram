@@ -32,7 +32,7 @@ namespace Telegram.Server.Web.Controllers.Api
             _users.Add(user);
             _db.SaveChanges();
 
-            return Json(new RequestResult(true, new RegisteredUser(user)));
+            return Json(new RegisteredUser(user));
         }
     }
 }

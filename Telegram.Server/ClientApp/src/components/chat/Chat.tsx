@@ -40,7 +40,6 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
   const loadPreviousMessages = useCallback(() => (
     (new ChatApi(id, authorizeToken))
       .messages(messages.length, 30)
-      .then(res => res.result)
       .then(messages => dispatch(addPreviousMessages({
         messages,
         chatId: id

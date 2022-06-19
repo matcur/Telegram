@@ -36,7 +36,7 @@ namespace Telegram.Server.Core.Services.Controllers
             return _users.FirstAsync(u => u.Id == _authorizedUser.Id());
         }
 
-        public IEnumerable<Chat> Chats(Pagination pagination)
+        public Task<IEnumerable<Chat>> Chats(Pagination pagination)
         {
             return _userService.Chats(_authorizedUser.Id(), pagination);
         }
@@ -52,9 +52,9 @@ namespace Telegram.Server.Core.Services.Controllers
             _db.SaveChanges();
         }
 
-        public async Task<bool> MemberOf(int chatId)
+        public Task<bool> MemberOf(int chatId)
         {
-            return await _users
+            return _users
                 .Where(u => u.Id == _authorizedUser.Id())
                 .AnyAsync(u => u.Chats.Any(c => c.ChatId == chatId));
         }
@@ -64,9 +64,9 @@ namespace Telegram.Server.Core.Services.Controllers
             return IsMessageAuthor(id);
         }
 
-        public async Task<bool> IsMessageAuthor(int id)
+        public Task<bool> IsMessageAuthor(int id)
         {
-            return await _messages
+            return _messages
                 .Where(m => m.Id == id && m.AuthorId == _authorizedUser.Id())
                 .AnyAsync();
         }

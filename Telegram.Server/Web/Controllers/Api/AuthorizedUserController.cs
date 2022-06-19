@@ -21,16 +21,16 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/authorized-user")]
         public async Task<IActionResult> AuthorizedUser()
         {
-            return Json(new RequestResult(true, await _authorizedUserService.Get()));
+            return Json(await _authorizedUserService.Get());
         }
 
         [HttpGet]
         [Route("api/1.0/authorized-user/chats")]
-        public IActionResult Chats([FromQuery]int count, [FromQuery]int offset = 0)
+        public async Task<IActionResult> Chats([FromQuery]int count, [FromQuery]int offset = 0)
         {
-            var result = _authorizedUserService.Chats(new Pagination(count, offset));
+            var result = await _authorizedUserService.Chats(new Pagination(count, offset));
 
-            return Json(new RequestResult(true, result));
+            return Json(result);
         }
 
         [HttpGet]

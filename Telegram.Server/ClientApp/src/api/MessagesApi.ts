@@ -11,15 +11,15 @@ export class MessagesApi {
     })
   }
 
-  async add(data: FormData) {
-    return await this.api.post<Message>(
+  add(data: FormData) {
+    return this.api.post<Message>(
       'messages/create',
       data
     )
   }
 
-  async update(message: FormData) {
-    return await this.api.put<Message>(
+  update(message: FormData) {
+    return this.api.put<Message>(
         'messages',
         message
     )

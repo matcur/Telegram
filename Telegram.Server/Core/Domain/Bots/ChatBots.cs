@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,11 +20,19 @@ namespace Telegram.Server.Core.Domain.Bots
 
         public async Task Act(Message message)
         {
+            if (!IsCommand(message))
+            {
+                await Task.CompletedTask;
+            }
+            
             var bots = await Bots(message.ChatId);
+            var tasks = new List<Task>();
             foreach (var bot in bots)
             {
-                bot.Act(message);
+                tasks.Add(bot.Act(message));
             }
+
+            await Task.WhenAll(tasks);
         }
 
         private async Task<IEnumerable<IDomainBot>> Bots(int chatId)
@@ -39,6 +48,11 @@ namespace Telegram.Server.Core.Domain.Bots
             }
             
             return bots;
+        }
+
+        private static bool IsCommand(Message message)
+        {
+            return message.ContentByType(ContentType.Text).Value.StartsWith("/");
         }
     }
 }

@@ -119,7 +119,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
     }
     
     const loadedFiles = await new FilesApi().upload("files", loadingFiles)
-    showDetailMessageForm(input.value, loadedFiles.result)
+    showDetailMessageForm(input.value, loadedFiles)
   }
   
   const onTextChange = (e: React.FormEvent<HTMLInputElement>) => {

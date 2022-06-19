@@ -33,7 +33,6 @@ export const AuthenticatedHandler: FC = ({children}) => {
     }
     (new AuthorizedUserApi(token))
       .authorizedUser()
-      .then(res => res.result)
       .then(onSuccess)
       .catch(onFail)
       .finally(() => setLoaded(true))

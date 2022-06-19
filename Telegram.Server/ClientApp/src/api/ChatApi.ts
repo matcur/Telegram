@@ -14,13 +14,13 @@ export class ChatApi {
     })
   }
   
-  async messages(offset: number, count: number) {
-    return await this.api.get<Message[]>(
+  messages(offset: number, count: number) {
+    return this.api.get<Message[]>(
       `chats/${this.id}/messages?offset=${offset}&count=${count}`
     )
   }
   
-  async addMember(userId: number) {
-    return await this.api.post(`chats/${this.id}/new-member/${userId}`)
+  addMember(userId: number) {
+    return this.api.post(`chats/${this.id}/new-member/${userId}`)
   }
 }

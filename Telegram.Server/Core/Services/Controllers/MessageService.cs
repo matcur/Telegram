@@ -68,7 +68,7 @@ namespace Telegram.Server.Core.Services.Controllers
         public async Task<Message> Add(MessageMap map, User author)
         {
             // extract to something
-            if (!_chats.Exists(map.ChatId))
+            if (!await _chats.Exists(map.ChatId))
             {
                 throw new NotFoundException($"Chat with id {map.ChatId} not found.");
             }
@@ -81,33 +81,33 @@ namespace Telegram.Server.Core.Services.Controllers
 
             var message = new Message(map);
 
-            message.ReplyToId = map.ReplyToId;
             message.Author = author;
             message.AuthorId = message.Author.Id;
+            if (map.ReplyToId.HasValue)
+            {
+                message.ReplyToId = map.ReplyToId;
+                message.ReplyTo = await Get(map.ReplyToId.Value);
+            }
             await _messages.AddAsync(message);
             await _db.SaveChangesAsync();
             
-            if (map.ReplyToId.HasValue)
-            {
-                message.ReplyTo = await Get(map.ReplyToId.Value);
-            }
-            
-            _messageAdded.Emit(message);
+            await _messageAdded.Emit(message);
 
             return message;
         }
 
         public async Task<Message> Update(UpdateMessageMap map)
         {
+            if (!await _authorizedUser.CanUpdateMessage(map.Id))
+            {
+                throw new PermissionDenyException($"You can't update message[id = {map.Id}].");
+            }
+            
             var message = await _messages
                 .Include(m => m.ContentMessages)
                 .ThenInclude(c => c.Content)
                 .Include(m => m.Author)
                 .FirstOrDefaultAsync(m => m.Id == map.Id);
-            if (message == null)
-            {
-                throw new NotFoundException($"Message with id = {map.Id} doesn't exist");
-            }
 
             _contents.RemoveRange(message.ContentMessages.Select(c => c.Content));
             message.ContentMessages.AddRange(map.ContentMessages);

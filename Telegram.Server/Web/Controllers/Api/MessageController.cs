@@ -42,7 +42,7 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             var message = await _messages.Add(map, await _authorizedUser.Get());
 
-            return Json(new RequestResult(true, message));
+            return Json(message);
         }
 
         [HttpPut]
@@ -50,9 +50,7 @@ namespace Telegram.Server.Web.Controllers.Api
         [Route("api/1.0/messages")]
         public async Task<IActionResult> Update([FromForm]UpdateMessageMap map)
         {
-            var message = await _messages.Update(map);
-
-            return Json(new RequestResult(true, message));
+            return Json(await _messages.Update(map));
         }
     }
 }

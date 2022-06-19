@@ -27,9 +27,9 @@ export const Index = () => {
 
   useEffect(() => {
     const load = async() => {
-      const response = await new AuthorizedUserApi(token).chats()
-      dispatch(addChats(response.result))
-      response.result.forEach(async c => {
+      const chats = await new AuthorizedUserApi(token).chats()
+      dispatch(addChats(chats))
+      chats.forEach(async c => {
         const hook = await chatWebsockets.get(c.id, token)
         hook.onMessageAdded(receiveMessage)
       })

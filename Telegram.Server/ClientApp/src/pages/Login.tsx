@@ -11,13 +11,9 @@ export const Login = () => {
   const [invalidPhoneMessage, setInvalidPhoneMessage] = useState('')
 
   const toVerification = async (phoneNumber: string) => {
-    const response = await new PhonesApi().find(phoneNumber)
-    if (response.success) {
-      const phone = response.result
-      history.push(`/telegram-verification?phoneNumber=${phone.number}&userId=${phone.ownerId}`)
-    } else {
-      history.push(`/phone-verification?phoneNumber=${phoneInput.value}`)
-    }
+    return new PhonesApi().find(phoneNumber)
+      .then(phone => history.push(`/telegram-verification?phoneNumber=${phone.number}&userId=${phone.ownerId}`))
+      .catch(() => history.push(`/phone-verification?phoneNumber=${phoneInput.value}`))
   }
   const toStart = () => history.push('/start')
 

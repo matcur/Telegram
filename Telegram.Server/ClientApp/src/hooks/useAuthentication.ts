@@ -7,10 +7,10 @@ export const useAuthentication = (users: UsersApi, verification: VerificationApi
   const dispatch = useAppDispatch()
 
   return async (phoneNumber: string, code: string) => {
-    const currentUser = (await users.find(phoneNumber)).result
+    const currentUser = (await users.find(phoneNumber))
     const token = (await verification.token({
       value: code, userId: currentUser.id
-    })).result
+    }))
 
     dispatch(authorize({
       currentUser,

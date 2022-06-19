@@ -18,13 +18,12 @@ export class EditingMessageState implements MessageState {
     const id = this.message.id;
     data.append("id", id.toString())
 
-    const response = await this.messages.update(data)
-    const message = response.result
+    const updatedMessage = await this.messages.update(data)
     
     this.dispatch(
       updateMessage({
-        chatId: message.chatId,
-        updatedMessage: message
+        chatId: updatedMessage.chatId,
+        updatedMessage,
       })
     )
   }

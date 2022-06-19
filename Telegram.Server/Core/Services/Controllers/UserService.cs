@@ -20,14 +20,6 @@ namespace Telegram.Server.Core.Services.Controllers
             _users = _db.Users;
         }
 
-        public bool TryFind(int id, out User user)
-        {
-            user = _users.Include(u => u.Phone)
-                .FirstOrDefault(u => u.Id == id);
-
-            return user != null;
-        }
-
         public async Task<User> Get(int id)
         {
             var chat = await _users.Include(u => u.Phone)
@@ -40,16 +32,20 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
-        public bool TryFindByPhone(string number, out User user)
+        public async Task<User> GetByPhone(string number)
         {
-            user = _users
+            var user = await _users
                 .Include(u => u.Phone)
-                .FirstOrDefault(u => u.Phone.Number == number);
+                .FirstOrDefaultAsync(u => u.Phone.Number == number);
+            if (user == null)
+            {
+                throw new NotFoundException($"User with phone number {number} is not found");
+            }
 
-            return user != null;
+            return user;
         }
 
-        public IEnumerable<Chat> Chats(int userId, Pagination pagination)
+        public Task<IEnumerable<Chat>> Chats(int userId, Pagination pagination)
         {
             return _users
                 .Where(u => u.Id == userId)
@@ -68,12 +64,12 @@ namespace Telegram.Server.Core.Services.Controllers
                     LastMessage = c.Chat.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
                     IconUrl = c.Chat.IconUrl,
                 }))
-                .First();
+                .FirstAsync();
         }
 
-        public List<User> All()
+        public async Task<List<User>> All()
         {
-            return _users.ToList();
+            return await _users.ToListAsync();
         }
     }
 }

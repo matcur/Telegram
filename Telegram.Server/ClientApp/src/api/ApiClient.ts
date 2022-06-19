@@ -18,7 +18,7 @@ export class ApiClient {
         'Accept': 'application/json',
         ...this.headers,
       },
-    }).then(res => res.json() as Promise<{success: boolean, result: TResult}>)
+    }).then(res => res.json() as Promise<TResult>)
   }
 
   async post<TResult>(resource: string, body: FormData | any = {}) {
@@ -31,7 +31,7 @@ export class ApiClient {
   
   async request<TResult>(method: string, resource: string, body: FormData | any = {}) {
     if (body instanceof FormData) {
-      return await this.sendXmlHttpRequest<{success: boolean, result: TResult}>(
+      return await this.sendXmlHttpRequest<TResult>(
           resource, body, method
       )
     }
@@ -43,7 +43,7 @@ export class ApiClient {
         ...this.headers,
       },
       body: JSON.stringify(body),
-    }).then(res => res.json() as Promise<{success: boolean, result: TResult}>)
+    }).then(res => res.json() as Promise<TResult>)
   }
 
   async sendXmlHttpRequest<TResult>(resource: string, data: FormData, method: string) {

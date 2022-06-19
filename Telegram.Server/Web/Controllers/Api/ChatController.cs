@@ -21,22 +21,19 @@ namespace Telegram.Server.Web.Controllers.Api
         private readonly MessageService _messages;
         
         private readonly UserService _users;
-        
-        private readonly MessageAdded _messageAdded;
 
-        public ChatController(ChatService chats, MessageService messages, UserService users, MessageAdded messageAdded)
+        public ChatController(ChatService chats, MessageService messages, UserService users)
         {
             _chats = chats;
             _messages = messages;
             _users = users;
-            _messageAdded = messageAdded;
         }
         
         [HttpGet]
         [Route("api/1.0/chats/{id:int}")]
         public async Task<IActionResult> Find([FromRoute]int id)
         {
-            return Json(new RequestResult(true, await _chats.Get(id)));
+            return Json(await _chats.Get(id));
         }
 
         [HttpGet]
@@ -45,14 +42,14 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             var result = await _messages.Filtered(id, offset, count);
 
-            return Json(new RequestResult(true, result));
+            return Json(result);
         }
         
         [HttpPost]
         [Route("api/1.0/chats/create")]
         public async Task<IActionResult> Create([FromForm]ChatMap map)
         {
-            return Json(new RequestResult(true, await _chats.Create(map)));
+            return Json(await _chats.Create(map));
         }
 
         [HttpPost]
@@ -62,7 +59,7 @@ namespace Telegram.Server.Web.Controllers.Api
             await _chats.AddMember(chatId, userId);
             await _messages.AddNewUserMessage(chatId, await _users.Get(userId));
 
-            return Json(new RequestResult(true));
+            return Ok();
         }
     }
 }

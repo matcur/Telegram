@@ -4,15 +4,15 @@ import {Code, Phone} from "models";
 export class VerificationApi {
   api = new ApiClient()
 
-  async byPhone(number: string): Promise<{success: boolean, result: unknown}> {
+  byPhone(number: string) {
     return this.api.post(`verification/by-phone?number=${number}`)
   }
 
-  async fromTelegram(phone: Pick<Phone, 'number'>): Promise<{success: boolean, result: unknown}> {
-    return await this.api.post(`verification/from-telegram?number=${phone.number}`)
+  fromTelegram(phone: Pick<Phone, 'number'>) {
+    return this.api.post(`verification/from-telegram?number=${phone.number}`)
   }
 
-  async token(code: Code): Promise<{success: boolean, result: string}> {
-    return await this.api.get(`verification/authorization-token?value=${code.value}&userId=${code.userId}`)
+  token(code: Code) {
+    return this.api.get<string>(`verification/authorization-token?value=${code.value}&userId=${code.userId}`)
   }
 }

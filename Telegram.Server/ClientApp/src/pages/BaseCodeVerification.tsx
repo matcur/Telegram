@@ -20,8 +20,8 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
   const [wrongCodeMessage, setWrongMessage] = useState('')
 
   const toIndex = async (enteredCode: string) => {
-    const response = await new CodesApi().valid({value: enteredCode, userId})
-    if (response.result) {
+    const valid = await new CodesApi().valid({value: enteredCode, userId})
+    if (valid) {
       await authenticate(phoneNumber, enteredCode)
       history.push('/')
 

@@ -16,10 +16,10 @@ export const useFormFiles = () => {
 
     return await new FilesApi()
       .upload(input.name, files)
-      .then(response => {
-        setUrls(response.result)
+      .then(paths => {
+        setUrls(paths)
 
-        return response.result
+        return paths
       })
   }
 

@@ -34,7 +34,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   
   useEffect(() => {
     new AuthorizedUserApi(token).contacts()
-      .then(res => setPotentialMembers(res as any as User[]))
+      .then(res => setPotentialMembers(res))
   }, [])
 
   const createChat = async (members: User[]) => {
@@ -46,9 +46,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
         ...members
       ]
     }
-    const response = await new ChatsApi().add(chat)
-
-    dispatch(addChat(response.result))
+    dispatch(addChat(await new ChatsApi().add(chat)))
   }
   const onCreate = async (members: User[]) => {
     await createChat(members)

@@ -15,10 +15,10 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             var path = new FileCollection(files, "files").Save();
 
-            return Json(new RequestResult(true, path));
+            return Json(path);
         }
         
-        [HttpPost]
+        [HttpDelete]
         [Route("api/1.0/remove-files")]
         public IActionResult Remove(IEnumerable<string> files)
         {
@@ -27,7 +27,7 @@ namespace Telegram.Server.Web.Controllers.Api
                 new PublicFile(file).Remove();
             }
 
-            return Json(new RequestResult(true));
+            return Ok();
         }
     }
 }

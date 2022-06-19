@@ -10,19 +10,19 @@ export class AuthorizedUserApi {
     })
   }
   
-  authorizedUser(): Promise<{success: boolean, result: User}> {
-    return this.api.get('authorized-user')
+  authorizedUser() {
+    return this.api.get<User>('authorized-user')
   }
 
-  async chats(): Promise<{success: boolean, result: Chat[]}> {
-    return await this.api.get('authorized-user/chats')
+  chats() {
+    return this.api.get<Chat[]>('authorized-user/chats')
   }
   
-  async changeAvatar(uri: string) {
-    return await this.api.post(`authorized-user/avatar?uri=${uri}`)
+  changeAvatar(uri: string) {
+    return this.api.post(`authorized-user/avatar?uri=${uri}`)
   }
   
-  async contacts() {
-    return await this.api.get<User[]>('authorized-user/contacts')
+  contacts() {
+    return this.api.get<User[]>('authorized-user/contacts')
   }
 }

@@ -6,7 +6,7 @@ import {toFormData} from "../utils/toFormData";
 export class ChatsApi {
   api = new ApiClient()
 
-  async add(chat: Omit<Chat, 'id' | 'messages'>) {
+  add(chat: Omit<Chat, 'id' | 'messages'>) {
     return this.api.post<Chat>('chats/create', toFormData(chat))
   }
 }

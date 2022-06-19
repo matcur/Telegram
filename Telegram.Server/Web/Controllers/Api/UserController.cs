@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
@@ -21,42 +22,32 @@ namespace Telegram.Server.Web.Controllers.Api
 
         [HttpGet]
         [Route("api/1.0/users")]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            return Json(_userService.All());
+            return Json(await _userService.All());
         }
 
         [HttpGet]
         [Route("api/1.0/users/{id}")]
-        public IActionResult Find([FromRoute]int id)
+        public async Task<IActionResult> Find([FromRoute]int id)
         {
-            if (_userService.TryFind(id, out var user))
-            {
-                return Json(new RequestResult(true, new UserMap(user)));
-            }
-
-            return NotFound($"User with id = {id}, not found.");
+            return Json(await _userService.Get(id));
         }
 
         [HttpGet]
         [Route("api/1.0/users/{id:int}/chats")]
-        public IActionResult Chats([FromRoute]int id, [FromQuery]int count, [FromQuery]int offset = 0)
+        public async Task<IActionResult> Chats([FromRoute]int id, [FromQuery]int count, [FromQuery]int offset = 0)
         {
-            var result = _userService.Chats(id, new Pagination(count, offset));
+            var result = await _userService.Chats(id, new Pagination(count, offset));
 
-            return Json(new RequestResult(true, result));
+            return Json(result);
         }
 
         [HttpGet]
         [Route("api/1.0/user/phone/{number}")]
-        public IActionResult ByPhone([FromRoute]string number)
+        public async Task<IActionResult> ByPhone([FromRoute]string number)
         {
-            if (_userService.TryFindByPhone(number, out var user))
-            {
-                return Json(new RequestResult(true, user));
-            }
-
-            return NotFound($"User with phone number == {number} is not found");
+            return Json(await _userService.GetByPhone(number));
         }
     }
 }

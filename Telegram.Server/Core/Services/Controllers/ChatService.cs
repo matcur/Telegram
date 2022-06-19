@@ -56,9 +56,9 @@ namespace Telegram.Server.Core.Services.Controllers
             await _db.SaveChangesAsync();
         }
 
-        public bool Exists(int id)
+        public Task<bool> Exists(int id)
         {
-            return _chats.Any(c => c.Id == id);
+            return _chats.AnyAsync(c => c.Id == id);
         }
     }
 }

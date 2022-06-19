@@ -4,7 +4,9 @@ import {User} from "models";
 export class RegistrationApi {
   api = new ApiClient()
 
-  async register(phone: {number: string}): Promise<{success: boolean; result: User}> {
-    return await this.api.post(`user/register?firstName=&lastName=&phoneNumber=${phone.number}`)
+  async register(phone: {number: string}) {
+    return await this.api.post<User>(
+      `user/register?firstName=&lastName=&phoneNumber=${phone.number}`
+    )
   }
 }

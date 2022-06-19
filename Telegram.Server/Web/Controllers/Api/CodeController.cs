@@ -28,16 +28,14 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             if (!_users.Any(u => u.Id == userId))
             {
-                return Json(
-                    new RequestResult(false, $"User with id = {userId} not found.")
-                );
+                return NotFound($"User with id = {userId} not found.");
             }
 
             var code = new Code { UserId = userId };
             _codes.Add(code);
             _db.SaveChanges();
 
-            return Json(new RequestResult(true));
+            return Ok();
         }
     }
 }

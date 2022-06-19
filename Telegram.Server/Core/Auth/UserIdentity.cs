@@ -32,17 +32,17 @@ namespace Telegram.Server.Core.Auth
             _codes = db.Codes;
         }
 
-        public bool ValidCode(string code, int userId)
+        public async Task<bool> ValidCode(string code, int userId)
         {
-            return _codes.Any(
+            return await _codes.AnyAsync(
                 c => code == c.Value &&
                      c.UserId == userId
             );
         }
 
-        public string CreateToken(int userId, string role)
+        public async Task<string> CreateToken(int userId, string role)
         {
-            if (_users.Any(u => u.Id == userId))
+            if (await _users.AnyAsync(u => u.Id == userId))
             {
                 var token = _authorizationToken.From(Claims(userId, role));
 

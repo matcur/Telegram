@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Telegram.Server.Core.Db.Extensions;
@@ -25,7 +26,14 @@ namespace Telegram.Server.Core.Domain.Bots
             form.Add(new StringContent(command), "command");
             form.Add(new StringContent(message.ChatId.ToString()), "chatId");
 
-            await _http.PostAsync(_bot.ServerUrl, form);
+            try
+            {
+                await _http.PostAsync(_bot.ServerUrl, form);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

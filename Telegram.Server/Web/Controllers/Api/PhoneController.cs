@@ -25,7 +25,7 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             var result = _phones.Any(p => p.Number == number);
 
-            return Json(new RequestResult(true, result));
+            return Json(result);
         }
 
         [HttpGet]
@@ -35,15 +35,10 @@ namespace Telegram.Server.Web.Controllers.Api
             var result = _phones.FirstOrDefault(p => p.Number == number);
             if (result == null)
             {
-                return Json(
-                    new RequestResult(
-                        false,
-                        $"Phone with number = {number}, not found."
-                    )
-                );
+                return NotFound($"Phone with number = {number}, not found.");
             }
 
-            return Json(new RequestResult(true, result));
+            return Json(result);
         }
     }
 }

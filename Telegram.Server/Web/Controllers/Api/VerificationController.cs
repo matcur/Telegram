@@ -34,18 +34,13 @@ namespace Telegram.Server.Web.Controllers.Api
             var phone = _phones.FirstOrDefault(p => p.Number == number);
             if (phone == null)
             {
-                return Json(
-                    new RequestResult(
-                        false,
-                        $"Phone number {number} - {number} doesn't exists."
-                    )
-                );
+                return NotFound($"Phone number {number} - {number} doesn't exists.");
             }
 
             _codes.Add(new Code { UserId = phone.OwnerId });
             _db.SaveChanges();
 
-            return Json(new RequestResult(true));
+            return Ok();
         }
 
         [HttpPost]
@@ -55,42 +50,37 @@ namespace Telegram.Server.Web.Controllers.Api
             var phone = _phones.FirstOrDefault(p => p.Number == number);
             if (phone == null)
             {
-                return Json(
-                    new RequestResult(
-                        false,
-                        $"Phone number {number} doesn't exists."
-                    )    
-                );
+                return NotFound($"Phone number {number} doesn't exists.");
             }
 
             _codes.Add(new Code { UserId = phone.OwnerId });
             _db.SaveChanges();
 
-            return Json(new RequestResult(true));
+            return Ok();
         }
 
         [HttpGet]
         [Route("api/1.0/verification/check-code")]
-        public IActionResult CheckCode([FromQuery]string value, [FromQuery]int userId)
+        public async Task<IActionResult> CheckCode([FromQuery]string value, [FromQuery]int userId)
         {
-            var valid = _identity.ValidCode(value, userId);
+            var valid = await _identity.ValidCode(value, userId);
 
-            return Json(new RequestResult(true, valid));
+            return Json(valid);
         }
 
         [HttpGet]
         [Route("api/1.0/verification/authorization-token")]
         public async Task<IActionResult> AuthorizationToken([FromQuery]string value, [FromQuery]int userId)
         {
-            if (_identity.ValidCode(value, userId))
+            if (!await _identity.ValidCode(value, userId))
             {
-                var token = _identity.CreateToken(userId, "simpleUser");
-                await _identity.ForgotCode(value, userId);
-                
-                return Json(new RequestResult<string>(true, token, ""));
+                return Unauthorized();
             }
 
-            return Json(new RequestResult(true, false));
+            var token = await _identity.CreateToken(userId, "simpleUser");
+            await _identity.ForgotCode(value, userId);
+                
+            return Json(token);
         }
     }
 }
