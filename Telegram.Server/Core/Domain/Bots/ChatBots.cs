@@ -22,7 +22,7 @@ namespace Telegram.Server.Core.Domain.Bots
         {
             if (!IsCommand(message))
             {
-                await Task.CompletedTask;
+                return;
             }
             
             var bots = await Bots(message.ChatId);
