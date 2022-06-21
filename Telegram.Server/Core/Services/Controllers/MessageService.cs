@@ -18,18 +18,18 @@ namespace Telegram.Server.Core.Services.Controllers
         
         private readonly AuthorizedUserService _authorizedUser;
         
-        private readonly MessageAdded _messageAdded;
+        private readonly ChatEvents _chatEvents;
 
         private readonly DbSet<Message> _messages;
         
         private readonly DbSet<Content> _contents;
 
-        public MessageService(AppDb db, ChatService chats, AuthorizedUserService authorizedUser, MessageAdded messageAdded)
+        public MessageService(AppDb db, ChatService chats, AuthorizedUserService authorizedUser, ChatEvents chatEvents)
         {
             _db = db;
             _chats = chats;
             _authorizedUser = authorizedUser;
-            _messageAdded = messageAdded;
+            _chatEvents = chatEvents;
             _messages = db.Messages;
             _contents = db.Contents;
         }
@@ -91,7 +91,7 @@ namespace Telegram.Server.Core.Services.Controllers
             await _messages.AddAsync(message);
             await _db.SaveChangesAsync();
             
-            await _messageAdded.Emit(message);
+            await _chatEvents.OnMessageAdded(message);
 
             return message;
         }

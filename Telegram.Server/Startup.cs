@@ -115,7 +115,7 @@ namespace Telegram.Server
             services.AddScoped<ChatService>();
             services.AddScoped<MessageService>();
             services.AddScoped<ChatBots>();
-            services.AddScoped<MessageAdded>();
+            services.AddScoped<ChatEvents>();
             
             services.AddSpaStaticFiles(
                 configuration => configuration.RootPath = "wwwroot"

@@ -6,7 +6,7 @@ using Telegram.Server.Core.Services.Hubs;
 
 namespace Telegram.Server.Core.Notifications
 {
-    public class MessageAdded
+    public class ChatEvents
     {
         private readonly AppDb _db;
         
@@ -14,14 +14,14 @@ namespace Telegram.Server.Core.Notifications
         
         private readonly ChatBots _bots;
 
-        public MessageAdded(AppDb db, ChatHubService chatHub, ChatBots bots)
+        public ChatEvents(AppDb db, ChatHubService chatHub, ChatBots bots)
         {
             _db = db;
             _chatHub = chatHub;
             _bots = bots;
         }
 
-        public async Task Emit(Message message)
+        public async Task OnMessageAdded(Message message)
         {
             await _chatHub.EmitMessage(message);
             await _bots.Act(message);
