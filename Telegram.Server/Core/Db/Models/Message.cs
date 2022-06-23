@@ -22,6 +22,8 @@ namespace Telegram.Server.Core.Db.Models
         [ForeignKey(nameof(ReplyTo))]
         public int? ReplyToId { get; set; }
 
+        public bool Edited { get; set; } = false;
+
         public DateTime CreationDate { get; set; }
 
         public Chat Chat { get; set; }

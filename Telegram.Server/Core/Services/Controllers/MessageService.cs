@@ -113,6 +113,7 @@ namespace Telegram.Server.Core.Services.Controllers
 
             _contents.RemoveRange(message.ContentMessages.Select(c => c.Content));
             message.ContentMessages.AddRange(map.ContentMessages);
+            message.Edited = true;
 
             await _db.SaveChangesAsync();
             await _chatEvents.OnMessageUpdated(message);
