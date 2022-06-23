@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Telegram.Server.Core
 {
@@ -7,11 +8,16 @@ namespace Telegram.Server.Core
         private readonly int _count;
 
         private readonly int _offset;
+        
+        private readonly string _text;
 
-        public Pagination(int count, int offset)
+        public Pagination(PaginationModel pagination) : this(pagination.Count, pagination.Offset, pagination.Text) { }
+
+        public Pagination(int count, int offset, string text = "")
         {
             _count = count;
             _offset = offset;
+            _text = text;
         }
 
         public int Count()
@@ -22,6 +28,11 @@ namespace Telegram.Server.Core
         public int Offset()
         {
             return Math.Max(_offset, 0);
+        }
+
+        public string Text()
+        {
+            return _text ?? "";
         }
     }
 }

@@ -14,9 +14,15 @@ export class ChatApi {
     })
   }
   
-  messages(offset: number, count: number) {
-    return this.api.get<Message[]>(
-      `chats/${this.id}/messages?offset=${offset}&count=${count}`
+  messages(offset: number, count: number, text: string = "") {
+    return this.api.post<Message[]>(
+      `chats/${this.id}/messages`, {
+        pagination: {
+          offset,
+          count,
+          text,
+        }
+      }
     )
   }
   

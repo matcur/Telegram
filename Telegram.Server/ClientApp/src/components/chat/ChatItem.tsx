@@ -17,21 +17,21 @@ export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
 
   return (
     <div
-      className={'chat-item ' + className}
+      className={'search-item ' + className}
       onClick={() => onClick(chat)}>
-      <img src={cat} alt="" className="circle chat-image"/>
-      <div className="chat-item-details">
+      <img src={cat} alt="" className="circle middle-image"/>
+      <div className="search-item-details">
         <div className="chat-name">
           <Community/>
           <span>{chat.name}</span>
         </div>
-        <div className="last-message">
+        <div className="message-search">
           <span className="last-message-user-name">{lastMessage.author.firstName}: </span>
           <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
         </div>
       </div>
-      <div className="chat-item-right-part">
-        <div className="last-message-date">{lastMessage.creationDate && readableDate(lastMessage.creationDate)}</div>
+      <div className="search-item-right-part">
+        <div className="search-message-date">{lastMessage.creationDate && readableDate(lastMessage.creationDate)}</div>
         <div className="unread-messages-count">2344</div>
       </div>
     </div>

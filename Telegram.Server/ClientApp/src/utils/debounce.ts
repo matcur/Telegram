@@ -1,11 +1,12 @@
-export const debounce = (f: (...args: any[]) => void, ms: number) => {
-  let allow = true
+export const debounce = <T>(f: (...args: any[]) => T, ms: number) => {
+  let timeout: NodeJS.Timeout;
   
   return (...args: any[]) => {
-    if (allow) {
-      allow = false
-      setTimeout(() => allow = true, ms)
-      f(...args)
-    }
+    clearTimeout(timeout)
+    return new Promise<T>(res => {
+      timeout = setTimeout(() => {
+        res(f(...args))
+      }, ms)
+    })
   }
 }

@@ -1,3 +1,5 @@
+import {toFormData} from "../utils/toFormData";
+
 export class ApiClient {
   private readonly host = host
   
@@ -30,20 +32,13 @@ export class ApiClient {
   }
   
   async request<TResult>(method: string, resource: string, body: FormData | any = {}) {
-    if (body instanceof FormData) {
-      return await this.sendXmlHttpRequest<TResult>(
-          resource, body, method
-      )
+    if (!(body instanceof FormData)) {
+      body = toFormData(body)
     }
-
-    return await fetch(this.host + resource, {
-      method: method,
-      headers: {
-        'Accept': 'application/json',
-        ...this.headers,
-      },
-      body: JSON.stringify(body),
-    }).then(res => res.json() as Promise<TResult>)
+    
+    return await this.sendXmlHttpRequest<TResult>(
+      resource, body, method
+    )
   }
 
   async sendXmlHttpRequest<TResult>(resource: string, data: FormData, method: string) {

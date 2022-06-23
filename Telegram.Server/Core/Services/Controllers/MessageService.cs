@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
@@ -49,20 +50,21 @@ namespace Telegram.Server.Core.Services.Controllers
             return message;
         }
 
-        public async Task<IEnumerable<Message>> Filtered(int chaiId, int offset, int count)
+        public async Task<IEnumerable<Message>> Filtered(int chaiId, Pagination pagination)
         {
             var result = await Details(chaiId)
-                .Skip(offset)
-                .Take(count)
+                .Skip(pagination.Offset())
+                .Take(pagination.Count())
+                .Where(m => m.ContentMessages.Any(c => c.Content.Value.Contains(pagination.Text())))
                 .ToListAsync();
             result.Reverse();
 
             return result;
         }
 
-        public async Task<Message> AddNewUserMessage(int chatId, User user)
+        public Task<Message> AddNewUserMessage(int chatId, User user)
         {
-            return await Add(new MessageMap(chatId, MessageType.NewUserAdded), user);
+            return Add(new MessageMap(chatId, MessageType.NewUserAdded), user);
         }
 
         public async Task<Message> Add(MessageMap map, User author)

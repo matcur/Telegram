@@ -7,9 +7,10 @@ import {ReactComponent as ThreeDot} from "public/svgs/three-dots.svg";
 
 type Props = {
   chat: Chat
+  onSearchClick(): void
 }
 
-export const ChatHeader: FC<Props> = ({chat}: Props) => {
+export const ChatHeader: FC<Props> = ({chat, onSearchClick}: Props) => {
   return (
     <div className="chat-header">
       <div className="chat-details">
@@ -17,7 +18,7 @@ export const ChatHeader: FC<Props> = ({chat}: Props) => {
         <div className="members-count">{splitByThousands(chat.messages.length)} members</div>
       </div>
       <div className="chat-actions">
-        <button className="clear-btn chat-action-btn">
+        <button className="clear-btn chat-action-btn" onClick={onSearchClick}>
           <Magnifier/>
         </button>
         <button className="clear-btn chat-action-btn">

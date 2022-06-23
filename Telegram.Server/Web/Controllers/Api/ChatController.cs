@@ -36,11 +36,11 @@ namespace Telegram.Server.Web.Controllers.Api
             return Json(await _chats.Get(id));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/1.0/chats/{id:int}/messages")]
-        public async Task<IActionResult> Messages([FromRoute]int id, [FromQuery]int offset, [FromQuery]int count)
+        public async Task<IActionResult> Messages([FromRoute]int id, [FromForm]PaginationModel pagination)
         {
-            var result = await _messages.Filtered(id, offset, count);
+            var result = await _messages.Filtered(id, new Pagination(pagination));
 
             return Json(result);
         }

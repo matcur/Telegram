@@ -21,6 +21,7 @@ export type Message = {
   chatId: number
   creationDate: string
   replyTo?: Message
+  chat?: Chat
 }
 
 export type Chat = {

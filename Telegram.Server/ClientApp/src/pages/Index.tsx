@@ -15,6 +15,15 @@ import {host} from "../api/ApiClient";
 import {ChatWebsockets} from "../app/chat/ChatWebsockets";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
 import {ChatWebsocket} from "../app/chat/ChatWebsocket";
+import {Chat as ChatModel} from "models";
+import {MessagesSearch} from "../components/search/MessageSearch/MessagesSearch";
+
+type Search = {
+  type: "chats"
+} | {
+  type: "messages",
+  inChat: ChatModel,
+}
 
 export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
@@ -23,6 +32,7 @@ export const Index = () => {
   const token = useAppSelector(state => state.authorization.token)
   const [chatWebsockets] = useState(() => new ChatWebsockets())
   const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(() => nullChatWebsocket)
+  const [search, setSearch] = useState<Search>(() => ({type: "chats"}))
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -53,19 +63,30 @@ export const Index = () => {
     dispatch(setLastMessage({chatId: message.chatId, message}))
     dispatch(addMessage({chatId: message.chatId, message}))
   }
+  const searchInChat = (chat: ChatModel) => {
+    setSearch({type: "messages", inChat: chat})
+  }
 
   return (
     <div className="index">
-      <ChatsBlock
+      {search.type === "chats" && <ChatsBlock
         selectedChat={selectedChat}
         onChatSelected={setSelectedChat}
-        chats={chats}/>
+        chats={chats}
+      />}
+      {search.type === "messages" && <MessagesSearch
+        chat={search.inChat}
+        onCloseClick={() => setSearch({type: "chats"})}
+        onMessageSelect={() => {}}
+      />}
       {
         selectedChat === nullChat? 
           <></>:
           <Chat
             chat={selectedChat}
-            websocket={chatWebsocket}/>
+            websocket={chatWebsocket}
+            onMessageSearchClick={() => searchInChat(selectedChat)}
+          />
       }
     </div>
   )

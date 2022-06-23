@@ -26,9 +26,10 @@ import {MessageOptions} from "../message/MessageOptions";
 type Props = {
   chat: ChatModel
   websocket: ChatWebsocket
+  onMessageSearchClick(): void
 }
 
-export const Chat: FC<Props> = ({chat, websocket}: Props) => {
+export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) => {
   const id = chat.id
   const input = useFormInput()
   const dispatch = useAppDispatch()
@@ -116,7 +117,7 @@ export const Chat: FC<Props> = ({chat, websocket}: Props) => {
 
   return (
     <div className="chat">
-      <ChatHeader chat={chat}/>
+      <ChatHeader chat={chat} onSearchClick={onMessageSearchClick}/>
       {
         loaded? (<>
           <MessageScroll

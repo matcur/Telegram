@@ -27,7 +27,7 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats}: Pro
   }
 
   return (
-    <div className="chats-block">
+    <div className="search-block">
       <Search
         onChange={search.onChange}
         icon={<Burger onClick={onBurgerClick}/>}/>
