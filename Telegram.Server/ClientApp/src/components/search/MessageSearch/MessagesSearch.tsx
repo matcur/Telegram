@@ -28,7 +28,7 @@ export const MessagesSearch = ({chat, onCloseClick, onMessageSelect}: Props) => 
       message={message}
       onClick={onMessageSelect}/>
   }
-  const loadFilteredMessages = useCallback(debounce<Promise<Message[]>>((offset: number, count: number, text: string) => (
+  const loadFilteredMessages = useCallback(debounce((offset: number, count: number, text: string) => (
     (new ChatApi(chat.id, authorizeToken))
       .messages(offset, count, text)
   ), 500), [chat.id])
