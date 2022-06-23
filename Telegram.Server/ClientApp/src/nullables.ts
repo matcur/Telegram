@@ -32,5 +32,7 @@ export const nullChatWebsocket = {
   async start() {},
   onMessageAdded() {},
   removeMessageAdded() {},
-  emitMessage() {},
+  onMessageUpdated() {},
+  removeMessageUpdated() {},
+  ensureWebhook() {},
 } as unknown as ChatWebsocket

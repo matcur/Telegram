@@ -11,7 +11,7 @@ import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
-import {addMessages, chatMessages, addPreviousMessages} from "app/slices/authorizationSlice";
+import {addMessages, chatMessages, addPreviousMessages, updateMessage} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
 import {debounce} from "../../utils/debounce";
@@ -92,6 +92,9 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
   const replyTo = (message: Message) => {
     setReply(message)
   }
+  const onMessageUpdated = (message: Message) => {
+    dispatch(updateMessage(message))
+  }
 
   useEffect(() => {
     setLoaded(false)
@@ -113,6 +116,11 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
 
   useEffect(() => {
     setInputState(newMessageState())
+  }, [chat])
+  
+  useEffect(function subscribeMessageUpdated() {
+    websocket.onMessageUpdated(onMessageUpdated)
+    return () => websocket.removeMessageUpdated(onMessageUpdated)
   }, [chat])
 
   return (

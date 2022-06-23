@@ -14,11 +14,20 @@ namespace Telegram.Server.Core.Services.Hubs
             _chatHub = chatHub;
         }
 
-        public Task EmitMessage(Message message)
+        public Task EmitNewMessage(Message message)
+        {
+            return Clients(message).SendAsync("MessageAdded", Serialize(message));
+        }
+
+        public Task EmitUpdatedMessage(Message message)
+        {
+            return Clients(message).SendAsync("MessageUpdated", Serialize(message));
+        }
+
+        private IClientProxy Clients(Message message)
         {
             return _chatHub.Clients
-                .Group(message.ChatId.ToString())
-                .SendAsync("ReceiveMessage", Serialize(message));
+                .Group(message.ChatId.ToString());
         }
     }
 }

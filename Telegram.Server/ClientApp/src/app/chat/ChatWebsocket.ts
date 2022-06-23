@@ -28,7 +28,7 @@ export class ChatWebsocket {
   onMessageAdded(callback: (message: Message) => void) {
     this.ensureWebhook()
 
-    this.webhook?.on("ReceiveMessage", (messageJson: string) => {
+    this.webhook?.on("MessageAdded", (messageJson: string) => {
       callback(JSON.parse(messageJson) as Message)
     })
   }
@@ -36,13 +36,21 @@ export class ChatWebsocket {
   removeMessageAdded(callback: (message: Message) => void) {
     this.ensureWebhook()
 
-    this.webhook?.off("ReceiveMessage", callback)
+    this.webhook?.off("MessageAdded", callback)
   }
-
-  emitMessage(message: Message) {
+  
+  onMessageUpdated(callback: (Message: Message) => void) {
     this.ensureWebhook()
     
-    this.webhook?.send('EmitMessage', JSON.stringify(message))
+    this.webhook!.on("MessageUpdated", json => {
+      callback(JSON.parse(json) as Message)
+    })
+  }
+
+  removeMessageUpdated(callback: (message: Message) => void) {
+    this.ensureWebhook()
+
+    this.webhook!.off("MessageUpdated", callback)
   }
 
   private ensureWebhook() {

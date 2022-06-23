@@ -23,8 +23,13 @@ namespace Telegram.Server.Core.Notifications
 
         public async Task OnMessageAdded(Message message)
         {
-            await _chatHub.EmitMessage(message);
+            await _chatHub.EmitNewMessage(message);
             await _bots.Act(message);
+        }
+
+        public Task OnMessageUpdated(Message message)
+        {
+            return _chatHub.EmitUpdatedMessage(message);
         }
     }
 }

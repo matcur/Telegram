@@ -115,6 +115,7 @@ namespace Telegram.Server.Core.Services.Controllers
             message.ContentMessages.AddRange(map.ContentMessages);
 
             await _db.SaveChangesAsync();
+            await _chatEvents.OnMessageUpdated(message);
 
             return message;
         }

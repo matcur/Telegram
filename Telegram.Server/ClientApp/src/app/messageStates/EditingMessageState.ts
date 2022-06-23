@@ -20,11 +20,6 @@ export class EditingMessageState implements MessageState {
 
     const updatedMessage = await this.messages.update(data)
     
-    this.dispatch(
-      updateMessage({
-        chatId: updatedMessage.chatId,
-        updatedMessage,
-      })
-    )
+    this.dispatch(updateMessage(updatedMessage))
   }
 }

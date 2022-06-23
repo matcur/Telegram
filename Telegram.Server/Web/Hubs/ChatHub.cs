@@ -27,11 +27,6 @@ namespace Telegram.Server.Web.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, ChatId().ToString());
         }
 
-        public async Task EmitMessage(string message)
-        {
-            await Clients.Group(ChatId().ToString()).SendAsync("ReceiveMessage", message);
-        }
-
         private int ChatId()
         {
             var query = Context.GetHttpContext().Request.Query;
