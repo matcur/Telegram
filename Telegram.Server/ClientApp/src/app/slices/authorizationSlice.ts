@@ -22,8 +22,9 @@ const authorizationSlice = createSlice({
       localStorage.setItem(`app-authorization-token-user-id-${payload.currentUser.id}`, payload.token)
     },
     flushToken(state) {
-      state.token = ""
-      localStorage.setItem('app-authorization-token', "")
+      state.token = ''
+      localStorage.setItem('app-authorization-token', '')
+      localStorage.setItem(`app-authorization-token-user-id-${state.currentUser.id}`, '')
     },
     addChat(state, {payload}: PayloadAction<Chat>) {
       state.currentUser.chats.push(payload)

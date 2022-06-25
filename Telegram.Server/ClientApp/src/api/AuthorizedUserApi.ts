@@ -19,6 +19,10 @@ export class AuthorizedUserApi {
     return this.api.post<Chat[]>('authorized-user/chats', {pagination})
   }
   
+  chatIds() {
+    return this.api.get<number[]>('authorized-user/chat-ids')
+  }
+  
   changeAvatar(uri: string) {
     return this.api.post(`authorized-user/avatar?uri=${uri}`)
   }

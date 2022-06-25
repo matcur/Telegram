@@ -27,21 +27,22 @@ export const Index = () => {
   const [chatWebsockets] = useState(() => new ChatWebsockets())
   const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
   const [search, setSearch] = useState<Search>(() => ({type: "chats"}))
+  const [authorizedUser, setAuthorizedUser] = useState(() => new AuthorizedUserApi(token))
   const dispatch = useDispatch()
 
   useEffect(() => {
     const load = async() => {
-      const chats = await new AuthorizedUserApi(token).chats({offset: 0, count: -1})
-      dispatch(addChats(chats))
-      chats.forEach(async c => {
-        const hook = await chatWebsockets.get(c.id, token)
+      const chatsPromise = authorizedUser.chats({offset: 0, count: -1})
+      const chatsIdsPromise = authorizedUser.chatIds();
+      (await chatsIdsPromise).forEach(async id => {
+        const hook = await chatWebsockets.get(id, token)
         hook.onMessageAdded(receiveMessage)
       })
+      dispatch(addChats(await chatsPromise))
     }
 
     load()
   }, [])
-  
   useEffect(() => {
     const load = async () => {
       const webhook = await chatWebsockets.get(selectedChat.id, token)
@@ -52,6 +53,9 @@ export const Index = () => {
       load()
     }
   }, [selectedChat])
+  useEffect(() => {
+    setAuthorizedUser(new AuthorizedUserApi(token))
+  }, [token])
 
   const receiveMessage = (message: Message) => {
     dispatch(setLastMessage({chatId: message.chatId, message}))

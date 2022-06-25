@@ -23,6 +23,15 @@ namespace Telegram.Server.Web.Controllers.Api
             return Json(await _authorizedUserService.Get());
         }
 
+        [HttpGet]
+        [Route("api/1.0/authorized-user/chat-ids")]
+        public async Task<IActionResult> ChatIds()
+        {
+            var result = await _authorizedUserService.ChatIds();
+
+            return Json(result);
+        }
+
         [HttpPost]
         [Route("api/1.0/authorized-user/chats")]
         public async Task<IActionResult> Chats([FromForm]PaginationModel pagination)

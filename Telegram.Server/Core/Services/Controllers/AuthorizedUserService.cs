@@ -41,6 +41,11 @@ namespace Telegram.Server.Core.Services.Controllers
             return _chatService.WithMember(_authorizedUser.Id(), pagination);
         }
 
+        public Task<List<int>> ChatIds()
+        {
+            return _chatService.WithMemberLoadIds(_authorizedUser.Id());
+        }
+
         public void ChangeAvatar(string avatarUrl)
         {
             var user = new User

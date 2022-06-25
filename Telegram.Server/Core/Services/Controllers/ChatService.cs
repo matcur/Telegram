@@ -76,5 +76,13 @@ namespace Telegram.Server.Core.Services.Controllers
 
             return query.ToListAsync();
         }
+
+        public Task<List<int>> WithMemberLoadIds(int userId)
+        {
+            return _chats
+                .Where(c => c.Members.Any(m => m.UserId == userId))
+                .Select(c => c.Id)
+                .ToListAsync();
+        }
     }
 }
