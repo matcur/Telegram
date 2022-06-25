@@ -6,7 +6,7 @@ import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
 import {readableDate} from "../../utils/datetime/readableDate";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {MessageTyping} from "../message/MessageTyping";
+import {MessageInputting} from "../message/MessageInputting";
 
 type Props = {
   chat: Chat
@@ -36,7 +36,7 @@ export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: 
               <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
             </>
           )}
-          <MessageTyping websocketPromise={websocket} setTyping={setMessageTyping}/>
+          <MessageInputting websocketPromise={websocket} setTyping={setMessageTyping}/>
         </div>
       </div>
       <div className="search-item-right-part">

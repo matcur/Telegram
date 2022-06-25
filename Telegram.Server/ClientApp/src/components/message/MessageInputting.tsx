@@ -12,7 +12,7 @@ export const showTypingTime = 500
 
 export const typingThrottleTime = showTypingTime - 100
 
-export const MessageTyping = ({websocketPromise, setTyping}: Props) => {
+export const MessageInputting = ({websocketPromise, setTyping}: Props) => {
   const [websocket, setWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
   const [users, setUsers] = useState<User[]>([])
   const displayedUsers = users

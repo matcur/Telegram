@@ -5,7 +5,7 @@ import {ReactComponent as Magnifier} from "public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "public/svgs/star.svg";
 import {ReactComponent as ThreeDot} from "public/svgs/three-dots.svg";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {MessageTyping} from "../message/MessageTyping";
+import {MessageInputting} from "../message/MessageInputting";
 
 type Props = {
   chat: Chat
@@ -20,7 +20,7 @@ export const ChatHeader: FC<Props> = ({chat, websocket, onSearchClick}: Props) =
         <div className="chat-name">{chat.name}</div>
         <div className="members-count">
           <span>{splitByThousands(chat.messages.length)} members </span>
-          <MessageTyping websocketPromise={websocket} setTyping={() => {}}/>
+          <MessageInputting websocketPromise={websocket} setTyping={() => {}}/>
         </div>
       </div>
       <div className="chat-actions">
