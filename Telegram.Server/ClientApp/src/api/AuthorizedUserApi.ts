@@ -14,6 +14,10 @@ export class AuthorizedUserApi {
   authorizedUser() {
     return this.api.get<User>('authorized-user')
   }
+  
+  chat(id: number) {
+    return this.api.get<Chat>(`authorized-user/chats/${id}`)
+  }
 
   chats(pagination: Pagination) {
     return this.api.post<Chat[]>('authorized-user/chats', {pagination})

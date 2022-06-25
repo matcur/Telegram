@@ -32,6 +32,9 @@ const authorizationSlice = createSlice({
     addChats(state, {payload}: PayloadAction<Chat[]>) {
       state.currentUser.chats = payload
     },
+    unshiftChat(state, {payload}: PayloadAction<Chat>) {
+      state.currentUser.chats.unshift(payload)
+    },
     addMessage(state, {payload}: PayloadAction<{chatId: number, message: Message}>) {
       const chat = selectChats(state).find(c => c.id === payload.chatId)
 
@@ -85,6 +88,7 @@ const authorizationSlice = createSlice({
 export const {
   authorize,
   addChat,
+  unshiftChat,
   addChats,
   addMessages,
   addMessage,

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {Chat} from "components/chat/Chat";
 import {nullChat, nullChatWebsocket} from "nullables";
 import {useAppSelector} from "../app/hooks";
 import {Message} from "../models";
-import {addChats, addMessage, setLastMessage} from "../app/slices/authorizationSlice";
+import {addChats, addMessage, setLastMessage, unshiftChat} from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";
 import {ChatWebsockets} from "../app/chat/ChatWebsockets";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
@@ -22,7 +22,10 @@ type Search = {
 export const Index = () => {
   const [selectedChat, setSelectedChat] = useState(nullChat)
   const currentUser = useAppSelector(state => state.authorization.currentUser)
+  // needs for websocket callback
+  const chatsRef = useRef<ChatModel[]>([])
   const chats = currentUser.chats
+  chatsRef.current = chats
   const token = useAppSelector(state => state.authorization.token)
   const [chatWebsockets] = useState(() => new ChatWebsockets())
   const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
@@ -57,7 +60,13 @@ export const Index = () => {
     setAuthorizedUser(new AuthorizedUserApi(token))
   }, [token])
 
-  const receiveMessage = (message: Message) => {
+  const receiveMessage = async (message: Message) => {
+    const chats = chatsRef.current;
+    if (!chats.some(c => c.id === message.chatId)) {
+      const chat = await authorizedUser.chat(message.chatId)
+      dispatch(unshiftChat(chat))
+    }
+    
     dispatch(setLastMessage({chatId: message.chatId, message}))
     dispatch(addMessage({chatId: message.chatId, message}))
   }
