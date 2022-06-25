@@ -1,5 +1,6 @@
 import {ApiClient} from "api/ApiClient";
 import {Chat, User} from "models";
+import {Pagination} from "../utils/type";
 
 export class AuthorizedUserApi {
   readonly api: ApiClient
@@ -14,8 +15,8 @@ export class AuthorizedUserApi {
     return this.api.get<User>('authorized-user')
   }
 
-  chats() {
-    return this.api.get<Chat[]>('authorized-user/chats')
+  chats(pagination: Pagination) {
+    return this.api.post<Chat[]>('authorized-user/chats', {pagination})
   }
   
   changeAvatar(uri: string) {

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Telegram.Server.Core
 {
@@ -22,7 +21,8 @@ namespace Telegram.Server.Core
 
         public int Count()
         {
-            return Math.Max(_count, 0);
+            // -1 if need load all
+            return Math.Max(_count, -1);
         }
 
         public int Offset()

@@ -16,19 +16,19 @@ namespace Telegram.Server.Core.Services.Controllers
 
         private readonly DbSet<User> _users;
 
-        private readonly UserService _userService;
-        
+        private readonly ChatService _chatService;
+
         private readonly DbSet<Message> _messages;
 
         private readonly AuthorizedUser _authorizedUser;
 
-        public AuthorizedUserService(AppDb db, AuthorizedUser authorizedUser, UserService userService)
+        public AuthorizedUserService(AppDb db, AuthorizedUser authorizedUser, ChatService chatService)
         {
             _db = db;
             _users = db.Users;
             _messages = db.Messages;
             _authorizedUser = authorizedUser;
-            _userService = userService;
+            _chatService = chatService;
         }
 
         public Task<User> Get()
@@ -36,9 +36,9 @@ namespace Telegram.Server.Core.Services.Controllers
             return _users.FirstAsync(u => u.Id == _authorizedUser.Id());
         }
 
-        public Task<IEnumerable<Chat>> Chats(Pagination pagination)
+        public Task<List<Chat>> Chats(Pagination pagination)
         {
-            return _userService.Chats(_authorizedUser.Id(), pagination);
+            return _chatService.WithMember(_authorizedUser.Id(), pagination);
         }
 
         public void ChangeAvatar(string avatarUrl)

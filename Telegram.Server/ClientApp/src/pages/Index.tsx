@@ -31,7 +31,7 @@ export const Index = () => {
 
   useEffect(() => {
     const load = async() => {
-      const chats = await new AuthorizedUserApi(token).chats()
+      const chats = await new AuthorizedUserApi(token).chats({offset: 0, count: -1})
       dispatch(addChats(chats))
       chats.forEach(async c => {
         const hook = await chatWebsockets.get(c.id, token)

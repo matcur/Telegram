@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Telegram.Server.Core;
 using Telegram.Server.Core.Services.Controllers;
 
@@ -24,11 +23,11 @@ namespace Telegram.Server.Web.Controllers.Api
             return Json(await _authorizedUserService.Get());
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/1.0/authorized-user/chats")]
-        public async Task<IActionResult> Chats([FromQuery]int count, [FromQuery]int offset = 0)
+        public async Task<IActionResult> Chats([FromForm]PaginationModel pagination)
         {
-            var result = await _authorizedUserService.Chats(new Pagination(count, offset));
+            var result = await _authorizedUserService.Chats(new Pagination(pagination));
 
             return Json(result);
         }
