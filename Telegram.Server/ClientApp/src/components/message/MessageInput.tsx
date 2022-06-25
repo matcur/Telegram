@@ -14,9 +14,10 @@ import {Message} from "../../models";
 type Props = {
   reply?: Message
   replyElement?: ReactElement
-  onSubmitting: (data: FormData) => void
   textInput: {value: string, onChange: (e: React.FormEvent<HTMLInputElement> | string) => void}
   chatId: number
+  onSubmitting(data: FormData): void
+  onInput(): void
 }
 
 type Form = {
@@ -57,7 +58,7 @@ const chats = {
   }
 }
 
-export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, textInput, chatId}: Props) => {
+export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, textInput, chatId, onInput}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
@@ -155,7 +156,9 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
           className="clear-input message-input"
           placeholder="Write a message..."
           value={textInput.value}
-          onChange={onTextChange}/>
+          onChange={onTextChange}
+          onInput={onInput}
+        />
         <Command/>
         <Smile/>
         <Microphone/>

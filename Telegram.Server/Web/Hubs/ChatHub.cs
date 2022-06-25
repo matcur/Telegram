@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Telegram.Server.Core;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Services.Controllers;
 
@@ -25,6 +26,12 @@ namespace Telegram.Server.Web.Hubs
             }
             
             await Groups.AddToGroupAsync(Context.ConnectionId, ChatId().ToString());
+        }
+        
+        public async Task EmitMessageTyping()
+        {
+            await Clients.OthersInGroup(ChatId().ToString())
+                .SendAsync("MessageTyping", JsonTelegram.Serialize(await _authorizedUser.Get()));
         }
 
         private int ChatId()

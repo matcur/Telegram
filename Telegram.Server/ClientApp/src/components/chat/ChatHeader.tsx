@@ -4,18 +4,24 @@ import {splitByThousands} from "utils/splitByThousands";
 import {ReactComponent as Magnifier} from "public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "public/svgs/star.svg";
 import {ReactComponent as ThreeDot} from "public/svgs/three-dots.svg";
+import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {MessageTyping} from "../message/MessageTyping";
 
 type Props = {
   chat: Chat
+  websocket: ChatWebsocket
   onSearchClick(): void
 }
 
-export const ChatHeader: FC<Props> = ({chat, onSearchClick}: Props) => {
+export const ChatHeader: FC<Props> = ({chat, websocket, onSearchClick}: Props) => {
   return (
     <div className="chat-header">
       <div className="chat-details">
         <div className="chat-name">{chat.name}</div>
-        <div className="members-count">{splitByThousands(chat.messages.length)} members</div>
+        <div className="members-count">
+          <span>{splitByThousands(chat.messages.length)} members </span>
+          <MessageTyping websocket={websocket} setHasTyping={() => {}}/>
+        </div>
       </div>
       <div className="chat-actions">
         <button className="clear-btn chat-action-btn" onClick={onSearchClick}>

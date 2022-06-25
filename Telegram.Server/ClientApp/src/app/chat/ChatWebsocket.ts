@@ -1,5 +1,8 @@
 import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
-import {Message} from "../../models";
+import {Message, User} from "../../models";
+import {debounce} from "../../utils/debounce";
+import {typingThrottleTime} from "../../components/message/MessageTyping";
+import {throttle} from "../../utils/throttle";
 
 export class ChatWebsocket {
   private webhook: HubConnection | undefined
@@ -51,6 +54,26 @@ export class ChatWebsocket {
     this.ensureWebhook()
 
     this.webhook!.off("MessageUpdated", callback)
+  }
+
+  emitMessageTyping = throttle(() => {
+    this.ensureWebhook()
+  
+    this.webhook!.invoke("EmitMessageTyping")
+  }, typingThrottleTime)
+  
+  onMessageTyping(callback: (author: User) => void) {
+    this.ensureWebhook()
+    
+    this.webhook!.on("MessageTyping", json => {
+      callback(JSON.parse(json) as User)
+    })
+  }
+
+  removeMessageTyping(callback: (author: User) => void) {
+    this.ensureWebhook()
+
+    this.webhook!.off("MessageTyping", callback)
   }
 
   private ensureWebhook() {

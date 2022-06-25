@@ -1,5 +1,7 @@
 import {toFormData} from "../utils/toFormData";
 
+export const host = '/api/'
+
 export class ApiClient {
   private readonly host = host
   
@@ -63,5 +65,3 @@ export class ApiClient {
     return new ApiClient(this.version, {...this.headers, ...headers})
   }
 }
-
-export const host = '/api/'

@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "app/hooks";
 import {Chat as ChatModel, Content, Message} from "models";
 import {LoadingChat} from "./LoadingChat";
 import {ChatHeader} from "components/chat/ChatHeader";
-import {useFormInput} from "hooks/useFormInput";
+import {InputEvent, useFormInput} from "hooks/useFormInput";
 import {textContent} from "utils/textContent";
 import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
@@ -95,6 +95,9 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
   const onMessageUpdated = (message: Message) => {
     dispatch(updateMessage(message))
   }
+  const onMessageInput = () => {
+    websocket.emitMessageTyping()
+  }
 
   useEffect(() => {
     setLoaded(false)
@@ -125,7 +128,11 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
 
   return (
     <div className="chat">
-      <ChatHeader chat={chat} onSearchClick={onMessageSearchClick}/>
+      <ChatHeader
+        websocket={websocket}
+        chat={chat}
+        onSearchClick={onMessageSearchClick}
+      />
       {
         loaded? (<>
           <MessageScroll
@@ -143,6 +150,7 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
           </MessageScroll>
           <MessageInput
             textInput={input}
+            onInput={onMessageInput}
             onSubmitting={onSubmit}
             chatId={id}
             reply={reply}

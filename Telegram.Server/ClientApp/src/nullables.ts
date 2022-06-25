@@ -35,4 +35,6 @@ export const nullChatWebsocket = {
   onMessageUpdated() {},
   removeMessageUpdated() {},
   ensureWebhook() {},
+  onMessageTyping() {},
+  removeMessageTyping() {},
 } as unknown as ChatWebsocket

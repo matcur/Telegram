@@ -5,7 +5,7 @@ using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server.Core.Services.Hubs
 {
-    public class ChatHubService : HubService
+    public class ChatHubService
     {
         private readonly IHubContext<ChatHub> _chatHub;
 
@@ -16,12 +16,12 @@ namespace Telegram.Server.Core.Services.Hubs
 
         public Task EmitNewMessage(Message message)
         {
-            return Clients(message).SendAsync("MessageAdded", Serialize(message));
+            return Clients(message).SendAsync("MessageAdded", JsonTelegram.Serialize(message));
         }
 
         public Task EmitUpdatedMessage(Message message)
         {
-            return Clients(message).SendAsync("MessageUpdated", Serialize(message));
+            return Clients(message).SendAsync("MessageUpdated", JsonTelegram.Serialize(message));
         }
 
         private IClientProxy Clients(Message message)

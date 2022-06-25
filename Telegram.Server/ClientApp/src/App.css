@@ -460,6 +460,10 @@ a {
     color: #73B9F5;
 }
 
+.message-typing {
+    color: #73B9F5;
+}
+
 .last-message-content {
     display: flex;
     align-items: center;
