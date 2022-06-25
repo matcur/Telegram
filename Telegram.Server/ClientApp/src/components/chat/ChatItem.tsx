@@ -1,20 +1,24 @@
-import React, {FC} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 import {Chat} from "models";
 import {nullMessage} from "nullables";
 import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
 import {readableDate} from "../../utils/datetime/readableDate";
+import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {MessageTyping} from "../message/MessageTyping";
 
 type Props = {
   chat: Chat
-  className: string
-  onClick: (chat: Chat) => void
+  className?: string
+  websocket: Promise<ChatWebsocket>
+  onClick(chat: Chat): void
 }
 
-export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
+export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: Props) => {
+  const [messageTyping, setMessageTyping] = useState(false);
   const lastMessage = chat.lastMessage?? nullMessage
-
+  
   return (
     <div
       className={'search-item ' + className}
@@ -26,8 +30,13 @@ export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
           <span>{chat.name}</span>
         </div>
         <div className="message-search">
-          <span className="last-message-user-name">{lastMessage.author.firstName}: </span>
-          <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
+          {!messageTyping && (
+            <>
+              <span className="last-message-user-name">{lastMessage.author.firstName}: </span>
+              <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
+            </>
+          )}
+          <MessageTyping websocketPromise={websocket} setTyping={setMessageTyping}/>
         </div>
       </div>
       <div className="search-item-right-part">

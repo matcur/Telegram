@@ -1,25 +1,26 @@
 ﻿import {User} from "../../models";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {useArray} from "../../hooks/useArray";
 import {useEffect, useState} from "react";
+import {nullChatWebsocket} from "../../nullables";
 
 type Props = {
-  websocket: ChatWebsocket
-  setHasTyping(value: boolean): void
+  websocketPromise: ChatWebsocket | Promise<ChatWebsocket>
+  setTyping(value: boolean): void
 }
 
 export const showTypingTime = 500
 
 export const typingThrottleTime = showTypingTime - 100
 
-export const MessageTyping = ({websocket, setHasTyping}: Props) => {
+export const MessageTyping = ({websocketPromise, setTyping}: Props) => {
+  const [websocket, setWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
   const [users, setUsers] = useState<User[]>([])
   const displayedUsers = users
     .sort((a, b) => a.firstName > b.firstName ? 1 : -1)
     .slice(0, 3)
   
   const onUserCountChange = (users: User[]) => {
-    setHasTyping(!users.length)
+    setTyping(Boolean(users.length))
     return users
   }
   
@@ -48,6 +49,14 @@ export const MessageTyping = ({websocket, setHasTyping}: Props) => {
     websocket.onMessageTyping(onTyping)
     return () => websocket.removeMessageTyping(onTyping)
   }, [websocket])
+  
+  useEffect(function awaitWebsocket() {
+    if (websocketPromise instanceof Promise) {
+      websocketPromise.then(setWebsocket)
+    } else {
+      setWebsocket(websocketPromise)
+    }
+  }, [websocketPromise])
   
   if (!displayedUsers.length) {
     return null

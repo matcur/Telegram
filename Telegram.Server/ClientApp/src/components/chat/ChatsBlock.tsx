@@ -8,12 +8,13 @@ import {Burger} from "components/icons/Burger";
 import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
 
 type Props = {
-  onChatSelected: (chat: Chat) => void
   selectedChat: Chat
   chats: Chat[]
+  websockets: ChatWebsockets
+  onChatSelected(chat: Chat): void
 }
 
-export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats}: Props) => {
+export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, websockets}: Props) => {
   const search = useFormInput('')
   const setLeftMenuVisible = useSetLeftMenuVisible()
 
@@ -32,6 +33,7 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats}: Pro
         onChange={search.onChange}
         icon={<Burger onClick={onBurgerClick}/>}/>
       <ChatList
+        websockets={websockets}
         chatsFiltration={filtration}
         selectedChat={selectedChat}
         onChatSelected={onChatSelected}

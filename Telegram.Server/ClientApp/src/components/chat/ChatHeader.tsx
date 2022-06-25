@@ -20,7 +20,7 @@ export const ChatHeader: FC<Props> = ({chat, websocket, onSearchClick}: Props) =
         <div className="chat-name">{chat.name}</div>
         <div className="members-count">
           <span>{splitByThousands(chat.messages.length)} members </span>
-          <MessageTyping websocket={websocket} setHasTyping={() => {}}/>
+          <MessageTyping websocketPromise={websocket} setTyping={() => {}}/>
         </div>
       </div>
       <div className="chat-actions">

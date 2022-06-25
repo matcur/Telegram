@@ -73,6 +73,7 @@ export const Index = () => {
         selectedChat={selectedChat}
         onChatSelected={setSelectedChat}
         chats={chats}
+        websockets={chatWebsockets}
       />}
       {search.type === "messages" && <MessagesSearch
         chat={search.inChat}

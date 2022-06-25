@@ -1,7 +1,7 @@
 import {ChatWebsocket} from "./ChatWebsocket";
 
 export class ChatWebsockets {
-  private items: ChatWebsocket[] = []
+  private items: Record<number, ChatWebsocket> = {}
 
   async get(chatId: number, authorizeToken: string) {
     const chatWebhook = this.items[chatId];
