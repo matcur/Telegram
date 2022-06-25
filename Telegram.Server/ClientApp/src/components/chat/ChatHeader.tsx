@@ -19,7 +19,7 @@ export const ChatHeader: FC<Props> = ({chat, websocket, onSearchClick}: Props) =
       <div className="chat-details">
         <div className="chat-name">{chat.name}</div>
         <div className="members-count">
-          <span>{splitByThousands(chat.messages.length)} members </span>
+          <span>{splitByThousands(chat.members.length)} members </span>
           <MessageInputting websocketPromise={websocket} setInputting={() => {}}/>
         </div>
       </div>
