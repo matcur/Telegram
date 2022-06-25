@@ -1,4 +1,4 @@
-import React, {createRef, FC, forwardRef, RefObject} from 'react'
+import React, {createRef, forwardRef} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 
 type Props = {

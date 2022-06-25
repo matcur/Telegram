@@ -1,7 +1,5 @@
 import {Chat, Message, User} from "models";
 import {ChatWebsocket} from "./app/chat/ChatWebsocket";
-import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
-import {host} from "./api/ApiClient";
 
 export const nullUser: User = {
   id: -1,

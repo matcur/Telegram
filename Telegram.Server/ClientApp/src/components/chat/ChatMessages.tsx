@@ -3,7 +3,6 @@ import {Message} from "models";
 import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
 import {inSameDay} from "../../utils/datetime/inSameDay";
-import {Position} from "../../utils/type";
 
 type Props = {
   messages: Message[]

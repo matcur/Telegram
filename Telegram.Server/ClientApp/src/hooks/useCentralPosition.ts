@@ -1,6 +1,6 @@
 import {ReactElement, useContext, useState} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
-import {Nothing, RemoveLastCentralElement} from "../utils/functions";
+import {RemoveLastCentralElement} from "../utils/functions";
 
 class CentralPosition {
   constructor() {

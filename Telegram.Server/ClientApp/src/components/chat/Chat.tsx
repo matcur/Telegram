@@ -1,23 +1,21 @@
-import React, {FC, ReactElement, useCallback, useEffect, useState} from 'react'
+import React, {FC, useCallback, useEffect, useState} from 'react'
 import {MessageInput} from "components/message/MessageInput";
 import {ChatMessages} from "components/chat/ChatMessages";
 import {useAppDispatch, useAppSelector} from "app/hooks";
-import {Chat as ChatModel, Content, Message} from "models";
+import {Chat as ChatModel, Message} from "models";
 import {LoadingChat} from "./LoadingChat";
 import {ChatHeader} from "components/chat/ChatHeader";
-import {InputEvent, useFormInput} from "hooks/useFormInput";
+import {useFormInput} from "hooks/useFormInput";
 import {textContent} from "utils/textContent";
 import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
-import {addMessages, chatMessages, addPreviousMessages, updateMessage} from "app/slices/authorizationSlice";
+import {addPreviousMessages, chatMessages, updateMessage} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
-import {debounce} from "../../utils/debounce";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {MessageScroll} from "./MessageScroll";
-import {Position} from "../../utils/type";
 import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
 import {MessageReply} from "./MessageReply";

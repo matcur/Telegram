@@ -1,5 +1,5 @@
 import {MessageState} from "app/messageStates/MessageState";
-import {Content, Message} from "models";
+import {Message} from "models";
 import {AnyAction} from "@reduxjs/toolkit";
 import {updateMessage} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";

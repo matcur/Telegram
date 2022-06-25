@@ -1,4 +1,4 @@
-import React, {ReactElement, useContext} from 'react'
+import React from 'react'
 import {LeftMenuUserInfo} from "./LeftMenuUserInfo";
 import {LeftMenuItem} from "./LeftMenuItem";
 import {ReactComponent as PeopleIcon} from "public/svgs/people.svg";
@@ -9,8 +9,6 @@ import {ReactComponent as GearIcon} from "public/svgs/gear.svg";
 import {ReactComponent as MoonIcon} from "public/svgs/moon.svg";
 import {Toggler} from "components/form/Toggler";
 import {NewGroupForm} from "components/forms/NewGroupForm";
-import {UpLayerContext} from "contexts/UpLayerContext";
-import {LeftMenuContext} from "contexts/LeftMenuContext";
 import {SettingsForm} from "../../forms/SettingsForm";
 
 type Props = {

@@ -1,5 +1,4 @@
 import React, {FC} from 'react'
-import {useAppSelector} from "app/hooks";
 import {Search} from "components/search/Search";
 import {useFormInput} from "hooks/useFormInput";
 import {ShortUserInfo} from "components/user/ShortUserInfo";

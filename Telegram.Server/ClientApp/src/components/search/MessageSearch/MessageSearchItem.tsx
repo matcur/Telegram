@@ -1,6 +1,6 @@
-﻿import {Chat, Message} from "../../../models";
+﻿import {Message} from "../../../models";
 import React, {FC} from "react";
-import {nullChat, nullMessage} from "../../../nullables";
+import {nullChat} from "../../../nullables";
 import cat from "../../../public/images/index/cat-3.jpg";
 import {ReactComponent as Community} from "../../../public/svgs/community.svg";
 import {ShortMessageContent} from "../../message/ShortMessageContent";

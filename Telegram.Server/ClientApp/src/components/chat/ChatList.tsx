@@ -1,6 +1,6 @@
-import React, {FC, useEffect} from 'react'
-import {Chat, Message} from "models";
-import { ChatItem } from './ChatItem';
+import React, {FC} from 'react'
+import {Chat} from "models";
+import {ChatItem} from './ChatItem';
 import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
 import {useAppSelector} from "../../app/hooks";
 

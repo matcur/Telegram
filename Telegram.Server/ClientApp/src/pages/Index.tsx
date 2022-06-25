@@ -1,17 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {LeftMenu} from "components/menus/left-menu";
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {Chat} from "components/chat/Chat";
 import {nullChat, nullChatWebsocket} from "nullables";
-import {UpLayerContext} from "contexts/UpLayerContext";
-import { LeftMenuContext } from 'contexts/LeftMenuContext';
-import {useArray} from "../hooks/useArray";
-import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {useAppSelector} from "../app/hooks";
 import {Message} from "../models";
 import {addChats, addMessage, setLastMessage} from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";
-import {host} from "../api/ApiClient";
 import {ChatWebsockets} from "../app/chat/ChatWebsockets";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
 import {ChatWebsocket} from "../app/chat/ChatWebsocket";
@@ -31,7 +25,7 @@ export const Index = () => {
   const chats = currentUser.chats
   const token = useAppSelector(state => state.authorization.token)
   const [chatWebsockets] = useState(() => new ChatWebsockets())
-  const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(() => nullChatWebsocket)
+  const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
   const [search, setSearch] = useState<Search>(() => ({type: "chats"}))
   const dispatch = useDispatch()
 

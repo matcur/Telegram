@@ -1,5 +1,4 @@
 import {Message} from "../../models";
-import imageIcon from "../../public/images/image-icon.png";
 import React from "react";
 import {fullName} from "../../utils/fullName";
 

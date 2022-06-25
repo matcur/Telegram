@@ -1,5 +1,4 @@
 import React from 'react'
-import cat from "public/images/index/cat-3.jpg";
 import {ReactComponent as Caret} from "public/svgs/caret.svg";
 import {useAppSelector} from "../../../app/hooks";
 

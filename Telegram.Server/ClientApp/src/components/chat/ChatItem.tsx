@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useState} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 import {Chat} from "models";
 import {nullMessage} from "nullables";

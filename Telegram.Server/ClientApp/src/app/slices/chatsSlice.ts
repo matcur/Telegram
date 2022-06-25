@@ -1,8 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Chat, Message} from "models";
-import {nullChat} from "nullables";
 import {removeFrom} from "utils/removeFrom";
-import {RootState} from "app/store";
 import {maxId} from "utils/maxId";
 
 type State = {

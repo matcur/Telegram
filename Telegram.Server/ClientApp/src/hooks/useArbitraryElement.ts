@@ -1,7 +1,6 @@
 import {ReactElement, useContext, useState} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
 import {RemoveLastCentralElement} from "../utils/functions";
-import {Position} from "../utils/type";
 
 class ArbitraryPosition {
   constructor() {

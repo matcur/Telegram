@@ -1,6 +1,5 @@
 import {ApiClient} from "./ApiClient";
 import {Message} from "../models";
-import {toFormData} from "../utils/toFormData";
 
 export class MessagesApi {
   private readonly api: ApiClient

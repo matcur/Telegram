@@ -1,4 +1,4 @@
-import React, {FC, RefObject, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import {Position} from "../../utils/type";
 import {useOutsideClick} from "../../hooks/useOutsideClick";
 
