@@ -36,7 +36,7 @@ export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: 
               <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
             </>
           )}
-          <MessageInputting websocketPromise={websocket} setTyping={setMessageTyping}/>
+          <MessageInputting websocketPromise={websocket} setInputting={setMessageTyping}/>
         </div>
       </div>
       <div className="search-item-right-part">

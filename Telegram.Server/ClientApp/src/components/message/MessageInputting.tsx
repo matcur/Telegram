@@ -5,14 +5,14 @@ import {nullChatWebsocket} from "../../nullables";
 
 type Props = {
   websocketPromise: ChatWebsocket | Promise<ChatWebsocket>
-  setTyping(value: boolean): void
+  setInputting(value: boolean): void
 }
 
 export const showTypingTime = 500
 
 export const typingThrottleTime = showTypingTime - 100
 
-export const MessageInputting = ({websocketPromise, setTyping}: Props) => {
+export const MessageInputting = ({websocketPromise, setInputting}: Props) => {
   const [websocket, setWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
   const [users, setUsers] = useState<User[]>([])
   const displayedUsers = users
@@ -20,7 +20,7 @@ export const MessageInputting = ({websocketPromise, setTyping}: Props) => {
     .slice(0, 3)
   
   const onUserCountChange = (users: User[]) => {
-    setTyping(Boolean(users.length))
+    setInputting(Boolean(users.length))
     return users
   }
   
