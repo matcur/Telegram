@@ -1,4 +1,4 @@
-import React, {createRef, FC, ReactElement, useEffect, useState} from 'react'
+import React, {createRef, FC, ReactElement, useCallback, useEffect, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -65,7 +65,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
   const [chatData, setChatData] = useState(chats.item(chatId))
   const centralPosition = useCentralPosition();
   
-  const showDetailMessageForm = (messageText: string, filePaths: string[]) => {
+  const showDetailMessageForm = useCallback((messageText: string, filePaths: string[]) => {
     centralPosition.show(
       <RichMessageForm
         filePaths={filePaths}
@@ -73,20 +73,20 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
         onSend={onDetailSubmit}
       />
     )
-  }
-  const hasContent = () => {
+  }, [textInput])
+  const hasContent = useCallback(() => {
     return textInput.value !== "" || chatData.currentMessage.files.length !== 0
-  }
+  }, [textInput, chatData])
   // TODO think something
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!hasContent()) {
       return
     }
     onDetailSubmit(textInput.value, chatData.currentMessage.files)
     chatData.currentMessage.text = "";
-  }
+  }, [textInput, chatData])
 
-  const onDetailSubmit = (messageText: string, filePaths: string[]) => {
+  const onDetailSubmit = useCallback((messageText: string, filePaths: string[]) => {
     const form = new FormData()
 
     seedForm(form, messageText, filePaths)
@@ -94,10 +94,10 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
 
     centralPosition.hide()
     chatData.currentMessage.text = "";
-  }
+  }, [chatData])
 
   // Todo: use toFormData function
-  const seedForm = (form: FormData, messageText: string, filePaths: string[]) => {
+  const seedForm = useCallback((form: FormData, messageText: string, filePaths: string[]) => {
     form.append('chatId', chatId.toString())
     form.append('authorId', currentUser.id.toString())
     form.append('contentMessages[0].content.type', 'Text')
@@ -107,33 +107,33 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
 
     filePaths.forEach((path, key) => {
       const index = key + 1;
-      
+
       form.append(`contentMessages[${index}].content.type`, 'Image')
       form.append(`contentMessages[${index}].content.value`, path)
     })
-  }
+  }, [reply])
   
-  const loadFiles = async (input: HTMLInputElement) => {
+  const loadFiles = useCallback(async (input: HTMLInputElement) => {
     const loadingFiles = input.files
     if (loadingFiles == null) {
       return
     }
-    
+
     const loadedFiles = await new FilesApi().upload("files", loadingFiles)
     showDetailMessageForm(input.value, loadedFiles)
-  }
+  }, [])
   
-  const onTextChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const onTextChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
     textInput.onChange(e)
     chats.changeText(e.currentTarget.value, chatId)
-  }
+  }, [textInput, chats])
   
   useEffect(() => {
     const chatData = chats.item(chatId)
     
     setChatData(chatData)
     textInput.onChange(chatData.currentMessage.text)
-  }, [chatId])
+  }, [chatId, textInput])
 
   return (
     <form

@@ -1,4 +1,4 @@
-import React, {createRef, FC, RefObject, useEffect, useState} from "react";
+import React, {createRef, FC, RefObject, useCallback, useEffect, useState} from "react";
 import {Chat, Message} from "../../models";
 import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
 
@@ -27,7 +27,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
     const scrollBar = bus.scrollBarRef.current!
     scrollTo(scrollBar.scrollHeight - bottomOffset)
   }
-  const onScroll = () => {
+  const onScroll = useCallback(() => {
     const scroll = bus.scrollBarRef.current
     if (!scroll) {
       return
@@ -47,8 +47,8 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
           scrollToBottom(bottom)
         })
     }
-  }
-  const onMessageAdded = () => {
+  }, [scrollBarRef.current])
+  const onMessageAdded = useCallback(() => {
     const scroll = bus.scrollBarRef.current!
     const topOffset = scroll.scrollTop
     const scrollHeight = scroll.scrollHeight
@@ -57,7 +57,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
     if (diff < (lastMessageHeight + 40)) {
       scrollToBottom()
     }
-  }
+  }, [])
 
   useEffect(() => {
     websocket.onMessageAdded(onMessageAdded)

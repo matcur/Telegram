@@ -52,22 +52,22 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   const [reply, setReply] = useState<Message>()
   
-  const onSubmit = (data: FormData) => {
+  const onSubmit = useCallback((data: FormData) => {
     inputState.save(data)
     setInputState(newMessageState())
     input.onChange('')
     setReply(undefined)
-  }
-  const tryEditMessage = (message: Message) => {
+  }, [input, inputState])
+  const tryEditMessage = useCallback((message: Message) => {
     if (!sameUsers(message.author, currentUser)) {
       return
     }
-    
+
     editMessage(message)
-  }
-  const onMessageRightClick = (message: Message, e: React.MouseEvent<HTMLDivElement>) => {
+  }, [currentUser])
+  const onMessageRightClick = useCallback((message: Message, e: React.MouseEvent<HTMLDivElement>) => {
     arbitraryElement.show(
-      <ArbitraryElement 
+      <ArbitraryElement
         position={{left: e.clientX, top: e.clientY}}
         onOutsideClick={arbitraryElement.hide}
       >
@@ -80,22 +80,22 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
         />
       </ArbitraryElement>
     )
-  }
-  const editMessage = (message: Message) => {
+  }, [])
+  const editMessage = useCallback((message: Message) => {
     input.onChange(textContent(message))
     setInputState(new EditingMessageState(
       message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizeToken)
     ))
-  }
-  const replyTo = (message: Message) => {
+  }, [input, authorizeToken])
+  const replyTo = useCallback((message: Message) => {
     setReply(message)
-  }
-  const onMessageUpdated = (message: Message) => {
+  }, [])
+  const onMessageUpdated = useCallback((message: Message) => {
     dispatch(updateMessage(message))
-  }
-  const onMessageInput = () => {
+  }, [])
+  const onMessageInput = useCallback(() => {
     websocket.emitMessageTyping()
-  }
+  }, [websocket])
 
   useEffect(() => {
     setLoaded(false)

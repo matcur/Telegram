@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from "react";
+import React, {FC, ReactElement, useCallback, useState} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
 import {LeftMenuContext} from "../contexts/LeftMenuContext";
 import {UpLayer} from "../components/up-layer/UpLayer";
@@ -11,12 +11,12 @@ export const UpLayerProvider: FC = ({children}) => {
   const [centralElements, setCentralElements] = useState<ReactElement[]>(() => [])
   const arbitraryElements = useArray<ReactElement>()
 
-  const hideUpLayer = () => {
+  const hideUpLayer = useCallback(() => {
     setLeftMenuVisible(false)
     setCentralElements([])
-  }
+  }, [])
 
-  const addCentralElement = (element: ReactElement) => {
+  const addCentralElement = useCallback((element: ReactElement) => {
     setCentralElements([...centralElements, element])
     setLeftMenuVisible(false)
 
@@ -32,24 +32,24 @@ export const UpLayerProvider: FC = ({children}) => {
         return result;
       })
     }) as RemoveLastCentralElement
-  }
-  const addArbitraryElement = (element: ReactElement) => {
+  }, [centralElements])
+  const addArbitraryElement = useCallback((element: ReactElement) => {
     arbitraryElements.add(element)
-    
+
     return () => arbitraryElements.remove(element)
-  }
-  const removeLastCentralElement = () => {
+  }, [])
+  const removeLastCentralElement = useCallback(() => {
     setCentralElements(elements => {
       const result = [...elements]
       result.splice(result.length - 1, 1)
 
       return result
     })
-  }
-  const onClick = () => {
+  }, [])
+  const onClick = useCallback(() => {
     removeLastCentralElement()
     setLeftMenuVisible(false)
-  }
+  }, [removeLastCentralElement])
   
   return (
     <UpLayerContext.Provider value={{addCentralElement, hide: hideUpLayer, addArbitraryElement}}>

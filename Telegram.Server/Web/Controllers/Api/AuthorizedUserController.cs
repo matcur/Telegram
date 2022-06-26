@@ -42,6 +42,15 @@ namespace Telegram.Server.Web.Controllers.Api
         }
 
         [HttpGet]
+        [Route("api/1.0/authorized-user/chats/{id:int}")]
+        public async Task<IActionResult> Chat([FromRoute]int id)
+        {
+            var result = await _authorizedUserService.Chat(id);
+
+            return Json(result);
+        }
+
+        [HttpGet]
         [Route("api/1.0/authorized-user/contacts")]
         public async Task<IActionResult> Contacts()
         {

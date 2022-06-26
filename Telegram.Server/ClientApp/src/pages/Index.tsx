@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {Chat} from "components/chat/Chat";
 import {nullChat, nullChatWebsocket} from "nullables";
@@ -70,9 +70,9 @@ export const Index = () => {
     dispatch(setLastMessage({chatId: message.chatId, message}))
     dispatch(addMessage({chatId: message.chatId, message}))
   }
-  const searchInChat = (chat: ChatModel) => {
-    setSearch({type: "messages", inChat: chat})
-  }
+  const searchInChat = useCallback(() => {
+    setSearch({type: "messages", inChat: selectedChat})
+  }, [selectedChat])
 
   return (
     <div className="index">
@@ -93,7 +93,7 @@ export const Index = () => {
           <Chat
             chat={selectedChat}
             websocket={chatWebsocket}
-            onMessageSearchClick={() => searchInChat(selectedChat)}
+            onMessageSearchClick={searchInChat}
           />
       }
     </div>

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
-using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
 using Telegram.Server.Core.Mapping;
@@ -66,7 +65,20 @@ namespace Telegram.Server.Core.Services.Controllers
         public Task<List<Chat>> WithMember(int userId, Pagination pagination)
         {
             var query = _chats
-                .DetailChats()
+                .Include(c => c.Members)
+                .ThenInclude(c => c.User)
+                .Include(c => c.Messages)
+                .ThenInclude(m => m.ContentMessages)
+                .ThenInclude(c => c.Content)
+                .Select(c => new Chat
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
+                    IconUrl = c.IconUrl,
+                    Members = c.Members,
+                })
                 .Where(c => c.Members.Any(m => m.UserId == userId))
                 .Skip(pagination.Offset());
             if (pagination.Count() != -1)

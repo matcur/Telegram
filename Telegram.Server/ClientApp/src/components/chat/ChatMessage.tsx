@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, useCallback} from 'react'
 import {Message, User} from "models";
 import {inRowPositionClass} from "utils/inRowPositionClass";
 import {DetailMessageContent} from "components/message/DetailMessageContent";
@@ -19,10 +19,10 @@ export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onD
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
   const isCurrentUser = currentUser.id === currentAuthor.id;
 
-  const onContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onContextMenu = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     onRightClick(message, e)
-  }
+  }, [onRightClick])
 
   return (
     <div

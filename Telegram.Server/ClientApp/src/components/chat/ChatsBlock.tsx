@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, useCallback} from 'react'
 import {Search} from "components/search/Search";
 import {ChatList} from "./ChatList";
 import {Chat} from "models";
@@ -18,14 +18,14 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, webs
   const search = useFormInput('')
   const setLeftMenuVisible = useSetLeftMenuVisible()
 
-  const onBurgerClick = () => {
+  const onBurgerClick = useCallback(() => {
     setLeftMenuVisible(true)
-  }
-  const filtration = (chat: Chat) => {
+  }, [])
+  const filtration = useCallback((chat: Chat) => {
     const value = search.value;
 
     return value === '' || chat.name.includes(value)
-  }
+  }, [search.value])
 
   return (
     <div className="search-block">
