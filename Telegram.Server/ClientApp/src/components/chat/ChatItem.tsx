@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react'
 import cat from "public/images/index/cat-3.jpg";
-import {Chat} from "models";
+import {Chat, User} from "models";
 import {nullMessage} from "nullables";
 import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: Props) => {
-  const [messageTyping, setMessageTyping] = useState(false);
+  const [typingUsers, setTypingUsers] = useState<User[]>([])
   const lastMessage = chat.lastMessage?? nullMessage
   
   return (
@@ -30,13 +30,17 @@ export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: 
           <span>{chat.name}</span>
         </div>
         <div className="message-search">
-          {!messageTyping && (
+          {!typingUsers.length && (
             <>
               <span className="last-message-user-name">{lastMessage.author.firstName}: </span>
               <ShortMessageContent content={lastMessage.contentMessages.map(c => c.content)}/>
             </>
           )}
-          <MessageInputting websocketPromise={websocket} setInputting={setMessageTyping}/>
+          <MessageInputting
+            websocketPromise={websocket}
+            setUsers={setTypingUsers}
+            users={typingUsers}
+          />
         </div>
       </div>
       <div className="search-item-right-part">

@@ -5,24 +5,19 @@ import {nullChatWebsocket} from "../../nullables";
 
 type Props = {
   websocketPromise: ChatWebsocket | Promise<ChatWebsocket>
-  setInputting(value: boolean): void
+  users: User[]
+  setUsers(value: User[] | ((value: User[]) => User[])): void
 }
 
 export const showTypingTime = 500
 
 export const typingThrottleTime = showTypingTime - 100
 
-export const MessageInputting = ({websocketPromise, setInputting}: Props) => {
+export const MessageInputting = ({websocketPromise, users, setUsers}: Props) => {
   const [websocket, setWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
-  const [users, setUsers] = useState<User[]>([])
   const displayedUsers = users
     .sort((a, b) => a.firstName > b.firstName ? 1 : -1)
     .slice(0, 3)
-  
-  const onUserCountChange = (users: User[]) => {
-    setInputting(Boolean(users.length))
-    return users
-  }
   
   const onTyping = (user: User) => {
     setUsers(users => {
@@ -30,7 +25,7 @@ export const MessageInputting = ({websocketPromise, setInputting}: Props) => {
       if (index > -1) {
         users.splice(index, 1)
       }
-      return onUserCountChange([...users, user])
+      return [...users, user]
     })
     setTimeout(() => {
       setUsers(users => {
@@ -40,7 +35,7 @@ export const MessageInputting = ({websocketPromise, setInputting}: Props) => {
           newUsers.splice(index, 1)
         }
         
-        return onUserCountChange(newUsers)
+        return newUsers
       })
     }, showTypingTime)
   }
@@ -57,6 +52,10 @@ export const MessageInputting = ({websocketPromise, setInputting}: Props) => {
       setWebsocket(websocketPromise)
     }
   }, [websocketPromise])
+  
+  useEffect(() => {
+    return () => setUsers([])
+  }, [])
   
   if (!displayedUsers.length) {
     return null
