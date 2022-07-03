@@ -11,18 +11,28 @@ export type User = {
 export type Content = {
   type: 'Text' | 'Image'
   value: string
-  displayOrder: number
+  displayOrder?: number
 }
 
 export type Message = {
   id: number
   author: User
+  authorId: number
   contentMessages: {content: Content}[]
   chatId: number
   creationDate: string
   replyTo?: Message
+  replyToId?: number
   chat?: Chat
 }
+
+export type NewMessage = Pick<
+  Message,
+  'authorId' |
+  'contentMessages' | 
+  'chatId' |
+  'replyToId'
+>
 
 export type Chat = {
   id: number

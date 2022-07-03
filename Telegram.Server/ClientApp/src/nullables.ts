@@ -13,6 +13,7 @@ export const nullUser: User = {
 export const nullMessage: Message = {
   id: -1,
   chatId: -1,
+  authorId: -1,
   contentMessages: [],
   author: nullUser,
   creationDate: '',

@@ -1,3 +1,5 @@
+import {Message} from "../../models";
+
 export interface MessageState {
-  save(data: FormData): void;
+  save(message: Partial<Message>): void;
 }

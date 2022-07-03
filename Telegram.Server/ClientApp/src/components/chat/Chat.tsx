@@ -52,8 +52,8 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   const [reply, setReply] = useState<Message>()
   
-  const onSubmit = useCallback((data: FormData) => {
-    inputState.save(data)
+  const onSubmit = useCallback((message: Partial<Message>) => {
+    inputState.save(message)
     setInputState(newMessageState())
     input.onChange('')
     setReply(undefined)

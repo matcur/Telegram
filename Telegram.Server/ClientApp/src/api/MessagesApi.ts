@@ -10,14 +10,14 @@ export class MessagesApi {
     })
   }
 
-  add(data: FormData) {
+  add(message: Message) {
     return this.api.post<Message>(
       'messages/create',
-      data
+      message
     )
   }
 
-  update(message: FormData) {
+  update(message: Partial<Message>) {
     return this.api.put<Message>(
         'messages',
         message

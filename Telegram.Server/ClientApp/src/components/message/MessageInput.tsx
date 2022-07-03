@@ -9,14 +9,14 @@ import {FileInput} from "../form/FileInput";
 import {FilesApi} from "../../api/FilesApi";
 import {RichMessageForm} from "../forms/RichMessageForm";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
-import {Message} from "../../models";
+import {Content, Message, NewMessage} from "../../models";
 
 type Props = {
   reply?: Message
   replyElement?: ReactElement
   textInput: {value: string, onChange: (e: React.FormEvent<HTMLInputElement> | string) => void}
   chatId: number
-  onSubmitting(data: FormData): void
+  onSubmitting(message: Partial<Message>): void
   onInput(): void
 }
 
@@ -86,15 +86,23 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
     chatData.currentMessage.text = "";
   }, [textInput, chatData])
 
-  const onDetailSubmit = useCallback((messageText: string, filePaths: string[]) => {
-    const form = new FormData()
-
-    seedForm(form, messageText, filePaths)
-    onSubmitting(form)
+  const onDetailSubmit = useCallback((text: string, filePaths: string[]) => {
+    const message: NewMessage = {
+      chatId,
+      authorId: currentUser.id,
+      replyToId: reply && reply.id,
+      contentMessages: [
+        {content: {
+          value: text,
+          type: 'Text',
+        }}, ...filePaths.map(path => ({content: {value: path, type: 'Image'} as Content}))
+      ]
+    }
+    onSubmitting(message)
 
     centralPosition.hide()
     chatData.currentMessage.text = "";
-  }, [chatData])
+  }, [chatData, reply])
 
   // Todo: use toFormData function
   const seedForm = useCallback((form: FormData, messageText: string, filePaths: string[]) => {
