@@ -103,23 +103,6 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
     centralPosition.hide()
     chatData.currentMessage.text = "";
   }, [chatData, reply])
-
-  // Todo: use toFormData function
-  const seedForm = useCallback((form: FormData, messageText: string, filePaths: string[]) => {
-    form.append('chatId', chatId.toString())
-    form.append('authorId', currentUser.id.toString())
-    form.append('contentMessages[0].content.type', 'Text')
-    form.append('contentMessages[0].content.value', messageText)
-
-    reply && form.append('replyToId', reply.id.toString())
-
-    filePaths.forEach((path, key) => {
-      const index = key + 1;
-
-      form.append(`contentMessages[${index}].content.type`, 'Image')
-      form.append(`contentMessages[${index}].content.value`, path)
-    })
-  }, [reply])
   
   const loadFiles = useCallback(async (input: HTMLInputElement) => {
     const loadingFiles = input.files
