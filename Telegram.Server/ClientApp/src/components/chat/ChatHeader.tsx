@@ -4,12 +4,12 @@ import {splitByThousands} from "utils/splitByThousands";
 import {ReactComponent as Magnifier} from "public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "public/svgs/star.svg";
 import {ReactComponent as ThreeDot} from "public/svgs/three-dots.svg";
-import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {MessageInputting} from "../message/MessageInputting";
 
 type Props = {
   chat: Chat
-  websocket: ChatWebsocket
+  websocket: IChatWebsocket
   onSearchClick(): void
 }
 

@@ -1,5 +1,5 @@
 import {Chat, Message, User} from "models";
-import {ChatWebsocket} from "./app/chat/ChatWebsocket";
+import {IChatWebsocket} from "./app/chat/ChatWebsocket";
 
 export const nullUser: User = {
   id: -1,
@@ -27,7 +27,6 @@ export const nullChat: Chat = {
 }
 
 export const nullChatWebsocket = {
-  chatId: -1,
   async start() {},
   onMessageAdded() {},
   removeMessageAdded() {},
@@ -36,4 +35,5 @@ export const nullChatWebsocket = {
   ensureWebhook() {},
   onMessageTyping() {},
   removeMessageTyping() {},
-} as unknown as ChatWebsocket
+  emitMessageTyping() {}
+} as IChatWebsocket

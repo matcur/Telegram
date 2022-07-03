@@ -1,10 +1,10 @@
 ﻿import {User} from "../../models";
-import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {useEffect, useState} from "react";
 import {nullChatWebsocket} from "../../nullables";
 
 type Props = {
-  websocketPromise: ChatWebsocket | Promise<ChatWebsocket>
+  websocketPromise: IChatWebsocket | Promise<IChatWebsocket>
   users: User[]
   setUsers(value: User[] | ((value: User[]) => User[])): void
 }
@@ -14,7 +14,7 @@ export const showTypingTime = 500
 export const typingThrottleTime = showTypingTime - 100
 
 export const MessageInputting = ({websocketPromise, users, setUsers}: Props) => {
-  const [websocket, setWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
+  const [websocket, setWebsocket] = useState<IChatWebsocket>(nullChatWebsocket)
   const displayedUsers = users
     .sort((a, b) => a.firstName > b.firstName ? 1 : -1)
     .slice(0, 3)

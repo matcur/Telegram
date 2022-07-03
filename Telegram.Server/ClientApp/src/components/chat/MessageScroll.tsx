@@ -1,11 +1,11 @@
 import React, {createRef, FC, RefObject, useCallback, useEffect, useState} from "react";
 import {Chat, Message} from "../../models";
-import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 
 type Props = {
   messages: Message[]
   loadPreviousMessages: () => Promise<void>
-  websocket: ChatWebsocket
+  websocket: IChatWebsocket
   chat: Chat
   chatLoaded: boolean
 }

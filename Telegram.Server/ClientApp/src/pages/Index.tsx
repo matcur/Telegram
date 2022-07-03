@@ -8,7 +8,6 @@ import {addChats, addMessage, setLastMessage, unshiftChat} from "../app/slices/a
 import {useDispatch} from "react-redux";
 import {ChatWebsockets} from "../app/chat/ChatWebsockets";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
-import {ChatWebsocket} from "../app/chat/ChatWebsocket";
 import {Chat as ChatModel} from "models";
 import {MessagesSearch} from "../components/search/MessageSearch/MessagesSearch";
 
@@ -28,7 +27,7 @@ export const Index = () => {
   chatsRef.current = chats
   const token = useAppSelector(state => state.authorization.token)
   const [chatWebsockets] = useState(() => new ChatWebsockets())
-  const [chatWebsocket, setChatWebsocket] = useState<ChatWebsocket>(nullChatWebsocket)
+  const [chatWebsocket, setChatWebsocket] = useState(nullChatWebsocket)
   const [search, setSearch] = useState<Search>(() => ({type: "chats"}))
   const [authorizedUser, setAuthorizedUser] = useState(() => new AuthorizedUserApi(token))
   const dispatch = useDispatch()

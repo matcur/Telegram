@@ -5,13 +5,13 @@ import {nullMessage} from "nullables";
 import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
 import {readableDate} from "../../utils/datetime/readableDate";
-import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {MessageInputting} from "../message/MessageInputting";
 
 type Props = {
   chat: Chat
   className?: string
-  websocket: Promise<ChatWebsocket>
+  websocket: Promise<IChatWebsocket>
   onClick(chat: Chat): void
 }
 

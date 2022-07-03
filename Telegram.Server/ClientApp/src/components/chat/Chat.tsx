@@ -14,7 +14,7 @@ import {ChatApi} from "api/ChatApi";
 import {addPreviousMessages, chatMessages, updateMessage} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
-import {ChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {MessageScroll} from "./MessageScroll";
 import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
@@ -23,7 +23,7 @@ import {MessageOptions} from "../message/MessageOptions";
 
 type Props = {
   chat: ChatModel
-  websocket: ChatWebsocket
+  websocket: IChatWebsocket
   onMessageSearchClick(): void
 }
 
