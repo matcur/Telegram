@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Domain.Bots;
 using Telegram.Server.Core.Services.Controllers;
@@ -9,17 +8,14 @@ namespace Telegram.Server.Core.Notifications
 {
     public class ChatEvents
     {
-        private readonly AppDb _db;
-        
         private readonly ChatHubService _chatHub;
         
         private readonly ChatBots _bots;
         
         private readonly ChatService _chats;
 
-        public ChatEvents(AppDb db, ChatHubService chatHub, ChatBots bots, ChatService chats)
+        public ChatEvents(ChatHubService chatHub, ChatBots bots, ChatService chats)
         {
-            _db = db;
             _chatHub = chatHub;
             _bots = bots;
             _chats = chats;
