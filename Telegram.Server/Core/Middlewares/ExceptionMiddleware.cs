@@ -35,6 +35,7 @@ namespace Telegram.Server.Core.Middlewares
             }
             catch (Exception e)
             {
+                response.ContentType = "application/json";
                 response.StatusCode = 500;
                 var body = await new JsonBody(e).AsString();
                 if (_env.IsDevelopment())

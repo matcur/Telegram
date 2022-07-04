@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,7 +16,9 @@ namespace Telegram.Server.Core.Db.Models
 
         public string Description { get; set; }
 
-        public string IconUrl { get; set; }    
+        public string IconUrl { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
 
         [NotMapped]
         public Message LastMessage { get; set; }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -78,6 +79,7 @@ namespace Telegram.Server.Core.Services.Controllers
                     LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
                     IconUrl = c.IconUrl,
                     Members = c.Members,
+                    UpdatedDate = c.UpdatedDate,
                 })
                 .Where(c => c.Members.Any(m => m.UserId == userId))
                 .Skip(pagination.Offset());
@@ -86,7 +88,9 @@ namespace Telegram.Server.Core.Services.Controllers
                 query = query.Take(pagination.Count());
             }
 
-            return query.ToListAsync();
+            return query
+                .OrderByDescending(c => c.UpdatedDate)
+                .ToListAsync();
         }
 
         public Task<List<int>> WithMemberLoadIds(int userId)
@@ -95,6 +99,16 @@ namespace Telegram.Server.Core.Services.Controllers
                 .Where(c => c.Members.Any(m => m.UserId == userId))
                 .Select(c => c.Id)
                 .ToListAsync();
+        }
+
+        public Task Update(int id)
+        {
+            var chat = new Chat {Id = id};
+            chat.UpdatedDate = DateTime.Now;
+
+            _db.Update(chat);
+            
+            return _db.SaveChangesAsync();
         }
     }
 }

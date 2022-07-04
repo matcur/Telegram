@@ -46,6 +46,10 @@ namespace Telegram.Server.Core.Db
             modelBuilder.Entity<Message>()
                 .Property(m => m.CreationDate)
                 .HasDefaultValueSql("NOW()");
+
+            modelBuilder.Entity<Chat>()
+                .Property(m => m.UpdatedDate)
+                .HasDefaultValueSql("NOW()");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
