@@ -1,7 +1,7 @@
 import {ChatWebsocket, IChatWebsocket} from "./ChatWebsocket";
 
 export class ChatWebsockets {
-  private items: Record<number, IChatWebsocket> = {}
+  private items: IChatWebsocket[] = []
 
   async get(chatId: number, authorizeToken: string) {
     const chatWebhook = this.items[chatId];
@@ -10,6 +10,10 @@ export class ChatWebsockets {
     }
     
     return chatWebhook 
+  }
+  
+  forEach(callback: (chat: IChatWebsocket, index: number) => void) {
+    this.items.forEach(callback)
   }
 
   private async startWebhook(chatId: number, authorizeToken: string) {

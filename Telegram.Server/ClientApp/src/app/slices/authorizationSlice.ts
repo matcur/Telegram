@@ -35,6 +35,12 @@ const authorizationSlice = createSlice({
     unshiftChat(state, {payload}: PayloadAction<Chat>) {
       state.currentUser.chats.unshift(payload)
     },
+    changeChatUpdatedDate(state, {payload: {chatId, value}}: PayloadAction<{chatId: number, value: string}>) {
+      const chat = state.currentUser.chats.find(c => c.id === chatId)
+      if (chat) {
+        chat.updatedDate = value
+      }
+    },
     addMessage(state, {payload}: PayloadAction<{chatId: number, message: Message}>) {
       const chat = selectChats(state).find(c => c.id === payload.chatId)
 
@@ -97,6 +103,7 @@ export const {
   updateMessage,
   addPreviousMessages,
   flushToken,
+  changeChatUpdatedDate,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

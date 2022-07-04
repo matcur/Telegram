@@ -4,12 +4,19 @@ import {Chat} from "components/chat/Chat";
 import {nullChat, nullChatWebsocket} from "nullables";
 import {useAppSelector} from "../app/hooks";
 import {Message} from "../models";
-import {addChats, addMessage, setLastMessage, unshiftChat} from "../app/slices/authorizationSlice";
+import {
+  addChats,
+  addMessage,
+  changeChatUpdatedDate,
+  setLastMessage,
+  unshiftChat
+} from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";
 import {ChatWebsockets} from "../app/chat/ChatWebsockets";
 import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
 import {Chat as ChatModel} from "models";
 import {MessagesSearch} from "../components/search/MessageSearch/MessagesSearch";
+import {IChatWebsocket} from "../app/chat/ChatWebsocket";
 
 type Search = {
   type: "chats"
@@ -31,14 +38,35 @@ export const Index = () => {
   const [search, setSearch] = useState<Search>(() => ({type: "chats"}))
   const [authorizedUser, setAuthorizedUser] = useState(() => new AuthorizedUserApi(token))
   const dispatch = useDispatch()
+  
+  useEffect(function updateDateOnMessageAdd() {
+    const updateDateWrap = (websocket: IChatWebsocket) => {
+      return (message: Message) => {
+        dispatch(changeChatUpdatedDate({
+          chatId: websocket.chatId(),
+          value: message.creationDate,
+        }))
+      }
+    }
 
+    const removes: ((m: Message) => void)[] = []
+    chatWebsockets.forEach(w => {
+      const updateDate = updateDateWrap(w)
+      w.onMessageAdded(updateDate)
+      removes.push(updateDate)
+    })
+    
+    return () => chatWebsockets.forEach(
+      (c, i) => c.removeMessageAdded(removes[i])
+    )
+  }, [currentUser.chats])
   useEffect(() => {
     const load = async() => {
       const chatsPromise = authorizedUser.chats({offset: 0, count: -1})
       const chatsIdsPromise = authorizedUser.chatIds();
-      (await chatsIdsPromise).forEach(async id => {
-        const hook = await chatWebsockets.get(id, token)
-        hook.onMessageAdded(receiveMessage)
+      (await chatsIdsPromise).forEach(id => {
+        chatWebsockets.get(id, token)
+          .then(h => h.onMessageAdded(receiveMessage))
       })
       dispatch(addChats(await chatsPromise))
     }

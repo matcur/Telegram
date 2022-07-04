@@ -24,9 +24,11 @@ export const nullChat: Chat = {
   name: '',
   messages: [],
   members: [],
+  updatedDate: '',
 }
 
 export const nullChatWebsocket = {
+  chatId() {return -1},
   async start() {},
   onMessageAdded() {},
   removeMessageAdded() {},

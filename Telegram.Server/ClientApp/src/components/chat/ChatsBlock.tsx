@@ -6,6 +6,7 @@ import {useFormInput} from "hooks/useFormInput";
 import {useSetLeftMenuVisible} from "hooks/useSetLeftMenuVisible";
 import {Burger} from "components/icons/Burger";
 import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
+import {compareObjectDate} from "../../utils/compareObjectDate";
 
 type Props = {
   selectedChat: Chat
@@ -37,7 +38,7 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, webs
         chatsFiltration={filtration}
         selectedChat={selectedChat}
         onChatSelected={onChatSelected}
-        chats={chats}/>
+        chats={[...chats].sort(compareObjectDate("updatedDate"))}/>
     </div>
   )
 }

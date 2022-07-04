@@ -39,6 +39,7 @@ export type Chat = {
   name: string
   messages: Message[]
   members: User[]
+  updatedDate?: string
   lastMessage?: Message
   iconUrl?: string
 }

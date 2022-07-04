@@ -4,6 +4,8 @@ import {typingThrottleTime} from "../../components/message/MessageInputting";
 import {throttle} from "../../utils/throttle";
 
 export interface IChatWebsocket {
+  chatId(): number;
+  
   start(): Promise<void>;
 
   onMessageAdded(callback: (message: Message) => void): void;
@@ -22,60 +24,64 @@ export interface IChatWebsocket {
 }
 
 export class ChatWebsocket implements IChatWebsocket {
-  private webhook: HubConnection | undefined
+  private _webhook: HubConnection | undefined
   
-  private readonly chatId: number;
+  private readonly _chatId: number;
   
-  private readonly authorizeToken: string;
+  private readonly _authorizeToken: string;
   
   constructor(chatId: number, authorizeToken: string) {
-    this.chatId = chatId;
-    this.authorizeToken = authorizeToken;
+    this._chatId = chatId;
+    this._authorizeToken = authorizeToken;
+  }
+  
+  chatId() {
+    return this._chatId
   }
 
   async start() {
     const webhook = new HubConnectionBuilder()
-      .withUrl(`/hubs/chats?chatId=${this.chatId}`, {
-        accessTokenFactory: () => this.authorizeToken,
+      .withUrl(`/hubs/chats?chatId=${this._chatId}`, {
+        accessTokenFactory: () => this._authorizeToken,
       })
       .withAutomaticReconnect()
       .build()
 
-    this.webhook = webhook
+    this._webhook = webhook
     await webhook.start()
   }
 
   onMessageAdded(callback: (message: Message) => void) {
-    this.webhook?.on("MessageAdded", (messageJson: string) => {
+    this._webhook?.on("MessageAdded", (messageJson: string) => {
       callback(JSON.parse(messageJson) as Message)
     })
   }
 
   removeMessageAdded(callback: (message: Message) => void) {
-    this.webhook?.off("MessageAdded", callback)
+    this._webhook?.off("MessageAdded", callback)
   }
 
   onMessageUpdated(callback: (Message: Message) => void) {
-    this.webhook!.on("MessageUpdated", json => {
+    this._webhook!.on("MessageUpdated", json => {
       callback(JSON.parse(json) as Message)
     })
   }
 
   removeMessageUpdated(callback: (message: Message) => void) {
-    this.webhook!.off("MessageUpdated", callback)
+    this._webhook!.off("MessageUpdated", callback)
   }
 
   emitMessageTyping = throttle(() => {
-    this.webhook!.invoke("EmitMessageTyping")
+    this._webhook!.invoke("EmitMessageTyping")
   }, typingThrottleTime)
 
   onMessageTyping(callback: (author: User) => void) {
-    this.webhook!.on("MessageTyping", json => {
+    this._webhook!.on("MessageTyping", json => {
       callback(JSON.parse(json) as User)
     })
   }
 
   removeMessageTyping(callback: (author: User) => void) {
-    this.webhook!.off("MessageTyping", callback)
+    this._webhook!.off("MessageTyping", callback)
   }
 }
