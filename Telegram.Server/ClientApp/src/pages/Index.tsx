@@ -59,7 +59,7 @@ export const Index = () => {
     return () => chatWebsockets.forEach(
       (c, i) => c.removeMessageAdded(removes[i])
     )
-  }, [currentUser.chats])
+  }, [currentUser.chats.length])
   useEffect(() => {
     const load = async() => {
       const chatsPromise = authorizedUser.chats({offset: 0, count: -1})
