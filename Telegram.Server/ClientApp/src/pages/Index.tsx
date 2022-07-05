@@ -38,6 +38,20 @@ export const Index = () => {
   const [search, setSearch] = useState<Search>(() => ({type: "chats"}))
   const [authorizedUser, setAuthorizedUser] = useState(() => new AuthorizedUserApi(token))
   const dispatch = useDispatch()
+
+  const receiveMessage = async (message: Message) => {
+    const chats = chatsRef.current;
+    if (!chats.some(c => c.id === message.chatId)) {
+      const chat = await authorizedUser.chat(message.chatId)
+      dispatch(unshiftChat(chat))
+    }
+
+    dispatch(setLastMessage({chatId: message.chatId, message}))
+    dispatch(addMessage({chatId: message.chatId, message}))
+  }
+  const searchInChat = useCallback(() => {
+    setSearch({type: "messages", inChat: selectedChat})
+  }, [selectedChat])
   
   useEffect(function updateDateOnMessageAdd() {
     const updateDateWrap = (websocket: IChatWebsocket) => {
@@ -86,20 +100,6 @@ export const Index = () => {
   useEffect(() => {
     setAuthorizedUser(new AuthorizedUserApi(token))
   }, [token])
-
-  const receiveMessage = async (message: Message) => {
-    const chats = chatsRef.current;
-    if (!chats.some(c => c.id === message.chatId)) {
-      const chat = await authorizedUser.chat(message.chatId)
-      dispatch(unshiftChat(chat))
-    }
-    
-    dispatch(setLastMessage({chatId: message.chatId, message}))
-    dispatch(addMessage({chatId: message.chatId, message}))
-  }
-  const searchInChat = useCallback(() => {
-    setSearch({type: "messages", inChat: selectedChat})
-  }, [selectedChat])
 
   return (
     <div className="index">
