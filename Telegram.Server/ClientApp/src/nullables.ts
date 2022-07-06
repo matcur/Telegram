@@ -17,6 +17,7 @@ export const nullMessage: Message = {
   contentMessages: [],
   author: nullUser,
   creationDate: '',
+  type: "UserMessage",
 }
 
 export const nullChat: Chat = {

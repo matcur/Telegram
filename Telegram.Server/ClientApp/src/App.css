@@ -1248,12 +1248,12 @@ input:checked + .fuck:before {
     background: rgba(0, 0, 0, 0.5);
     transition: bottom .3s;
 }
-.date-delimiter {
+.middle-message {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.date-value {
+.middle-message-value {
     display: flex;
     align-items: center;
     height: 27px;

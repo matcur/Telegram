@@ -21,6 +21,7 @@ export type Message = {
   contentMessages: {content: Content}[]
   chatId: number
   creationDate: string
+  type: "UserMessage" | "NewUserAdded"
   replyTo?: Message
   replyToId?: number
   chat?: Chat

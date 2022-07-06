@@ -3,6 +3,7 @@ import {Message} from "models";
 import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
 import {inSameDay} from "../../utils/datetime/inSameDay";
+import {MiddleMessage} from "./MiddleMessage";
 
 type Props = {
   messages: Message[]
@@ -23,18 +24,19 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
       const sameDay = inSameDay(new Date(current.creationDate), new Date(next.creationDate))
       const showDate = !sameDay && next !== nullMessage
       const nextDate = new Date(next.creationDate)
-      result.push(<ChatMessage
+      if (current.type === "UserMessage") {
+        result.push(<ChatMessage
           key={key++}
           onDoubleClick={onMessageDoubleClick}
           previousAuthor={previous.author}
           message={current}
           nextAuthor={next.author}
           onRightClick={onMessageRightClick}
-      />)
+        />)
+      }
       if (showDate) {
-        result.push(<div key={key++} className="date-delimiter">
-          <div className="date-value">{`${months[nextDate.getMonth()]} ${nextDate.getDate()}`}</div>
-        </div>)
+        const date = `${months[nextDate.getMonth()]} ${nextDate.getDate()}`
+        result.push(<MiddleMessage>{date}</MiddleMessage>)
       }
     })
 
