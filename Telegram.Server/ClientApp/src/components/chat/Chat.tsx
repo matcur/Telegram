@@ -46,9 +46,9 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
       .then(() => {})
   ), [chat, messages])
 
-  const newMessageState = () => {
+  const newMessageState = useCallback(() => {
     return new NewMessageState(new MessagesApi(authorizeToken))
-  }
+  }, [authorizeToken])
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   const [reply, setReply] = useState<Message>()
   

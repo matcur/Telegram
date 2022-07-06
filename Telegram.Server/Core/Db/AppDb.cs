@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db.Models;
-using Telegram.Server.Core.Domain;
 
 namespace Telegram.Server.Core.Db
 {
@@ -50,6 +49,15 @@ namespace Telegram.Server.Core.Db
             modelBuilder.Entity<Chat>()
                 .Property(m => m.UpdatedDate)
                 .HasDefaultValueSql("NOW()");
+            
+            modelBuilder
+                .Entity<Message>()
+                .Property(c => c.Type)
+                .HasDefaultValue(MessageType.UserMessage)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<MessageType>(v)
+                );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
