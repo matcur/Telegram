@@ -58,6 +58,15 @@ namespace Telegram.Server.Core.Db
                     v => v.ToString(),
                     v => Enum.Parse<MessageType>(v)
                 );
+            
+            modelBuilder
+                .Entity<Chat>()
+                .Property(c => c.Type)
+                .HasDefaultValue(ChatType.Public)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<ChatType>(v)
+                );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

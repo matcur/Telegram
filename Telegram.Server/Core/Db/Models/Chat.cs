@@ -23,6 +23,8 @@ namespace Telegram.Server.Core.Db.Models
         [NotMapped]
         public Message LastMessage { get; set; }
 
+        public ChatType Type { get; set; }
+
         public List<Message> Messages { get; set; } = new List<Message>();
 
         public List<ChatUser> Members { get; set; } = new List<ChatUser>();
