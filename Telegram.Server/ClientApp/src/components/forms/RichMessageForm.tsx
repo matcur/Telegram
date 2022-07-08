@@ -2,6 +2,7 @@ import {TextInput} from "../form/TextInput";
 import {useFormInput} from "../../hooks/useFormInput";
 import {FormButton} from "../form/FormButton";
 import {FC} from "react";
+import {BaseForm} from "./BaseForm";
 
 type Props = {
   filePaths: string[]
@@ -17,7 +18,7 @@ export const RichMessageForm: FC<Props> = ({filePaths, messageText, onSend = () 
   }
   
   return (
-    <div className="form detail-message-form">
+    <BaseForm className="detail-message-form">
       <div className="message-form-files">
         {filePaths.map(file)}
       </div>
@@ -28,6 +29,6 @@ export const RichMessageForm: FC<Props> = ({filePaths, messageText, onSend = () 
           name="Send"
           onClick={() => onSend(input.value, filePaths)}/>
       </div>
-    </div>
+    </BaseForm>
   )
 }

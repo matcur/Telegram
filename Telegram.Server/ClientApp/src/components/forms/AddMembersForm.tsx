@@ -6,6 +6,7 @@ import {FormButton} from "components/form/FormButton";
 import {like} from "utils/like";
 import {User} from "models";
 import {useArray} from "hooks/useArray";
+import {BaseForm} from "./BaseForm";
 
 type Props = {
   onCreateClick: (users: User[]) => void
@@ -31,7 +32,7 @@ export const AddMembersForm: FC<Props> = ({onCreateClick, hide, potentialMembers
   }
 
   return (
-    <div className="form add-members-form">
+    <BaseForm className={"add-members-form"}>
       <div className="add-members-form-header">
         <span className="form-title add-members-title">Add Members</span>
         <span className="invite-friend-count">{selectedFriends.value.length + 1} / 20000</span>
@@ -43,13 +44,13 @@ export const AddMembersForm: FC<Props> = ({onCreateClick, hide, potentialMembers
         {filtered?.map(friendInfo)}
       </div>
       <div className="form-buttons add-members-buttons">
-        <FormButton 
+        <FormButton
           name="Cancel"
           onClick={hide}/>
         <FormButton
           name="Create"
           onClick={() => onCreateClick(selectedFriends.value)}/>
       </div>
-    </div>
+    </BaseForm>
   )
 }

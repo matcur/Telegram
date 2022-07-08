@@ -12,6 +12,7 @@ import {User} from "../../models";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
+import {BaseForm} from "./BaseForm";
 
 type Props = {
   initName?: string
@@ -76,7 +77,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   }
 
   return (
-    <div className="form new-group-form">
+    <BaseForm className="new-group-form">
       <div className="inputs">
         <div className="df aic">
           <ImageInput
@@ -96,6 +97,6 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
           name="Next"
           onClick={onNextClick}/>
       </div>
-    </div>
+    </BaseForm>
   )
 }

@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {changeAvatar} from "../../app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {ReactComponent as CameraIcon} from "public/svgs/camera.svg";
+import {BaseForm} from "./BaseForm";
 
 type Props = {
   hide: () => void
@@ -52,7 +53,7 @@ export const SettingsForm = ({hide}: Props) => {
   ]
   
   return (
-    <div className="form settings-form">
+    <BaseForm className="settings-form">
       <div className="form-header settings-header">
         <span className="form-title settings-title">Settings</span>
         <a 
@@ -90,6 +91,6 @@ export const SettingsForm = ({hide}: Props) => {
       <ul className="clear-menu new-group-form__menu">
         {menuItems.map(menuItem)}
       </ul>
-    </div>
+    </BaseForm>
   )
 }
