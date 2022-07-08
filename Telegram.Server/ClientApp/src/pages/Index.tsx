@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {ChatsBlock} from "components/chat/ChatsBlock";
-import {Chat} from "components/chat/Chat";
+import {ChatOfType} from "components/chat/ChatOfType";
 import {nullChat, nullChatWebsocket} from "nullables";
 import {useAppSelector} from "../app/hooks";
 import {Message} from "../models";
@@ -117,7 +117,7 @@ export const Index = () => {
       {
         selectedChat === nullChat? 
           <></>:
-          <Chat
+          <ChatOfType
             chat={selectedChat}
             websocket={chatWebsocket}
             onMessageSearchClick={searchInChat}

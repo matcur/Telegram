@@ -77,7 +77,6 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
   const hasContent = useCallback(() => {
     return textInput.value !== "" || chatData.currentMessage.files.length !== 0
   }, [textInput, chatData])
-  // TODO think something
   const onSubmit = useCallback(() => {
     if (!hasContent()) {
       return

@@ -1,10 +1,6 @@
 import React, {FC, useCallback, useEffect, useState} from 'react'
-import {MessageInput} from "components/message/MessageInput";
-import {ChatMessages} from "components/chat/ChatMessages";
 import {useAppDispatch, useAppSelector} from "app/hooks";
 import {Chat as ChatModel, Message} from "models";
-import {LoadingChat} from "./LoadingChat";
-import {ChatHeader} from "components/chat/ChatHeader";
 import {useFormInput} from "hooks/useFormInput";
 import {textContent} from "utils/textContent";
 import {NewMessageState} from "app/messageStates/NewMessageState";
@@ -15,11 +11,10 @@ import {addPreviousMessages, chatMessages, updateMessage} from "app/slices/autho
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
 import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {MessageScroll} from "./MessageScroll";
 import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
-import {MessageReply} from "./MessageReply";
 import {MessageOptions} from "../message/MessageOptions";
+import {PublicChat} from "../chats/PublicChat";
 
 type Props = {
   chat: ChatModel
@@ -27,9 +22,9 @@ type Props = {
   onMessageSearchClick(): void
 }
 
-export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) => {
+export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) => {
   const id = chat.id
-  const input = useFormInput()
+  const textInput = useFormInput()
   const dispatch = useAppDispatch()
   const [loaded, setLoaded] = useState(false)
   const messages = useAppSelector(state => chatMessages(state, id))
@@ -55,9 +50,9 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
   const onSubmit = useCallback((message: Partial<Message>) => {
     inputState.save(message)
     setInputState(newMessageState())
-    input.onChange('')
+    textInput.onChange('')
     setReply(undefined)
-  }, [input, inputState])
+  }, [textInput, inputState])
   const tryEditMessage = useCallback((message: Message) => {
     if (!sameUsers(message.author, currentUser)) {
       return
@@ -82,11 +77,11 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
     )
   }, [])
   const editMessage = useCallback((message: Message) => {
-    input.onChange(textContent(message))
+    textInput.onChange(textContent(message))
     setInputState(new EditingMessageState(
       message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizeToken)
     ))
-  }, [input, authorizeToken])
+  }, [textInput, authorizeToken])
   const replyTo = useCallback((message: Message) => {
     setReply(message)
   }, [])
@@ -96,6 +91,8 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
   const onMessageInput = useCallback(() => {
     websocket.emitMessageTyping()
   }, [websocket])
+
+  const onRemoveReplyClick = useCallback(() => setReply(undefined), [])
 
   useEffect(() => {
     setLoaded(false)
@@ -107,12 +104,8 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
       return
     }
 
-    const load = async () => {
-      await loadPreviousMessages()
-      setLoaded(true)
-    }
-
-    load()
+    loadPreviousMessages()
+      .then(() => setLoaded(true))
   }, [chat])
 
   useEffect(() => {
@@ -123,40 +116,26 @@ export const Chat: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) 
     websocket.onMessageUpdated(onMessageUpdated)
     return () => websocket.removeMessageUpdated(onMessageUpdated)
   }, [chat])
-
+  
+  const props = {
+    websocket,
+    chat,
+    onMessageSearchClick,
+    loaded,
+    messages,
+    loadPreviousMessages,
+    tryEditMessage,
+    onMessageRightClick,
+    replyTo,
+    textInput,
+    onMessageInput,
+    onSubmit,
+    id,
+    reply,
+    onRemoveReplyClick,
+  }
+  
   return (
-    <div className="chat">
-      <ChatHeader
-        websocket={websocket}
-        chat={chat}
-        onSearchClick={onMessageSearchClick}
-      />
-      {
-        loaded? (<>
-          <MessageScroll
-            messages={messages}
-            loadPreviousMessages={loadPreviousMessages}
-            websocket={websocket}
-            chat={chat}
-            chatLoaded={loaded}>
-            <ChatMessages
-              onMessageDoubleClick={tryEditMessage}
-              messages={messages}
-              onMessageRightClick={onMessageRightClick}
-              replyTo={replyTo}
-            />
-          </MessageScroll>
-          <MessageInput
-            textInput={input}
-            onInput={onMessageInput}
-            onSubmitting={onSubmit}
-            chatId={id}
-            reply={reply}
-            replyElement={reply && <MessageReply message={reply} onCloseClick={() => setReply(undefined)}/>}
-          />
-        </>)
-        : <LoadingChat/>
-      }
-    </div>
+    <PublicChat {...props}/>
   )
 }
