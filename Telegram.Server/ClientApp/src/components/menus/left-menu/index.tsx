@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {LeftMenuUserInfo} from "./LeftMenuUserInfo";
 import {LeftMenuItem} from "./LeftMenuItem";
 import {ReactComponent as PeopleIcon} from "public/svgs/people.svg";
@@ -16,14 +16,15 @@ type Props = {
 }
 
 export const LeftMenu = ({visible}: Props) => {
-  const items = [
+  const [needNightMode, setNeedNightMode] = useState(false)
+  const [items] = useState(() => [
     {name: 'New Group', icon: <PeopleIcon/>, getCentralElement: (hide: () => void) => <NewGroupForm hide={hide}/>},
     {name: 'New Channel', icon: <SpeakerIcon/>},
     {name: 'Contacts', icon: <PersonIcon/>},
     {name: 'Calls', icon: <PhoneIcon/>},
     {name: 'Settings', icon: <GearIcon/>, getCentralElement: (hide: () => void) => <SettingsForm hide={hide}/>},
-    {name: 'Night Mode', icon: <MoonIcon/>, additionalElement: <Toggler/>},
-  ]
+    {name: 'Night Mode', icon: <MoonIcon/>, additionalElement: <Toggler value={needNightMode} setValue={setNeedNightMode}/>},
+  ])
 
   return (
     <div className={'left-menu' + (visible? ' show-left-menu': '')}>

@@ -196,8 +196,9 @@ body {
 }
 
 .big-avatar {
-    width: 65px;
-    height: 65px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
 }
 
 .df {
@@ -635,6 +636,7 @@ a {
     align-items: center;
     padding: 0 0 0 18px;
     border-bottom: 1px solid #0F1820;
+    cursor: pointer;
 }
 
 .members-count {
@@ -960,17 +962,16 @@ a {
 
 .toggler-container {
     position: relative;
-    background: #276899;
     cursor: pointer;
 }
 
-.checkmark:before {
+.checkmark {
     position: absolute;
     content: '';
     border-radius: 50%;
 }
 
-.small-toggler .checkmark:before {
+.small-toggler .checkmark {
     right: calc( 100% - 12px);
     top: -3px;
     width: 17px;
@@ -981,18 +982,13 @@ a {
     transition: .1s;
 }
 
-.toggler:checked + .checkmark:before {
+.toggler:checked + .checkmark {
     right: -7px;
 }
 
 input {
     width: 30px;
     height: 30px;
-}
-
-input:checked + .fuck:before {
-    position: absolute;
-    content: "1232";
 }
 
 .show-left-menu {
@@ -1044,7 +1040,7 @@ input:checked + .fuck:before {
     padding: 10px 20px 15px 20px;
     margin: auto;
     background: #17212B;
-    border-radius: 3px;
+    border-radius: 6px;
 }
 
 .form-title {
@@ -1215,8 +1211,8 @@ input:checked + .fuck:before {
     cursor: pointer;
 }
 
-.settings-form__item:hover {
-    background: rgba(255, 255, 255, 0.1);
+.form-row-hover:hover {
+    background: #232E3C;
 }
 
 .form-splitter {
@@ -1228,7 +1224,8 @@ input:checked + .fuck:before {
 .settings-form__avatar-input {
     padding: 0 20px 10px 20px;
 }
-.new-avatar {
+.new-avatar,
+.chat-avatar {
     position: relative;
     overflow: hidden;
     border-radius: 50%;
@@ -1306,6 +1303,55 @@ input:checked + .fuck:before {
     padding-left: 7px;
 }
 .message-form__reply {
+    margin-left: 20px;
+}
+.group-form__icon-column {
+    width: 60px;
+}
+.group-form-row {
+    height: 40px;
+    padding: 0 20px;
+    cursor: pointer;
+}
+.middle-size-form {
+    width: 400px;
+}
+/*
+ need variable 
+ padding-left: 20px;
+*/
+.group-form-header {
+    padding-left: 20px;
+}
+.group-avatar-wrapper {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.group-form {
+    padding: 10px 0 15px 0;
+}
+.group-form-header {
+    
+}
+.value-column {
+    height: 100%;
+    width: 100%;
+}
+.group-form-row {
+    display: flex;
+}
+.form-grouping {
+    padding: 10px 0;
+}
+.group-details {
     margin-left: 20px;
 }
 /*# sourceMappingURL=style.css.map */

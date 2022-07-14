@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
+using Telegram.Server.Core.Exceptions;
 
 namespace Telegram.Server.Core.Services.Controllers
 {
@@ -84,6 +85,14 @@ namespace Telegram.Server.Core.Services.Controllers
         public Task<List<User>> Contacts()
         {
             return _users.Take(10).ToListAsync();
+        }
+
+        public async Task EnsureMemberOf(int chatId)
+        {
+            if (!await MemberOf(chatId))
+            {
+                throw new PermissionDenyException($"You are not member of chat.");
+            }
         }
     }
 }

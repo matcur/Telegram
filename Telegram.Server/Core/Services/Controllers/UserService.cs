@@ -32,6 +32,13 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
+        public Task<List<User>> Enumerable(List<int> ids)
+        {
+            return _users
+                .Where(u => ids.Contains(u.Id))
+                .ToListAsync();
+        }
+
         public async Task<User> GetByPhone(string number)
         {
             var user = await _users
@@ -70,6 +77,16 @@ namespace Telegram.Server.Core.Services.Controllers
         public async Task<List<User>> All()
         {
             return await _users.ToListAsync();
+        }
+
+        public Task<List<User>> ChatMembers(int chatId, Pagination pagination)
+        {
+            return _users
+                .OrderByDescending(u => u.Id)
+                .Where(u => u.Chats.Any(c => c.ChatId == chatId))
+                .Take(pagination.Count())
+                .Skip(pagination.Offset())
+                .ToListAsync();
         }
     }
 }

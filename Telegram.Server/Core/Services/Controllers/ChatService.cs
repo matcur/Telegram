@@ -46,15 +46,12 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
-        public async Task AddMember(int chatId, int userId)
+        public async Task AddMembers(int chatId, List<int> memberIds)
         {
-            var memberTask = _users.Get(userId);
-            var chatTask = Get(chatId);
-
-            var member = await memberTask;
-            var chat = await chatTask;
+            var members = await _users.Enumerable(memberIds);
+            var chat = await Get(chatId);
             
-            chat.Members.Add(new ChatUser(member.Id));
+            chat.Members.AddRange(members.Select(m => new ChatUser{UserId = m.Id}));
             await _db.SaveChangesAsync();
         }
 
@@ -76,7 +73,9 @@ namespace Telegram.Server.Core.Services.Controllers
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
-                    LastMessage = c.Messages.OrderByDescending(m => m.Id).FirstOrDefault(),
+                    LastMessage = c.Messages.Where(m => m.Type == MessageType.UserMessage)
+                        .OrderByDescending(m => m.Id)
+                        .FirstOrDefault(),
                     IconUrl = c.IconUrl,
                     Members = c.Members,
                     UpdatedDate = c.UpdatedDate,
@@ -103,12 +102,20 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public Task Update(int id)
         {
-            var chat = new Chat {Id = id};
-            chat.UpdatedDate = DateTime.Now;
-
-            _db.Update(chat);
+            _chats.FromSqlRaw(
+                $"update \"Chats\" set \"UpdatedDate\" = {DateTime.Now} " +
+                $"where \"Id\" = {id}"
+            );
             
             return _db.SaveChangesAsync();
+        }
+
+        private async Task EnsureChatExists(int chatId)
+        {
+            if (await _chats.AnyAsync(c => c.Id == chatId))
+            {
+                throw new NotFoundException($"Chat with id = {chatId} not found.");
+            }
         }
     }
 }

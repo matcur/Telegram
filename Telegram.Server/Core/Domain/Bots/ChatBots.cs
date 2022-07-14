@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,7 +51,8 @@ namespace Telegram.Server.Core.Domain.Bots
 
         private static bool IsCommand(Message message)
         {
-            return message.ContentByType(ContentType.Text).Value.StartsWith("/");
+            return message.Type == MessageType.UserMessage && 
+                   message.ContentByType(ContentType.Text).Value.StartsWith("/");
         }
     }
 }

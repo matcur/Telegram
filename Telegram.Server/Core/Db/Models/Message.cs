@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using Microsoft.EntityFrameworkCore.Storage;
 using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Db.Models
@@ -33,6 +31,8 @@ namespace Telegram.Server.Core.Db.Models
         public Message ReplyTo { get; set; }
 
         public List<ContentMessage> ContentMessages { get; set; } = new List<ContentMessage>();
+
+        public List<UserMessage> AssociatedUsers { get; set; } = new List<UserMessage>();
 
         public MessageType Type { get; set; } = MessageType.UserMessage;
 

@@ -7,4 +7,8 @@ export class UsersApi {
   find(number: string) {
     return this.api.get<User>(`user/phone/${number}`)
   }
+  
+  all() {
+    return this.api.get<User[]>("users")
+  }
 }

@@ -14,6 +14,7 @@ type Props = {
   hide: () => void
 }
 
+// TODO: extract potentialMembers to component
 export const AddMembersForm: FC<Props> = ({onCreateClick, hide, potentialMembers = []}) => {
   const search = useFormInput()
   const selectedFriends = useArray<User>()

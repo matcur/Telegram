@@ -1,5 +1,6 @@
 import {ApiClient} from "./ApiClient";
-import {Message} from "models";
+import {Message, User} from "models";
+import {Pagination} from "../utils/type";
 
 export class ChatApi {
   private readonly id: number
@@ -25,7 +26,14 @@ export class ChatApi {
     )
   }
   
-  addMember(userId: number) {
-    return this.api.post(`chats/${this.id}/new-member/${userId}`)
+  addMembers(memberIds: number[]) {
+    return this.api.post("chat/add-new-members", {
+      memberIds,
+      chatId: this.id,
+    })
+  }
+
+  members(pagination: Pagination) {
+    return this.api.post<User[]>(`chats/${this.id}/members`, {pagination})
   }
 }

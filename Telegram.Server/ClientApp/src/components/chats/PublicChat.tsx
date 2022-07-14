@@ -1,6 +1,6 @@
 ﻿import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {Chat as ChatModel, Message} from "../../models";
-import React from "react";
+import {Chat as ChatModel, Message, User} from "../../models";
+import React, {useCallback} from "react";
 import {MessageInput} from "../message/MessageInput";
 import {ReactComponent as Magnifier} from "../../public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "../../public/svgs/star.svg";
@@ -11,23 +11,32 @@ import {MessageScroll} from "../chat/MessageScroll";
 import {ChatMessages} from "../chat/ChatMessages";
 import {MessageReply} from "../chat/MessageReply";
 import {ChatDetails} from "../chat/ChatDetails";
+import {GroupForm} from "../forms/GroupForm";
+import {useCentralPosition} from "../../hooks/useCentralPosition";
+import {preventClickBubble} from "../../utils/preventClickBubble";
+import {Pagination} from "../../utils/type";
+import {useAppSelector} from "../../app/hooks";
+import {useAwait} from "../../hooks/useAwait";
+import {UsersApi} from "../../api/UsersApi";
+import {ChatApi} from "../../api/ChatApi";
 
 type Props = {
   websocket: IChatWebsocket
   chat: ChatModel
-  onMessageSearchClick: () => void
   loaded: boolean
   messages: Message[]
-  loadPreviousMessages: () => Promise<void>
-  tryEditMessage: (message: Message) => void
-  onMessageRightClick: (message: Message, e: React.MouseEvent<HTMLDivElement>) => void
-  replyTo: (message: Message) => void
   textInput: { onChange: (e: (React.FormEvent<HTMLInputElement> | string)) => void; value: string }
   onMessageInput: () => void
-  onSubmit: (message: Partial<Message>) => void
   id: number
   reply: Message | undefined
-  onRemoveReplyClick: () => void
+  loadPreviousMessages(): Promise<void>
+  onMessageSearchClick(): void
+  tryEditMessage(message: Message): void
+  onMessageRightClick(message: Message, e: React.MouseEvent<HTMLDivElement>): void
+  replyTo(message: Message): void
+  onRemoveReplyClick(): void
+  onSubmit(message: Partial<Message>): void
+  loadMembers(groupId: number, pagination: Pagination): void
 }
 
 export const PublicChat = ({
@@ -45,16 +54,35 @@ export const PublicChat = ({
  onMessageRightClick,
  onSubmit,
  replyTo,
- textInput
+ textInput,
+ loadMembers,
 }: Props) => {
+  const chatInfoElement = useCentralPosition()
+  const potentialMembers = useAwait(() => new UsersApi().all(), [])
+  const authorizeToken = useAppSelector(state => state.authorization.token)
+
+  const addMembers = useCallback((users: User[]) => {
+    return new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
+  }, [authorizeToken])
+  const showChatInfo = useCallback(() => {
+    chatInfoElement.show(<GroupForm
+      onHideClick={chatInfoElement.hide}
+      group={chat}
+      totalMemberCount={1234}
+      loadMembers={loadMembers}
+      potentialMembers={potentialMembers}
+      addMembers={addMembers}
+    />)
+  }, [potentialMembers])
+  
   return (
     <BaseChat loaded={loaded}>
-      <ChatHeader>
+      <ChatHeader onClick={showChatInfo}>
         <ChatDetails
           chat={chat}
           websocket={websocket}
         />
-        <div className="chat-actions">
+        <div className="chat-actions" onClick={preventClickBubble}>
           <button className="clear-btn chat-action-btn" onClick={onMessageSearchClick}>
             <Magnifier/>
           </button>

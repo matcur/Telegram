@@ -5,11 +5,11 @@ import {fullName} from "../../utils/fullName";
 
 type Props = {
   user: User
-  onClick: (user: User) => void
+  onClick?: (user: User) => void
   className?: string
 }
 
-export const ShortUserInfo: FC<Props> = ({className = '', user, onClick}) => {
+export const ShortUserInfo: FC<Props> = ({className = '', user, onClick = () => {}}) => {
   return (
     <div
       onClick={() => onClick(user)}

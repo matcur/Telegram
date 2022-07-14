@@ -24,7 +24,8 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
       const sameDay = inSameDay(new Date(current.creationDate), new Date(next.creationDate))
       const showDate = !sameDay && next !== nullMessage
       const nextDate = new Date(next.creationDate)
-      if (current.type === "UserMessage") {
+      const type = current.type;
+      if (type === "UserMessage") {
         result.push(<ChatMessage
           key={key++}
           onDoubleClick={onMessageDoubleClick}
@@ -33,6 +34,9 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
           nextAuthor={next.author}
           onRightClick={onMessageRightClick}
         />)
+      }
+      if (type === "NewUserAdded") {
+        result.push(<MiddleMessage>Some body ones adde</MiddleMessage>)
       }
       if (showDate) {
         const date = `${months[nextDate.getMonth()]} ${nextDate.getDate()}`

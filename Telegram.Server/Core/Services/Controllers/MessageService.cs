@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
+using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
 using Telegram.Server.Core.Mapping;
@@ -52,43 +52,53 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public async Task<IEnumerable<Message>> Filtered(int chaiId, Pagination pagination)
         {
-            var result = await Details(chaiId)
+            var result = await _messages.Details(chaiId)
                 .Skip(pagination.Offset())
                 .Take(pagination.Count())
-                .Where(m => m.ContentMessages.Any(c => c.Content.Value.Contains(pagination.Text())))
+                .Filtered(pagination)
                 .ToListAsync();
+
             result.Reverse();
 
             return result;
         }
 
-        public Task<Message> AddNewUserMessage(int chatId, User user)
+        public async Task<Message> AddNewUsersMessage(int chatId, List<int> newMemberIds)
         {
-            return Add(new MessageMap(chatId, MessageType.NewUserAdded), user);
+            var map = new Message
+            {
+                ChatId = chatId,
+                Type = MessageType.NewUserAdded,
+                AssociatedUsers = newMemberIds.Select(id => new UserMessage{UserId = id}).ToList()
+            };
+            return await Add(map, await _authorizedUser.Get());
         }
 
-        public async Task<Message> Add(MessageMap map, User author)
+        public Task<Message> Add(MessageMap map, User author)
+        {
+            return Add(new Message(map), author);
+        }
+
+        public async Task<Message> Add(Message message, User author)
         {
             // extract to something
-            if (!await _chats.Exists(map.ChatId))
+            if (!await _chats.Exists(message.ChatId))
             {
-                throw new NotFoundException($"Chat with id {map.ChatId} not found.");
+                throw new NotFoundException($"Chat with id {message.ChatId} not found.");
             }
 
             // too
-            if (!await _authorizedUser.MemberOf(map.ChatId))
+            if (!await _authorizedUser.MemberOf(message.ChatId))
             {
-                throw new PermissionDenyException($"You are not member of chat {map.ChatId}");
+                throw new PermissionDenyException($"You are not member of chat {message.ChatId}");
             }
-
-            var message = new Message(map);
 
             message.Author = author;
             message.AuthorId = message.Author.Id;
-            if (map.ReplyToId.HasValue)
+            if (message.ReplyToId.HasValue)
             {
-                message.ReplyToId = map.ReplyToId;
-                message.ReplyTo = await Get(map.ReplyToId.Value);
+                message.ReplyToId = message.ReplyToId;
+                message.ReplyTo = await Get(message.ReplyToId.Value);
             }
             await _messages.AddAsync(message);
             await _db.SaveChangesAsync();
@@ -119,15 +129,6 @@ namespace Telegram.Server.Core.Services.Controllers
             await _chatEvents.OnMessageUpdated(message);
 
             return message;
-        }
-        
-        private IQueryable<Message> Details(int chatId)
-        {
-            return _messages.Where(m => m.ChatId == chatId)
-                .Include(m => m.ContentMessages)
-                .ThenInclude(c => c.Content)
-                .Include(m => m.Author)
-                .OrderByDescending(m => m.Id);
         }
     }
 }

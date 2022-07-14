@@ -56,8 +56,13 @@ export class ApiClient {
       
       request.send(data);
 
-      request.onload = () => res(JSON.parse(request.response))
-      request.onerror = () => rej('error occurred')
+      request.onload = () => {
+        res(JSON.parse(request.response || "{}"))
+      }
+      request.onerror = (e) => {
+        console.error(`Error occured while sending request to ${resource}`, e)
+        rej()
+      }
     })
   }
   

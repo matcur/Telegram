@@ -1,15 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sherden.AspNet.Filesystem.Files;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core;
-using Telegram.Server.Core.Attributes.Model;
-using Telegram.Server.Core.Db;
-using Telegram.Server.Core.Db.Extensions;
-using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Mapping;
-using Telegram.Server.Core.Notifications;
 using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
@@ -53,13 +46,23 @@ namespace Telegram.Server.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Route("api/1.0/chats/{chatId:int}/new-member/{userId:int}")]
-        public async Task<IActionResult> AddMember([FromRoute]int chatId, [FromRoute]int userId)
+        [Route("api/1.0/chat/add-new-members")]
+        public async Task<IActionResult> AddMembers([FromForm]int chatId, [FromForm]List<int> memberIds)
         {
-            await _chats.AddMember(chatId, userId);
-            await _messages.AddNewUserMessage(chatId, await _users.Get(userId));
+            await _chats.AddMembers(chatId, memberIds);
+            await _messages.AddNewUsersMessage(chatId, memberIds);
 
             return Ok();
+        }
+        
+        [HttpPost]
+        [Route("api/1.0/members/chats/{chatId:int}")]
+        public async Task<IActionResult> Members(
+            [FromQuery]int chatId, [FromForm]PaginationModel pagination)
+        {
+            var members = await _users.ChatMembers(chatId, new Pagination(pagination));
+
+            return Json(members);
         }
     }
 }

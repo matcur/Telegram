@@ -87,6 +87,12 @@ const authorizationSlice = createSlice({
       if (i + 1 === messages.length) {
         chat.lastMessage = message
       }
+    },
+    addChatMembers(state, {payload: {chatId, members}}: PayloadAction<{chatId: number, members: User[]}>) {
+      const chat = state.currentUser.chats.find(c => c.id === chatId)
+      if (!chat) return
+      
+      chat.members.push(...members)
     }
   }
 })
@@ -104,6 +110,7 @@ export const {
   addPreviousMessages,
   flushToken,
   changeChatUpdatedDate,
+  addChatMembers,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

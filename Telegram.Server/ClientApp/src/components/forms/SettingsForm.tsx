@@ -18,6 +18,15 @@ export const SettingsForm = ({hide}: Props) => {
   const files = useFormFiles()
   const avatarRef = useRef<HTMLImageElement>(null)
   const dispatch = useAppDispatch()
+  const [menuItems] = useState(() => [
+    {name: 'Edit profile'},
+    {name: 'Notifications'},
+    {name: 'Privacy and Security'},
+    {name: 'Chat Settings'},
+    {name: 'Folders'},
+    {name: 'Advanced'},
+    {name: 'Language'},
+  ])
   
   const loadImage = async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
@@ -30,7 +39,7 @@ export const SettingsForm = ({hide}: Props) => {
   }
   const menuItem = (item: {name: string}) => {
     return (
-      <li className="settings-form__item">
+      <li className="settings-form__item form-row-hover">
         {item.name}
       </li>
     )
@@ -41,16 +50,6 @@ export const SettingsForm = ({hide}: Props) => {
       current.click()
     }
   }
-  
-  const menuItems: {name: string}[] = [
-    {name: 'Edit profile'},
-    {name: 'Notifications'},
-    {name: 'Privacy and Security'},
-    {name: 'Chat Settings'},
-    {name: 'Folders'},
-    {name: 'Advanced'},
-    {name: 'Language'},
-  ]
   
   return (
     <BaseForm className="settings-form">

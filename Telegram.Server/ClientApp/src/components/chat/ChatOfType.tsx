@@ -7,7 +7,7 @@ import {NewMessageState} from "app/messageStates/NewMessageState";
 import {MessageState} from "app/messageStates/MessageState";
 import {EditingMessageState} from "app/messageStates/EditingMessageState";
 import {ChatApi} from "api/ChatApi";
-import {addPreviousMessages, chatMessages, updateMessage} from "app/slices/authorizationSlice";
+import {addChatMembers, addPreviousMessages, chatMessages, updateMessage} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
 import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
@@ -15,6 +15,7 @@ import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
 import {MessageOptions} from "../message/MessageOptions";
 import {PublicChat} from "../chats/PublicChat";
+import {Pagination} from "../../utils/type";
 
 type Props = {
   chat: ChatModel
@@ -93,6 +94,12 @@ export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: P
   }, [websocket])
 
   const onRemoveReplyClick = useCallback(() => setReply(undefined), [])
+  const loadMembers = useCallback(async (chatId: number, pagination: Pagination) => {
+    const members = await new ChatApi(chatId, authorizeToken)
+      .members(pagination)
+    
+    dispatch(addChatMembers({chatId, members}))
+  }, [authorizeToken])
 
   useEffect(() => {
     setLoaded(false)
@@ -136,6 +143,9 @@ export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: P
   }
   
   return (
-    <PublicChat {...props}/>
+    <PublicChat 
+      {...props}
+      loadMembers={loadMembers}
+    />
   )
 }
