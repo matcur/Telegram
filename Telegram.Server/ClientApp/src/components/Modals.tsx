@@ -18,10 +18,13 @@ export const Modals: FC<Props> = ({children}) => {
     }))
   }
   const remove = useCallback((key: string) => {
-    setModals(modals => ({
-      ...modals,
-      [key]: undefined,
-    }))
+    setModals(modals => {
+      const newModals = {...modals}
+      
+      delete newModals[key]
+      
+      return newModals
+    })
   }, [])
   
   return (
