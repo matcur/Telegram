@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from 'react'
+import React, {FC, useContext, useEffect, useRef, useState} from 'react'
 import {FormButton} from "components/form/FormButton";
 import {ImageInput} from "components/form/ImageInput";
 import {TextInput} from "components/form/TextInput";
@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
+import {Modal} from "../Modal";
 
 type Props = {
   initName?: string
@@ -32,6 +33,10 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const dispatch = useAppDispatch()
   const token = useAppSelector(state => state.authorization.token)
   const [potentialMembers, setPotentialMembers] = useState<User[]>([])
+  const [futureMembers, setFutureMembers] = useState<User[]>([])
+  const membersRef = useRef<User[]>([])
+  const [showAddMembersForm, setShowAddMembersForm] = useState(false)
+  membersRef.current = futureMembers
   
   useEffect(() => {
     new AuthorizedUserApi(token).contacts()
@@ -49,26 +54,43 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     }
     dispatch(addChat(await new ChatsApi().add(chat)))
   }
-  const onCreate = async (members: User[]) => {
-    await createChat(members)
+  const onCreate = async () => {
+    await createChat(membersRef.current)
     upLayer.hide()
   }
   const loadImage = async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
     setIcon(urls[0])
   }
-  const showNextStep = () => {
-    form.show(<AddMembersForm
-      onCreateClick={onCreate}
-      hide={form.hide}
-      potentialMembers={potentialMembers}
-    />)
+  const addMembersModal = () => {
+    const footer = (
+      <div className="form-buttons add-members-buttons">
+        <FormButton
+          name="Cancel"
+          onClick={() => setShowAddMembersForm(false)}/>
+        <FormButton
+          name="Create"
+          onClick={onCreate}
+          disabled={futureMembers.length === 0}
+        />
+      </div>
+    )
+    return (
+      <Modal key={"new_members_form"}>
+        <AddMembersForm
+          potentialMembers={potentialMembers}
+          footer={footer}
+          selected={futureMembers}
+          setSelected={setFutureMembers}
+        />
+      </Modal>
+    )
   }
   const formValid = () => name !== ''
   const onNextClick = () => {
     setNextClicked(true)
     if (formValid()) {
-      showNextStep()
+      setShowAddMembersForm(true)
     }
   }
   const onNameChange = (e: InputEvent) => {
@@ -78,6 +100,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
 
   return (
     <BaseForm className="new-group-form">
+      {showAddMembersForm && addMembersModal()}
       <div className="inputs">
         <div className="df aic">
           <ImageInput

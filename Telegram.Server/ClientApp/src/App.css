@@ -1249,6 +1249,7 @@ input {
     width: 100%;
     display: flex;
     justify-content: center;
+    padding: 8px 0;
 }
 .middle-message-value {
     display: flex;
@@ -1353,5 +1354,24 @@ input {
 }
 .group-details {
     margin-left: 20px;
+}
+.modals {
+    position: absolute;
+    z-index: -100;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0);
+    top: 0;
+    left: 0;
+}
+.opened-modals {
+    background: rgba(0, 0, 0, .3);
+    z-index: 1000;
+}
+.form-btn:disabled {
+    cursor: not-allowed;
+    color: rgba(99, 150, 203, .3);
 }
 /*# sourceMappingURL=style.css.map */

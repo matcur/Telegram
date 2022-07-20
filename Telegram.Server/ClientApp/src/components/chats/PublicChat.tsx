@@ -62,7 +62,7 @@ export const PublicChat = ({
   const authorizeToken = useAppSelector(state => state.authorization.token)
 
   const addMembers = useCallback((users: User[]) => {
-    return new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
+    return users.length && new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
   }, [authorizeToken])
   const showChatInfo = useCallback(() => {
     chatInfoElement.show(<GroupForm

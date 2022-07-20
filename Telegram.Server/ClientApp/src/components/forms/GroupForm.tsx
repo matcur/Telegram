@@ -1,5 +1,5 @@
 ﻿import {BaseForm} from "./BaseForm";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useRef, useState} from "react";
 import {Nothing} from "../../utils/functions";
 import {Chat, User} from "../../models";
 import {Toggler} from "../form/Toggler";
@@ -8,6 +8,7 @@ import {Pagination} from "../../utils/type";
 import {ShortUserInfo} from "../user/ShortUserInfo";
 import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {AddMembersForm} from "./AddMembersForm";
+import {FormButton} from "../form/FormButton";
 
 type Props = {
   group: Chat
@@ -25,6 +26,9 @@ export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, ad
     () => setNeedNotify(value => !value),
     []
   )
+  const [futureMembers, setFutureMembers] = useState<User[]>([])
+  const membersRef = useRef<User[]>([])
+  membersRef.current = futureMembers
   const loadNextMembers = useCallback(() => {
     const memberCount = group.members.length;
     if (totalMemberCount === memberCount) return
@@ -32,11 +36,22 @@ export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, ad
     loadMembers(group.id, {offset: memberCount, count: 30})
   }, [])
   const showAddNewMembersForm = useCallback(() => {
+    const footer = (
+      <div className="form-buttons add-members-buttons">
+        <FormButton
+          name="Cancel"
+          onClick={addMembersForm.hide}/>
+        <FormButton
+          name="Add"
+          onClick={() => addMembers(membersRef.current)}/>
+      </div>
+    )
     addMembersForm.show(
       <AddMembersForm
-        onCreateClick={addMembers}
-        hide={addMembersForm.hide}
         potentialMembers={potentialMembers}
+        footer={footer}
+        setSelected={setFutureMembers}
+        selected={futureMembers}
       />
     )
   }, [])

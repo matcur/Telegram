@@ -12,6 +12,7 @@ class CentralPosition {
   internalHide() {}
 }
 
+// use inside Modal
 export const useCentralPosition: () => ({show: (element: ReactElement) => void, hide: () => void}) = () => {
   const upLayer = useContext(UpLayerContext)
   const [centralPosition] = useState(() => new CentralPosition())
