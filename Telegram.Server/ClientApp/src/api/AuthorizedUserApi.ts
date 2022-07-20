@@ -1,6 +1,8 @@
 import {ApiClient} from "api/ApiClient";
 import {Chat, User} from "models";
 import {Pagination} from "../utils/type";
+import {Omit} from "react-redux";
+import {toFormData} from "../utils/toFormData";
 
 export class AuthorizedUserApi {
   readonly api: ApiClient
@@ -33,5 +35,9 @@ export class AuthorizedUserApi {
   
   contacts() {
     return this.api.get<User[]>('authorized-user/contacts')
+  }
+
+  addChat(chat: Omit<Chat, 'id' | 'messages'>) {
+    return this.api.post<Chat>('authorized-user/chats/add', toFormData(chat))
   }
 }

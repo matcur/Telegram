@@ -63,7 +63,7 @@ namespace Telegram.Server.Core.Services.Controllers
             return result;
         }
 
-        public async Task<Message> AddNewUsersMessage(int chatId, List<int> newMemberIds)
+        public async Task<Message> AddNewUsersMessage(int chatId, IEnumerable<int> newMemberIds)
         {
             var map = new Message
             {

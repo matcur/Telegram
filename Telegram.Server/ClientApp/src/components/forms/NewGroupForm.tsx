@@ -6,11 +6,9 @@ import {InputEvent} from "hooks/useFormInput";
 import {UpLayerContext} from "contexts/UpLayerContext";
 import {AddMembersForm} from "components/forms/AddMembersForm";
 import {useFormFiles} from "../../hooks/useFormFiles";
-import {ChatsApi} from "../../api/ChatsApi";
 import {addChat} from "../../app/slices/authorizationSlice";
 import {User} from "../../models";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
 import {Modal} from "../Modal";
@@ -28,7 +26,6 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const [nameEntered, setNameEntered] = useState(false)
   const [icon, setIcon] = useState(initIcon)
   const [nextClicked, setNextClicked] = useState(false)
-  const form = useCentralPosition()
   const files = useFormFiles()
   const dispatch = useAppDispatch()
   const token = useAppSelector(state => state.authorization.token)
@@ -52,7 +49,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
         ...members
       ]
     }
-    dispatch(addChat(await new ChatsApi().add(chat)))
+    dispatch(addChat(await new AuthorizedUserApi(token).addChat(chat)))
   }
   const onCreate = async () => {
     await createChat(membersRef.current)

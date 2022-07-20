@@ -7,6 +7,7 @@ using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
+using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Services.Controllers
 {
@@ -93,6 +94,11 @@ namespace Telegram.Server.Core.Services.Controllers
             {
                 throw new PermissionDenyException($"You are not member of chat.");
             }
+        }
+
+        public Task<Chat> AddChat(ChatMap map)
+        {
+            return _chatService.Add(map);
         }
     }
 }

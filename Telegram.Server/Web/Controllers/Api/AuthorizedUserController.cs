@@ -1,7 +1,9 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Server.Core;
+using Telegram.Server.Core.Mapping;
 using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
@@ -10,10 +12,13 @@ namespace Telegram.Server.Web.Controllers.Api
     public class AuthorizedUserController : Controller
     {
         private readonly AuthorizedUserService _authorizedUserService;
+        
+        private readonly MessageService _messages;
 
-        public AuthorizedUserController(AuthorizedUserService authorizedUserService)
+        public AuthorizedUserController(AuthorizedUserService authorizedUserService, MessageService messages)
         {
             _authorizedUserService = authorizedUserService;
+            _messages = messages;
         }
 
         [HttpGet]
@@ -64,6 +69,20 @@ namespace Telegram.Server.Web.Controllers.Api
             _authorizedUserService.ChangeAvatar(uri);
 
             return Ok();
+        }
+        
+        [HttpPost]
+        [Route("api/1.0/authorized-user/chats/add")]
+        [Authorize]
+        public async Task<IActionResult> AddChat([FromForm]ChatMap map)
+        {
+            var chat = await _authorizedUserService.AddChat(map);
+            await _messages.AddNewUsersMessage(
+                chat.Id,
+                chat.Members.Select(m => m.UserId)
+            );
+            
+            return Json(chat);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
-        public async Task<Chat> Create(ChatMap map)
+        public async Task<Chat> Add(ChatMap map)
         {
             var chat = new Chat(map);
             

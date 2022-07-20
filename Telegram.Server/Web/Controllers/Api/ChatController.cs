@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Server.Core;
-using Telegram.Server.Core.Mapping;
 using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
@@ -36,13 +35,6 @@ namespace Telegram.Server.Web.Controllers.Api
             var result = await _messages.Filtered(id, new Pagination(pagination));
 
             return Json(result);
-        }
-        
-        [HttpPost]
-        [Route("api/1.0/chats/create")]
-        public async Task<IActionResult> Create([FromForm]ChatMap map)
-        {
-            return Json(await _chats.Create(map));
         }
 
         [HttpPost]
