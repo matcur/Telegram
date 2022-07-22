@@ -1,5 +1,6 @@
+import {Modal} from 'components/Modal';
 import React, {FC, ReactElement} from 'react'
-import {useCentralPosition} from "../../../hooks/useCentralPosition";
+import {useFlag} from "../../../hooks/useFlag";
 
 type Props = {
   name: string
@@ -9,15 +10,15 @@ type Props = {
 }
 
 export const LeftMenuItem: FC<Props> = ({name, icon, additionalElement, getCentralElement}: Props) => {
-  const centralPosition = useCentralPosition()
-  const onClick = () => {
-    getCentralElement && centralPosition.show(getCentralElement(centralPosition.hide))
-  }
+  const [modalVisible, showModal, hideModal] = useFlag(false)
   
   return (
     <div
       className="left-menu-option"
-      onClick={onClick}>
+      onClick={showModal}>
+      {modalVisible && getCentralElement && (
+        <Modal name={`LeftMenuItem_${name}`}>{getCentralElement(hideModal)}</Modal>
+      )}
       {icon}
       <div className="option-name">{name}</div>
       {additionalElement}

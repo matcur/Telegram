@@ -8,8 +8,9 @@ import {useAppSelector} from "../../app/hooks";
 import {FileInput} from "../form/FileInput";
 import {FilesApi} from "../../api/FilesApi";
 import {RichMessageForm} from "../forms/RichMessageForm";
-import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {Content, Message, NewMessage} from "../../models";
+import {useFlag} from "../../hooks/useFlag";
+import {Modal} from "../Modal";
 
 type Props = {
   reply?: Message
@@ -59,20 +60,18 @@ const chats = {
 }
 
 export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, textInput, chatId, onInput}: Props) => {
+  const [detailMessageVisible, showDetailMessage, hideDetailMessage] = useFlag(false)
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
   const form = createRef<HTMLFormElement>()
   const [chatData, setChatData] = useState(chats.item(chatId))
-  const centralPosition = useCentralPosition();
+  const [modalData, setModalData] = useState(() => (
+    {messageText: "", filePaths: [] as string[]}
+  ))
   
   const showDetailMessageForm = useCallback((messageText: string, filePaths: string[]) => {
-    centralPosition.show(
-      <RichMessageForm
-        filePaths={filePaths}
-        messageText={textInput.value}
-        onSend={onDetailSubmit}
-      />
-    )
+    setModalData({messageText: textInput.value, filePaths})
+    showDetailMessage()
   }, [textInput])
   const hasContent = useCallback(() => {
     return textInput.value !== "" || chatData.currentMessage.files.length !== 0
@@ -99,13 +98,14 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
     }
     onSubmitting(message)
 
-    centralPosition.hide()
+    hideDetailMessage()
+    setModalData({messageText: "", filePaths: []})
     chatData.currentMessage.text = "";
   }, [chatData, reply])
   
   const loadFiles = useCallback(async (input: HTMLInputElement) => {
     const loadingFiles = input.files
-    if (loadingFiles == null) {
+    if (!loadingFiles) {
       return
     }
 
@@ -130,6 +130,13 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
       className="message-form"
       onSubmit={handleSubmit(onSubmit)}
       ref={form}>
+      {detailMessageVisible && <Modal name="MessageInputRichMessageForm">
+        <RichMessageForm
+          filePaths={modalData.filePaths}
+          messageText={modalData.messageText}
+          onSend={onDetailSubmit}
+        />
+      </Modal>}
       <div className="message-form__reply">
         {replyElement}
       </div>

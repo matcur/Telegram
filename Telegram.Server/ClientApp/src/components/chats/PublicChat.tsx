@@ -12,13 +12,14 @@ import {ChatMessages} from "../chat/ChatMessages";
 import {MessageReply} from "../chat/MessageReply";
 import {ChatDetails} from "../chat/ChatDetails";
 import {GroupForm} from "../forms/GroupForm";
-import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {preventClickBubble} from "../../utils/preventClickBubble";
 import {Pagination} from "../../utils/type";
 import {useAppSelector} from "../../app/hooks";
 import {useAwait} from "../../hooks/useAwait";
 import {UsersApi} from "../../api/UsersApi";
 import {ChatApi} from "../../api/ChatApi";
+import {useFlag} from "../../hooks/useFlag";
+import {Modal} from "../Modal";
 
 type Props = {
   websocket: IChatWebsocket
@@ -57,27 +58,27 @@ export const PublicChat = ({
  textInput,
  loadMembers,
 }: Props) => {
-  const chatInfoElement = useCentralPosition()
+  const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
   const potentialMembers = useAwait(() => new UsersApi().all(), [])
   const authorizeToken = useAppSelector(state => state.authorization.token)
 
   const addMembers = useCallback((users: User[]) => {
     return users.length && new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
   }, [authorizeToken])
-  const showChatInfo = useCallback(() => {
-    chatInfoElement.show(<GroupForm
-      onHideClick={chatInfoElement.hide}
-      group={chat}
-      totalMemberCount={1234}
-      loadMembers={loadMembers}
-      potentialMembers={potentialMembers}
-      addMembers={addMembers}
-    />)
-  }, [potentialMembers])
   
   return (
     <BaseChat loaded={loaded}>
-      <ChatHeader onClick={showChatInfo}>
+      {groupFormVisible && <Modal name="PublicChatGroupForm">
+        <GroupForm
+          onHideClick={hideGroupForm}
+          group={chat}
+          totalMemberCount={1234}
+          loadMembers={loadMembers}
+          potentialMembers={potentialMembers}
+          addMembers={addMembers}
+        />
+      </Modal>}
+      <ChatHeader onClick={showGroupForm}>
         <ChatDetails
           chat={chat}
           websocket={websocket}
