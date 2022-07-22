@@ -6,9 +6,10 @@ import {Toggler} from "../form/Toggler";
 import {InfiniteScroll} from "../lists/InfiniteScroll";
 import {Pagination} from "../../utils/type";
 import {ShortUserInfo} from "../user/ShortUserInfo";
-import {useCentralPosition} from "../../hooks/useCentralPosition";
 import {AddMembersForm} from "./AddMembersForm";
 import {FormButton} from "../form/FormButton";
+import {useFlag} from "../../hooks/useFlag";
+import {Modal} from "../Modal";
 
 type Props = {
   group: Chat
@@ -20,8 +21,8 @@ type Props = {
 }
 
 export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, addMembers, potentialMembers}: Props) => {
+  const [addMembersVisible, showAddMembers, hideAddMembers] = useFlag(false)
   const [needNotify, setNeedNotify] = useState(false)
-  const addMembersForm = useCentralPosition()
   const toggleNotify = useCallback(
     () => setNeedNotify(value => !value),
     []
@@ -35,29 +36,32 @@ export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, ad
     
     loadMembers(group.id, {offset: memberCount, count: 30})
   }, [])
-  const showAddNewMembersForm = useCallback(() => {
+  const addMembersForm = () => {
     const footer = (
       <div className="form-buttons add-members-buttons">
         <FormButton
           name="Cancel"
-          onClick={addMembersForm.hide}/>
+          onClick={hideAddMembers}/>
         <FormButton
           name="Add"
           onClick={() => addMembers(membersRef.current)}/>
       </div>
     )
-    addMembersForm.show(
-      <AddMembersForm
-        potentialMembers={potentialMembers}
-        footer={footer}
-        setSelected={setFutureMembers}
-        selected={futureMembers}
-      />
+    return (
+      <Modal name="GroupFormAddMembers">
+        <AddMembersForm
+          potentialMembers={potentialMembers}
+          footer={footer}
+          setSelected={setFutureMembers}
+          selected={futureMembers}
+        />
+      </Modal>
     )
-  }, [])
+  }
   
   return (
     <BaseForm className="group-form middle-size-form">
+      {addMembersVisible && addMembersForm()}
       <div className="form-header group-form-header">
         <div className="form-title">Group Info</div>
         <a
@@ -83,7 +87,7 @@ export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, ad
         </div>
       </div>
       <div className="form-splitter"/>
-      <a onClick={showAddNewMembersForm} className="add-new-members">
+      <a onClick={showAddMembers} className="add-new-members">
         Add new members
       </a>
       <InfiniteScroll

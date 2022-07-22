@@ -2,17 +2,17 @@
 import {ModalsContext} from "./Modals";
 
 type Props = {
-  key: string
+  name: string
 }
 
-export const Modal: FC<Props> = ({children, key}) => {
+export const Modal: FC<Props> = ({children, name}) => {
   const modalsContext = useContext(ModalsContext)
   
   useEffect(() => {
-    modalsContext.insert(children, key)
+    modalsContext.insert(<div className="modal">{children}</div>, name)
   }, [children])
   useEffect(() => {
-    return () => modalsContext.remove(key)
+    return () => modalsContext.remove(name)
   }, [])
   
   return null

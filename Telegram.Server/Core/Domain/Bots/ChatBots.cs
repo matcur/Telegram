@@ -51,8 +51,9 @@ namespace Telegram.Server.Core.Domain.Bots
 
         private static bool IsCommand(Message message)
         {
-            return message.Type == MessageType.UserMessage && 
-                   message.ContentByType(ContentType.Text).Value.StartsWith("/");
+            return message.Type == MessageType.UserMessage &&
+                   (message.ContentByType(ContentType.Text)?.Value?.StartsWith("/")
+                    ?? false);
         }
     }
 }
