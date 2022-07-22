@@ -18,12 +18,17 @@ namespace Telegram.Server.Core.Db.Models
 
         public string IconUrl { get; set; }
 
+        [ForeignKey(nameof(Creator))]
+        public int CreatorId { get; set; }
+
         public DateTime UpdatedDate { get; set; }
 
         [NotMapped]
         public Message LastMessage { get; set; }
 
         public ChatType Type { get; set; }
+
+        public User Creator { get; set; }
 
         public List<Message> Messages { get; set; } = new List<Message>();
 

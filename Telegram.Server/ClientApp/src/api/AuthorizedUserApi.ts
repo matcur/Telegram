@@ -37,7 +37,7 @@ export class AuthorizedUserApi {
     return this.api.get<User[]>('authorized-user/contacts')
   }
 
-  addChat(chat: Omit<Chat, 'id' | 'messages'>) {
-    return this.api.post<Chat>('authorized-user/chats/add', toFormData(chat))
+  addGroup(chat: Omit<Chat, 'id' | 'messages'>) {
+    return this.api.post<Chat>('authorized-user/groups/add', toFormData(chat))
   }
 }

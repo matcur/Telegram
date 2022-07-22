@@ -45,11 +45,10 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
       name: name,
       iconUrl: icon,
       members: [
-        {...currentUser, chats: []},
         ...members
       ]
     }
-    dispatch(addChat(await new AuthorizedUserApi(token).addChat(chat)))
+    dispatch(addChat(await new AuthorizedUserApi(token).addGroup(chat)))
   }
   const onCreate = async () => {
     await createChat(membersRef.current)

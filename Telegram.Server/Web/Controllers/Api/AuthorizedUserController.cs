@@ -72,11 +72,11 @@ namespace Telegram.Server.Web.Controllers.Api
         }
         
         [HttpPost]
-        [Route("api/1.0/authorized-user/chats/add")]
+        [Route("api/1.0/authorized-user/groups/add")]
         [Authorize]
-        public async Task<IActionResult> AddChat([FromForm]ChatMap map)
+        public async Task<IActionResult> AddGroupChat([FromForm]ChatMap map)
         {
-            var chat = await _authorizedUserService.AddChat(map);
+            var chat = await _authorizedUserService.AddGroup(map);
             await _messages.AddNewUsersMessage(
                 chat.Id,
                 chat.Members.Select(m => m.UserId)

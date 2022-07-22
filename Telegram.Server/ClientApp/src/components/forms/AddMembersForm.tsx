@@ -43,7 +43,7 @@ export const AddMembersForm: FC<Props> = ({selected, setSelected, footer, potent
     <BaseForm className={"add-members-form"}>
       <div className="add-members-form-header">
         <span className="form-title add-members-title">Add Members</span>
-        <span className="invite-friend-count">{selected.length + 1} / 20000</span>
+        <span className="invite-friend-count">{selected.length} / 20000</span>
         <Search
           className="add-member-search"
           onChange={search.onChange}/>

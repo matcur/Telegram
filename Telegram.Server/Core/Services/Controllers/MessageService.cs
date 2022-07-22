@@ -82,15 +82,16 @@ namespace Telegram.Server.Core.Services.Controllers
         public async Task<Message> Add(Message message, User author)
         {
             // extract to something
-            if (!await _chats.Exists(message.ChatId))
+            var chatId = message.ChatId;
+            if (!await _chats.Exists(chatId))
             {
-                throw new NotFoundException($"Chat with id {message.ChatId} not found.");
+                throw new NotFoundException($"Chat with id {chatId} not found.");
             }
 
             // too
-            if (!await _authorizedUser.MemberOf(message.ChatId))
+            if (!await _authorizedUser.MemberOf(chatId) && !await _authorizedUser.CreatorOf(chatId))
             {
-                throw new PermissionDenyException($"You are not member of chat {message.ChatId}");
+                throw new PermissionDenyException($"You can't add message to chat {chatId}");
             }
 
             message.Author = author;

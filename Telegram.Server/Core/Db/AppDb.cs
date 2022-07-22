@@ -64,7 +64,7 @@ namespace Telegram.Server.Core.Db
             modelBuilder
                 .Entity<Chat>()
                 .Property(c => c.Type)
-                .HasDefaultValue(ChatType.Public)
+                .HasDefaultValue(ChatType.Group)
                 .HasConversion(
                     v => v.ToString(),
                     v => Enum.Parse<ChatType>(v)
@@ -73,6 +73,7 @@ namespace Telegram.Server.Core.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=root;Password=root");
         }
     }

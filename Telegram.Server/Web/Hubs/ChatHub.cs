@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Telegram.Server.Core;
-using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Hubs
@@ -20,7 +19,7 @@ namespace Telegram.Server.Web.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if (!await _authorizedUser.MemberOf(ChatId()))
+            if (!await _authorizedUser.MemberOf(ChatId()) && !await _authorizedUser.CreatorOf(ChatId()))
             {
                 throw new Exception($"You are not member of {ChatId()}");
             }

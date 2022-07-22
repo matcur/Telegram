@@ -6,16 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
-using Telegram.Server.Core.Mapping;
 
 namespace Telegram.Server.Core.Services.Controllers
 {
     public class ChatService
     {
         private readonly UserService _users;
-        
+
         private readonly AppDb _db;
-        
+
         private readonly DbSet<Chat> _chats;
 
         public ChatService(UserService users, AppDb db)
@@ -24,7 +23,7 @@ namespace Telegram.Server.Core.Services.Controllers
             _db = db;
             _chats = db.Chats;
         }
-        
+
         public async Task<Chat> Get(int id)
         {
             var chat = await _chats.FirstOrDefaultAsync(c => c.Id == id);
@@ -36,10 +35,8 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
-        public async Task<Chat> Add(ChatMap map)
+        public async Task<Chat> Add(Chat chat)
         {
-            var chat = new Chat(map);
-            
             await _chats.AddAsync(chat);
             await _db.SaveChangesAsync();
 
@@ -50,8 +47,8 @@ namespace Telegram.Server.Core.Services.Controllers
         {
             var members = await _users.Enumerable(memberIds);
             var chat = await Get(chatId);
-            
-            chat.Members.AddRange(members.Select(m => new ChatUser{UserId = m.Id}));
+
+            chat.Members.AddRange(members.Select(m => new ChatUser {UserId = m.Id}));
             await _db.SaveChangesAsync();
         }
 
@@ -79,8 +76,10 @@ namespace Telegram.Server.Core.Services.Controllers
                     IconUrl = c.IconUrl,
                     Members = c.Members,
                     UpdatedDate = c.UpdatedDate,
+                    CreatorId = c.CreatorId,
                 })
                 .Where(c => c.Members.Any(m => m.UserId == userId))
+                .Where(c => c.CreatorId == userId)
                 .Skip(pagination.Offset());
             if (pagination.Count() != -1)
             {
@@ -106,7 +105,7 @@ namespace Telegram.Server.Core.Services.Controllers
                 $"update \"Chats\" set \"UpdatedDate\" = {DateTime.Now} " +
                 $"where \"Id\" = {id}"
             );
-            
+
             return _db.SaveChangesAsync();
         }
 

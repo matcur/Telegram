@@ -71,6 +71,13 @@ namespace Telegram.Server.Core.Services.Controllers
                 .AnyAsync(u => u.Chats.Any(c => c.ChatId == chatId));
         }
 
+        public Task<bool> CreatorOf(int chatId)
+        {
+            return _users
+                .AnyAsync(u => 
+                    u.Chats.Any(c => c.Chat.CreatorId == _authorizedUser.Id()));
+        }
+
         public Task<bool> CanUpdateMessage(int id)
         {
             return IsMessageAuthor(id);
@@ -85,7 +92,9 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public Task<List<User>> Contacts()
         {
-            return _users.Take(10).ToListAsync();
+            return _users
+                .Where(u => u.Id != _authorizedUser.Id())
+                .ToListAsync();
         }
 
         public async Task EnsureMemberOf(int chatId)
@@ -96,9 +105,13 @@ namespace Telegram.Server.Core.Services.Controllers
             }
         }
 
-        public Task<Chat> AddChat(ChatMap map)
+        public async Task<Chat> AddGroup(ChatMap map)
         {
-            return _chatService.Add(map);
+            var chat = new Chat(map);
+            chat.Creator = await Get();
+            chat.Type = ChatType.Group;
+            
+            return await _chatService.Add(chat);
         }
     }
 }
