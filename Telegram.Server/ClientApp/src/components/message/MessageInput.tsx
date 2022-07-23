@@ -130,7 +130,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
       className="message-form"
       onSubmit={handleSubmit(onSubmit)}
       ref={form}>
-      {detailMessageVisible && <Modal name="MessageInputRichMessageForm">
+      {detailMessageVisible && <Modal hide={hideDetailMessage} name="MessageInputRichMessageForm">
         <RichMessageForm
           filePaths={modalData.filePaths}
           messageText={modalData.messageText}

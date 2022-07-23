@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
 import {Modal} from "../Modal";
+import {useFlag} from "../../hooks/useFlag";
 
 type Props = {
   initName?: string
@@ -32,9 +33,9 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const [potentialMembers, setPotentialMembers] = useState<User[]>([])
   const [futureMembers, setFutureMembers] = useState<User[]>([])
   const membersRef = useRef<User[]>([])
-  const [showAddMembersForm, setShowAddMembersForm] = useState(false)
+  const [addMembersVisible, showAddMembers, hideAddMembers] = useFlag(false)
   membersRef.current = futureMembers
-  
+
   useEffect(() => {
     new AuthorizedUserApi(token).contacts()
       .then(res => setPotentialMembers(res))
@@ -49,11 +50,12 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
         ...members
       ]
     }
-    dispatch(addChat(await new AuthorizedUserApi(token).addChat(chat)))
+    dispatch(addChat(await new AuthorizedUserApi(token).addGroup(chat)))
   }
   const onCreate = async () => {
     await createChat(membersRef.current)
-    upLayer.hide()
+    hideAddMembers()
+    hide()
   }
   const loadImage = async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
@@ -64,7 +66,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
       <div className="form-buttons add-members-buttons">
         <FormButton
           name="Cancel"
-          onClick={() => setShowAddMembersForm(false)}/>
+          onClick={hideAddMembers}/>
         <FormButton
           name="Create"
           onClick={onCreate}
@@ -73,7 +75,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
       </div>
     )
     return (
-      <Modal name={"new_members_form"}>
+      <Modal hide={hideAddMembers} name={"new_members_form"}>
         <AddMembersForm
           potentialMembers={potentialMembers}
           footer={footer}
@@ -87,7 +89,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const onNextClick = () => {
     setNextClicked(true)
     if (formValid()) {
-      setShowAddMembersForm(true)
+      showAddMembers()
     }
   }
   const onNameChange = (e: InputEvent) => {
@@ -97,7 +99,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
 
   return (
     <BaseForm className="new-group-form">
-      {showAddMembersForm && addMembersModal()}
+      {addMembersVisible && addMembersModal()}
       <div className="inputs">
         <div className="df aic">
           <ImageInput

@@ -17,7 +17,7 @@ export const LeftMenuItem: FC<Props> = ({name, icon, additionalElement, getCentr
       className="left-menu-option"
       onClick={showModal}>
       {modalVisible && getCentralElement && (
-        <Modal name={`LeftMenuItem_${name}`}>{getCentralElement(hideModal)}</Modal>
+        <Modal hide={hideModal} name={`LeftMenuItem_${name}`}>{getCentralElement(hideModal)}</Modal>
       )}
       {icon}
       <div className="option-name">{name}</div>
