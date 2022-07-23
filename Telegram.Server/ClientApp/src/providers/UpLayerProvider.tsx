@@ -5,20 +5,21 @@ import {UpLayer} from "../components/up-layer/UpLayer";
 import {LeftMenu} from "../components/menus/left-menu";
 import {RemoveLastCentralElement} from "../utils/functions";
 import {useArray} from "../hooks/useArray";
+import {useFlag} from "../hooks/useFlag";
 
 export const UpLayerProvider: FC = ({children}) => {
-  const [leftMenuVisible, setLeftMenuVisible] = useState(false)
+  const [leftMenuVisible, showLeftMenu, hideLeftMenu] = useFlag(false)
   const [centralElements, setCentralElements] = useState<ReactElement[]>(() => [])
   const arbitraryElements = useArray<ReactElement>()
 
   const hideUpLayer = useCallback(() => {
-    setLeftMenuVisible(false)
+    hideLeftMenu()
     setCentralElements([])
   }, [])
 
   const addCentralElement = useCallback((element: ReactElement) => {
     setCentralElements([...centralElements, element])
-    setLeftMenuVisible(false)
+    hideLeftMenu()
 
     return (() => {
       setCentralElements(elements => {
@@ -48,15 +49,15 @@ export const UpLayerProvider: FC = ({children}) => {
   }, [])
   const onClick = useCallback(() => {
     removeLastCentralElement()
-    setLeftMenuVisible(false)
+    hideLeftMenu()
   }, [removeLastCentralElement])
   
   return (
     <UpLayerContext.Provider value={{addCentralElement, hide: hideUpLayer, addArbitraryElement}}>
-      <LeftMenuContext.Provider value={{setVisible: setLeftMenuVisible}}>
+      <LeftMenuContext.Provider value={{show: showLeftMenu, hide: hideLeftMenu}}>
         <UpLayer
           leftElementVisible={leftMenuVisible}
-          leftElement={<LeftMenu visible={leftMenuVisible}/>}
+          leftElement={<LeftMenu onItemClick={hideLeftMenu} visible={leftMenuVisible}/>}
           arbitraryElements={arbitraryElements.value}
           centerElements={centralElements}
           onClick={onClick}>

@@ -10,12 +10,14 @@ import {ReactComponent as MoonIcon} from "public/svgs/moon.svg";
 import {Toggler} from "components/form/Toggler";
 import {NewGroupForm} from "components/forms/NewGroupForm";
 import {SettingsForm} from "../../forms/SettingsForm";
+import {nope, Nothing} from "../../../utils/functions";
 
 type Props = {
   visible: boolean
+  onItemClick?: Nothing
 }
 
-export const LeftMenu = ({visible}: Props) => {
+export const LeftMenu = ({visible, onItemClick = nope}: Props) => {
   const [needNightMode, setNeedNightMode] = useState(false)
   const [items] = useState(() => [
     {name: 'New Group', icon: <PeopleIcon/>, getCentralElement: (hide: () => void) => <NewGroupForm hide={hide}/>},
@@ -33,6 +35,7 @@ export const LeftMenu = ({visible}: Props) => {
         {items.map((i, key) => (
           <LeftMenuItem
             key={key}
+            onClick={onItemClick}
             name={i.name}
             icon={i.icon}
             getCentralElement={i.getCentralElement}
