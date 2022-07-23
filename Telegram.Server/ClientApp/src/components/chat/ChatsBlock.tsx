@@ -1,12 +1,12 @@
-import React, {FC, useCallback} from 'react'
+import React, {FC, useCallback, useContext} from 'react'
 import {Search} from "components/search/Search";
 import {ChatList} from "./ChatList";
 import {Chat} from "models";
 import {useFormInput} from "hooks/useFormInput";
-import {useSetLeftMenuVisible} from "hooks/useSetLeftMenuVisible";
 import {Burger} from "components/icons/Burger";
 import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
 import {compareObjectDate} from "../../utils/compareObjectDate";
+import {LeftMenuContext} from "../../contexts/LeftMenuContext";
 
 type Props = {
   selectedChat: Chat
@@ -17,10 +17,10 @@ type Props = {
 
 export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, websockets}: Props) => {
   const search = useFormInput('')
-  const setLeftMenuVisible = useSetLeftMenuVisible()
+  const leftMenu = useContext(LeftMenuContext)
 
   const onBurgerClick = useCallback(() => {
-    setLeftMenuVisible(true)
+    leftMenu.show()
   }, [])
   const filtration = useCallback((chat: Chat) => {
     const value = search.value;
