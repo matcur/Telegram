@@ -48,7 +48,7 @@ export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, ad
       </div>
     )
     return (
-      <Modal name="GroupFormAddMembers">
+      <Modal hide={hideAddMembers} name="GroupFormAddMembers">
         <AddMembersForm
           potentialMembers={potentialMembers}
           footer={footer}

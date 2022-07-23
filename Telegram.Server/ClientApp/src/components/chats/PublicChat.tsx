@@ -68,7 +68,7 @@ export const PublicChat = ({
   
   return (
     <BaseChat loaded={loaded}>
-      {groupFormVisible && <Modal name="PublicChatGroupForm">
+      {groupFormVisible && <Modal hide={hideGroupForm} name="PublicChatGroupForm">
         <GroupForm
           onHideClick={hideGroupForm}
           group={chat}

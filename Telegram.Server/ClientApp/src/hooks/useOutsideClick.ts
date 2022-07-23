@@ -1,9 +1,8 @@
 ﻿import React, {useEffect} from "react";
 
-export const useOutsideClick = (callback: () => void, ref?:  React.RefObject<HTMLElement>) => {
-  const element = ref && ref.current
-  
+export const useOutsideClick = (callback: () => void, ref?:  React.RefObject<HTMLElement>, ...dep: any[]) => {
   useEffect(function onChange() {
+    const element = ref && ref.current
     if (!element) return
 
     const listener = (e: MouseEvent) => {
@@ -15,5 +14,5 @@ export const useOutsideClick = (callback: () => void, ref?:  React.RefObject<HTM
     document.addEventListener("mousedown", listener)
 
     return () => document.removeEventListener("mousedown", listener)
-  }, [callback, element])
+  }, [callback, ...dep])
 }
