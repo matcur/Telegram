@@ -1,0 +1,166 @@
+﻿$message-inner-width: 440px
+
+.current-user-message .message-author-avatar
+  display: none
+
+.message
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  margin-top: 5px
+
+.message-wrapper
+  position: relative
+  padding: 8px 13px
+  border-radius: 3px
+  border-bottom-left-radius: 0
+  background: #182533
+  max-width: $message-inner-width
+
+.message-triangle
+  position: absolute
+  width: 0
+  height: 0
+  bottom: -4px
+  left: -6px
+  -webkit-transform: rotate(-135deg)
+  transform: rotate(-135deg)
+  border-top: 7px solid transparent
+  border-bottom: 7px solid transparent
+  border-right: 7px solid #182533
+
+.message-author
+  display: none
+  color: #9D8BF2
+  font-size: 14px
+
+.message-text
+  color: #F5F5F5
+  font-size: 14px
+
+.message-created-at
+  margin-top: 2px
+  text-align: right
+  color: #727E8A
+  font-size: 13px
+
+.message-reply
+  right: 20px
+  position: absolute
+  font-size: 14px
+  color: #727E8A
+
+.text-content
+  margin-top: 4px
+  word-break: break-word
+
+.first-in-row-message .message-author,
+.single-message .message-author
+  display: block
+
+.first-in-row-message .message-triangle,
+.first-in-row-message .message-author-avatar,
+.previous-in-row-message .message-triangle,
+.previous-in-row-message .message-author-avatar
+  visibility: hidden
+
+.last-in-row-message .message-wrapper:hover .message-reply,
+.previous-in-row-message .message-wrapper:hover .message-reply
+  display: none
+
+.message-wrapper:hover .message-reply
+  display: block
+
+.message-reply
+  display: none
+  text-decoration: underline
+  cursor: pointer
+
+.message-form
+  display: flex
+  justify-content: center
+  flex-direction: column
+
+.message-form__content
+  display: flex
+  align-items: center
+
+.message-input-icon path
+  fill: #727E8A
+
+.message-input-icon
+  width: 20px
+  padding: 0 15px
+  -webkit-transform: scale(1.5)
+  transform: scale(1.5)
+
+.message-input
+  -webkit-box-flex: 2
+  -ms-flex: 2
+  flex: 2
+  padding: 12px 0
+  background: transparent
+  
+.image-content
+  max-width: $message-inner-width
+
+.current-user-message
+  -webkit-box-orient: horizontal
+  -webkit-box-direction: reverse
+  -ms-flex-direction: row-reverse
+  flex-direction: row-reverse
+
+.current-user-message .message-wrapper
+  background: #2B5278
+  border-bottom-left-radius: 3px
+
+.current-user-message .message-triangle
+  left: calc( 100% - 2px)
+  -webkit-transform: rotate(-45deg)
+  transform: rotate(-45deg)
+  border-right: 7px solid #2B5278
+
+.middle-message
+  width: 100%
+  display: flex
+  justify-content: center
+  padding: 8px 0
+
+.middle-message-value
+  display: flex
+  align-items: center
+  height: 27px
+  padding: 0 15px
+  background: #1E2C3A
+  border-radius: 13px
+  font-size: 15px
+
+.message-options
+  width: 190px
+  padding: 5px 0
+  background: #17212B
+  border-radius: 5px
+
+.message-option:hover
+  background: #232E3C
+  cursor: pointer
+
+.message-option
+  padding: 5px 15px
+  font-size: 16px
+
+.reply-message-content
+  display: flex
+  flex-direction: column
+
+.reply-message-user-name
+  color: #51B3F3
+  font-size: 14px
+
+.replying-message
+  display: flex
+  align-items: center
+  height: 50px
+
+:export
+  contentWidth: $message-inner-width

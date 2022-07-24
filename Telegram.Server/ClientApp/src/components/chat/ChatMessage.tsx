@@ -4,6 +4,7 @@ import {inRowPositionClass} from "utils/inRowPositionClass";
 import {DetailMessageContent} from "components/message/DetailMessageContent";
 import cat from "public/images/index/cat-3.jpg"
 import {useAppSelector} from "app/hooks";
+import {classNames} from "../../utils/classNames";
 
 type Props = {
   onDoubleClick: (message: Message) => void
@@ -28,11 +29,11 @@ export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onD
     <div
       onDoubleClick={() => onDoubleClick(message)}
       onContextMenu={onContextMenu}
-      className={[
-        "message ",
+      className={classNames(
+        "message",
         inRowPosition,
-        isCurrentUser? 'current-user-message': ''
-      ].join(' ')}>
+        {'current-user-message': isCurrentUser}
+      )}>
       <img src={cat} /** {currentAuthor.avatarUrl} **/ alt="" className="circle message-author-avatar"/>
       <div className="message-wrapper">
         <div className="message-triangle"/>

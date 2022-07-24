@@ -4,6 +4,7 @@ import {ChatMessage} from "./ChatMessage";
 import {nullMessage} from "nullables";
 import {inSameDay} from "../../utils/datetime/inSameDay";
 import {MiddleMessage} from "./MiddleMessage";
+import {userNames} from "../../utils/userNames";
 
 type Props = {
   messages: Message[]
@@ -25,9 +26,10 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
       const showDate = !sameDay && next !== nullMessage
       const nextDate = new Date(next.creationDate)
       const type = current.type;
+      key++
       if (type === "UserMessage") {
         result.push(<ChatMessage
-          key={key++}
+          key={key}
           onDoubleClick={onMessageDoubleClick}
           previousAuthor={previous.author}
           message={current}
@@ -36,11 +38,12 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
         />)
       }
       if (type === "NewUserAdded") {
-        result.push(<MiddleMessage>Some body ones adde</MiddleMessage>)
+        result.push(<MiddleMessage key={key}>{userNames(current.associatedUsers)}</MiddleMessage>)
       }
       if (showDate) {
         const date = `${months[nextDate.getMonth()]} ${nextDate.getDate()}`
-        result.push(<MiddleMessage>{date}</MiddleMessage>)
+        key++
+        result.push(<MiddleMessage key={key}>{date}</MiddleMessage>)
       }
     })
 

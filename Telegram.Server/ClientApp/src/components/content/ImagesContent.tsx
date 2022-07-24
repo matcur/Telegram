@@ -1,5 +1,6 @@
 import React, {FC} from 'react'
 import {Content} from "models";
+import {classNames} from "../../utils/classNames";
 
 type Props = {
   content: Content[]
@@ -11,7 +12,7 @@ export const ImagesContent: FC<Props> = ({content, className}: Props) => {
     {content.map(c =>
       <img
         src={c.value}
-        className={`image-content ${className}`}
+        className={classNames('image-content', className)}
         alt=""
       />)}
   </>

@@ -25,6 +25,7 @@ export type Message = {
   replyTo?: Message
   replyToId?: number
   chat?: Chat
+  associatedUsers: User[]
 }
 
 export type NewMessage = Pick<
