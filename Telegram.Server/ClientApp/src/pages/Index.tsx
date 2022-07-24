@@ -17,6 +17,7 @@ import {AuthorizedUserApi} from "../api/AuthorizedUserApi";
 import {Chat as ChatModel} from "models";
 import {MessagesSearch} from "../components/search/MessageSearch/MessagesSearch";
 import {IChatWebsocket} from "../app/chat/ChatWebsocket";
+import "styles/pages/chat.sass"
 
 type Search = {
   type: "chats"

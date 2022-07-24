@@ -1,0 +1,152 @@
+﻿
+.page
+  height: 100vh
+  background: #17212B
+  padding: 0 20px
+
+
+.page.start-page
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+  height: 100vh
+  width: 100vw
+  padding: 0
+
+
+.start-image
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-pack: justify
+  -ms-flex-pack: justify
+  justify-content: space-between
+  height: 200px
+  background: -webkit-gradient(linear, left top, left bottom, from(#124A82), to(#22649E))
+  background: linear-gradient(#124A82, #22649E)
+
+
+.start-block
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-pack: center
+  -ms-flex-pack: center
+  justify-content: center
+  -webkit-box-align: center
+  -ms-flex-align: center
+  align-items: center
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+  height: 100%
+  color: #fff
+
+
+.start-welcome
+  text-align: center
+  color: #727E8A
+
+
+.start-messaging-btn
+  margin-top: 30px
+
+
+.scan-qr-page
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+  background: #17212B
+
+
+.qr-code
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-align: center
+  -ms-flex-align: center
+  align-items: center
+  -webkit-box-pack: center
+  -ms-flex-pack: center
+  justify-content: center
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+  -ms-flex-item-align: center
+  align-self: center
+  margin: auto
+
+
+.qr-code-image
+  border-radius: 10px
+
+
+.qr-code-title
+  margin-top: 10px
+
+
+.qr-code-instruction
+  list-style: none
+  counter-reset: instruction-index
+
+
+.qr-code-instruction-item
+  font-size: 14px
+  font-weight: 300
+  counter-increment: instruction-index
+
+
+.qr-code-instruction-item:before
+  content: counter(instruction-index) ". "
+  font-weight: bold
+
+
+.phone-login
+  color: #6A9D9B
+
+
+.login-page,
+.code-verification-page
+  display: -webkit-box
+  display: -ms-flexbox
+  display: flex
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -ms-flex-direction: column
+  flex-direction: column
+
+
+.phone-caption
+  font-size: 13px
+  color: #727E8A
+
+
+.login-form
+  width: 260px
+  margin: auto
+
+
+.login-phone-group
+  margin-top: 30px
+
+
+.login-form-btn
+  margin-top: 30px
+
+
+.code-verification-group
+  margin-top: 80px
+
+
+.page-title
+  font-size: 25px

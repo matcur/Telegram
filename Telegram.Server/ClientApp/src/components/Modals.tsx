@@ -3,6 +3,8 @@ import {classNames} from "../utils/classNames";
 import {useOutsideClick} from "../hooks/useOutsideClick";
 import {nope, Nothing} from "../utils/functions";
 import {lastIn} from "../utils/lastIn";
+import "styles/modal.sass"
+import "styles/up-layer.sass"
 
 type Props = {}
 
