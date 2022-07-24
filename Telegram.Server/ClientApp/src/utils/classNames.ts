@@ -1,11 +1,27 @@
-﻿export const classNames = (...classes: any[]) => {
-  const filter = (className: any) => {
-    if (typeof className === "function") {
-      return false
+﻿export type ClassName = 
+  | string 
+  | Record<string, boolean | undefined | null | number> 
+  | undefined
+  | null
+  | false
+  | number
+
+export const classNames = (...classes: ClassName[]) => {
+  const prepare = (className: ClassName): string => {
+    if (!className) {
+      return ""
     }
-    
-    return Boolean(className)
+    if (typeof className === "number") {
+      return ""
+    }
+    if (typeof className === "object") {
+      return Object.entries(className)
+        .filter(([name, visible]) => visible)
+        .map(([name]) => name)
+        .join(" ")
+    }
+    return className
   }
   
-  return classes.filter(filter).join(" ")
+  return classes.map(prepare).filter(Boolean).join(" ")
 }
