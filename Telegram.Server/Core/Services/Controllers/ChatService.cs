@@ -101,12 +101,10 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public Task Update(int id)
         {
-            _chats.FromSqlRaw(
-                $"update \"Chats\" set \"UpdatedDate\" = {DateTime.Now} " +
-                $"where \"Id\" = {id}"
+            return _db.Database.ExecuteSqlRawAsync(
+                $"update \"Chats\" set \"UpdatedDate\" = '{DateTime.Now.ToString("yyyy-MM-dd h:mm:ss.fff")}' " +
+                $"where \"Id\" = {id};"
             );
-
-            return _db.SaveChangesAsync();
         }
 
         private async Task EnsureChatExists(int chatId)

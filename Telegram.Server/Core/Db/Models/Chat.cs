@@ -21,7 +21,7 @@ namespace Telegram.Server.Core.Db.Models
         [ForeignKey(nameof(Creator))]
         public int CreatorId { get; set; }
 
-        public DateTime UpdatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
         [NotMapped]
         public Message LastMessage { get; set; }
