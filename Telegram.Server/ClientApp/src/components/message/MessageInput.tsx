@@ -85,15 +85,16 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
   }, [textInput, chatData])
 
   const onDetailSubmit = useCallback((text: string, filePaths: string[]) => {
+    const content = filePaths.map(path => ({content: {value: path, type: 'Image'} as Content}))
+    if (text) {
+      content.push({content: {value: text, type: 'Text'}})
+    }
     const message: NewMessage = {
       chatId,
       authorId: currentUser.id,
       replyToId: reply && reply.id,
       contentMessages: [
-        {content: {
-          value: text,
-          type: 'Text',
-        }}, ...filePaths.map(path => ({content: {value: path, type: 'Image'} as Content}))
+        ...content
       ]
     }
     onSubmitting(message)

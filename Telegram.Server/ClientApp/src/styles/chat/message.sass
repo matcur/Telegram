@@ -1,4 +1,10 @@
-﻿$message-inner-width: 440px
+﻿@import "/src/styles/index"
+
+$inner-width: 440px
+$inner-horizontal-padding: 13px
+$inner-vertical-padding: 8px
+$creation-date-bottom: 5px
+$creation-date-right: 10px
 
 .current-user-message .message-author-avatar
   display: none
@@ -11,11 +17,13 @@
 
 .message-wrapper
   position: relative
-  padding: 8px 13px
   border-radius: 3px
   border-bottom-left-radius: 0
   background: #182533
-  max-width: $message-inner-width
+  max-width: $inner-width
+  
+.message-author-wrapper
+  padding: $inner-vertical-padding $inner-horizontal-padding
 
 .message-triangle
   position: absolute
@@ -39,8 +47,9 @@
   font-size: 14px
 
 .message-created-at
-  margin-top: 2px
-  text-align: right
+  position: absolute
+  bottom: $creation-date-bottom
+  right: $creation-date-right
   color: #727E8A
   font-size: 13px
 
@@ -53,6 +62,10 @@
 .text-content
   margin-top: 4px
   word-break: break-word
+  padding-left: $inner-horizontal-padding
+  padding-right: $inner-horizontal-padding
+  padding-bottom: $inner-vertical-padding
+  font-size: $font-size
 
 .first-in-row-message .message-author,
 .single-message .message-author
@@ -102,7 +115,7 @@
   background: transparent
   
 .image-content
-  max-width: $message-inner-width
+  max-width: $inner-width
 
 .current-user-message
   -webkit-box-orient: horizontal
@@ -110,15 +123,16 @@
   -ms-flex-direction: row-reverse
   flex-direction: row-reverse
 
-.current-user-message .message-wrapper
-  background: #2B5278
-  border-bottom-left-radius: 3px
-
-.current-user-message .message-triangle
-  left: calc( 100% - 2px)
-  -webkit-transform: rotate(-45deg)
-  transform: rotate(-45deg)
-  border-right: 7px solid #2B5278
+.current-user-message 
+  .message-wrapper
+    background: #2B5278
+    border-bottom-left-radius: 3px
+  .message-triangle
+    left: calc( 100% - 2px)
+    -webkit-transform: rotate(-45deg)
+    transform: rotate(-45deg)
+    border-right: 7px solid #2B5278
+  .image-content
 
 .middle-message
   width: 100%
@@ -163,4 +177,8 @@
   height: 50px
 
 :export
-  contentWidth: $message-inner-width
+  messageWidth: $inner-width
+  contentWidth: $inner-width - 2 * $creation-date-right
+  creationDateBottom: $creation-date-bottom
+  creationDateRight: $creation-date-right
+  messageTextSize: $font-size

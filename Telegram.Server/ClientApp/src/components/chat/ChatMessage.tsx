@@ -1,12 +1,11 @@
-import React, {FC, useCallback} from 'react'
+import React, {FC, ReactElement, useCallback} from 'react'
 import {Message, User} from "models";
 import {inRowPositionClass} from "utils/inRowPositionClass";
-import {DetailMessageContent} from "components/message/DetailMessageContent";
-import cat from "public/images/index/cat-3.jpg"
 import {useAppSelector} from "app/hooks";
 import {classNames} from "../../utils/classNames";
 
-type Props = {
+export type ChatMessageProps = {
+  key: string | number
   onDoubleClick: (message: Message) => void
   onRightClick: (message: Message, event: React.MouseEvent<HTMLDivElement>) => void
   previousAuthor: User
@@ -14,7 +13,7 @@ type Props = {
   nextAuthor: User
 }
 
-export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick}: Props) => {
+export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick, children}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const currentAuthor = message.author
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
@@ -34,14 +33,7 @@ export const ChatMessage: FC<Props> = ({previousAuthor, message, nextAuthor, onD
         inRowPosition,
         {'current-user-message': isCurrentUser}
       )}>
-      <img src={cat} /** {currentAuthor.avatarUrl} **/ alt="" className="circle message-author-avatar"/>
-      <div className="message-wrapper">
-        <div className="message-triangle"/>
-        <span className="message-reply">Reply</span>
-        <span className="message-author">{currentAuthor.firstName + " " + currentAuthor.lastName}</span>
-        <DetailMessageContent
-          message={message}/>
-      </div>
+      {children}
     </div>
   )
 }

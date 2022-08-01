@@ -20,7 +20,11 @@ namespace Telegram.Server.Core.Domain.Bots
 
         public async Task Act(Message message)
         {
-            var command = message.ContentByType(ContentType.Text).Value;
+            var command = message.ContentByType(ContentType.Text)?.Value;
+            if (command == null)
+            {
+                return;
+            }
             
             var form = new MultipartFormDataContent();
             form.Add(new StringContent(command), "command");

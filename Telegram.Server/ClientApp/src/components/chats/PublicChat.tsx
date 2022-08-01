@@ -20,6 +20,7 @@ import {UsersApi} from "../../api/UsersApi";
 import {ChatApi} from "../../api/ChatApi";
 import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
+import {PublicMessageFork} from "../chat/PublicMessageFork";
 
 type Props = {
   websocket: IChatWebsocket
@@ -106,6 +107,7 @@ export const PublicChat = ({
           messages={messages}
           onMessageRightClick={onMessageRightClick}
           replyTo={replyTo}
+          makeMessage={props => <PublicMessageFork {...props}/>}
         />
       </MessageScroll>
       <MessageInput

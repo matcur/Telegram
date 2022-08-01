@@ -8,7 +8,8 @@ namespace Telegram.Server.Core.Db.Extensions
     {
         public static Content ContentByType(this Message message, ContentType type)
         {
-            return message.ContentMessages.Find(c => c.Content.Type == type).Content;
+            var contentMessage = message.ContentMessages.Find(c => c.Content.Type == type);
+            return contentMessage?.Content;
         }
 
         public static IQueryable<Message> Filtered(this IQueryable<Message> self, Pagination pagination)
