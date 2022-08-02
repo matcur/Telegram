@@ -25,7 +25,7 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, webs
   const filtration = useCallback((chat: Chat) => {
     const value = search.value;
 
-    return value === '' || chat.name.includes(value)
+    return value === '' || chat.name?.includes(value)
   }, [search.value])
 
   return (

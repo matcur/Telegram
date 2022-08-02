@@ -159,7 +159,7 @@
   padding: 8px 10px
 
 .search-item-details
-  padding-right: 2px
+  padding-right: 10px
   display: -webkit-box
   display: -ms-flexbox
   display: flex
@@ -186,6 +186,7 @@
 
 .last-message-user-name
   color: #73B9F5
+  white-space: nowrap
 
 .message-typing
   color: #73B9F5
@@ -198,6 +199,10 @@
   text-overflow: ellipsis
   white-space: nowrap
   overflow: hidden
+  &__text
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
 
 .search-item-right-part
   display: -webkit-box

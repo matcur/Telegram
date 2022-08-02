@@ -2,7 +2,7 @@ import React from 'react'
 
 export const LoadingChat = () => {
   return (
-    <div>
+    <div className="chat">
       I'am loading
     </div>
   )
