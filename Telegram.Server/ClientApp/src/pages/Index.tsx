@@ -117,7 +117,7 @@ export const Index = () => {
       />}
       {
         selectedChat === nullChat? 
-          <></>:
+          <div className="chat"></div>:
           <ChatOfType
             chat={selectedChat}
             websocket={chatWebsocket}
