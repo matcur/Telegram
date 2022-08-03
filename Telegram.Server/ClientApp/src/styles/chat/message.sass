@@ -23,6 +23,7 @@ $creation-date-right: 10px
   max-width: $inner-width
   
 .message-author-wrapper
+  display: none
   padding: $inner-vertical-padding $inner-horizontal-padding
 
 .message-triangle
@@ -38,7 +39,6 @@ $creation-date-right: 10px
   border-right: 7px solid #182533
 
 .message-author
-  display: none
   color: #9D8BF2
   font-size: 14px
 
@@ -67,8 +67,8 @@ $creation-date-right: 10px
   padding-bottom: $inner-vertical-padding
   font-size: $font-size
 
-.first-in-row-message .message-author,
-.single-message .message-author
+.first-in-row-message .message-author-wrapper,
+.single-message .message-author-wrapper
   display: block
 
 .first-in-row-message .message-triangle,
