@@ -78,8 +78,7 @@ namespace Telegram.Server.Core.Services.Controllers
                     UpdatedDate = c.UpdatedDate,
                     CreatorId = c.CreatorId,
                 })
-                .Where(c => c.Members.Any(m => m.UserId == userId))
-                .Where(c => c.CreatorId == userId)
+                .Where(c => c.Members.Any(m => m.UserId == userId) || c.CreatorId == userId)
                 .Skip(pagination.Offset());
             if (pagination.Count() != -1)
             {
