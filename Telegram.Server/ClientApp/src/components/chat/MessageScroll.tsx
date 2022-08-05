@@ -16,7 +16,6 @@ const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivE
 export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages, loadPreviousMessages, children}) => {
   const scrollBarRef = createRef<HTMLDivElement>()
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
-  const [loadingMessages, setLoadingMessages] = useState(false)
   bus.scrollBarRef = scrollBarRef
 
   const scrollTo = (top: number) => {
@@ -39,15 +38,11 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
       ...lastScrollTops,
       [chat.id]: top
     })
-    if (top < loadPreviousMessageOffset && messages.length && !loadingMessages) {
-      setLoadingMessages(true)
+    if (top < loadPreviousMessageOffset && messages.length) {
       loadPreviousMessages()
-        .then(() => {
-          setLoadingMessages(false)
-          scrollToBottom(bottom)
-        })
+        .then(() => scrollToBottom(bottom))
     }
-  }, [scrollBarRef.current])
+  }, [scrollBarRef.current, loadPreviousMessages])
   const onMessageAdded = useCallback(() => {
     const scroll = bus.scrollBarRef.current!
     const topOffset = scroll.scrollTop

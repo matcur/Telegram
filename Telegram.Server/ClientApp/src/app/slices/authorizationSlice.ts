@@ -65,11 +65,11 @@ const authorizationSlice = createSlice({
     },
     addPreviousMessages(state, {payload}: PayloadAction<{chatId: number, messages: Message[]}>) {
       const chat = selectChats(state).find(c => c.id === payload.chatId)
-      if (chat === undefined) {
+      if (!chat) {
         return
       }
       
-      chat.messages.splice(0, 0, ...payload.messages)
+      chat.messages.unshift(...payload.messages)
     },
     changeAvatar(state, {payload}: PayloadAction<string>) {
       state.currentUser.avatarUrl = payload

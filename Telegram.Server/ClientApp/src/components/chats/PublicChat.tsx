@@ -1,5 +1,4 @@
-﻿import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {Chat as ChatModel, Message, User} from "../../models";
+﻿import {User} from "../../models";
 import React, {useCallback} from "react";
 import {MessageInput} from "../message/MessageInput";
 import {ReactComponent as Magnifier} from "../../public/svgs/magnifier.svg";
@@ -21,23 +20,9 @@ import {ChatApi} from "../../api/ChatApi";
 import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
 import {PublicMessageFork} from "../chat/PublicMessageFork";
+import {ChatProps} from "../chat/ChatOfType";
 
-type Props = {
-  websocket: IChatWebsocket
-  chat: ChatModel
-  loaded: boolean
-  messages: Message[]
-  textInput: { onChange: (e: (React.FormEvent<HTMLInputElement> | string)) => void; value: string }
-  onMessageInput: () => void
-  id: number
-  reply: Message | undefined
-  loadPreviousMessages(): Promise<void>
-  onMessageSearchClick(): void
-  tryEditMessage(message: Message): void
-  onMessageRightClick(message: Message, e: React.MouseEvent<HTMLDivElement>): void
-  replyTo(message: Message): void
-  onRemoveReplyClick(): void
-  onSubmit(message: Partial<Message>): void
+type Props = ChatProps & {
   loadMembers(groupId: number, pagination: Pagination): void
 }
 
