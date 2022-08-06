@@ -1,4 +1,4 @@
-import React, {createRef, FC, ReactElement, useCallback, useEffect, useState} from 'react'
+import React, {createRef, FC, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -68,6 +68,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
   const [modalData, setModalData] = useState(() => (
     {messageText: "", filePaths: [] as string[]}
   ))
+  const inputRef = useRef<HTMLInputElement>(null)
   
   const showDetailMessageForm = useCallback((messageText: string, filePaths: string[]) => {
     setModalData({messageText: textInput.value, filePaths})
@@ -125,12 +126,16 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
     setChatData(chatData)
     textInput.onChange(chatData.currentMessage.text)
   }, [chatId, textInput])
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [inputRef.current])
 
   return (
     <form
       className="message-form"
       onSubmit={handleSubmit(onSubmit)}
-      ref={form}>
+      ref={form}
+    >
       {detailMessageVisible && <Modal hide={hideDetailMessage} name="MessageInputRichMessageForm">
         <RichMessageForm
           filePaths={modalData.filePaths}
@@ -156,6 +161,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
           value={textInput.value}
           onChange={onTextChange}
           onInput={onInput}
+          ref={inputRef}
         />
         <Command/>
         <Smile/>
