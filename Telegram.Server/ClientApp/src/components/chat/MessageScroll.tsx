@@ -1,4 +1,4 @@
-import React, {createRef, FC, RefObject, useCallback, useEffect, useState} from "react";
+import React, {FC, useCallback, useEffect, useRef, useState} from "react";
 import {Chat, Message} from "../../models";
 import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 
@@ -11,23 +11,21 @@ type Props = {
 }
 
 const loadPreviousMessageOffset = 45
-const bus = {scrollBarRef: {current: null}} as {scrollBarRef: RefObject<HTMLDivElement>}
 
 export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages, loadPreviousMessages, children}) => {
-  const scrollBarRef = createRef<HTMLDivElement>()
+  const scrollBarRef = useRef<HTMLDivElement>(null)
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
-  bus.scrollBarRef = scrollBarRef
 
   const scrollTo = (top: number) => {
-    const scroll = bus.scrollBarRef.current!
+    const scroll = scrollBarRef.current!
     scroll.scrollTo({top: top})
   }
   const scrollToBottom = (bottomOffset = 0) => {
-    const scrollBar = bus.scrollBarRef.current!
+    const scrollBar = scrollBarRef.current!
     scrollTo(scrollBar.scrollHeight - bottomOffset)
   }
   const onScroll = useCallback(() => {
-    const scroll = bus.scrollBarRef.current
+    const scroll = scrollBarRef.current
     if (!scroll) {
       return
     }
@@ -42,9 +40,9 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
       loadPreviousMessages()
         .then(() => scrollToBottom(bottom))
     }
-  }, [scrollBarRef.current, loadPreviousMessages])
+  }, [loadPreviousMessages])
   const onMessageAdded = useCallback(() => {
-    const scroll = bus.scrollBarRef.current!
+    const scroll = scrollBarRef.current!
     const topOffset = scroll.scrollTop
     const scrollHeight = scroll.scrollHeight
     const lastMessageHeight = scroll.lastElementChild?.clientHeight ?? 0
