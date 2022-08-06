@@ -31,6 +31,8 @@ namespace Telegram.Server.Core.Db.Extensions
                 .Include(m => m.ContentMessages)
                 .ThenInclude(c => c.Content)
                 .Include(m => m.Author)
+                .Include(m => m.AssociatedUsers)
+                .ThenInclude(m => m.User)
                 .OrderByDescending(m => m.Id);
         }
     }

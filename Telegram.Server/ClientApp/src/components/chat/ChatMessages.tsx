@@ -37,7 +37,11 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
         }))
       }
       if (type === "NewUserAdded") {
-        result.push(<MiddleMessage key={current.id}>{userNames(current.associatedUsers)}</MiddleMessage>)
+        result.push(
+          <MiddleMessage key={current.id}>
+            {userNames(current.associatedUsers.map(a => a.user))}
+          </MiddleMessage>
+        )
       }
       if (showDate) {
         const date = `${months[nextDate.getMonth()]} ${nextDate.getDate()}`
