@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Telegram.Server.Core.Db;
+using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
 
@@ -40,7 +41,9 @@ namespace Telegram.Server.Core.Services.Controllers
             await _chats.AddAsync(chat);
             await _db.SaveChangesAsync();
 
-            return chat;
+            return await _chats
+                .DetailChats()
+                .FirstAsync(c => c.Id == chat.Id);
         }
 
         public async Task AddMembers(int chatId, List<int> memberIds)
