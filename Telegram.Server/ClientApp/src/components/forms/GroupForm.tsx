@@ -10,6 +10,7 @@ import {AddMembersForm} from "./AddMembersForm";
 import {FormButton} from "../form/FormButton";
 import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
+import "styles/forms/group-form.sass"
 
 type Props = {
   group: Chat

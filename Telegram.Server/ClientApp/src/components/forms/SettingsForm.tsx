@@ -6,6 +6,7 @@ import {changeAvatar} from "../../app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {ReactComponent as CameraIcon} from "public/svgs/camera.svg";
 import {BaseForm} from "./BaseForm";
+import "styles/forms/settings-form.sass"
 
 type Props = {
   hide: () => void
