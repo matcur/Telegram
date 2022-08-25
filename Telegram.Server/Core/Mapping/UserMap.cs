@@ -14,7 +14,7 @@ namespace Telegram.Server.Core.Mapping
 
         public string AvatarUrl { get; set; }
 
-        public PhoneMap Phone { get; set; }
+        public PhoneMap? Phone { get; set; }
 
         public UserMap() { }
 

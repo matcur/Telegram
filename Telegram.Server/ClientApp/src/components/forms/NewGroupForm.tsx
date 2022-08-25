@@ -1,9 +1,8 @@
-import React, {FC, useContext, useEffect, useRef, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import {FormButton} from "components/form/FormButton";
 import {ImageInput} from "components/form/ImageInput";
-import {TextInput} from "components/form/TextInput";
+import {TextField} from "components/form/TextField";
 import {InputEvent} from "hooks/useFormInput";
-import {UpLayerContext} from "contexts/UpLayerContext";
 import {AddMembersForm} from "components/forms/AddMembersForm";
 import {useFormFiles} from "../../hooks/useFormFiles";
 import {addChat} from "../../app/slices/authorizationSlice";
@@ -22,7 +21,6 @@ type Props = {
 
 export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
-  const upLayer = useContext(UpLayerContext)
   const [name, setName] = useState(initName)
   const [nameEntered, setNameEntered] = useState(false)
   const [icon, setIcon] = useState(initIcon)
@@ -105,7 +103,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
           <ImageInput
             onSelected={loadImage}
             thumbnail={icon}/>
-          <TextInput
+          <TextField
             label="Group Name"
             input={{value: name, onChange: onNameChange}}
             className={formValid() || (!nameEntered && !nextClicked)? '': 'invalid-group'}/>

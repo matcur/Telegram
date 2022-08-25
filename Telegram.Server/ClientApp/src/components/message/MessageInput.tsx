@@ -15,7 +15,7 @@ import {Modal} from "../Modal";
 type Props = {
   reply?: Message
   replyElement?: ReactElement
-  textInput: {value: string, onChange: (e: React.FormEvent<HTMLInputElement> | string) => void}
+  textInput: {value: string, onChange: (e: React.FormEvent<HTMLTextAreaElement> | string) => void}
   chatId: number
   onSubmitting(message: Partial<Message>): void
   onInput(): void
@@ -68,7 +68,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
   const [modalData, setModalData] = useState(() => (
     {messageText: "", filePaths: [] as string[]}
   ))
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   
   const showDetailMessageForm = useCallback((messageText: string, filePaths: string[]) => {
     setModalData({messageText: textInput.value, filePaths})
@@ -115,7 +115,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
     showDetailMessageForm(input.value, loadedFiles)
   }, [])
   
-  const onTextChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+  const onTextChange = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
     textInput.onChange(e)
     chats.changeText(e.currentTarget.value, chatId)
   }, [textInput, chats])
@@ -154,8 +154,7 @@ export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, text
           type="file"
           hidden={true}
           {...register('files')}/>
-        <input
-          type="text"
+        <textarea
           className="clear-input message-input"
           placeholder="Write a message..."
           value={textInput.value}

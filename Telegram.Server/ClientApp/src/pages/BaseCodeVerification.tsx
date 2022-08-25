@@ -1,5 +1,5 @@
 import React, {FormEvent, ReactElement, useState} from 'react'
-import {useHistory} from "react-router";
+import {useHistory} from "react-router-dom";
 import {VerificationApi} from "api/VerificationApi";
 import {CodesApi} from "api/CodesApi";
 import {UsersApi} from "api/UsersApi";
@@ -48,7 +48,7 @@ export const BaseCodeVerification = ({title, phoneNumber, userId}: Props) => {
         <p className="phone-caption">
           {title}
         </p>
-        <div className="form-group code-verification-group">
+        <div className="form-field code-verification-group">
           <label htmlFor="code" className="input-label">Code</label>
           <input
             value={code.value}

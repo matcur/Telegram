@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-export type InputEvent = React.FormEvent<HTMLInputElement>
+export type InputEvent = React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
 
 export const useFormInput = (initialState: string = '') => {
   const [value, setValue] = useState(initialState)

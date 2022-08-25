@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from "react";
-import {useHistory} from "react-router";
+import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {authorize, flushToken} from "../../app/slices/authorizationSlice";

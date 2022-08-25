@@ -13,6 +13,7 @@ export const showTypingTime = 500
 
 export const typingThrottleTime = showTypingTime - 100
 
+// TODO change websocketPromise to function with ability to subscribe by id what about illy klimov talk
 export const MessageInputting = ({websocketPromise, users, setUsers}: Props) => {
   const [websocket, setWebsocket] = useState<IChatWebsocket>(nullChatWebsocket)
   const displayedUsers = users

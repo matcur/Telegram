@@ -31,7 +31,7 @@ export type ChatProps = {
   chat: ChatModel
   loaded: boolean
   messages: Message[]
-  textInput: { onChange: (e: (React.FormEvent<HTMLInputElement> | string)) => void; value: string }
+  textInput: { onChange: (e: (React.FormEvent<HTMLTextAreaElement> | string)) => void; value: string }
   onMessageInput: () => void
   id: number
   reply: Message | undefined

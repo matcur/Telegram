@@ -5,6 +5,7 @@ import {Nothing} from "../utils/functions";
 type Props = {
   name: string
   hide: Nothing
+  // add opened
 }
 
 export const Modal: FC<Props> = ({children, name, hide}) => {

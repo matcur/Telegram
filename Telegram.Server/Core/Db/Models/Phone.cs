@@ -18,7 +18,7 @@ namespace Telegram.Server.Core.Db.Models
         
         public Phone(PhoneMap phone)
         {
-            Number = phone.Number;
+            Number = phone?.Number;
         }
     }
 }

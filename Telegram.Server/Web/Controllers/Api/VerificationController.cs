@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Telegram.Server.Core;
 using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
@@ -74,11 +73,13 @@ namespace Telegram.Server.Web.Controllers.Api
         {
             if (!await _identity.ValidCode(value, userId))
             {
-                return Unauthorized();
+                return BadRequest("Wrong code");
             }
 
-            var token = await _identity.CreateToken(userId, "simpleUser");
-            await _identity.ForgotCode(value, userId);
+            var tokenTask = _identity.CreateToken(userId, "simpleUser");
+            var codeTask = _identity.ForgotCode(value, userId);
+            var token = await tokenTask;
+            await codeTask;
                 
             return Json(token);
         }

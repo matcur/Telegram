@@ -1,5 +1,5 @@
 import React, {FormEvent, useState} from 'react';
-import {useHistory} from "react-router";
+import {useHistory} from "react-router-dom";
 import {isValidPhone} from "utils/isValidPhone";
 import {PhonesApi} from "api/PhonesApi";
 import {useFormInput} from "hooks/useFormInput";
@@ -41,7 +41,7 @@ export const Login = () => {
           Please confirm your country code and<br/>
           enter your mobile phone number.
         </p>
-        <div className="form-group login-phone-group">
+        <div className="form-field login-phone-group">
           <input
             value={phoneInput.value}
             onInput={onPhoneInput}

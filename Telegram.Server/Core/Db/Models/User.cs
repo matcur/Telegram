@@ -15,6 +15,9 @@ namespace Telegram.Server.Core.Db.Models
 
         public string AvatarUrl { get; set; }
 
+        [MaxLength(70)]
+        public string Bio { get; set; } = "";
+
         public Phone Phone { get; set; }
 
         public List<Code> Codes { get; set; } = new List<Code>();
@@ -34,6 +37,19 @@ namespace Telegram.Server.Core.Db.Models
             FirstName = registration.FirstName;
             LastName = registration.LastName;
             Phone = phone;
+        }
+
+        public User(UserMap map)
+        {
+            if (map.Phone != null)
+            {
+                var phone = new Phone(map.Phone);
+                Phone = phone;
+            }
+            
+            FirstName = map.FirstName;
+            LastName = map.LastName;
+            AvatarUrl = map.AvatarUrl;
         }
     }
 }

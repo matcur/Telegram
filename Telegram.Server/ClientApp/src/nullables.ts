@@ -7,7 +7,8 @@ export const nullUser: User = {
   lastName: '',
   chats: [],
   avatarUrl: '',
-  friends: []
+  friends: [],
+  bio: '',
 }
 
 export const nullMessage: Message = {

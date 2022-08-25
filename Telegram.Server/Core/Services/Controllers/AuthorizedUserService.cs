@@ -113,5 +113,12 @@ namespace Telegram.Server.Core.Services.Controllers
             
             return await _chatService.Add(chat);
         }
+
+        public void Update(User user)
+        {
+            user.Id = _authorizedUser.Id();
+            _db.Entry(user).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
     }
 }

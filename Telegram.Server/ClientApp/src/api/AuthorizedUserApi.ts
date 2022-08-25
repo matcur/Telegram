@@ -32,6 +32,10 @@ export class AuthorizedUserApi {
   changeAvatar(uri: string) {
     return this.api.post(`authorized-user/avatar?uri=${uri}`)
   }
+
+  update(user: Partial<User>) {
+    return this.api.put('authorized-user', {user})
+  }
   
   contacts() {
     return this.api.get<User[]>('authorized-user/contacts')

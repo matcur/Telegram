@@ -17,8 +17,7 @@ export const ImageInput = forwardRef<HTMLImageElement, Props>(({onSelected, thum
   }
 
   return (
-    <div
-      className="image-input-wrapper">
+    <div className="image-input-wrapper">
       <img
         src={thumbnail? thumbnail: cat}
         alt=""

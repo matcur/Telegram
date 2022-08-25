@@ -1,4 +1,4 @@
-import {TextInput} from "../form/TextInput";
+import {TextField} from "../form/TextField";
 import {useFormInput} from "../../hooks/useFormInput";
 import {FormButton} from "../form/FormButton";
 import {FC} from "react";
@@ -22,7 +22,7 @@ export const RichMessageForm: FC<Props> = ({filePaths, messageText, onSend = () 
       <div className="message-form-files">
         {filePaths.map(file)}
       </div>
-      <TextInput label='Caption' input={input}/>
+      <TextField label='Caption' input={input}/>
       <div className="form-buttons">
         <FormButton name="Cancel"/>
         <FormButton

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Server.Core;
+using Telegram.Server.Core.Attributes.Model;
+using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Mapping;
 using Telegram.Server.Core.Services.Controllers;
 
@@ -83,6 +85,16 @@ namespace Telegram.Server.Web.Controllers.Api
             );
             
             return Json(chat);
+        }
+
+        [HttpPut]
+        [Route("api/1.0/authorized-user")]
+        [ModelValidation]
+        public IActionResult Update([FromForm]User user)
+        {
+            _authorizedUserService.Update(user);
+            
+            return Ok();
         }
     }
 }

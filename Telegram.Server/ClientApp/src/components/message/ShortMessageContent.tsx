@@ -11,9 +11,9 @@ export const ShortMessageContent: FC<Props> = ({content}: Props) => {
   const hasImage = content.find(c => c.type === 'Image')
 
   return (
-    <span className="last-message-content">
+    <div className="last-message-content">
       {hasImage && <img src={imageIcon} alt=""/>}
       <span className="last-message-content__text">{text?.value?? ''}</span>
-    </span>
+    </div>
   )
 }

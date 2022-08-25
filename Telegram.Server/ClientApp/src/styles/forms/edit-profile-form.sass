@@ -1,0 +1,56 @@
+﻿@import "base-form"
+@import "../elements/input"
+@import "../colors"
+@import "settings-form"
+
+.edit-profile-form
+  width: $setting-form-width
+  padding: 0
+
+.edit-profile-avatar
+  width: 100px
+  height: 100px
+  border-radius: 50%
+
+.edit-profile-form__avatar-wrapper
+  display: flex
+  align-items: center
+  flex-direction: column
+
+.edit-profile-header
+  position: relative
+  display: flex
+  justify-content: space-between
+  padding: $header-padding $header-padding
+
+.edit-profile__user-name
+  padding-top: 10px
+  font-size: 18px
+
+.about-me-form
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  padding: 15px $header-padding
+
+.about-me-input
+  flex: 1
+  padding: 0 $header-padding
+  font-size: 14px
+
+.about-me-input::placeholder
+  color: $small-text-color
+
+.characters-left
+  padding-right: $header-padding
+  color: $small-text-color
+  font-size: 14px
+
+.edit-profile-fields
+  padding: 6px 0
+
+.edit-form-row-value
+  font-size: 15px
+  color: $primary-color
+  font-weight: 500

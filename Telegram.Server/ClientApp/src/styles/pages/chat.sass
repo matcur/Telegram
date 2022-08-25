@@ -2,11 +2,19 @@
 @import "../up-layer"
 @import "../modal"
 @import "../chat/message"
+@import "../colors"
+@import "../elements/input"
+@import "../forms/base-form"
+
+.clear-menu
+  list-style-type: none
+  padding-left: 0
+  margin-top: 0
 
 .input-label
   position: absolute
   margin-top: -25px
-  color: #6396CB
+  color: $primary-color
   font-size: 16px
 
 .form-input
@@ -16,16 +24,6 @@
   padding: 10px 0 10px 15px
   -webkit-transition: .1s
   transition: .1s
-
-.form-group
-  display: -webkit-box
-  display: -ms-flexbox
-  display: flex
-  position: relative
-  -webkit-box-orient: vertical
-  -webkit-box-direction: normal
-  -ms-flex-direction: column
-  flex-direction: column
 
 .input-line::before,
 .input-line::after
@@ -42,7 +40,7 @@
   left: 50%
   height: 2px
   width: 0
-  background: #6396CB
+  background: $primary-color
   -webkit-transition: .2s
   transition: .2s
 
@@ -159,7 +157,6 @@
   padding: 8px 10px
 
 .search-item-details
-  padding-right: 10px
   display: -webkit-box
   display: -ms-flexbox
   display: flex
@@ -170,9 +167,9 @@
   -webkit-box-pack: center
   -ms-flex-pack: center
   justify-content: center
-  margin-right: auto
   -ms-flex-negative: 1
-  flex-shrink: 1
+  flex-shrink: 3
+  flex-grow: 2
 
 .chat-name
   font-size: 14px
@@ -195,10 +192,11 @@
   display: flex
   align-items: center
   margin-left: 5px
-  color: #91A3B5
+  color: $small-text-color
   text-overflow: ellipsis
   white-space: nowrap
   overflow: hidden
+  flex-grow: 2
   &__text
     text-overflow: ellipsis
     overflow: hidden
@@ -224,7 +222,7 @@
   white-space: nowrap
 
 .search-message-date
-  color: #91A3B5
+  color: $small-text-color
 
 .unread-messages-count
   margin-top: 5px
@@ -301,7 +299,8 @@
   flex-direction: column
   position: relative
   max-height: 100vh
-  min-width: 350px
+  max-width: 700px
+  width: 500px
   border-right: 1px solid #0F1820
 
 .user-name
@@ -374,33 +373,6 @@ input
   color: #727E8A
   text-align: center
 
-.form-btn
-  padding: 8px
-  margin: 0 5px
-  border-radius: 5px
-  font-size: 16px
-  color: #6396CB
-  font-weight: 600
-  cursor: pointer
-  text-transform: uppercase
-
-.form-btn:hover
-  background: #1D2A39
-
-.form
-  padding: 10px 20px 15px 20px
-  margin: auto
-  background: #17212B
-  border-radius: 6px
-
-.form-title
-  font-size: 18px
-
-.form-buttons
-  display: flex
-  justify-content: flex-end
-  margin-top: 10px
-
 .file-input
   display: none
 
@@ -409,11 +381,14 @@ input
 
 .label
   font-size: 15px
-  color: #6396CB
+  color: $primary-color
 
 .new-group-form
   width: 330px
-  padding-top: 20px
+  padding: 20px 20px 15px
+
+.new-group-form__menu
+  margin: 7px 0
 
 .image-input
   width: 80px
@@ -474,9 +449,14 @@ input
 .invalid-group .input-line::after
   background: #fa2323
 
-.user-activity-status
+.activity-status
   font-size: 13px
+
+.active-status
   color: #73B9F5
+
+.inactive-status
+  color: $small-text-color
 
 .close
   position: relative
@@ -495,6 +475,7 @@ input
   height: 17px
   width: 2px
   background-color: #fff
+  left: 50%
 
 .close:before
   transform: rotate(45deg)
@@ -513,16 +494,6 @@ input
 .form-btn:disabled
   cursor: not-allowed
   color: rgba(99, 150, 203, .3)
-
-.clear-input
-  border: none
-  background: transparent
-  color: #fff
-  font-weight: 400
-  caret-color: #fff
-
-.clear-input:focus
-  outline: none
 
 .hidden
   visibility: hidden

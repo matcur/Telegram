@@ -1,12 +1,17 @@
-﻿.settings-form
-  width: 370px
+﻿@import "base-form"
+
+$setting-form-width: 370px
+$header-padding: 20px
+
+.settings-form
+  width: $setting-form-width
   padding: 0
 
 .settings-header
   position: relative
   display: flex
   justify-content: space-between
-  padding: 25px 20px
+  padding: $header-padding $header-padding
 
 .settings-title
   font-size: 18px
@@ -14,30 +19,14 @@
 .settings-form__user-info
   margin-left: 15px
 
-
-.clear-menu
-  list-style-type: none
-  padding-left: 0
-
-
-.settings-form__item
-  font-size: 15px
-  font-weight: 400
-  color: #ccc
-  padding: 11px 20px
-  transition: background .2s
-  cursor: pointer
-
-
-.form-row-hover:hover
-  background: #232E3C
-
+.edit-profile-field
+  display: flex
+  justify-content: space-between
 
 .form-splitter
   height: 8px
   width: 100%
   background: #232E3C
-
 
 .settings-form__avatar-input
   padding: 0 20px 10px 20px
@@ -69,3 +58,17 @@
 
 .message-form__reply
   margin-left: 20px
+
+.transition-form
+  position: absolute
+  left: 0
+  transition: .2s
+
+.left-transition-form
+  left: -100%
+
+.right-transition-form
+  left: 100%
+
+.show-right-transition-form
+  left: 0

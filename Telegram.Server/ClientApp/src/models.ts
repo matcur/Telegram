@@ -4,6 +4,7 @@ export type User = {
   lastName: string
   chats: Chat[]
   avatarUrl: string
+  bio: string
   phone?: Phone
   friends?: User[]
 }
@@ -25,9 +26,7 @@ export type Message = {
   replyTo?: Message
   replyToId?: number
   chat?: Chat
-  associatedUsers: [{
-    user: User,
-  }]
+  associatedUsers: {user: User}[]
 }
 
 export type NewMessage = Pick<
