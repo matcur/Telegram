@@ -26,6 +26,19 @@ const authorizationSlice = createSlice({
       localStorage.setItem('app-authorization-token', '')
       localStorage.setItem(`app-authorization-token-user-id-${state.currentUser.id}`, '')
     },
+    updateAuthorizedUser(state, {payload}: PayloadAction<User>) {
+      state.currentUser = {
+        ...state.currentUser,
+        ...payload,
+      }
+    },
+    updateFriend(state, {payload}: PayloadAction<User>) {
+      const friends = state.currentUser.friends || [];
+      const index = friends.findIndex(f => f.id === payload.id)
+      if (index >= 1) {
+        friends.splice(index, 1, payload)
+      }
+    },
     addChat(state, {payload}: PayloadAction<Chat>) {
       state.currentUser.chats.push(payload)
     },
@@ -111,6 +124,8 @@ export const {
   flushToken,
   changeChatUpdatedDate,
   addChatMembers,
+  updateAuthorizedUser,
+  updateFriend,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

@@ -5,6 +5,7 @@ import {AuthenticatedHandler} from "./components/handlers/AuthenticatedHandler";
 import {UpLayerProvider} from "./providers/UpLayerProvider";
 import {Modals} from "./components/Modals";
 import "styles/index.sass"
+import {UserUpdatedHandler} from "./components/handlers/UserUpdatedHandler";
 
 const App = () => {
   return (
@@ -13,9 +14,11 @@ const App = () => {
         <UpLayerProvider>
           <BrowserRouter>
             <AuthenticatedHandler>
-              <Switch>
-                {routes}
-              </Switch>
+              <UserUpdatedHandler>
+                <Switch>
+                  {routes}
+                </Switch>
+              </UserUpdatedHandler>
             </AuthenticatedHandler>
           </BrowserRouter>
         </UpLayerProvider>

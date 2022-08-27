@@ -16,7 +16,7 @@ namespace Telegram.Server.Core.Db.Models
         public string AvatarUrl { get; set; }
 
         [MaxLength(70)]
-        public string Bio { get; set; } = "";
+        public string Bio { get; set; }
 
         public Phone Phone { get; set; }
 

@@ -8,6 +8,7 @@ using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
 using Telegram.Server.Core.Mapping;
+using Telegram.Server.Core.Services.Hubs;
 
 namespace Telegram.Server.Core.Services.Controllers
 {
@@ -24,13 +25,24 @@ namespace Telegram.Server.Core.Services.Controllers
 
         private readonly AuthorizedUser _authorizedUser;
 
-        public AuthorizedUserService(AppDb db, AuthorizedUser authorizedUser, ChatService chatService)
+        private readonly ChatHubService _chatHub;
+        
+        private readonly UserHubService _userHub;
+
+        public AuthorizedUserService(
+            AppDb db,
+            AuthorizedUser authorizedUser,
+            ChatService chatService,
+            ChatHubService chatHub,
+            UserHubService userHub)
         {
             _db = db;
             _users = db.Users;
             _messages = db.Messages;
             _authorizedUser = authorizedUser;
             _chatService = chatService;
+            _chatHub = chatHub;
+            _userHub = userHub;
         }
 
         public Task<User> Get()
@@ -114,11 +126,13 @@ namespace Telegram.Server.Core.Services.Controllers
             return await _chatService.Add(chat);
         }
 
-        public void Update(User user)
+        public async Task Update(User user)
         {
             user.Id = _authorizedUser.Id();
             _db.Entry(user).State = EntityState.Modified;
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
+            // Todo: extract to some background task
+            await _userHub.EmitUserUpdated(_authorizedUser.Id(), new UpdatedUserMap(user));
         }
     }
 }

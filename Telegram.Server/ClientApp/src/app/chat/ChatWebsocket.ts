@@ -23,6 +23,7 @@ export interface IChatWebsocket {
   emitMessageTyping(...args: any[]): void;
 }
 
+// Todo: change to functions with variables like fields
 export class ChatWebsocket implements IChatWebsocket {
   private _webhook: HubConnection | undefined
   

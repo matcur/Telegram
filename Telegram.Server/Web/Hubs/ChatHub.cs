@@ -8,7 +8,7 @@ using Telegram.Server.Core.Services.Controllers;
 namespace Telegram.Server.Web.Hubs
 {
     [Authorize]
-    public class ChatHub : Hub
+    public class ChatHub : TelegramHub
     {
         private readonly AuthorizedUserService _authorizedUser;
 
@@ -19,40 +19,19 @@ namespace Telegram.Server.Web.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if (!await _authorizedUser.MemberOf(ChatId()) && !await _authorizedUser.CreatorOf(ChatId()))
+            var chatId = IntFromQuery("chatId");
+            if (!await _authorizedUser.MemberOf(chatId) && !await _authorizedUser.CreatorOf(chatId))
             {
-                throw new Exception($"You are not member of {ChatId()}");
+                throw new Exception($"You are not member of {chatId}");
             }
             
-            await Groups.AddToGroupAsync(Context.ConnectionId, ChatId().ToString());
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
         }
         
         public async Task EmitMessageTyping()
         {
-            await Clients.OthersInGroup(ChatId().ToString())
+            await Clients.OthersInGroup(IntFromQuery("chatId").ToString())
                 .SendAsync("MessageTyping", JsonTelegram.Serialize(await _authorizedUser.Get()));
-        }
-
-        private int ChatId()
-        {
-            var query = Context.GetHttpContext().Request.Query;
-            if (!query.ContainsKey("chatId"))
-            {
-                throw new Exception("Can't find chatId in query params.");
-            }
-
-            var chatId = query["chatId"];
-            if (string.IsNullOrEmpty(chatId))
-            {
-                throw new Exception("'chatId' must be specified.");
-            }
-
-            if (!int.TryParse(chatId, out var result))
-            {
-                throw new Exception("'chatId' must be int.");
-            }
-            
-            return result;
         }
     }
 }

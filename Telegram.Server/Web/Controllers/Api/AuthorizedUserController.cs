@@ -90,9 +90,9 @@ namespace Telegram.Server.Web.Controllers.Api
         [HttpPut]
         [Route("api/1.0/authorized-user")]
         [ModelValidation]
-        public IActionResult Update([FromForm]User user)
+        public async Task<IActionResult> Update([FromForm]User user)
         {
-            _authorizedUserService.Update(user);
+            await _authorizedUserService.Update(user);
             
             return Ok();
         }

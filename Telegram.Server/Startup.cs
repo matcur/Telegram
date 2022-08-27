@@ -110,6 +110,7 @@ namespace Telegram.Server
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<AuthorizedUser>();
             services.AddScoped<ChatHubService>();
+            services.AddScoped<UserHubService>();
             services.AddScoped<UserService>();
             services.AddScoped<AuthorizedUserService>();
             services.AddScoped<ChatService>();
@@ -153,6 +154,7 @@ namespace Telegram.Server
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>($"{HubsRoutePrefix}/chats");
+                endpoints.MapHub<UserHub>($"{HubsRoutePrefix}/user");
             });
 
             app.UseSpa(spa =>
