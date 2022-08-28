@@ -127,7 +127,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     }
     textInput.onChange(newValue)
     chats.changeText(newValue, chatId)
-  }, [chatId])
+  }, [chatId, textInput.value])
   const onTextChange = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
     changeText(e.currentTarget.value)
   }, [changeText, textInput, chats])
