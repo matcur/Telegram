@@ -11,6 +11,7 @@ import {RichMessageForm} from "../forms/RichMessageForm";
 import {Content, Message, NewMessage} from "../../models";
 import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
+import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
 
 type Props = {
   reply?: Message
@@ -30,6 +31,7 @@ type ChatData = {
   currentMessage: {text: string, files: string[]}
 }
 
+// TODO move to parent and pass chat
 const chats = {
   items: [] as ChatData[],
   item(id: number) {
@@ -69,6 +71,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     {messageText: "", filePaths: [] as string[]}
   ))
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const fitTextScrollHeight = useFitScrollHeight(inputRef)
   
   const showDetailMessageForm = useCallback((messageText: string, filePaths: string[]) => {
     setModalData({messageText: textInput.value, filePaths})
@@ -118,6 +121,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
   const onTextChange = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
     textInput.onChange(e)
     chats.changeText(e.currentTarget.value, chatId)
+    fitTextScrollHeight()
   }, [textInput, chats])
   
   useEffect(() => {
