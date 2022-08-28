@@ -12,6 +12,7 @@ import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
 import {NameForm} from "./NameForm";
 import {User} from "../../models";
+import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
 
 type Props = {
   hide: Nothing
@@ -27,6 +28,8 @@ export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
   const [avatar, setAvatar] = useState(currentUser.avatarUrl)
   const files = useFormFiles()
   const avatarRef = useRef<HTMLImageElement>(null)
+  const bioRef = useRef<HTMLTextAreaElement>(null)
+  const fitBioScrollHeight = useFitScrollHeight(bioRef)
   const dispatch = useAppDispatch()
   const [nameFormVisible, showNameForm, hideNameForm] = useFlag(false)
 
@@ -39,22 +42,10 @@ export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
     dispatch(changeAvatar(newAvatar))
     new AuthorizedUserApi(token).changeAvatar(newAvatar)
   }, [token])
-  const onBioRefChange = (ref: HTMLTextAreaElement) => {
-    if (!ref) {
-      return
-    }
-
-    ref.style.height = "0"
-    ref.style.height = `${ref.scrollHeight}px`
-  }
   const [bio, setBio] = useState("")
   const onBioChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    const target = e.currentTarget
-    const {style, value} = target
-
-    setBio(value)
-    style.height = "0"
-    style.height = `${target.scrollHeight}px`
+    setBio(e.currentTarget.value)
+    fitBioScrollHeight()
   }, [bio])
   const save = useCallback((user: Partial<User>) => {
     new AuthorizedUserApi(token)
@@ -104,7 +95,7 @@ export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
         </div>
         <div className="about-me-form">
           <textarea
-            ref={onBioRefChange}
+            ref={bioRef}
             onChange={onBioChange}
             value={bio}
             placeholder="Bio"
