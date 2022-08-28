@@ -1,6 +1,6 @@
 ﻿import {User} from "../../models";
 import React, {useCallback} from "react";
-import {MessageInput} from "../message/MessageInput";
+import {MessageForm} from "../message/MessageForm";
 import {ReactComponent as Magnifier} from "../../public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "../../public/svgs/star.svg";
 import {ReactComponent as ThreeDot} from "../../public/svgs/three-dots.svg";
@@ -95,7 +95,7 @@ export const PublicChat = ({
           makeMessage={props => <PublicMessageFork {...props}/>}
         />
       </MessageScroll>
-      <MessageInput
+      <MessageForm
         textInput={textInput}
         onInput={onMessageInput}
         onSubmitting={onSubmit}

@@ -59,7 +59,7 @@ const chats = {
   }
 }
 
-export const MessageInput: FC<Props> = ({reply, replyElement, onSubmitting, textInput, chatId, onInput}: Props) => {
+export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textInput, chatId, onInput}: Props) => {
   const [detailMessageVisible, showDetailMessage, hideDetailMessage] = useFlag(false)
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
