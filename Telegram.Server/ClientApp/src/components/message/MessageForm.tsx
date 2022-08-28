@@ -1,4 +1,4 @@
-import React, {createRef, FC, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
+import React, {FC, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -12,6 +12,7 @@ import {Content, Message, NewMessage} from "../../models";
 import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
 import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
+import {useWindowListener} from "../../hooks/useWindowListener";
 
 type Props = {
   reply?: Message
@@ -65,7 +66,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
   const [detailMessageVisible, showDetailMessage, hideDetailMessage] = useFlag(false)
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const {register, handleSubmit} = useForm<Form>()
-  const form = createRef<HTMLFormElement>()
+  const form = useRef<HTMLFormElement>(null)
   const [chatData, setChatData] = useState(chats.item(chatId))
   const [modalData, setModalData] = useState(() => (
     {messageText: "", filePaths: [] as string[]}
@@ -78,7 +79,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     showDetailMessage()
   }, [textInput])
   const hasContent = useCallback(() => {
-    return textInput.value !== "" || chatData.currentMessage.files.length !== 0
+    return textInput.value.trim() !== "" || chatData.currentMessage.files.length !== 0
   }, [textInput, chatData])
   const onSubmit = useCallback(() => {
     if (!hasContent()) {
@@ -118,12 +119,31 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     showDetailMessageForm(input.value, loadedFiles)
   }, [])
   
+  const changeText = useCallback((newValue: string) => {
+    newValue = newValue.trimLeft();
+    const oldValue = textInput.value
+    if (!newValue.trim() && !oldValue.length) {
+      return
+    }
+    textInput.onChange(newValue)
+    chats.changeText(newValue, chatId)
+  }, [chatId])
   const onTextChange = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
-    textInput.onChange(e)
-    chats.changeText(e.currentTarget.value, chatId)
-    fitTextScrollHeight()
-  }, [textInput, chats])
+    changeText(e.currentTarget.value)
+  }, [changeText, textInput, chats])
+  const onEnterPress = useCallback((e: KeyboardEvent) => {
+    if (e.ctrlKey) {
+      return
+    }
+    if (e.key === "Enter" && !e.altKey) {
+      return onSubmit()
+    }
+    if (e.key === "Enter" && e.altKey) {
+      return changeText(textInput.value + "\n")
+    }
+  }, [textInput.value, textInput.onChange, onSubmit, form.current])
   
+  useWindowListener(onEnterPress, "keyup")
   useEffect(() => {
     const chatData = chats.item(chatId)
     
@@ -133,6 +153,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
   useEffect(() => {
     inputRef.current?.focus()
   }, [inputRef.current])
+  useEffect(fitTextScrollHeight, [textInput.value])
 
   return (
     <form
