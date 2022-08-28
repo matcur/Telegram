@@ -84,7 +84,7 @@ export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
         <span className="form-title settings-title">Info</span>
         <a
           className="close settings-form-close"
-          onClick={hide}
+          onClick={onHide}
         />
       </div>
       <div className="edit-profile-form__avatar-wrapper">
