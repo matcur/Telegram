@@ -1,4 +1,4 @@
-﻿import React, {CSSProperties, FC, useCallback, useContext, useEffect, useRef, useState} from "react";
+﻿import React, {FC, useCallback, useContext, useEffect, useRef} from "react";
 import {ResizesContext} from "./ResizeContext";
 import {useRandomString} from "../../hooks/useRandomString";
 import {withoutUnit} from "../../utils/withoutUnit";
@@ -9,32 +9,28 @@ type Props = {
   minWidth?: number
 }
 
-const remainWidth: CSSProperties = {flexGrow: 100}
-
 export const ResizedElement: FC<Props> = ({
   maxWidth = Number.POSITIVE_INFINITY,
   minWidth = Number.NEGATIVE_INFINITY,
   initWidth = "*",
   children,
 }) => {
-  const [styles, setStyles] = useState<CSSProperties>(() => ({}))
-  const stylesRef = useRef(styles)
-  stylesRef.current = styles
+  const resizedRef = useRef<HTMLDivElement>(null)
   const resizeContext = useContext(ResizesContext)
   const key = "resized_" + useRandomString()
 
   const increaseWidthInternal = useCallback((width: number) => {
-    setStyles(styles => {
-      const newWidth = withoutUnit(styles.width) + width
-      if (newWidth > maxWidth || newWidth < minWidth) {
-        return styles
-      }
+    const resize = resizedRef.current
+    if (!resize) {
+      return
+    }
+    const styles = resize.style
+    const newWidth = withoutUnit(styles.width) + width
+    if (newWidth > maxWidth || newWidth < minWidth) {
+      return
+    }
 
-      return {
-        ...styles,
-        width: newWidth
-      }
-    })
+    styles.width = `${newWidth}px`
   }, [])
 
   useEffect(function subscribeToResize() {
@@ -49,7 +45,7 @@ export const ResizedElement: FC<Props> = ({
         return minWidth
       },
       width(): number {
-        return withoutUnit(stylesRef.current.width)
+        return withoutUnit(resizedRef?.current?.style?.width)
       }
     })
 
@@ -57,15 +53,19 @@ export const ResizedElement: FC<Props> = ({
   }, [])
 
   useEffect(function initWidthEffect() {
-    if (initWidth === "*") {
-      setStyles(styles => ({...styles, ...remainWidth}))
-    } else {
-      setStyles(styles => ({...styles, width: initWidth}))
+    const resize = resizedRef.current
+    if (!resize) {
+      return
     }
-  }, [])
+    if (initWidth === "*") {
+      resize.style.flexGrow = "100"
+    } else {
+      resize.style.width = `${initWidth}px`
+    }
+  }, [resizedRef.current])
 
   return (
-    <div style={styles}>
+    <div ref={resizedRef}>
       {children}
     </div>
   )

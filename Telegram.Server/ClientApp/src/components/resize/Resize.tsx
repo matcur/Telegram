@@ -1,5 +1,5 @@
-﻿import React, {FC, useCallback, useState} from "react";
-import {ResizeBarsContext, Resizes, ResizesContext, ResizeValue} from "./ResizeContext";
+﻿import React, {CSSProperties, FC, useCallback, useState} from "react";
+import {ParentResizeContext, ResizeBarsContext, Resizes, ResizesContext, ResizeValue} from "./ResizeContext";
 import "./resize.sass"
 import {nullResizeElement} from "../../nullables";
 
@@ -19,6 +19,7 @@ export const Resize: FC<Props> = ({children}) => {
   const [resizes, setResizes] = useState<Resizes>(() => ({}))
   const [resizeBars, setResizeBars] = useState<string[]>(() => [])
   const [orderedElements, setOrderedElements] = useState<OrderedElement[]>(() => [])
+  const [styles, setStyles] = useState<CSSProperties>(() => ({}))
   const insertResize = useCallback((key: string, value: ResizeValue) => {
     setResizes(resizes => ({
       ...resizes,
@@ -58,12 +59,9 @@ export const Resize: FC<Props> = ({children}) => {
   }, [])
   const barSiblings = useCallback((barKey: string): [OrderedResizeElement, OrderedResizeElement] => {
     const barIndex = orderedElements.findIndex(b => b.key === barKey)
-    if (barIndex < 1 || orderedElements.length < 3) {
-      return [nullResizeElement, nullResizeElement]
-    }
 
-    const leftResized = orderedElements[barIndex - 1]
-    const rightResized = orderedElements[barIndex + 1]
+    const leftResized = orderedElements[barIndex - 1] ?? nullResizeElement
+    const rightResized = orderedElements[barIndex + 1] ?? nullResizeElement
     if (leftResized.type === "resize-element" && rightResized.type === "resize-element") {
       return [leftResized, rightResized]
     }
@@ -92,6 +90,18 @@ export const Resize: FC<Props> = ({children}) => {
 
     return [leftResized.width(), rightResized.width()]
   }, [barSiblings])
+  const disableUserSelect = useCallback(() => {
+    setStyles(styles => ({
+      ...styles,
+      userSelect: "none",
+    }))
+  }, [])
+  const activateUserSelect = useCallback(() => {
+    setStyles(styles => ({
+      ...styles,
+      userSelect: "initial",
+    }))
+  }, [])
 
   return (
     <ResizeBarsContext.Provider
@@ -111,9 +121,19 @@ export const Resize: FC<Props> = ({children}) => {
           remove: removeResize,
         }}
       >
-        <div className="resizer">
-          {children}
-        </div>
+        <ParentResizeContext.Provider
+          value={{
+            disableUserSelect,
+            activateUserSelect,
+          }}
+        >
+          <div
+            className="resizer"
+            style={styles}
+          >
+            {children}
+          </div>
+        </ParentResizeContext.Provider>
       </ResizesContext.Provider>
     </ResizeBarsContext.Provider>
   )

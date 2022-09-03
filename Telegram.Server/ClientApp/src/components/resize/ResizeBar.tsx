@@ -1,5 +1,5 @@
 ﻿import React, {CSSProperties, useCallback, useContext, useEffect, useRef} from "react";
-import {ResizeBarsContext} from "./ResizeContext";
+import {ParentResizeContext, ResizeBarsContext} from "./ResizeContext";
 import {useRandomString} from "../../hooks/useRandomString";
 import {useWindowListener} from "../../hooks/useWindowListener";
 
@@ -11,13 +11,16 @@ type Props = {
 export const ResizeBar = ({style, width = 3}: Props) => {
   const handlerWidth = width + 4
   const resizeBarsContext = useContext(ResizeBarsContext)
+  const parentResizeContext = useContext(ParentResizeContext)
   const key = "resize_bar_" + useRandomString()
   const mouseStateRef = useRef({downed: false, lastDownXPosition: 0})
   const activateResize = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    parentResizeContext.disableUserSelect()
     mouseStateRef.current.downed = true
     mouseStateRef.current.lastDownXPosition = e.clientX
   }, [])
   const disableResize = useCallback(() => {
+    parentResizeContext.activateUserSelect()
     mouseStateRef.current.downed = false
   }, [])
   const resizeRef = useRef<HTMLDivElement>(null)

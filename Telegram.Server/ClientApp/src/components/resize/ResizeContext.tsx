@@ -16,7 +16,11 @@ type ResizesType = {
   insert: (key: string, value: ResizeValue) => void
 }
 
-export const ResizesContext = createContext<ResizesType>({items: {}, insert: nope, remove: nope})
+export const ResizesContext = createContext<ResizesType>({
+  items: {},
+  insert: nope,
+  remove: nope,
+})
 
 type ResizeBarsType = {
   items: string[]
@@ -34,4 +38,14 @@ export const ResizeBarsContext = createContext<ResizeBarsType>({
   remove: nope,
   siblingsMinWidth: () => [0, 0],
   siblingsWidth: () => [0, 0],
+})
+
+type ParentResize = {
+  disableUserSelect: () => void
+  activateUserSelect: () => void
+}
+
+export const ParentResizeContext = createContext<ParentResize>({
+  disableUserSelect: nope,
+  activateUserSelect: nope,
 })
