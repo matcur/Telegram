@@ -18,6 +18,9 @@ import {Chat as ChatModel} from "models";
 import {MessagesSearch} from "../components/search/MessageSearch/MessagesSearch";
 import {IChatWebsocket} from "../app/chat/ChatWebsocket";
 import "styles/pages/chat.sass"
+import {Resize} from "../components/resize/Resize";
+import {ResizedElement} from "../components/resize/ResizedElement";
+import {ResizeBar} from "../components/resize/ResizeBar";
 
 type Search = {
   type: "chats"
@@ -104,26 +107,38 @@ export const Index = () => {
 
   return (
     <div className="index">
-      {search.type === "chats" && <ChatsBlock
-        selectedChat={selectedChat}
-        onChatSelected={setSelectedChat}
-        chats={chats}
-        websockets={chatWebsockets}
-      />}
-      {search.type === "messages" && <MessagesSearch
-        chat={search.inChat}
-        onCloseClick={() => setSearch({type: "chats"})}
-        onMessageSelect={() => {}}
-      />}
-      {
-        selectedChat === nullChat? 
-          <div className="chat"></div>:
-          <ChatOfType
-            chat={selectedChat}
-            websocket={chatWebsocket}
-            onMessageSearchClick={searchInChat}
-          />
-      }
+      <Resize>
+        <ResizedElement initWidth={500} maxWidth={800} minWidth={400}>
+          {search.type === "chats" && (
+            <ChatsBlock
+              selectedChat={selectedChat}
+              onChatSelected={setSelectedChat}
+              chats={chats}
+              websockets={chatWebsockets}
+            />
+          )}
+          {search.type === "messages" && (
+            <MessagesSearch
+              chat={search.inChat}
+              onCloseClick={() => setSearch({type: "chats"})}
+              onMessageSelect={() => {}}
+            />
+          )}
+        </ResizedElement>
+        <ResizeBar/>
+        {
+          selectedChat === nullChat?
+            <div className="chat"></div>: (
+              <ResizedElement>
+                <ChatOfType
+                  chat={selectedChat}
+                  websocket={chatWebsocket}
+                  onMessageSearchClick={searchInChat}
+                />
+              </ResizedElement>
+            )
+        }
+      </Resize>
     </div>
   )
 }
