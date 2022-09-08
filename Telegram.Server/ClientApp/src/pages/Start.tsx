@@ -1,10 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import leftPart from 'public/images/start/start-left-part.png'
 import rightPart from 'public/images/start/start-right-part.png'
 import airplane from 'public/images/start/start-airplane.png'
 import {Link} from "react-router-dom";
+import "styles/pages/start-pages.sass"
+import {loadTheme} from "../utils/loadTheme";
 
 const Start = () => {
+  useEffect(() => {
+    loadTheme('dark')
+    loadTheme('light')
+  }, [])
+
   return (
     <div className="page start-page">
       <div className="start-image">

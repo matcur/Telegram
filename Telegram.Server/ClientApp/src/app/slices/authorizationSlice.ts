@@ -2,19 +2,33 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Chat, Message, User} from "models";
 import {nullChat, nullUser} from "nullables";
 import {RootState} from "../store";
+import {Theme} from "../../providers/ThemeProvider";
 
 type State = {
   currentUser: User
   token: string
+  theme: Theme
 }
 
-const initialState = {currentUser: {...nullUser}, token: localStorage.getItem('app-authorization-token')} as State
+let theme: Theme;
+const storedTheme = localStorage.getItem('theme') || '';
+if (storedTheme === 'light' || storedTheme === 'dark') {
+  theme = storedTheme
+} else {
+  theme = 'dark'
+}
+
+const initialState: State = {
+  currentUser: {...nullUser},
+  token: localStorage.getItem('app-authorization-token') || "",
+  theme: theme,
+}
 
 const authorizationSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
-    authorize(state, {payload}: PayloadAction<State>) {
+    authorize(state, {payload}: PayloadAction<Pick<State, 'currentUser' | 'token'>>) {
       state.currentUser = payload.currentUser
       state.token = payload.token
       
@@ -25,6 +39,10 @@ const authorizationSlice = createSlice({
       state.token = ''
       localStorage.setItem('app-authorization-token', '')
       localStorage.setItem(`app-authorization-token-user-id-${state.currentUser.id}`, '')
+    },
+    choiceTheme(state, {payload}: PayloadAction<Theme>) {
+      state.theme = payload
+      localStorage.setItem('theme', payload)
     },
     updateAuthorizedUser(state, {payload}: PayloadAction<User>) {
       state.currentUser = {
@@ -126,6 +144,7 @@ export const {
   addChatMembers,
   updateAuthorizedUser,
   updateFriend,
+  choiceTheme,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

@@ -21,6 +21,7 @@ import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
 import {PublicMessageFork} from "../chat/PublicMessageFork";
 import {ChatProps} from "../chat/ChatOfType";
+import {useThemedChatClass} from "../../hooks/useThemedChatClass";
 
 type Props = ChatProps & {
   loadMembers(groupId: number, pagination: Pagination): void
@@ -47,13 +48,16 @@ export const PublicChat = ({
   const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
   const potentialMembers = useAwait(() => new UsersApi().all(), [])
   const authorizeToken = useAppSelector(state => state.authorization.token)
+  const themedClass = useThemedChatClass()
 
   const addMembers = useCallback((users: User[]) => {
     return users.length && new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
   }, [authorizeToken])
   
   return (
-    <BaseChat loaded={loaded}>
+    <BaseChat
+      loaded={loaded}
+    >
       {groupFormVisible && <Modal hide={hideGroupForm} name="PublicChatGroupForm">
         <GroupForm
           onHideClick={hideGroupForm}
@@ -86,7 +90,9 @@ export const PublicChat = ({
         loadPreviousMessages={loadPreviousMessages}
         websocket={websocket}
         chat={chat}
-        chatLoaded={loaded}>
+        chatLoaded={loaded}
+        className={themedClass}
+      >
         <ChatMessages
           onMessageDoubleClick={tryEditMessage}
           messages={messages}

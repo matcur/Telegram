@@ -6,7 +6,7 @@ import {Nothing} from "../../../utils/functions";
 type Props = {
   name: string
   icon?: ReactElement
-  additionalElement?: ReactElement
+  additionalElement?: () => ReactElement
   getCentralElement?: (hide: () => void) => ReactElement
   onClick: Nothing
 }
@@ -27,7 +27,7 @@ export const LeftMenuItem: FC<Props> = ({onClick, name, icon, additionalElement,
       )}
       {icon}
       <div className="option-name">{name}</div>
-      {additionalElement}
+      {additionalElement && additionalElement()}
     </div>
   )
 }

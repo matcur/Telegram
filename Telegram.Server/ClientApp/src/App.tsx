@@ -6,23 +6,26 @@ import {UpLayerProvider} from "./providers/UpLayerProvider";
 import {Modals} from "./components/Modals";
 import "styles/index.sass"
 import {UserUpdatedHandler} from "./components/handlers/UserUpdatedHandler";
+import {ThemeProvider} from "./providers/ThemeProvider";
 
 const App = () => {
   return (
     <div className="App">
-      <Modals>
-        <UpLayerProvider>
-          <BrowserRouter>
-            <AuthenticatedHandler>
-              <UserUpdatedHandler>
-                <Switch>
-                  {routes}
-                </Switch>
-              </UserUpdatedHandler>
-            </AuthenticatedHandler>
-          </BrowserRouter>
-        </UpLayerProvider>
-      </Modals>
+      <ThemeProvider>
+        <Modals>
+          <UpLayerProvider>
+            <BrowserRouter>
+              <AuthenticatedHandler>
+                <UserUpdatedHandler>
+                  <Switch>
+                    {routes}
+                  </Switch>
+                </UserUpdatedHandler>
+              </AuthenticatedHandler>
+            </BrowserRouter>
+          </UpLayerProvider>
+        </Modals>
+      </ThemeProvider>
     </div>
   );
 }

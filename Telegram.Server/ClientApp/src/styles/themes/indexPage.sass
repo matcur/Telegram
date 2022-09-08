@@ -1,0 +1,129 @@
+@mixin indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder)
+  color: $mainColor
+  .index
+    background: $mainBackground
+
+  .form
+    background: $mainBackground
+
+  .message-options
+    background: $mainBackground
+
+  .page
+    background: $mainBackground
+
+  .left-menu
+    background: $mainBackground
+
+  .scan-qr-page
+    background: $mainBackground
+
+  .small-toggler .checkmark
+    background: $mainBackground
+    border: 2px solid $leftMenuUserInfo
+
+  .last-message-content
+    color: $chatListItemColor
+
+  .about-me-input::placeholder
+    color: $chatListItemColor
+
+  .characters-left
+    color: $chatListItemColor
+
+  .search-message-date
+    color: $chatListItemColor
+
+  .inactive-status
+    color: $chatListItemColor
+
+  .last-message-user-name
+    color: $chatListLastMessageAuthorColor
+
+  .message-typing
+    color: $chatListLastMessageAuthorColor
+
+  .active-status
+    color: $chatListLastMessageAuthorColor
+
+  .left-menu-user-info
+    background: $leftMenuUserInfo
+
+  .btn
+    color: $mainColor
+
+  .form-input
+    color: $mainColor
+
+  .clear-input
+    caret-color: $searchBackground
+
+  .form-input
+    color: $mainColor
+
+  .start-block
+    color: $mainColor
+
+  .chats-search-input
+    background: $searchBackground
+
+  .form-row
+    color: $mainColor
+
+  .close:before, .close:after
+    background: $mainColor
+
+  .unread-messages-count
+    background: $unreadMessageCountBackground
+    color: $unreadMessageCountColor
+
+  .selected-chat
+    .unread-messages-count
+      color: $selectedChatBackground
+      background-color: $selectedChatUnreadMessageCountBackground
+
+  .burger-line
+    background: $burgerLineBackground
+
+  .burger:hover .burger-line
+    background: $hoverBurgerLineBackground
+
+  .chat-icon-hover:hover path
+    fill: $burgerLineBackground
+
+  .icon:hover
+    fill: $burgerLineBackground
+
+  .left-menu-option:hover path
+    fill: $burgerLineBackground
+
+  .search-block
+    border-right: 1px solid $betweenElementBorder
+
+  .chat-header
+    border-bottom: 1px solid $betweenElementBorder
+
+  .search-item:hover
+    background: $searchItemHoverBackground
+
+  .selected-chat
+    background: $selectedChatBackground
+
+  .selected-chat:hover
+    background: $selectedChatBackground
+
+  .chat-messages
+    background: $chatMessagesBackground
+
+  .message-wrapper
+    background: $mainBackground
+
+  .message-triangle
+    border-right-color: $mainBackground
+
+  .middle-message-value
+    background: $mainBackground
+
+// sass allow pass arguments only in row
+@include indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder)
+

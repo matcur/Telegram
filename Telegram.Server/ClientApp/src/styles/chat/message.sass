@@ -2,7 +2,8 @@
 
 $inner-width: 440px
 $inner-horizontal-padding: 13px
-$inner-vertical-padding: 8px
+$inner-top-padding: 8px
+$inner-bottom-padding: 6px
 $creation-date-bottom: 5px
 $creation-date-right: 10px
 
@@ -10,9 +11,8 @@ $creation-date-right: 10px
   display: none
 
 .message
-  display: -webkit-box
-  display: -ms-flexbox
   display: flex
+  align-items: flex-end
   margin-top: 5px
 
 .message-wrapper
@@ -24,7 +24,7 @@ $creation-date-right: 10px
   
 .message-author-wrapper
   display: none
-  padding: $inner-vertical-padding $inner-horizontal-padding
+  padding: $inner-bottom-padding $inner-horizontal-padding
 
 .message-triangle
   position: absolute
@@ -60,11 +60,11 @@ $creation-date-right: 10px
   color: #727E8A
 
 .text-content
-  margin-top: 4px
   word-break: break-word
+  padding-top: $inner-top-padding
   padding-left: $inner-horizontal-padding
   padding-right: $inner-horizontal-padding
-  padding-bottom: $inner-vertical-padding
+  padding-bottom: $inner-bottom-padding
   font-size: $font-size
 
 .first-in-row-message .message-author-wrapper,
@@ -152,7 +152,6 @@ $creation-date-right: 10px
 .message-options
   width: 190px
   padding: 5px 0
-  background: #17212B
   border-radius: 5px
 
 .message-option:hover

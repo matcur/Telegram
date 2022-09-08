@@ -1,6 +1,7 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from "react";
 import {Chat, Message} from "../../models";
 import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
+import {classNames} from "../../utils/classNames";
 
 type Props = {
   messages: Message[]
@@ -8,11 +9,12 @@ type Props = {
   websocket: IChatWebsocket
   chat: Chat
   chatLoaded: boolean
+  className?: string
 }
 
 const loadPreviousMessageOffset = 45
 
-export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages, loadPreviousMessages, children}) => {
+export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages, loadPreviousMessages, children, className}) => {
   const scrollBarRef = useRef<HTMLDivElement>(null)
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
 
@@ -73,7 +75,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
   return (
     <div
       ref={scrollBarRef}
-      className="scrollbar chat-messages"
+      className={classNames("scrollbar chat-messages", className)}
       onScroll={onScroll}>
       {children}
     </div>

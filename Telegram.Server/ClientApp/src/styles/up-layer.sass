@@ -18,9 +18,8 @@
   justify-content: space-between
   width: 270px
   height: 100%
-  background: #17212B
   -webkit-transition: .4s
-  transition: .4s
+  transition: left .4s
   -webkit-transition-timing-function: ease-in-out
   transition-timing-function: ease-in-out
 
@@ -54,11 +53,6 @@
   align-items: center
   padding: 12px 25px
   cursor: pointer
-
-.left-menu-option:hover path
-  -webkit-transition: .1s
-  transition: .1s
-  fill: #DCDCDC
 
 .left-menu-option:hover
   -webkit-transition: .1s
@@ -105,6 +99,7 @@
   background: rgba(0, 0, 0, 0)
   transition: .4s
   transition-timing-function: ease-in-out
+  transition-property: background, z-index
   
 .show-up-layer
   z-index: 100

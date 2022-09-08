@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useContext, useState} from 'react'
 import {LeftMenuUserInfo} from "./LeftMenuUserInfo";
 import {LeftMenuItem} from "./LeftMenuItem";
 import {ReactComponent as PeopleIcon} from "public/svgs/people.svg";
@@ -11,6 +11,8 @@ import {Toggler} from "components/form/Toggler";
 import {NewGroupForm} from "components/forms/NewGroupForm";
 import {SettingsForm} from "../../forms/SettingsForm";
 import {nope, Nothing} from "../../../utils/functions";
+import {ChangeThemeContext} from "../../../contexts/ChangeThemeContext";
+import {useTheme} from "../../../hooks/useTheme";
 
 type Props = {
   visible: boolean
@@ -18,29 +20,55 @@ type Props = {
 }
 
 export const LeftMenu = ({visible, onItemClick = nope}: Props) => {
-  const [needNightMode, setNeedNightMode] = useState(false)
-  const [items] = useState(() => [
-    {name: 'New Group', icon: <PeopleIcon/>, getCentralElement: (hide: () => void) => <NewGroupForm hide={hide}/>},
-    {name: 'New Channel', icon: <SpeakerIcon/>},
-    {name: 'Contacts', icon: <PersonIcon/>},
-    {name: 'Calls', icon: <PhoneIcon/>},
-    {name: 'Settings', icon: <GearIcon/>, getCentralElement: (hide: () => void) => <SettingsForm hide={hide}/>},
-    {name: 'Night Mode', icon: <MoonIcon/>, additionalElement: <Toggler value={needNightMode} setValue={setNeedNightMode}/>},
-  ])
+  const changeTheme = useContext(ChangeThemeContext)
+  const theme = useTheme()
+  const [darkTheme, setDarkTheme] = useState(theme === 'dark')
+  const onThemeChange = useCallback((isDarkTheme: boolean) => {
+    setDarkTheme(isDarkTheme)
+    if (isDarkTheme) {
+      changeTheme('dark')
+    } else {
+      changeTheme('light')
+    }
+  }, [changeTheme])
 
   return (
     <div className={'left-menu' + (visible? ' show-left-menu': '')}>
       <LeftMenuUserInfo/>
       <div className="left-menu-options">
-        {items.map((i, key) => (
-          <LeftMenuItem
-            key={key}
-            onClick={onItemClick}
-            name={i.name}
-            icon={i.icon}
-            getCentralElement={i.getCentralElement}
-          />
-        ))}
+        <LeftMenuItem
+          onClick={onItemClick}
+          name="New Group"
+          icon={<PeopleIcon/>}
+          getCentralElement={(hide: () => void) => <NewGroupForm hide={hide}/>}
+        />
+        <LeftMenuItem
+          onClick={onItemClick}
+          name="New Channel"
+          icon={<SpeakerIcon/>}
+        />
+        <LeftMenuItem
+          onClick={onItemClick}
+          name="Contacts"
+          icon={<PersonIcon/>}
+        />
+        <LeftMenuItem
+          onClick={onItemClick}
+          name="Calls"
+          icon={<PhoneIcon/>}
+        />
+        <LeftMenuItem
+          onClick={onItemClick}
+          name="Settings"
+          icon={<GearIcon/>}
+          getCentralElement={(hide: () => void) => <SettingsForm hide={hide}/>}
+        />
+        <LeftMenuItem
+          onClick={nope}
+          name="Night Mode"
+          icon={<MoonIcon/>}
+          additionalElement={() => (<Toggler value={darkTheme} setValue={onThemeChange}/>)}
+        />
       </div>
       <div className="left-menu-app-info">
         <strong>Telegram Desktop</strong>

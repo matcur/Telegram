@@ -76,11 +76,9 @@ namespace Telegram.Server.Web.Controllers.Api
                 return BadRequest("Wrong code");
             }
 
-            var tokenTask = _identity.CreateToken(userId, "simpleUser");
-            var codeTask = _identity.ForgotCode(value, userId);
-            var token = await tokenTask;
-            await codeTask;
-                
+            var token =  await _identity.CreateToken(userId, "simpleUser");
+            await _identity.ForgotCode(value, userId);
+
             return Json(token);
         }
     }

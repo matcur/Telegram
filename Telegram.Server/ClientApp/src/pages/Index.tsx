@@ -125,7 +125,7 @@ export const Index = () => {
             />
           )}
         </ResizedElement>
-        <ResizeBar/>
+        <ResizeBar width={0}/>
         {
           selectedChat === nullChat?
             <div className="chat"></div>: (
