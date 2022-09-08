@@ -2,7 +2,6 @@ import {Theme} from "../providers/ThemeProvider";
 
 export const loadTheme = (theme: Theme) => {
   const resetTransitionStyle = document.createElement("style");
-  resetTransitionStyle.classList.add('fuck')
   document.head.appendChild(resetTransitionStyle)
   resetTransitionStyle.innerText =
     'body * {' +
