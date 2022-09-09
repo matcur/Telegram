@@ -41,14 +41,14 @@ export const SettingsForm = ({hide}: Props) => {
   const [innerFormPendingClose, setInnerFormPendingClose] = useState(false)
   const hideInnerForm = () => {
     setInnerFormPendingClose(true)
-    setRightFormHeight(0)
+    setRightHeight(0)
     setTimeout(() => {
       setInnerForm(undefined)
       setInnerFormPendingClose(false)
     }, 200)
   }
-  const [settingsHeight, setSettingsHeight] = useState(0)
-  const [rightFormHeight, setRightFormHeight] = useState(0)
+  const [settingsHeight, setLeftHeight] = useState(0)
+  const [rightFormHeight, setRightHeight] = useState(0)
   const [wrapHeight, setWrapHeight] = useState(0)
 
   const loadImage = useCallback(async (input: HTMLInputElement) => {
@@ -76,31 +76,31 @@ export const SettingsForm = ({hide}: Props) => {
       current.click()
     }
   }, [])
-  const [settingsObserver] = useState(() => (
+  const [leftObserver] = useState(() => (
     new ResizeObserver(elements => {
-      elements.forEach(r => setSettingsHeight(r.target.clientHeight))
+      elements.forEach(r => setLeftHeight(r.target.clientHeight))
     })
   ))
-  const [rightFormObserver] = useState(() => (
+  const [rightObserver] = useState(() => (
     new ResizeObserver(elements => {
-      elements.forEach(r => setRightFormHeight(r.target.clientHeight))
+      elements.forEach(r => setRightHeight(r.target.clientHeight))
     })
   ))
-  const settingsRef = useRef<HTMLDivElement>()
-  const rightFormRef = useRef<HTMLDivElement>()
-  const setSettingsRef = useCallback((node: HTMLDivElement) => {
-    settingsRef.current && settingsObserver.unobserve(settingsRef.current)
-    node && settingsObserver.observe(node)
+  const leftRef = useRef<HTMLDivElement>()
+  const rightRef = useRef<HTMLDivElement>()
+  const setLeftRef = useCallback((node: HTMLDivElement) => {
+    leftRef.current && leftObserver.unobserve(leftRef.current)
+    node && leftObserver.observe(node)
 
-    setSettingsHeight(node?.clientHeight ?? 0)
-    settingsRef.current = node
+    setLeftHeight(node?.clientHeight ?? 0)
+    leftRef.current = node
   }, [])
   const setRightFormRef = useCallback((node: HTMLDivElement) => {
-    rightFormRef.current && rightFormObserver.unobserve(rightFormRef.current)
-    node && rightFormObserver.observe(node)
+    rightRef.current && rightObserver.unobserve(rightRef.current)
+    node && rightObserver.observe(node)
 
-    setRightFormHeight(node?.clientHeight ?? 0)
-    rightFormRef.current = node
+    setRightHeight(node?.clientHeight ?? 0)
+    rightRef.current = node
   }, [])
 
   useEffect(() => {
@@ -119,7 +119,7 @@ export const SettingsForm = ({hide}: Props) => {
   return (
     <div style={{position: "relative", height: wrapHeight, transition: ".2s", width: 370, overflow: "hidden", display: "flex", background: "#17212B", borderRadius: 6}}>
       <BaseForm
-        formRef={setSettingsRef}
+        formRef={setLeftRef}
         className={classNames({
           "transition-form": true,
           "settings-form": true,
