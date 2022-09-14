@@ -9,6 +9,7 @@ namespace Telegram.Server.Core
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            NullValueHandling = NullValueHandling.Ignore,
         };
         
         public static string Serialize(object value)

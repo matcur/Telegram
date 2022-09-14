@@ -124,7 +124,22 @@ const authorizationSlice = createSlice({
       if (!chat) return
       
       chat.members.push(...members)
-    }
+    },
+    updateChatMember(state, {payload: {chatId, member}}: PayloadAction<{chatId: number, member: User}>) {
+      const chat = state.currentUser.chats.find(c => c.id === chatId)
+      if (!chat) return
+
+      chat.messages?.forEach(m => {
+        if (m.author.id === member.id) {
+          return m.author = {...m.author, ...member}
+        }
+        return m
+      })
+      const lastMessage = chat.lastMessage
+      if (lastMessage?.author.id === member.id) {
+        lastMessage.author = {...lastMessage.author, ...member}
+      }
+    },
   }
 })
 
@@ -145,6 +160,7 @@ export const {
   updateAuthorizedUser,
   updateFriend,
   choiceTheme,
+  updateChatMember,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

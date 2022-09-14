@@ -3,13 +3,14 @@ import {ChatsBlock} from "components/chat/ChatsBlock";
 import {ChatOfType} from "components/chat/ChatOfType";
 import {nullChat, nullChatWebsocket} from "nullables";
 import {useAppSelector} from "../app/hooks";
-import {Message} from "../models";
+import {Message, User} from "../models";
 import {
   addChats,
   addMessage,
   changeChatUpdatedDate,
   setLastMessage,
-  unshiftChat
+  unshiftChat,
+  updateChatMember
 } from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";
 import {ChatWebsockets} from "../app/chat/ChatWebsockets";
@@ -58,7 +59,7 @@ export const Index = () => {
   }, [selectedChat])
   
   useEffect(function updateDateOnMessageAdd() {
-    const updateDateWrap = (websocket: IChatWebsocket) => {
+    const updateMessage = (websocket: IChatWebsocket) => {
       return (message: Message) => {
         dispatch(changeChatUpdatedDate({
           chatId: websocket.chatId(),
@@ -66,17 +67,24 @@ export const Index = () => {
         }))
       }
     }
+    const updateMember = (websocket: IChatWebsocket) => {
+      return (member: User) => {
+        dispatch(updateChatMember({
+          member,
+          chatId: websocket.chatId(),
+        }))
+      }
+    }
 
-    const removes: ((m: Message) => void)[] = []
+    const unsubscribes: (() => void)[] = []
     chatWebsockets.forEach(w => {
-      const updateDate = updateDateWrap(w)
-      w.onMessageAdded(updateDate)
-      removes.push(updateDate)
+      unsubscribes.push(
+        w.onMessageAdded(updateMessage(w)),
+        w.onMemberUpdated(updateMember(w))
+      )
     })
     
-    return () => chatWebsockets.forEach(
-      (c, i) => c.removeMessageAdded(removes[i])
-    )
+    return () => unsubscribes.forEach(u => u())
   }, [currentUser.chats.length])
   useEffect(() => {
     const load = async() => {

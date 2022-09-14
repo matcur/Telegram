@@ -2,25 +2,30 @@ import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {Message, User} from "../../models";
 import {typingThrottleTime} from "../../components/message/MessageInputting";
 import {throttle} from "../../utils/throttle";
+import {Nothing} from "../../utils/functions";
 
 export interface IChatWebsocket {
   chatId(): number;
   
   start(): Promise<void>;
 
-  onMessageAdded(callback: (message: Message) => void): void;
+  onMessageAdded(callback: (message: Message) => void): Nothing;
 
-  removeMessageAdded(callback: (message: Message) => void): void;
+  removeMessageAdded(callback: () => void): void;
 
   onMessageUpdated(callback: (Message: Message) => void): void;
 
-  removeMessageUpdated(callback: (message: Message) => void): void;
+  removeMessageUpdated(callback: () => void): void;
 
   onMessageTyping(callback: (author: User) => void): void;
 
-  removeMessageTyping(callback: (author: User) => void): void;
+  removeMessageTyping(callback: () => void): void;
   
   emitMessageTyping(...args: any[]): void;
+
+  onMemberUpdated(callback: (member: User) => void): Nothing;
+
+  removeMemberUpdated(callback: () => void): void;
 }
 
 // Todo: change to functions with variables like fields
@@ -56,6 +61,8 @@ export class ChatWebsocket implements IChatWebsocket {
     this._webhook?.on("MessageAdded", (messageJson: string) => {
       callback(JSON.parse(messageJson) as Message)
     })
+    
+    return () => this._webhook?.off("MessageAdded", callback)
   }
 
   removeMessageAdded(callback: (message: Message) => void) {
@@ -84,5 +91,17 @@ export class ChatWebsocket implements IChatWebsocket {
 
   removeMessageTyping(callback: (author: User) => void) {
     this._webhook!.off("MessageTyping", callback)
+  }
+  
+  onMemberUpdated(callback: (member: User) => void) {
+    this._webhook?.on("MemberUpdated", json => {
+      callback(JSON.parse(json) as User)
+    })
+    
+    return () => this._webhook?.off("MemberUpdated", callback)
+  }
+
+  removeMemberUpdated(callback: () => void) {
+    this._webhook?.off("MemberUpdated")
   }
 }

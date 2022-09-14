@@ -1,6 +1,7 @@
 import {Chat, Message, User} from "models";
 import {IChatWebsocket} from "./app/chat/ChatWebsocket";
 import {OrderedResizeElement} from "./components/resize/Resize";
+import {nope} from "./utils/functions";
 
 export const nullUser: User = {
   id: -1,
@@ -34,14 +35,16 @@ export const nullChat: Chat = {
 export const nullChatWebsocket = {
   chatId() {return -1},
   async start() {},
-  onMessageAdded() {},
+  onMessageAdded() {return nope},
   removeMessageAdded() {},
   onMessageUpdated() {},
   removeMessageUpdated() {},
   ensureWebhook() {},
   onMessageTyping() {},
   removeMessageTyping() {},
-  emitMessageTyping() {}
+  emitMessageTyping() {},
+  onMemberUpdated() {return nope},
+  removeMemberUpdated() {},
 } as IChatWebsocket
 
 export const nullResizeElement: OrderedResizeElement = {

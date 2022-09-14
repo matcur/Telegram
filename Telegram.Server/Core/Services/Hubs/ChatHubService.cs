@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Telegram.Server.Core.Db.Models;
+using Telegram.Server.Core.Mapping;
 using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server.Core.Services.Hubs
@@ -26,12 +27,12 @@ namespace Telegram.Server.Core.Services.Hubs
             return Clients(message).SendAsync("MessageUpdated", JsonTelegram.Serialize(message));
         }
         
-        public Task EmitMemberDataChanged(List<int> chatIds, User user)
+        public Task EmitMemberUpdated(List<int> chatIds, UpdatedUserMap user)
         {
             return _chatHub
                 .Clients
                 .Groups(chatIds.Select(c => c.ToString()).ToList())
-                .SendAsync("MemberDataChanged", JsonTelegram.Serialize(user));
+                .SendAsync("MemberUpdated", JsonTelegram.Serialize(user));
         }
 
         private IClientProxy Clients(Message message)

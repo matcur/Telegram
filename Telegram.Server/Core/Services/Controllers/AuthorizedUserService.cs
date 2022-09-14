@@ -126,13 +126,16 @@ namespace Telegram.Server.Core.Services.Controllers
             return await _chatService.Add(chat);
         }
 
-        public async Task Update(User user)
+        public async Task Update(UpdatedUserMap updatedUserMap)
         {
-            user.Id = _authorizedUser.Id();
-            _db.Entry(user).State = EntityState.Modified;
+            updatedUserMap.Id = _authorizedUser.Id();
+            _db.Entry(new User(updatedUserMap)).State = EntityState.Modified;
             await _db.SaveChangesAsync();
             // Todo: extract to some background task
-            await _userHub.EmitUserUpdated(_authorizedUser.Id(), new UpdatedUserMap(user));
+            var userHubTask = _userHub.EmitUserUpdated(_authorizedUser.Id(), updatedUserMap);
+            var chatsHubTask = _chatHub.EmitMemberUpdated(await ChatIds(), updatedUserMap);
+            await userHubTask;
+            await chatsHubTask;
         }
     }
 }

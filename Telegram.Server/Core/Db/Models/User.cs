@@ -51,5 +51,13 @@ namespace Telegram.Server.Core.Db.Models
             LastName = map.LastName;
             AvatarUrl = map.AvatarUrl;
         }
+
+        public User(UpdatedUserMap user)
+        {
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Bio = user.Bio;
+        }
     }
 }
