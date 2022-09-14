@@ -44,7 +44,7 @@ const authorizationSlice = createSlice({
       state.theme = payload
       localStorage.setItem('theme', payload)
     },
-    updateAuthorizedUser(state, {payload}: PayloadAction<User>) {
+    updateAuthorizedUser(state, {payload}: PayloadAction<Partial<User>>) {
       state.currentUser = {
         ...state.currentUser,
         ...payload,

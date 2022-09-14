@@ -29,7 +29,7 @@ export const SettingsForm = ({hide}: Props) => {
   const avatarRef = useRef<HTMLImageElement>(null)
   const dispatch = useAppDispatch()
   const [menuItems] = useState<MenuItem[]>(() => [
-    {name: 'Edit profile', getForm: (backClick: Nothing) => <EditProfileForm hide={hide} formRef={setRightFormRef} backClick={backClick}/>},
+    {name: 'Edit profile', getForm: (backClick: Nothing) => <EditProfileForm hide={backClick} formRef={setRightFormRef} backClick={backClick}/>},
     {name: 'Notifications'},
     {name: 'Privacy and Security'},
     {name: 'Chat Settings'},

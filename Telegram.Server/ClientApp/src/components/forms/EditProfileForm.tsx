@@ -1,9 +1,9 @@
 import {BaseForm} from "./BaseForm";
 import {ImageInput} from "../form/ImageInput";
-import React, {ChangeEvent, Ref, useCallback, useRef, useState} from "react";
+import React, {ChangeEvent, Ref, useCallback, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useFormFiles} from "../../hooks/useFormFiles";
-import {changeAvatar} from "../../app/slices/authorizationSlice";
+import {changeAvatar, updateAuthorizedUser} from "../../app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {Nothing} from "../../utils/functions";
 import "styles/forms/edit-profile-form.sass"
@@ -13,6 +13,7 @@ import {Modal} from "../Modal";
 import {NameForm} from "./NameForm";
 import {User} from "../../models";
 import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
+import {rightDiff} from "../../utils/rightDiff";
 
 type Props = {
   hide: Nothing
@@ -22,7 +23,7 @@ type Props = {
 
 const maxBioLength = 70
 
-export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
+export const EditProfileForm = ({formRef, hide}: Props) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const token = useAppSelector(state => state.authorization.token)
   const [avatar, setAvatar] = useState(currentUser.avatarUrl)
@@ -42,26 +43,38 @@ export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
     dispatch(changeAvatar(newAvatar))
     new AuthorizedUserApi(token).changeAvatar(newAvatar)
   }, [token])
-  const [bio, setBio] = useState("")
+  const [bio, setBio] = useState(currentUser.bio ?? "")
   const onBioChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setBio(e.currentTarget.value)
     fitBioScrollHeight()
   }, [bio])
-  const save = useCallback((user: Partial<User>) => {
+  const update = useCallback((user: Partial<User>) => {
     new AuthorizedUserApi(token)
-      .update(user)
-  }, [token])
+      .update({...currentUser, ...user})
+  }, [token, currentUser])
+  const saveChanges = useCallback((user: Partial<User>) => {
+    const changedUser = rightDiff(currentUser, user)
+    if (Object.keys(changedUser).length) {
+      update(changedUser)
+      dispatch(updateAuthorizedUser(changedUser))
+    }
+  }, [update, currentUser])
   const onHide = useCallback(() => {
-    save({bio})
+    saveChanges({bio})
     hide()
-  }, [hide, bio])
+  }, [currentUser.bio, hide, bio])
+
   const renderNameForm = () => {
     return (
       <Modal name="edit-profile-name" hide={hideNameForm}>
-        <NameForm user={currentUser} hide={hideNameForm} save={save}/>
+        <NameForm user={currentUser} hide={hideNameForm} save={saveChanges}/>
       </Modal>
     )
   }
+
+  useEffect(() => {
+    setBio(currentUser.bio ?? "")
+  }, [currentUser.bio])
 
   return (
     <BaseForm
@@ -71,7 +84,7 @@ export const EditProfileForm = ({backClick, formRef, hide}: Props) => {
     >
       {nameFormVisible && renderNameForm()}
       <div className="form-header edit-profile-header">
-        <span onClick={backClick}>Back</span>
+        <span onClick={onHide}>Back</span>
         <span className="form-title settings-title">Info</span>
         <a
           className="close settings-form-close"
