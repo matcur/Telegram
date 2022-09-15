@@ -12,7 +12,7 @@ import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
 import {Modal} from "../Modal";
 import {useFlag} from "../../hooks/useFlag";
-import {useMousedown} from "../../hooks/useMousedown";
+import {useMouseup} from "../../hooks/useMouseup";
 
 type Props = {
   initName?: string
@@ -104,7 +104,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     nameRef.current?.focus()
   }, [nameRef.current])
   
-  useMousedown(() => {
+  useMouseup(() => {
     if (addMembersVisible) {
       return onCreate()
     }
