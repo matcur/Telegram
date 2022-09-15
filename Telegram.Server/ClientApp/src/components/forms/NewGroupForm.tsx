@@ -123,7 +123,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
           <TextField
             label="Group Name"
             input={{value: name, onChange: onNameChange}}
-            className={formValid() || (!nameEntered && !nextClicked)? '': 'invalid-group'}
+            isInvalid={!formValid() && (nameEntered || nextClicked)}
             fieldRef={nameRef}
           />
         </div>
