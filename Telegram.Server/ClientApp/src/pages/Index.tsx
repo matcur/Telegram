@@ -116,7 +116,7 @@ export const Index = () => {
   return (
     <div className="index">
       <Resize>
-        <ResizedElement initWidth={500} maxWidth={800} minWidth={400}>
+        <ResizedElement initWidth={400} maxWidth={800} minWidth={400}>
           {search.type === "chats" && (
             <ChatsBlock
               selectedChat={selectedChat}
