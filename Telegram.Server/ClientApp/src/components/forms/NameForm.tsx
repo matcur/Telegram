@@ -3,7 +3,7 @@ import {TextFields} from "../form/TextFields";
 import {SmallTextField} from "../form/SmallTextField";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {User} from "../../models";
-import {useMouseup} from "../../hooks/useMouseup";
+import {useKeyup} from "../../hooks/useKeyup";
 
 type Props = {
   user: Partial<User>
@@ -43,7 +43,7 @@ export const NameForm = ({user, save, hide}: Props) => {
   useEffect(function focusFirstName() {
     firstNameRef.current?.focus()
   }, [firstNameRef.current])
-  useMouseup(function focusNextOrSave() {
+  useKeyup(function focusNextOrSave() {
     const focusedElement = document.activeElement;
     if (focusedElement === firstNameRef.current) {
       return lastNameRef.current.focus()

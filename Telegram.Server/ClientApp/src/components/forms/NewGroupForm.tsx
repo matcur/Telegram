@@ -12,7 +12,7 @@ import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
 import {Modal} from "../Modal";
 import {useFlag} from "../../hooks/useFlag";
-import {useMouseup} from "../../hooks/useMouseup";
+import {useKeyup} from "../../hooks/useKeyup";
 
 type Props = {
   initName?: string
@@ -30,11 +30,9 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const dispatch = useAppDispatch()
   const token = useAppSelector(state => state.authorization.token)
   const [potentialMembers, setPotentialMembers] = useState<User[]>([])
-  const [futureMembers, setFutureMembers] = useState<User[]>([])
-  const membersRef = useRef<User[]>([])
+  const [selectedMembers, setSelectedMembers] = useState<User[]>([])
   const nameRef = useRef<HTMLInputElement>(null)
   const [addMembersVisible, showAddMembers, hideAddMembers] = useFlag(false)
-  membersRef.current = futureMembers
 
   const createChat = async (members: User[]) => {
     const chat = {
@@ -48,10 +46,10 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     dispatch(addChat(await new AuthorizedUserApi(token).addGroup(chat)))
   }
   const onCreate = async () => {
-    if (!futureMembers.length) {
+    if (!selectedMembers.length) {
       return
     }
-    await createChat(membersRef.current)
+    await createChat(selectedMembers)
     hideAddMembers()
     hide()
   }
@@ -68,7 +66,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
         <FormButton
           name="Create"
           onClick={onCreate}
-          disabled={futureMembers.length === 0}
+          disabled={selectedMembers.length === 0}
         />
       </div>
     )
@@ -77,8 +75,8 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
         <AddMembersForm
           potentialMembers={potentialMembers}
           footer={footer}
-          selected={futureMembers}
-          setSelected={setFutureMembers}
+          selected={selectedMembers}
+          setSelected={setSelectedMembers}
         />
       </Modal>
     )
@@ -104,7 +102,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     nameRef.current?.focus()
   }, [nameRef.current])
   
-  useMouseup(() => {
+  useKeyup(() => {
     if (addMembersVisible) {
       return onCreate()
     }
