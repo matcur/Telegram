@@ -4,15 +4,11 @@ import {classNames} from "../../utils/classNames";
 type Props = {
   className?: string
   formRef?: Ref<HTMLDivElement>
-  inDark?: boolean
 }
 
-export const BaseForm: FC<Props> = ({formRef, inDark, className, children}) => {
+export const BaseForm: FC<Props> = ({formRef, className, children}) => {
   return (
-    <div ref={formRef} className={classNames({
-      "in-dark-form": inDark,
-      "form": true,
-    }, className)}>
+    <div ref={formRef} className={classNames("form", className)}>
       {children}
     </div>
   )

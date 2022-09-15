@@ -1,14 +1,16 @@
-import React, {FC, ReactElement, useCallback} from "react";
+import React, {FC, ReactElement, useCallback, useContext} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
 import {LeftMenuContext} from "../contexts/LeftMenuContext";
 import {UpLayer} from "../components/up-layer/UpLayer";
 import {LeftMenu} from "../components/menus/left-menu";
 import {useArray} from "../hooks/useArray";
 import {useFlag} from "../hooks/useFlag";
+import {ModalsOpened} from "../components/Modals";
 
 export const UpLayerProvider: FC = ({children}) => {
   const [leftMenuVisible, showLeftMenu, hideLeftMenu] = useFlag(false)
   const arbitraryElements = useArray<ReactElement>()
+  const modalsContext = useContext(ModalsOpened)
 
   const hide = useCallback(() => {
     hideLeftMenu()
@@ -30,7 +32,9 @@ export const UpLayerProvider: FC = ({children}) => {
           leftElementVisible={leftMenuVisible}
           leftElement={<LeftMenu onItemClick={hideLeftMenu} visible={leftMenuVisible}/>}
           arbitraryElements={arbitraryElements.value}
-          onClick={onClick}>
+          onClick={onClick}
+          modalOpened={modalsContext}
+        >
           {children}
         </UpLayer>
       </LeftMenuContext.Provider>

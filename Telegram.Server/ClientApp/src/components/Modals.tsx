@@ -1,5 +1,4 @@
-﻿import {createContext, createRef, FC, ReactNode, useCallback, useState} from "react";
-import {classNames} from "../utils/classNames";
+﻿import React, {createContext, createRef, FC, ReactNode, useCallback, useState} from "react";
 import {useOutsideClick} from "../hooks/useOutsideClick";
 import {nope, Nothing} from "../utils/functions";
 import {lastIn} from "../utils/lastIn";
@@ -11,11 +10,14 @@ type Props = {}
 export const ModalsContext = createContext({
   insert(element: ReactNode, name: string, hide: Nothing) {},
   remove(key: string) {},
+  items: [] as Modal[],
 })
 
 type Modal = {name: string, element: ReactNode, hide: Nothing}
 
 const nullModal: Modal = {hide: nope, element: "", name: ""}
+
+export const ModalsOpened = createContext(false)
 
 export const Modals: FC<Props> = ({children}) => {
   const [modals, setModals] = useState<Modal[]>([])
@@ -62,12 +64,20 @@ export const Modals: FC<Props> = ({children}) => {
   
   return (
     <ModalsContext.Provider
-      value={{insert, remove}}
+      value={{insert, remove, items: modals}}
     >
-      {children}
-      <div className={classNames("modals up-layer", Object.keys(modals).length && "opened-modals")}>
-        {modals.map((m, i) => <div ref={upperModalRef} className="modal">{m.element}</div>)}
-      </div>
+      <ModalsOpened.Provider
+        value={!!modals.length}
+      >
+        {children}
+        {modals.map((m, i) => (
+          <div
+            ref={upperModalRef}
+            className="modal"
+            style={{zIndex: i === modals.length - 1 ? 101 : 0}}
+          >{m.element}</div>
+        ))}
+      </ModalsOpened.Provider>
     </ModalsContext.Provider>
   )
 }

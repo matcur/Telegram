@@ -80,7 +80,6 @@ export const EditProfileForm = ({formRef, hide}: Props) => {
     <BaseForm
       formRef={formRef}
       className="edit-profile-form"
-      inDark={nameFormVisible}
     >
       {nameFormVisible && renderNameForm()}
       <div className="form-header edit-profile-header">

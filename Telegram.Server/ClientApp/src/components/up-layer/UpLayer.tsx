@@ -1,10 +1,12 @@
 import React, {FC, ReactElement} from 'react'
+import {classNames} from "../../utils/classNames";
 
 type Props = {
   onClick: () => void
   leftElement: ReactElement
   leftElementVisible: boolean
   arbitraryElements?: ReactElement[]
+  modalOpened: boolean
 }
 
 export const UpLayer: FC<Props> = ({
@@ -12,14 +14,18 @@ export const UpLayer: FC<Props> = ({
     leftElementVisible,
     arbitraryElements = [],
     onClick,
-    children
+    children,
+    modalOpened,
   }) => {
-  const visible = leftElementVisible
+  const visible = leftElementVisible || modalOpened
   
   return (
     <>
       <div
-        className={'up-layer' + (visible? ' show-up-layer': '')}
+        className={classNames({
+          'show-up-layer': visible,
+          'up-layer': true,
+        })}
         onClick={onClick}>
         <div
           className="left-element"
