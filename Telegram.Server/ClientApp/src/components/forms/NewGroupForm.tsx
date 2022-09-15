@@ -12,6 +12,7 @@ import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
 import {Modal} from "../Modal";
 import {useFlag} from "../../hooks/useFlag";
+import {useMousedown} from "../../hooks/useMousedown";
 
 type Props = {
   initName?: string
@@ -31,13 +32,9 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const [potentialMembers, setPotentialMembers] = useState<User[]>([])
   const [futureMembers, setFutureMembers] = useState<User[]>([])
   const membersRef = useRef<User[]>([])
+  const nameRef = useRef<HTMLInputElement>(null)
   const [addMembersVisible, showAddMembers, hideAddMembers] = useFlag(false)
   membersRef.current = futureMembers
-
-  useEffect(() => {
-    new AuthorizedUserApi(token).contacts()
-      .then(res => setPotentialMembers(res))
-  }, [])
 
   const createChat = async (members: User[]) => {
     const chat = {
@@ -51,6 +48,9 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     dispatch(addChat(await new AuthorizedUserApi(token).addGroup(chat)))
   }
   const onCreate = async () => {
+    if (!futureMembers.length) {
+      return
+    }
     await createChat(membersRef.current)
     hideAddMembers()
     hide()
@@ -95,6 +95,23 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
     setNameEntered(true)
   }
 
+  useEffect(() => {
+    new AuthorizedUserApi(token).contacts()
+      .then(res => setPotentialMembers(res))
+  }, [])
+  
+  useEffect(() => {
+    nameRef.current?.focus()
+  }, [nameRef.current])
+  
+  useMousedown(() => {
+    if (addMembersVisible) {
+      return onCreate()
+    }
+
+    onNextClick()
+  }, "Enter")
+
   return (
     <BaseForm className="new-group-form">
       {addMembersVisible && addMembersModal()}
@@ -106,7 +123,9 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
           <TextField
             label="Group Name"
             input={{value: name, onChange: onNameChange}}
-            className={formValid() || (!nameEntered && !nextClicked)? '': 'invalid-group'}/>
+            className={formValid() || (!nameEntered && !nextClicked)? '': 'invalid-group'}
+            fieldRef={nameRef}
+          />
         </div>
       </div>
       <div className="form-buttons">
