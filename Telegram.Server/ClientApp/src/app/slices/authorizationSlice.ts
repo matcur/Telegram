@@ -3,6 +3,7 @@ import {Chat, Message, User} from "models";
 import {nullChat, nullUser} from "nullables";
 import {RootState} from "../store";
 import {Theme} from "../../providers/ThemeProvider";
+import {storedTheme} from "../../utils/storedTheme";
 
 type State = {
   currentUser: User
@@ -10,18 +11,10 @@ type State = {
   theme: Theme
 }
 
-let theme: Theme;
-const storedTheme = localStorage.getItem('theme') || '';
-if (storedTheme === 'light' || storedTheme === 'dark') {
-  theme = storedTheme
-} else {
-  theme = 'dark'
-}
-
 const initialState: State = {
   currentUser: {...nullUser},
   token: localStorage.getItem('app-authorization-token') || "",
-  theme: theme,
+  theme: storedTheme(),
 }
 
 const authorizationSlice = createSlice({

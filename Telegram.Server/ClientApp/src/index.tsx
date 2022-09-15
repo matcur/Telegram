@@ -5,6 +5,14 @@ import App from './App';
 import {store} from 'app/store';
 import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import {loadTheme} from "./utils/loadTheme";
+import {storedTheme} from "./utils/storedTheme";
+
+const theme = storedTheme();
+loadTheme(theme)
+  .then(() => {
+    document.body.classList.add(theme)
+  })
 
 ReactDOM.render(
   <React.StrictMode>
