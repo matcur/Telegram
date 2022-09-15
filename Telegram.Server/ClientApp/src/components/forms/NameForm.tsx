@@ -1,8 +1,9 @@
 ﻿import {SimpleChangeForm} from "./SimpleChangeForm";
 import {TextFields} from "../form/TextFields";
 import {SmallTextField} from "../form/SmallTextField";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {User} from "../../models";
+import {useMousedown} from "../../hooks/useMousedown";
 
 type Props = {
   user: Partial<User>
@@ -14,6 +15,8 @@ export const NameForm = ({user, save, hide}: Props) => {
   const [firstName, setFirstName] = useState(user.firstName)
   const [lastName, setLastName] = useState(user.lastName)
   const [firstNameInvalid, setFirstNameInvalid] = useState(!user.firstName)
+  const firstNameRef = useRef<HTMLInputElement>(null)
+  const lastNameRef = useRef<HTMLInputElement>(null)
   
   const onSave = useCallback(() => {
     if (firstNameInvalid) {
@@ -37,6 +40,20 @@ export const NameForm = ({user, save, hide}: Props) => {
     setFirstName(value)
   }, [])
   
+  useEffect(function focusFirstName() {
+    firstNameRef.current?.focus()
+  }, [firstNameRef.current])
+  useMousedown(function focusNextOrSave() {
+    const focusedElement = document.activeElement;
+    if (focusedElement === firstNameRef.current) {
+      return lastNameRef.current.focus()
+    }
+    
+    if (focusedElement === lastNameRef.current) {
+      return onSave()
+    }
+  }, "Enter")
+  
   return (
     <SimpleChangeForm title="Name" onSave={onSave} onClose={onHide}>
       <TextFields>
@@ -44,10 +61,12 @@ export const NameForm = ({user, save, hide}: Props) => {
           label="First Name"
           input={{value: firstName, onChange: onFirstNameChange}}
           isInvalid={firstNameInvalid}
+          fieldRef={firstNameRef}
         />
         <SmallTextField
           label="Last Name"
           input={{value: lastName, onChange: e => setLastName(e.currentTarget.value)}}
+          fieldRef={lastNameRef}
         />
       </TextFields>
     </SimpleChangeForm>

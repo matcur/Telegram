@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, MutableRefObject} from 'react'
 import {InputEvent} from "hooks/useFormInput";
 import {classNames} from "../../utils/classNames";
 
@@ -9,20 +9,25 @@ export type TextFieldProps = {
   labelClassName?: string
   inputClassName?: string
   isInvalid?: boolean
+  fieldRef?: MutableRefObject<HTMLInputElement>
 }
 
-export const TextField: FC<TextFieldProps> = ({isInvalid = false, className = '', inputClassName, labelClassName, label, input}) => {
+export const TextField: FC<TextFieldProps> = ({fieldRef, isInvalid = false, className = '', inputClassName, labelClassName, label, input}) => {
   return (
-    <div className={classNames({
-      [className]: true,
-      "form-field": true,
-      "invalid-group": isInvalid,
-    })} style={{display: 'block'}}>
+    <div 
+      className={classNames({
+        [className]: true,
+        "form-field": true,
+        "invalid-group": isInvalid,
+      })}
+      style={{display: 'block'}}
+    >
       <label className={classNames("label", labelClassName)}>
         {label}
       </label>
       <input
         {...input}
+        ref={fieldRef}
         className={classNames(
           inputClassName,
           "clear-input text-input form-input",
