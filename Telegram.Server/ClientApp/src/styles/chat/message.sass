@@ -24,7 +24,7 @@ $creation-date-right: 10px
   
 .message-author-wrapper
   display: none
-  padding: $inner-bottom-padding $inner-horizontal-padding
+  padding: $inner-bottom-padding $inner-horizontal-padding 3px
 
 .message-triangle
   position: absolute
@@ -70,6 +70,12 @@ $creation-date-right: 10px
 .first-in-row-message .message-author-wrapper,
 .single-message .message-author-wrapper
   display: block
+
+.first-in-row-message,
+.single-message
+  &:not(.current-user-message)
+    .text-content
+      padding-top: 0
 
 .first-in-row-message .message-triangle,
 .first-in-row-message .message-author-avatar,
