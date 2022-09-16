@@ -1,22 +1,22 @@
 ﻿import {User} from "../../models";
 import {HubConnectionBuilder} from "@microsoft/signalr";
 
-type Callback = (user: User) => void
+type UserUpdatedCallback = (user: User) => void
 
-const callbacks: Callback[] = []
+const userUpdatedCallbacks: UserUpdatedCallback[] = []
 
-const unsubscribe = (callback: Callback) => {
+const unsubscribe = (callbacks: UserUpdatedCallback[], callback: UserUpdatedCallback) => {
   return () => callbacks.splice(callbacks.indexOf(callback), 1)
 }
 
-const subscribe = (callback: Callback) => {
-  if (callbacks.indexOf(callback) !== -1) {
-    return unsubscribe(callback)
+const subscribeUserUpdated = (callback: UserUpdatedCallback) => {
+  if (userUpdatedCallbacks.indexOf(callback) !== -1) {
+    return unsubscribe(userUpdatedCallbacks, callback)
   }
   
-  callbacks.push(callback)
+  userUpdatedCallbacks.push(callback)
   
-  return unsubscribe(callback)
+  return unsubscribe(userUpdatedCallbacks, callback)
 }
 
 const init = async (id: number, token: string) => {
@@ -35,12 +35,12 @@ const init = async (id: number, token: string) => {
       console.error(e, "Can't parse updated user")
       return
     }
-    callbacks.forEach(c => c(user))
+    userUpdatedCallbacks.forEach(c => c(user))
   })
 }
 
 export {
   init,
-  subscribe,
+  subscribeUserUpdated,
   unsubscribe,
 }
