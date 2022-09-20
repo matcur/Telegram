@@ -28,7 +28,6 @@ type Props = ChatProps & {
 }
 
 export const PublicChat = ({
- websocket,
  chat,
  onMessageSearchClick,
  loadPreviousMessages,
@@ -44,6 +43,8 @@ export const PublicChat = ({
  replyTo,
  textInput,
  loadMembers,
+ onMessageAdded,
+ onMessageTyping,
 }: Props) => {
   const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
   const potentialMembers = useAwait(() => new UsersApi().all(), [])
@@ -71,7 +72,7 @@ export const PublicChat = ({
       <ChatHeader onClick={showGroupForm}>
         <ChatDetails
           chat={chat}
-          websocket={websocket}
+          onMessageTyping={onMessageTyping}
         />
         <div className="chat-actions" onClick={preventClickBubble}>
           <button className="clear-btn chat-action-btn" onClick={onMessageSearchClick}>
@@ -88,7 +89,7 @@ export const PublicChat = ({
       <MessageScroll
         messages={messages}
         loadPreviousMessages={loadPreviousMessages}
-        websocket={websocket}
+        onMessageAdded={onMessageAdded}
         chat={chat}
         chatLoaded={loaded}
         className={themedClass}

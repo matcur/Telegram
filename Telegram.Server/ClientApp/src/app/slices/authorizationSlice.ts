@@ -4,6 +4,8 @@ import {nullChat, nullUser} from "nullables";
 import {RootState} from "../store";
 import {Theme} from "../../providers/ThemeProvider";
 import {storedTheme} from "../../utils/storedTheme";
+import {chatWebsocketExists, initChatWebsocket} from "../chat/chatWebsocket";
+import {initUserWebhook} from "../chat/userWebsocket";
 
 type State = {
   currentUser: User
@@ -15,6 +17,7 @@ const initialState: State = {
   currentUser: {...nullUser},
   token: localStorage.getItem('app-authorization-token') || "",
   theme: storedTheme(),
+
 }
 
 const authorizationSlice = createSlice({
@@ -24,6 +27,7 @@ const authorizationSlice = createSlice({
     authorize(state, {payload}: PayloadAction<Pick<State, 'currentUser' | 'token'>>) {
       state.currentUser = payload.currentUser
       state.token = payload.token
+      initUserWebhook(state.currentUser.id, payload.token)
       
       localStorage.setItem('app-authorization-token', payload.token)
       localStorage.setItem(`app-authorization-token-user-id-${payload.currentUser.id}`, payload.token)
@@ -50,11 +54,13 @@ const authorizationSlice = createSlice({
         friends.splice(index, 1, payload)
       }
     },
-    addChat(state, {payload}: PayloadAction<Chat>) {
-      state.currentUser.chats.push(payload)
-    },
     addChats(state, {payload}: PayloadAction<Chat[]>) {
-      state.currentUser.chats = payload
+      const newChats = payload.filter(c => !state.currentUser.chats.some(addedChat => addedChat.id === c.id))
+      newChats.forEach(c => initChatWebsocket(c.id, state.token))
+      state.currentUser.chats = [
+        ...state.currentUser.chats,
+        ...newChats,
+      ]
     },
     unshiftChat(state, {payload}: PayloadAction<Chat>) {
       state.currentUser.chats.unshift(payload)
@@ -138,7 +144,6 @@ const authorizationSlice = createSlice({
 
 export const {
   authorize,
-  addChat,
   unshiftChat,
   addChats,
   addMessages,

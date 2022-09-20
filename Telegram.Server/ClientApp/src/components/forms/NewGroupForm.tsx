@@ -5,7 +5,6 @@ import {TextField} from "components/form/TextField";
 import {InputEvent} from "hooks/useFormInput";
 import {AddMembersForm} from "components/forms/AddMembersForm";
 import {useFormFiles} from "../../hooks/useFormFiles";
-import {addChat} from "../../app/slices/authorizationSlice";
 import {User} from "../../models";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
@@ -34,7 +33,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
   const nameRef = useRef<HTMLInputElement>(null)
   const [addMembersVisible, showAddMembers, hideAddMembers] = useFlag(false)
 
-  const createChat = async (members: User[]) => {
+  const createChat = (members: User[]) => {
     const chat = {
       name: name,
       iconUrl: icon,
@@ -43,7 +42,7 @@ export const NewGroupForm: FC<Props> = ({initName = '', initIcon = '', hide}) =>
         ...members
       ]
     }
-    dispatch(addChat(await new AuthorizedUserApi(token).addGroup(chat)))
+    new AuthorizedUserApi(token).addGroup(chat)
   }
   const onCreate = async () => {
     if (!selectedMembers.length) {

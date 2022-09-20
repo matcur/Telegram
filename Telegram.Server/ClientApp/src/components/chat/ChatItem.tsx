@@ -1,23 +1,25 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useMemo, useState} from 'react'
 import cat from "public/images/index/cat-3.jpg";
 import {Chat, User} from "models";
 import {nullMessage} from "nullables";
 import {ReactComponent as Community} from "public/svgs/community.svg";
 import {ShortMessageContent} from "components/message/ShortMessageContent";
 import {readableDate} from "../../utils/datetime/readableDate";
-import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {MessageInputting} from "../message/MessageInputting";
 
 type Props = {
   chat: Chat
   className?: string
-  websocket: Promise<IChatWebsocket>
   onClick(chat: Chat): void
+  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
 }
 
-export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: Props) => {
+export const ChatItem: FC<Props> = ({chat, className = '', onClick, onMessageTyping}: Props) => {
   const [typingUsers, setTypingUsers] = useState<User[]>([])
   const lastMessage = chat.lastMessage?? nullMessage
+  const onMessageTypingWrap = useMemo(() => {
+    return onMessageTyping.bind(null, chat.id)
+  }, [onMessageTyping, chat.id])
   
   return (
     <div
@@ -37,9 +39,9 @@ export const ChatItem: FC<Props> = ({chat, websocket, className = '', onClick}: 
             </>
           )}
           <MessageInputting
-            websocketPromise={websocket}
             setUsers={setTypingUsers}
             users={typingUsers}
+            onMessageTyping={onMessageTypingWrap}
           />
         </div>
       </div>

@@ -81,13 +81,6 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
   const hasContent = useCallback(() => {
     return textInput.value.trim() !== "" || chatData.currentMessage.files.length !== 0
   }, [textInput, chatData])
-  const onSubmit = useCallback(() => {
-    if (!hasContent()) {
-      return
-    }
-    onDetailSubmit(textInput.value, chatData.currentMessage.files)
-    chatData.currentMessage.text = "";
-  }, [textInput, chatData])
 
   const onDetailSubmit = useCallback((text: string, filePaths: string[]) => {
     const content = filePaths.map(path => ({content: {value: path, type: 'Image'} as Content}))
@@ -102,12 +95,19 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
         ...content
       ]
     }
+    setModalData({messageText: "", filePaths: []})
+    chatData.currentMessage.text = "";
     onSubmitting(message)
 
     hideDetailMessage()
-    setModalData({messageText: "", filePaths: []})
+  }, [chatData, reply, onSubmitting])
+  const onSubmit = useCallback(() => {
+    if (!hasContent()) {
+      return
+    }
+    onDetailSubmit(textInput.value, chatData.currentMessage.files)
     chatData.currentMessage.text = "";
-  }, [chatData, reply])
+  }, [textInput.value, chatData, onDetailSubmit])
   
   const loadFiles = useCallback(async (input: HTMLInputElement) => {
     const loadingFiles = input.files
@@ -129,7 +129,11 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     chats.changeText(newValue, chatId)
   }, [chatId, textInput.value])
   const onTextChange = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
-    changeText(e.currentTarget.value)
+    const value = e.currentTarget.value;
+    if (value.endsWith("\n")) {
+      return
+    }
+    changeText(value)
   }, [changeText, textInput, chats])
   const onEnterPress = useCallback((e: KeyboardEvent) => {
     if (e.ctrlKey) {
@@ -149,7 +153,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     
     setChatData(chatData)
     textInput.onChange(chatData.currentMessage.text)
-  }, [chatId, textInput])
+  }, [chatId])
   useEffect(() => {
     inputRef.current?.focus()
   }, [inputRef.current])

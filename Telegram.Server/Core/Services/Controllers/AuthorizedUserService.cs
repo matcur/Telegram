@@ -119,11 +119,14 @@ namespace Telegram.Server.Core.Services.Controllers
 
         public async Task<Chat> AddGroup(ChatMap map)
         {
-            var chat = new Chat(map);
-            chat.Creator = await Get();
-            chat.Type = ChatType.Group;
+            var chatDto = new Chat(map);
+            chatDto.Creator = await Get();
+            chatDto.Type = ChatType.Group;
+
+            var chat = await _chatService.Add(chatDto);
+            await _userHub.EmitAddedInChat(chatDto);
             
-            return await _chatService.Add(chat);
+            return chat;
         }
 
         public async Task Update(UpdatedUserMap updatedUserMap)

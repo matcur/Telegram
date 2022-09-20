@@ -1,21 +1,14 @@
 ﻿import {User} from "../../models";
-import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
-import {useEffect, useState} from "react";
-import {nullChatWebsocket} from "../../nullables";
+import React, {useEffect, useState} from "react";
+import {showTypingTime} from "../../typingSettings";
 
 type Props = {
-  websocketPromise: IChatWebsocket | Promise<IChatWebsocket>
   users: User[]
+  onMessageTyping(callback: (user: User) => void): () => void
   setUsers(value: User[] | ((value: User[]) => User[])): void
 }
 
-export const showTypingTime = 500
-
-export const typingThrottleTime = showTypingTime - 100
-
-// TODO change websocketPromise to function with ability to subscribe by id what about illy klimov talk
-export const MessageInputting = ({websocketPromise, users, setUsers}: Props) => {
-  const [websocket, setWebsocket] = useState<IChatWebsocket>(nullChatWebsocket)
+export const MessageInputting = ({onMessageTyping, users, setUsers}: Props) => {
   const displayedUsers = users
     .sort((a, b) => a.firstName > b.firstName ? 1 : -1)
     .slice(0, 3)
@@ -41,18 +34,9 @@ export const MessageInputting = ({websocketPromise, users, setUsers}: Props) => 
     }, showTypingTime)
   }
   
-  useEffect(function subscribeOnTyping() {
-    websocket.onMessageTyping(onTyping)
-    return () => websocket.removeMessageTyping(onTyping)
-  }, [websocket])
-  
-  useEffect(function awaitWebsocket() {
-    if (websocketPromise instanceof Promise) {
-      websocketPromise.then(setWebsocket)
-    } else {
-      setWebsocket(websocketPromise)
-    }
-  }, [websocketPromise])
+  useEffect(() => {
+    return onMessageTyping(onTyping)
+  }, [])
   
   useEffect(() => {
     return () => setUsers([])

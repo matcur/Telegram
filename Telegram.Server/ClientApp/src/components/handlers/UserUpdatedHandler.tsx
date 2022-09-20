@@ -2,10 +2,10 @@
 import {useDispatch} from "react-redux";
 import {useToken} from "../../hooks/useToken";
 import {useCurrentUser} from "../../hooks/useCurrentUser";
-import {init, subscribeUserUpdated, unsubscribe} from "../../app/chat/userWebsocket";
+import {subscribeAddedInChat, subscribeUserUpdated} from "../../app/chat/userWebsocket";
 import {User} from "../../models";
-import {updateAuthorizedUser, updateFriend} from "app/slices/authorizationSlice";
-import {Nothing} from "../../utils/functions";
+import {addChats, updateAuthorizedUser, updateFriend} from "app/slices/authorizationSlice";
+import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 
 type Props = {}
 
@@ -22,14 +22,19 @@ export const UserUpdatedHandler: FC<Props> = ({children}) => {
     }
   }, [currentUser.id])
   
+  const addNewChat = async (chatId: number) => {
+    const chat = await new AuthorizedUserApi(token).chat(chatId)
+    dispatch(addChats([chat]))
+  }
+  
   useEffect(() => {
-    init(currentUser.id, token)
     const unsubscribes = [
       subscribeUserUpdated(updateUser),
+      subscribeAddedInChat(addNewChat),
     ]
     
     return () => unsubscribes.forEach(u => u())
-  }, [token])
+  }, [currentUser.id])
   
   return (
     <>{children}</>

@@ -1,21 +1,20 @@
 import React, {FC, useCallback, useContext} from 'react'
 import {Search} from "components/search/Search";
 import {ChatList} from "./ChatList";
-import {Chat} from "models";
+import {Chat, User} from "models";
 import {useFormInput} from "hooks/useFormInput";
 import {Burger} from "components/icons/Burger";
-import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
 import {compareObjectDate} from "../../utils/compareObjectDate";
 import {LeftMenuContext} from "../../contexts/LeftMenuContext";
 
 type Props = {
   selectedChat: Chat
   chats: Chat[]
-  websockets: ChatWebsockets
   onChatSelected(chat: Chat): void
+  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
 }
 
-export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, websockets}: Props) => {
+export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, onMessageTyping}) => {
   const search = useFormInput('')
   const leftMenu = useContext(LeftMenuContext)
 
@@ -34,11 +33,12 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, webs
         onChange={search.onChange}
         icon={<Burger onClick={onBurgerClick}/>}/>
       <ChatList
-        websockets={websockets}
         chatsFiltration={filtration}
         selectedChat={selectedChat}
         onChatSelected={onChatSelected}
-        chats={[...chats].sort(compareObjectDate("updatedDate"))}/>
+        chats={[...chats].sort(compareObjectDate("updatedDate"))}
+        onMessageTyping={onMessageTyping}
+      />
     </div>
   )
 }

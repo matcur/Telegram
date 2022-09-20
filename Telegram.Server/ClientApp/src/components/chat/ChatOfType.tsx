@@ -1,6 +1,6 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {useAppDispatch, useAppSelector} from "app/hooks";
-import {Chat as ChatModel, Message} from "models";
+import {Chat as ChatModel, Message, User} from "models";
 import {useFormInput} from "hooks/useFormInput";
 import {textContent} from "utils/textContent";
 import {NewMessageState} from "app/messageStates/NewMessageState";
@@ -10,24 +10,22 @@ import {ChatApi} from "api/ChatApi";
 import {addChatMembers, addPreviousMessages, chatMessages, updateMessage} from "app/slices/authorizationSlice";
 import {MessagesApi} from "../../api/MessagesApi";
 import {sameUsers} from "../../utils/sameUsers";
-import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
 import {MessageOptions} from "../message/MessageOptions";
 import {PublicChat} from "../chats/PublicChat";
 import {Pagination} from "../../utils/type";
 import {useFlag} from "../../hooks/useFlag";
+import {emitMessageTyping, onMessageAdded, onMessageTyping, onMessageUpdated} from "../../app/chat/chatWebsocket";
 
 type Props = {
   chat: ChatModel
-  websocket: IChatWebsocket
   onMessageSearchClick(): void
 }
 
 const messagePerPage = 30;
 
 export type ChatProps = {
-  websocket: IChatWebsocket
   chat: ChatModel
   loaded: boolean
   messages: Message[]
@@ -42,9 +40,11 @@ export type ChatProps = {
   replyTo(message: Message): void
   onRemoveReplyClick(): void
   onSubmit(message: Partial<Message>): void
+  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
+  onMessageAdded(chatId: number, callback: () => void): () => void
 }
 
-export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: Props) => {
+export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
   const id = chat.id
   const textInput = useFormInput()
   const dispatch = useAppDispatch()
@@ -126,12 +126,11 @@ export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: P
   const replyTo = useCallback((message: Message) => {
     setReply(message)
   }, [])
-  const onMessageUpdated = useCallback((message: Message) => {
-    dispatch(updateMessage(message))
-  }, [])
   const onMessageInput = useCallback(() => {
-    websocket.emitMessageTyping()
-  }, [websocket])
+    emitMessageTyping(id)
+  }, [id])
+  const onMessageAddedWrap = useCallback(onMessageAdded, [])
+  const onMessageTypingWrap = useCallback(onMessageTyping, [])
 
   const onRemoveReplyClick = useCallback(() => setReply(undefined), [])
   const loadMembers = useCallback(async (chatId: number, pagination: Pagination) => {
@@ -162,12 +161,10 @@ export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: P
   }, [chat])
 
   useEffect(function subscribeMessageUpdated() {
-    websocket.onMessageUpdated(onMessageUpdated)
-    return () => websocket.removeMessageUpdated(onMessageUpdated)
-  }, [chat])
+    onMessageUpdated(id, message => dispatch(updateMessage(message)))
+  }, [id])
 
   const props = {
-    websocket,
     chat,
     onMessageSearchClick,
     loaded,
@@ -183,6 +180,8 @@ export const ChatOfType: FC<Props> = ({chat, websocket, onMessageSearchClick}: P
     reply,
     onRemoveReplyClick,
     allMessagesLoaded,
+    onMessageAdded: onMessageAddedWrap,
+    onMessageTyping: onMessageTypingWrap,
   }
 
   return (

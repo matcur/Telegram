@@ -1,27 +1,23 @@
 import React, {FC} from 'react'
-import {Chat} from "models";
+import {Chat, User} from "models";
 import {ChatItem} from './ChatItem';
-import {ChatWebsockets} from "../../app/chat/ChatWebsockets";
-import {useAppSelector} from "../../app/hooks";
 
 type Props = {
   selectedChat: Chat
   chats: Chat[]
-  websockets: ChatWebsockets
   onChatSelected(chat: Chat): void
   chatsFiltration(chat: Chat): boolean
+  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
 }
 
-export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltration, chats, websockets}: Props) => {
-  const token = useAppSelector(state => state.authorization.token)
-  
+export const ChatList: FC<Props> = ({selectedChat, onChatSelected, chatsFiltration, chats, onMessageTyping}: Props) => {
   const makeChat = (chat: Chat) => {
     return <ChatItem
       key={chat.id}
       chat={chat}
       className={chat.id === selectedChat.id? 'selected-chat': ''}
       onClick={onChatSelected}
-      websocket={websockets.get(chat.id, token)}
+      onMessageTyping={onMessageTyping}
     />
   }
 

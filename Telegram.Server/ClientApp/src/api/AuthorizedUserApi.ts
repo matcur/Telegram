@@ -34,7 +34,11 @@ export class AuthorizedUserApi {
   }
 
   update(user: Partial<User>) {
-    return this.api.put('authorized-user', {user})
+    return this.api.put('authorized-user', {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      bio: user.bio,
+    })
   }
   
   contacts() {

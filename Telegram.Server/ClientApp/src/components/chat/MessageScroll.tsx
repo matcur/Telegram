@@ -1,20 +1,19 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from "react";
 import {Chat, Message} from "../../models";
-import {IChatWebsocket} from "../../app/chat/ChatWebsocket";
 import {classNames} from "../../utils/classNames";
 
 type Props = {
   messages: Message[]
   loadPreviousMessages: () => Promise<void>
-  websocket: IChatWebsocket
   chat: Chat
   chatLoaded: boolean
   className?: string
+  onMessageAdded(chatId: number, callback: () => void): () => void
 }
 
 const loadPreviousMessageOffset = 45
 
-export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages, loadPreviousMessages, children, className}) => {
+export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPreviousMessages, children, className, onMessageAdded}) => {
   const scrollBarRef = useRef<HTMLDivElement>(null)
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
 
@@ -43,7 +42,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
         .then(() => scrollToBottom(bottom))
     }
   }, [loadPreviousMessages])
-  const onMessageAdded = useCallback(() => {
+  const onMessageAddedWrap = useCallback(() => {
     const scroll = scrollBarRef.current!
     const topOffset = scroll.scrollTop
     const scrollHeight = scroll.scrollHeight
@@ -55,9 +54,8 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, websocket, messages,
   }, [])
 
   useEffect(() => {
-    websocket.onMessageAdded(onMessageAdded)
-    return () => websocket.removeMessageAdded(onMessageAdded)
-  }, [websocket])
+    return onMessageAdded(chat.id, onMessageAddedWrap)
+  }, [chat.id])
 
   useEffect(() => {
     if (!chatLoaded) {

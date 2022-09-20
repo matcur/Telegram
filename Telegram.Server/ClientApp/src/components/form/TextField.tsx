@@ -1,4 +1,4 @@
-import React, {FC, MutableRefObject} from 'react'
+import React, {FC, MutableRefObject, RefObject} from 'react'
 import {InputEvent} from "hooks/useFormInput";
 import {classNames} from "../../utils/classNames";
 
@@ -9,7 +9,7 @@ export type TextFieldProps = {
   labelClassName?: string
   inputClassName?: string
   isInvalid?: boolean
-  fieldRef?: MutableRefObject<HTMLInputElement>
+  fieldRef?: RefObject<HTMLInputElement>
 }
 
 export const TextField: FC<TextFieldProps> = ({fieldRef, isInvalid = false, className = '', inputClassName, labelClassName, label, input}) => {
