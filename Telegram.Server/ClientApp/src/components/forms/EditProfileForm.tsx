@@ -33,6 +33,9 @@ export const EditProfileForm = ({formRef, hide}: Props) => {
   const fitBioScrollHeight = useFitScrollHeight(bioRef)
   const dispatch = useAppDispatch()
   const [nameFormVisible, showNameForm, hideNameForm] = useFlag(false)
+  const [bio, setBio] = useState(currentUser.bio ?? "")
+  const bioValueRef = useRef(bio)
+  bioValueRef.current = bio
 
   const loadImage = useCallback(async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
@@ -43,7 +46,6 @@ export const EditProfileForm = ({formRef, hide}: Props) => {
     dispatch(changeAvatar(newAvatar))
     new AuthorizedUserApi(token).changeAvatar(newAvatar)
   }, [token])
-  const [bio, setBio] = useState(currentUser.bio ?? "")
   const onBioChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setBio(e.currentTarget.value)
     fitBioScrollHeight()
@@ -75,6 +77,10 @@ export const EditProfileForm = ({formRef, hide}: Props) => {
   useEffect(() => {
     setBio(currentUser.bio ?? "")
   }, [currentUser.bio])
+  
+  useEffect(() => {
+    return () => saveChanges({bio: bioValueRef.current})
+  }, [])
 
   return (
     <BaseForm
