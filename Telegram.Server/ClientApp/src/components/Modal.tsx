@@ -1,19 +1,20 @@
-﻿import {FC, useContext, useEffect} from "react";
+﻿import {FC, ReactElement, useContext, useEffect, useRef} from "react";
 import {ModalsContext} from "./Modals";
 import {Nothing} from "../utils/functions";
+import {circularReplacer} from "../utils/circularReplacer";
 
 type Props = {
   name: string
   hide: Nothing
-  // add opened
+  children: ReactElement<any>
 }
 
-export const Modal: FC<Props> = ({children, name, hide}) => {
+export const Modal = ({children, name, hide}: Props) => {
   const modalsContext = useContext(ModalsContext)
   
   useEffect(() => {
     modalsContext.insert(children, name, hide)
-  }, [children])
+  }, [JSON.stringify(children.props, circularReplacer())])
   useEffect(() => {
     return () => {
       modalsContext.remove(name)

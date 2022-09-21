@@ -17,8 +17,6 @@ type Modal = {name: string, element: ReactNode, hide: Nothing}
 
 const nullModal: Modal = {hide: nope, element: "", name: ""}
 
-export const ModalsOpened = createContext(false)
-
 export const Modals: FC<Props> = ({children}) => {
   const [modals, setModals] = useState<Modal[]>([])
   const upperModalRef = createRef<HTMLDivElement>()
@@ -66,18 +64,14 @@ export const Modals: FC<Props> = ({children}) => {
     <ModalsContext.Provider
       value={{insert, remove, items: modals}}
     >
-      <ModalsOpened.Provider
-        value={!!modals.length}
-      >
-        {children}
-        {modals.map((m, i) => (
-          <div
-            ref={upperModalRef}
-            className="modal"
-            style={{zIndex: i === modals.length - 1 ? 101 : 0}}
-          >{m.element}</div>
-        ))}
-      </ModalsOpened.Provider>
+      {children}
+      {modals.map((m, i) => (
+        <div
+          ref={upperModalRef}
+          className="modal"
+          style={{zIndex: i === modals.length - 1 ? 101 : 0}}
+        >{m.element}</div>
+      ))}
     </ModalsContext.Provider>
   )
 }
