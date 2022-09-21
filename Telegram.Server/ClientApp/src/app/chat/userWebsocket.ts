@@ -8,7 +8,7 @@ type AddedInNewChatCallback = (chatId: number) => void
 const userUpdatedCallbacks: UserUpdatedCallback[] = []
 const addedInNewChatCallbacks: AddedInNewChatCallback[] = []
 
-const subscribeUserUpdated = (callback: UserUpdatedCallback) => {
+const onUserUpdated = (callback: UserUpdatedCallback) => {
   if (userUpdatedCallbacks.indexOf(callback) !== -1) {
     return unsubscribe(userUpdatedCallbacks, callback)
   }
@@ -18,7 +18,7 @@ const subscribeUserUpdated = (callback: UserUpdatedCallback) => {
   return unsubscribe(userUpdatedCallbacks, callback)
 }
 
-const subscribeAddedInChat = (callback: AddedInNewChatCallback) => {
+const onAddedInChat = (callback: AddedInNewChatCallback) => {
   if (addedInNewChatCallbacks.indexOf(callback) !== -1) {
     return unsubscribe(addedInNewChatCallbacks, callback)
   }
@@ -60,6 +60,6 @@ const initUserWebhook = async (id: number, token: string) => {
 
 export {
   initUserWebhook,
-  subscribeUserUpdated,
-  subscribeAddedInChat,
+  onUserUpdated,
+  onAddedInChat,
 }

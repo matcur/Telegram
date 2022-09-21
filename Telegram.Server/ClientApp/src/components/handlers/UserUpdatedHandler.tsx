@@ -2,7 +2,7 @@
 import {useDispatch} from "react-redux";
 import {useToken} from "../../hooks/useToken";
 import {useCurrentUser} from "../../hooks/useCurrentUser";
-import {subscribeAddedInChat, subscribeUserUpdated} from "../../app/chat/userWebsocket";
+import {onAddedInChat, onUserUpdated} from "../../app/chat/userWebsocket";
 import {User} from "../../models";
 import {addChats, updateAuthorizedUser, updateFriend} from "app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
@@ -29,8 +29,8 @@ export const UserUpdatedHandler: FC<Props> = ({children}) => {
   
   useEffect(() => {
     const unsubscribes = [
-      subscribeUserUpdated(updateUser),
-      subscribeAddedInChat(addNewChat),
+      onUserUpdated(updateUser),
+      onAddedInChat(addNewChat),
     ]
     
     return () => unsubscribes.forEach(u => u())
