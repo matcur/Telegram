@@ -1,3 +1,4 @@
+import React from "react";
 import {Message} from "../../models";
 
 type Props = {

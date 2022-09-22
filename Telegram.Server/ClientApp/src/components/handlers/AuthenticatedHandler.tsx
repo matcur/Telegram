@@ -5,6 +5,7 @@ import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {authorize, flushToken} from "../../app/slices/authorizationSlice";
 import {useAppSelector} from "../../app/hooks";
 import {User} from "../../models";
+import React from "react";
 
 export const AuthenticatedHandler: FC = ({children}) => {
   const history = useHistory()

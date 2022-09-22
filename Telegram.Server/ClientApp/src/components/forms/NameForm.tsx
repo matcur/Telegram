@@ -46,7 +46,7 @@ export const NameForm = ({user, save, hide}: Props) => {
   useKeyup(function focusNextOrSave() {
     const focusedElement = document.activeElement;
     if (focusedElement === firstNameRef.current) {
-      return lastNameRef.current.focus()
+      return lastNameRef.current?.focus()
     }
     
     if (focusedElement === lastNameRef.current) {

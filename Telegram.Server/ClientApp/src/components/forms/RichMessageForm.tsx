@@ -3,6 +3,7 @@ import {useFormInput} from "../../hooks/useFormInput";
 import {FormButton} from "../form/FormButton";
 import {FC} from "react";
 import {BaseForm} from "./BaseForm";
+import React from "react";
 
 type Props = {
   filePaths: string[]

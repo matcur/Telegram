@@ -1,4 +1,5 @@
-﻿import {Message} from "../../models";
+﻿import React from "react";
+import {Message} from "../../models";
 import {imageContent} from "../../utils/imageContent";
 
 type Props = {
