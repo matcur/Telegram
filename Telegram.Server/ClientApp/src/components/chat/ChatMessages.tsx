@@ -1,22 +1,24 @@
 import React, {ReactElement} from 'react'
-import {Message} from "models";
+import {Message, User} from "models";
 import {ChatMessageProps} from "./ChatMessage";
 import {nullMessage} from "nullables";
 import {inSameDay} from "../../utils/datetime/inSameDay";
 import {MiddleMessage} from "./MiddleMessage";
 import {userNames} from "../../utils/userNames";
+import {MessageFormProps} from "./PublicMessageFork";
 
 type Props = {
   messages: Message[]
   onMessageDoubleClick: (message: Message) => void
   onMessageRightClick: (message: Message, event: React.MouseEvent<HTMLDivElement>) => void
   replyTo(message: Message): void
-  makeMessage(props: ChatMessageProps): ReactElement
+  makeMessage(props: MessageFormProps): ReactElement
+  onAvatarClick(user: User): void
 }
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick, makeMessage}: Props) => {
+export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick, makeMessage, onAvatarClick}: Props) => {
   const makeMessages = (messages: Message[]) => {
     const result: ReactElement[] = [];
     messages.forEach((current, i) => {
@@ -34,6 +36,7 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
           message: current,
           nextAuthor: next.author,
           onRightClick: onMessageRightClick,
+          onAvatarClick,
         }))
       }
       if (type === "NewUserAdded") {

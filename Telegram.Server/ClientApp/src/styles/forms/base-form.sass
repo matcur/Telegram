@@ -1,7 +1,8 @@
 ﻿@import "../colors"
 
 $form-border-radius: 6px
-$default-form-padding: 10px 20px 15px 20px
+$vertical-padding: 25px
+$default-form-padding: 10px $vertical-padding 15px $vertical-padding
 
 .middle-size-form
   width: 400px
@@ -10,6 +11,9 @@ $default-form-padding: 10px 20px 15px 20px
   display: flex
   justify-content: space-between
   align-items: center
+
+.form-header-padding
+  padding: 0 25px
 
 .value-column
   height: 100%
@@ -83,3 +87,22 @@ $default-form-padding: 10px 20px 15px 20px
 
 .text-fields .form-field:not(:last-child)
   margin-bottom: 12px
+
+.vertical-form-padding
+  padding: 20px 0 15px
+
+.form-icon-column
+  padding: 10px $vertical-padding
+
+.form-info-column
+  padding: 10px 0
+
+.form-info-column .form-info:not(:last-child)
+  padding-bottom: 10px
+
+.form-info-row
+  display: flex
+
+.info-description
+  color: $small-text-color
+  font-size: 13px

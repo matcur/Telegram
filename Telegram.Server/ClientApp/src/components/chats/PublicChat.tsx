@@ -22,6 +22,8 @@ import {Modal} from "../Modal";
 import {PublicMessageFork} from "../chat/PublicMessageFork";
 import {ChatProps} from "../chat/ChatOfType";
 import {useThemedChatClass} from "../../hooks/useThemedChatClass";
+import {useModalVisible} from "../../hooks/useModalVisible";
+import {UserInfoForm} from "../forms/UserInfoForm";
 
 type Props = ChatProps & {
   loadMembers(groupId: number, pagination: Pagination): void
@@ -47,6 +49,7 @@ export const PublicChat = ({
  onMessageTyping,
 }: Props) => {
   const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
+  const [userInfoVisible, userInfoData, showUserInfo, hideUserInfo] = useModalVisible<User>()
   const potentialMembers = useAwait(() => new UsersApi().all(), [])
   const authorizeToken = useAppSelector(state => state.authorization.token)
   const themedClass = useThemedChatClass()
@@ -67,6 +70,12 @@ export const PublicChat = ({
           loadMembers={loadMembers}
           potentialMembers={potentialMembers}
           addMembers={addMembers}
+        />
+      </Modal>}
+      {userInfoVisible && <Modal hide={hideUserInfo} name="PublicChatGroupForm">
+        <UserInfoForm
+          hide={hideUserInfo}
+          user={userInfoData!}
         />
       </Modal>}
       <ChatHeader onClick={showGroupForm}>
@@ -100,6 +109,7 @@ export const PublicChat = ({
           onMessageRightClick={onMessageRightClick}
           replyTo={replyTo}
           makeMessage={props => <PublicMessageFork {...props}/>}
+          onAvatarClick={showUserInfo}
         />
       </MessageScroll>
       <MessageForm

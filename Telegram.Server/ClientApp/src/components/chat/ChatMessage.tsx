@@ -6,11 +6,11 @@ import {classNames} from "../../utils/classNames";
 
 export type ChatMessageProps = {
   key: string | number
-  onDoubleClick: (message: Message) => void
-  onRightClick: (message: Message, event: React.MouseEvent<HTMLDivElement>) => void
   previousAuthor: User
   message: Message
   nextAuthor: User
+  onDoubleClick(message: Message): void
+  onRightClick(message: Message, event: React.MouseEvent<HTMLDivElement>): void
 }
 
 export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick, children}) => {
