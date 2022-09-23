@@ -155,6 +155,7 @@ namespace Telegram.Server
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>($"{HubsRoutePrefix}/chats");
                 endpoints.MapHub<UserHub>($"{HubsRoutePrefix}/user");
+                endpoints.MapHub<ActivityHub>($"{HubsRoutePrefix}/activity");
             });
 
             app.UseSpa(spa =>

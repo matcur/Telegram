@@ -15,6 +15,7 @@ namespace Telegram.Server.Web.Hubs
             _authorizedUser = authorizedUser;
         }
         
+        // TODO: Add unsubscribe on disconnected
         public override Task OnConnectedAsync()
         {
             var userId = IntFromQuery("userId");

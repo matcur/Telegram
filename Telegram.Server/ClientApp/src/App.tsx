@@ -7,6 +7,7 @@ import {Modals} from "./components/Modals";
 import "styles/index.sass"
 import {UserUpdatedHandler} from "./components/handlers/UserUpdatedHandler";
 import {ThemeProvider} from "./providers/ThemeProvider";
+import {ActivityHandler} from "./components/handlers/ActivityHandler";
 
 const App = () => {
   return (
@@ -17,9 +18,11 @@ const App = () => {
             <BrowserRouter>
               <AuthenticatedHandler>
                 <UserUpdatedHandler>
-                  <Switch>
-                    {routes}
-                  </Switch>
+                  <ActivityHandler>
+                    <Switch>
+                      {routes}
+                    </Switch>
+                  </ActivityHandler>
                 </UserUpdatedHandler>
               </AuthenticatedHandler>
             </BrowserRouter>

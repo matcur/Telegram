@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {BaseForm} from "./BaseForm";
 import {User} from "../../models";
 import {Nothing} from "../../utils/functions";
@@ -10,6 +10,11 @@ import {Info} from "../form/Info";
 import {ReactComponent as AboutMe} from "public/svgs/about-me.svg";
 import cat from "../../public/images/index/cat-3.jpg";
 import "styles/forms/user-info-form.sass"
+import {activityStatus} from "../../utils/user/activityStatus";
+import {initActiveWebsocket, onOffline, onOnline} from "../../app/chat/activeWebsocket";
+import {useToken} from "../../hooks/useToken";
+import {useDispatch} from "react-redux";
+import {callWith} from "../../utils/array/callWith";
 
 type Props = {
   user: User
@@ -17,6 +22,24 @@ type Props = {
 }
 
 export const UserInfoForm = ({hide, user}: Props) => {
+  const token = useToken()
+  const stopWebhook = useRef<Nothing>()
+  const [state, setState] = useState("offline")
+  const userId = user.id
+  
+  useEffect(() => {
+    initActiveWebsocket(userId, token)
+      .then(callback => stopWebhook.current = callback)
+    const unsubscribes = [
+      onOnline(userId, () => setState("online")),
+      onOffline(userId, () => setState("offline")),
+    ]
+    return () => {
+      stopWebhook.current && stopWebhook.current()
+      callWith(unsubscribes, undefined)
+    }
+  }, [userId])
+  
   return (
     <BaseForm className="user-info-form vertical-form-padding middle-size-form">
       <div className="form-header form-header-padding">
@@ -35,7 +58,7 @@ export const UserInfoForm = ({hide, user}: Props) => {
             {fullName(user)}
           </div>
           <div className="activity-status active-status">
-            online
+            {state}
           </div>
         </div>
       </div>

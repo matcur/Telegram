@@ -7,6 +7,7 @@ export type User = {
   bio: string
   phone?: Phone
   friends?: User[]
+  lastActiveTime: string
 }
 
 export type Content = {

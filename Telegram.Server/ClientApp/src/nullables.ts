@@ -10,6 +10,7 @@ export const nullUser: User = {
   avatarUrl: '',
   friends: [],
   bio: '',
+  lastActiveTime: '',
 }
 
 export const nullMessage: Message = {

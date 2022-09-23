@@ -32,6 +32,11 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
+        public Task<bool> Exists(int id)
+        {
+            return _users.AnyAsync(u => u.Id == id);
+        }
+
         public Task<List<User>> Enumerable(List<int> ids)
         {
             return _users

@@ -75,6 +75,7 @@ const chatWebsocketExists = (chatId: number) => {
   return findWebsocket(chatId) !== nullWebsocket
 }
 
+// TODO: extract code to separate function 
 const onMessageAdded = (chatId: number, callback: (message: Message) => void) => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.messageAdded
