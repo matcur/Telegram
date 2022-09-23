@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Telegram.Server.Core.Mapping;
 
@@ -19,6 +20,8 @@ namespace Telegram.Server.Core.Db.Models
         public string Bio { get; set; }
 
         public Phone Phone { get; set; }
+
+        public DateTime LastActiveTime { get; set; }
 
         public List<Code> Codes { get; set; } = new List<Code>();
 
