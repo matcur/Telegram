@@ -66,6 +66,7 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
       new ChatApi(id, authorizeToken)
         .messages(messages.length, 30)
         .then(messages => {
+          res()
           if (!messages.length) {
             return markAllMessagesLoaded()
           }
@@ -73,7 +74,6 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
             messages,
             chatId: id
           }))
-          res()
           loadingMessagesPromise.current = null
         }).catch(rej)
     })

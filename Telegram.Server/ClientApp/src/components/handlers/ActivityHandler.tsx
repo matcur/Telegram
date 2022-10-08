@@ -6,6 +6,7 @@ import {Nothing} from "../../utils/functions";
 import {onWindowBlur, onWindowFocus} from "../../utils/onWindow";
 import {callWith} from "../../utils/array/callWith";
 import {useFlag} from "../../hooks/useFlag";
+import {nullUser} from "../../nullables";
 
 export const ActivityHandler: FC = ({children}) => {
   const currentUser = useCurrentUser()
@@ -23,6 +24,9 @@ export const ActivityHandler: FC = ({children}) => {
   }
   
   useEffect(function initActivity() {
+    if (currentUser === nullUser) {
+      return
+    }
     initActiveWebsocket(currentUser.id, token)
       .then(callback => {
         unsubscribe.current = callback

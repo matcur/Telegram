@@ -74,7 +74,7 @@ namespace Telegram.Server.Core.Db
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=postgres;Password=1234");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=root;Password=root");
         }
     }
 }
