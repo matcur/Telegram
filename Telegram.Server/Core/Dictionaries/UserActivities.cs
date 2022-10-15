@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Telegram.Server.Core.Services.Controllers;
 using Telegram.Server.Web.Hubs;
 
 namespace Telegram.Server.Core.Dictionaries
@@ -9,9 +11,21 @@ namespace Telegram.Server.Core.Dictionaries
     {
         private static readonly DeepDictionary<int, string, bool> Activities =
             new DeepDictionary<int, string, bool>();
+        
+        private static readonly Dictionary<int, DateTime> LastUserActivityTimes =
+            new Dictionary<int, DateTime>();
 
-        public void Online(int userId, string deepKey)
+        private readonly UserService _users;
+
+        public UserActivities(UserService users)
         {
+            _users = users;
+        }
+
+        public async Task Online(int userId, string deepKey)
+        {
+            LastUserActivityTimes[userId] = DateTime.Now;
+            await _users.UpdateLastActivity(userId);
             Activities.Put(
                 userId,
                 deepKey,
@@ -19,8 +33,10 @@ namespace Telegram.Server.Core.Dictionaries
             );
         }
 
-        public void Offline(int userId, string deepKey)
+        public async Task Offline(int userId, string deepKey)
         {
+            LastUserActivityTimes[userId] = DateTime.Now;
+            await _users.UpdateLastActivity(userId);
             Activities.Put(userId, deepKey, false);
         }
 
@@ -37,6 +53,18 @@ namespace Telegram.Server.Core.Dictionaries
         public bool IsOffline(int userId)
         {
             return !IsOnline(userId);
+        }
+
+        public DateTime LastActivity(int userId)
+        {
+            if (LastUserActivityTimes.ContainsKey(userId))
+            {
+                return LastUserActivityTimes[userId];
+            }
+
+            LastUserActivityTimes[userId] = _users.LastActivity(userId);
+            
+            return LastUserActivityTimes[userId];
         }
     }
 }

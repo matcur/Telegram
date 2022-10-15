@@ -18,12 +18,14 @@ namespace Telegram.Server.Web.Hubs
         private readonly AuthorizedUser _authorizedUser;
         
         private readonly UserActivities _userActivities;
+        
+        private readonly int _changeTabDelay = 10;
 
         public ActivityHub(UserService users, AuthorizedUser authorizedUser)
         {
             _users = users;
             _authorizedUser = authorizedUser;
-            _userActivities = new UserActivities();
+            _userActivities = new UserActivities(users);
         }
 
         public override async Task OnConnectedAsync()
@@ -38,33 +40,33 @@ namespace Telegram.Server.Web.Hubs
             await NotifyCaller(userId);
         }
 
-        public void EmitOnline()
+        public async Task EmitOnline()
         {
             var userId = EnsureCurrentUser();
-            _userActivities.Online(userId, Context.ConnectionId);
-            Emit(userId, "EmitOnline");
+            await _userActivities.Online(userId, Context.ConnectionId);
+            await Emit(userId, "EmitOnline");
         }
 
         public async Task EmitOffline()
         {
             var userId = EnsureCurrentUser();
-            _userActivities.Offline(userId, Context.ConnectionId);
-            await Task.Delay(10);
+            await _userActivities.Offline(userId, Context.ConnectionId);
+            await Task.Delay(_changeTabDelay);
             if (_userActivities.IsOffline(userId))
             {
                 Emit(userId, "EmitOffline");
             }
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
             var userId = IntFromQuery("userId");
             if (_authorizedUser.Id() == userId)
             {
-                EmitOffline();
+                await EmitOffline();
                 _userActivities.Remove(_authorizedUser.Id(), Context.ConnectionId);
             }
-            return Groups.RemoveFromGroupAsync(Context.ConnectionId, userId.ToString());
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, userId.ToString());
         }
 
         private Task NotifyCaller(int userId)
@@ -72,14 +74,18 @@ namespace Telegram.Server.Web.Hubs
             var isOnline = _userActivities.IsOnline(userId);
             return Clients
                 .Caller
-                .SendAsync(isOnline ? "EmitOnline" : "EmitOffline", userId);
+                .SendAsync(
+                    isOnline ? "EmitOnline" : "EmitOffline",
+                    userId,
+                    _userActivities.LastActivity(userId)
+                );
         }
 
-        private void Emit(int userId, string method)
+        private Task Emit(int userId, string method)
         {
-            Clients
+            return Clients
                 .Group(userId.ToString())
-                .SendAsync(method, userId);
+                .SendAsync(method, userId, DateTime.Now);
         }
         
         private int EnsureCurrentUser()

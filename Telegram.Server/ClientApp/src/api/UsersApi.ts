@@ -4,8 +4,12 @@ import {User} from "models";
 export class UsersApi {
   api = new ApiClient()
 
-  find(number: string) {
+  findByPhone(number: string) {
     return this.api.get<User>(`user/phone/${number}`)
+  }
+  
+  findById(id: number) {
+    return this.api.get<User>(`users/${id}`)
   }
   
   all() {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,6 +93,23 @@ namespace Telegram.Server.Core.Services.Controllers
                 .Take(pagination.Count())
                 .Skip(pagination.Offset())
                 .ToListAsync();
+        }
+
+        public Task UpdateLastActivity(int userId)
+        {
+            var now = DateTime.Now.ToString("yyyy-MM-dd h:mm:ss.fff");
+            
+            return _db.Database.ExecuteSqlRawAsync(
+                $"update \"Users\" set \"LastActiveTime\" = '{now}' " +
+                $"where \"Id\" = {userId};"
+            );
+        }
+
+        public DateTime LastActivity(int userId)
+        {
+            return _users
+                .Where(u => u.Id == userId).Select(u => u.LastActiveTime)
+                .FirstOrDefault();
         }
     }
 }

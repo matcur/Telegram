@@ -1,3 +1,4 @@
-﻿export const callWith = <T>(array: ((v: T) => void)[], value: T) => {
-  array.forEach(f => f(value))
+﻿// TODO: add typescript support with FuncArgs?
+export const callWith = (array: ((...v: any[]) => void)[], ...values: any[]) => {
+  array.forEach(f => f(...values))
 }

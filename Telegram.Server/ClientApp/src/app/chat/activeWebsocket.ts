@@ -7,12 +7,12 @@ type Websocket = {
   webhook: HubConnection
   userId: number
   callbacks: {
-    online: ((userId: number) => void)[],
-    offline: ((userId: number) => void)[],
+    online: Callback[],
+    offline: Callback[],
   }
 }
 
-type Callback = (userId: number) => void
+type Callback = (lastActivity: Date) => void
 
 const websockets: Websocket[] = []
 
@@ -32,7 +32,7 @@ const initActiveWebsocket = async (userId: number, authorizeToken: string) => {
     .withAutomaticReconnect()
     .build()
 
-  const callbacks = {
+  const callbacks: Websocket["callbacks"] = {
     online: [],
     offline: [],
   };
@@ -43,11 +43,11 @@ const initActiveWebsocket = async (userId: number, authorizeToken: string) => {
   }
   websockets.push(websocket)
   await webhook.start()
-  webhook.on("EmitOnline", (json: string) => {
-    callWith(callbacks.online, JSON.parse(json) as number)
+  webhook.on("EmitOnline", (userId: string) => {
+    callWith(callbacks.online, new Date())
   })
-  webhook.on("EmitOffline", (json: string) => {
-    callWith(callbacks.offline, JSON.parse(json) as number)
+  webhook.on("EmitOffline", (userId: string, lastActivity: string) => {
+    callWith(callbacks.offline, new Date(lastActivity))
   })
   
   return () => {
@@ -59,7 +59,7 @@ const initActiveWebsocket = async (userId: number, authorizeToken: string) => {
   }
 }
 
-function add(userId: number, callbacksKey: keyof Websocket["callbacks"], callback: (userId: number) => void) {
+function add(userId: number, callbacksKey: keyof Websocket["callbacks"], callback: Callback) {
   const websocket = findWebsocket(userId)
   if (!websocket) {
     return () => {
