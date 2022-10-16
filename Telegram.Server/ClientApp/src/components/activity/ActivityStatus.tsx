@@ -12,7 +12,7 @@ export const ActivityStatus = ({userId}: {userId: number}) => {
   if (userActivity.state === "online") {
     displayedActivity = "online"
   } else {
-    displayedActivity = secondsAgo < 60 ? "Was recently" : Math.floor(secondsAgo / 60) + " minutes ago"
+    displayedActivity = secondsAgo < 60 ? "was recently" : Math.floor(secondsAgo / 60) + " minutes ago"
   }
 
   return (
@@ -21,7 +21,7 @@ export const ActivityStatus = ({userId}: {userId: number}) => {
       userActivity.state === "online" && "active-status",
       userActivity.state === "offline" && "offline-status",
     )}>
-      {displayedActivity}
+      {!userActivity.loading && displayedActivity}
     </div>
   )
 }
