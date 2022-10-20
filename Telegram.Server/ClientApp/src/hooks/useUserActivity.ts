@@ -22,7 +22,7 @@ export const useUserActivity = (userId: number) => {
     ]
     return () => {
       stopWebhook.current && stopWebhook.current()
-      callWith(unsubscribes, undefined)
+      callWith(unsubscribes)
     }
   }, [userId])
   

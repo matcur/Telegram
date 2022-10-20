@@ -1,19 +1,21 @@
 ﻿import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {Message, User} from "../../models";
-import {unsubscribe} from "../../utils/array/unsubscribe";
-import {addIfNotExists} from "../../utils/array/addInNotExists";
 import {callWith} from "../../utils/array/callWith";
 import {throttle} from "../../utils/throttle";
 import {typingThrottleTime} from "../../typingSettings";
+
+
+type MessageCallback = (message: Message) => void;
+type UserCallback = (user: User) => void;
 
 type Websocket = {
   webhook?: HubConnection
   chatId: number
   callbacks: {
-    messageAdded: ((message: Message) => void)[],
-    messageUpdated: ((message: Message) => void)[],
-    messageTyping: ((message: Message) => void)[],
-    memberUpdated: ((message: Message) => void)[],
+    messageAdded: Set<MessageCallback>,
+    messageUpdated: Set<MessageCallback>,
+    messageTyping: Set<UserCallback>,
+    memberUpdated: Set<UserCallback>,
   }
 }
 
@@ -22,10 +24,10 @@ const nullWebsocket: Websocket = {
   chatId: -1,
   webhook: undefined,
   callbacks: {
-    messageAdded: [],
-    messageUpdated: [],
-    messageTyping: [],
-    memberUpdated: [],
+    messageAdded: new Set(),
+    messageUpdated: new Set(),
+    messageTyping: new Set(),
+    memberUpdated: new Set(),
   }
 }
 
@@ -41,11 +43,11 @@ const initChatWebsocket = async (chatId: number, authorizeToken: string) => {
     .withAutomaticReconnect()
     .build()
 
-  const callbacks = {
-    messageAdded: [],
-    messageUpdated: [],
-    messageTyping: [],
-    memberUpdated: [],
+  const callbacks: Websocket["callbacks"] = {
+    messageAdded: new Set(),
+    messageUpdated: new Set(),
+    messageTyping: new Set(),
+    memberUpdated: new Set(),
   };
   websockets.push({
     chatId,
@@ -54,16 +56,16 @@ const initChatWebsocket = async (chatId: number, authorizeToken: string) => {
   })
   await webhook.start()
   webhook.on("MessageAdded", (json: string) => {
-    callWith(callbacks.messageAdded, JSON.parse(json) as Message)
+    callWith(callbacks.messageAdded.values(), JSON.parse(json) as Message)
   })
   webhook.on("MessageUpdated", json => {
-    callWith(callbacks.messageUpdated, JSON.parse(json) as Message)
+    callWith(callbacks.messageUpdated.values(), JSON.parse(json) as Message)
   })
   webhook.on("MessageTyping", json => {
-    callWith(callbacks.messageTyping, JSON.parse(json) as User)
+    callWith(callbacks.messageTyping.values(), JSON.parse(json) as User)
   })
   webhook.on("MemberUpdated", json => {
-    callWith(callbacks.memberUpdated, JSON.parse(json) as User)
+    callWith(callbacks.memberUpdated.values(), JSON.parse(json) as User)
   })
 }
 
@@ -76,40 +78,40 @@ const chatWebsocketExists = (chatId: number) => {
 }
 
 // TODO: extract code to separate function 
-const onMessageAdded = (chatId: number, callback: (message: Message) => void) => {
+const onMessageAdded = (chatId: number, callback: MessageCallback) => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.messageAdded
-  addIfNotExists(callbacks, callback)
-  
-  return unsubscribe(callbacks, callback)
+  callbacks.add(callback)
+
+  return () => callbacks.delete(callback)
 }
 
-const onMessageUpdated = (chatId: number, callback: (message: Message) => void) => {
+const onMessageUpdated = (chatId: number, callback: MessageCallback) => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.messageUpdated
-  addIfNotExists(callbacks, callback)
+  callbacks.add(callback)
 
-  return unsubscribe(callbacks, callback)
+  return () => callbacks.delete(callback)
 }
 
-const onMessageTyping = (chatId: number, callback: (user: User) => void) => {
+const onMessageTyping = (chatId: number, callback: UserCallback) => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.messageTyping
-  addIfNotExists(callbacks, callback)
+  callbacks.add(callback)
 
-  return unsubscribe(callbacks, callback)
+  return () => callbacks.delete(callback)
 }
 
 const emitMessageTyping = throttle((chatId: number) => {
   findWebsocket(chatId)?.webhook?.invoke("EmitMessageTyping")
 }, typingThrottleTime)
 
-const onMemberUpdated = (chatId: number, callback: (message: User) => void) => {
+const onMemberUpdated = (chatId: number, callback: (user: User) => void) => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.memberUpdated
-  addIfNotExists(callbacks, callback)
+  callbacks.add(callback)
 
-  return unsubscribe(callbacks, callback)
+  return () => callbacks.delete(callback)
 }
 
 export {

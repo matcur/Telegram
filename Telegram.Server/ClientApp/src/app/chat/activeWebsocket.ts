@@ -1,14 +1,12 @@
 ﻿import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {callWith} from "../../utils/array/callWith";
-import {addIfNotExists} from "../../utils/array/addInNotExists";
-import {unsubscribe} from "../../utils/array/unsubscribe";
 
 type Websocket = {
   webhook: HubConnection
   userId: number
   callbacks: {
-    online: Callback[],
-    offline: Callback[],
+    online: Set<Callback>,
+    offline: Set<Callback>,
   }
 }
 
@@ -33,8 +31,8 @@ const initActiveWebsocket = async (userId: number, authorizeToken: string) => {
     .build()
 
   const callbacks: Websocket["callbacks"] = {
-    online: [],
-    offline: [],
+    online: new Set<Callback>(),
+    offline: new Set<Callback>(),
   };
   const websocket = {
     userId,
@@ -44,10 +42,10 @@ const initActiveWebsocket = async (userId: number, authorizeToken: string) => {
   websockets.push(websocket)
   await webhook.start()
   webhook.on("EmitOnline", (userId: string) => {
-    callWith(callbacks.online, new Date())
+    callWith(callbacks.online.values(), new Date())
   })
   webhook.on("EmitOffline", (userId: string, lastActivity: string) => {
-    callWith(callbacks.offline, new Date(lastActivity))
+    callWith(callbacks.offline.values(), new Date(lastActivity))
   })
   
   return () => {
@@ -66,8 +64,8 @@ function add(userId: number, callbacksKey: keyof Websocket["callbacks"], callbac
     }
   }
   const callbacks = websocket.callbacks[callbacksKey]
-  addIfNotExists(callbacks, callback)
-  return unsubscribe(callbacks, callback)
+  callbacks.add(callback)
+  return () => callbacks.delete(callback)
 }
 
 const onOnline = (userId: number, callback: Callback) => {
@@ -95,19 +93,10 @@ const emitOffline = (userId: number) => {
   emit(userId, "EmitOffline")
 }
 
-const forceCallOffline = (userId: number) => {
-  const websocket = findWebsocket(userId)
-  if (!websocket) {
-    return
-  }
-  callWith(websocket.callbacks.offline, userId)
-}
-
 export {
   initActiveWebsocket,
   onOnline,
   onOffline,
   emitOnline,
   emitOffline,
-  forceCallOffline,
 }
