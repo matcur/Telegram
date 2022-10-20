@@ -1,5 +1,5 @@
 ﻿import {User} from "../../models";
-import React, {useCallback} from "react";
+import React from "react";
 import {MessageForm} from "../message/MessageForm";
 import {ReactComponent as Magnifier} from "../../public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "../../public/svgs/star.svg";
@@ -24,6 +24,7 @@ import {ChatProps} from "../chat/ChatOfType";
 import {useThemedChatClass} from "../../hooks/useThemedChatClass";
 import {useModalVisible} from "../../hooks/useModalVisible";
 import {UserInfoForm} from "../forms/UserInfoForm";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = ChatProps & {
   loadMembers(groupId: number, pagination: Pagination): void
@@ -54,9 +55,9 @@ export const PublicChat = ({
   const authorizeToken = useAppSelector(state => state.authorization.token)
   const themedClass = useThemedChatClass()
 
-  const addMembers = useCallback((users: User[]) => {
+  const addMembers = useFunction((users: User[]) => {
     return users.length && new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
-  }, [authorizeToken])
+  })
   
   return (
     <BaseChat

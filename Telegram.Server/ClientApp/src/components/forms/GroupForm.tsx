@@ -1,5 +1,5 @@
 ﻿import {BaseForm} from "./BaseForm";
-import React, {useCallback, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Nothing} from "../../utils/functions";
 import {Chat, User} from "../../models";
 import {Toggler} from "../form/Toggler";
@@ -11,6 +11,7 @@ import {FormButton} from "../form/FormButton";
 import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
 import "styles/forms/group-form.sass"
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   group: Chat
@@ -24,19 +25,18 @@ type Props = {
 export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, addMembers, potentialMembers}: Props) => {
   const [addMembersVisible, showAddMembers, hideAddMembers] = useFlag(false)
   const [needNotify, setNeedNotify] = useState(false)
-  const toggleNotify = useCallback(
-    () => setNeedNotify(value => !value),
-    []
+  const toggleNotify = useFunction(
+    () => setNeedNotify(value => !value)
   )
   const [futureMembers, setFutureMembers] = useState<User[]>([])
   const membersRef = useRef<User[]>([])
   membersRef.current = futureMembers
-  const loadNextMembers = useCallback(() => {
+  const loadNextMembers = useFunction(() => {
     const memberCount = group.members.length;
     if (totalMemberCount === memberCount) return
     
     loadMembers(group.id, {offset: memberCount, count: 30})
-  }, [])
+  })
   const addMembersForm = () => {
     const footer = (
       <div className="form-buttons add-members-buttons">

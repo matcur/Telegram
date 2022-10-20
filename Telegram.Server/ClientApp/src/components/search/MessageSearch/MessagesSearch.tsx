@@ -2,11 +2,12 @@
 import {useFormInput} from "../../../hooks/useFormInput";
 import {Search} from "../../search/Search";
 import {Burger} from "../../icons/Burger";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {MessageSearchItem} from "./MessageSearchItem";
 import {ChatApi} from "../../../api/ChatApi";
 import {useAppSelector} from "../../../app/hooks";
 import {debounce} from "../../../utils/debounce";
+import {useFunction} from "../../../hooks/useFunction";
 
 type Props = {
   chat: Chat
@@ -27,10 +28,10 @@ export const MessagesSearch = ({chat, onCloseClick, onMessageSelect}: Props) => 
       message={message}
       onClick={onMessageSelect}/>
   }
-  const loadFilteredMessages = useCallback(debounce((offset: number, count: number, text: string) => (
+  const loadFilteredMessages = useFunction(debounce((offset: number, count: number, text: string) => (
     (new ChatApi(chat.id, authorizeToken))
       .messages(offset, count, text)
-  ), 500), [chat.id])
+  ), 500))
   
   useEffect(function searchChanged() {
     const load = async () => {

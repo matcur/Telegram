@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import {useAppDispatch, useAppSelector} from "app/hooks";
 import {Chat as ChatModel, Message, User} from "models";
 import {useFormInput} from "hooks/useFormInput";
@@ -17,6 +17,7 @@ import {PublicChat} from "../chats/PublicChat";
 import {Pagination} from "../../utils/type";
 import {useFlag} from "../../hooks/useFlag";
 import {emitMessageTyping, onMessageAdded, onMessageTyping, onMessageUpdated} from "../../app/chat/chatWebsocket";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   chat: ChatModel
@@ -55,7 +56,7 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
   const authorizeToken = useAppSelector(state => state.authorization.token)
   const [allMessagesLoaded, markAllMessagesLoaded, unmarkAllMessagesLoaded] = useFlag(false)
   const loadingMessagesPromise = useRef<Promise<void> | null>(null)
-  const loadPreviousMessages = useCallback(() => {
+  const loadPreviousMessages = useFunction(() => {
     if (allMessagesLoaded) {
       return Promise.resolve();
     }
@@ -80,28 +81,28 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
     loadingMessagesPromise.current = promise
 
     return promise
-  }, [allMessagesLoaded, chat, messages.length])
+  })
 
-  const newMessageState = useCallback(() => {
+  const newMessageState = useFunction(() => {
     return new NewMessageState(new MessagesApi(authorizeToken))
-  }, [authorizeToken])
+  })
   const [inputState, setInputState] = useState<MessageState>(newMessageState)
   const [reply, setReply] = useState<Message>()
 
-  const onSubmit = useCallback((message: Partial<Message>) => {
+  const onSubmit = useFunction((message: Partial<Message>) => {
     inputState.save(message)
     setInputState(newMessageState())
     textInput.onChange('')
     setReply(undefined)
-  }, [textInput, inputState])
-  const tryEditMessage = useCallback((message: Message) => {
+  })
+  const tryEditMessage = useFunction((message: Message) => {
     if (!sameUsers(message.author, currentUser)) {
       return
     }
 
     editMessage(message)
-  }, [currentUser])
-  const onMessageRightClick = useCallback((message: Message, e: React.MouseEvent<HTMLDivElement>) => {
+  })
+  const onMessageRightClick = useFunction((message: Message, e: React.MouseEvent<HTMLDivElement>) => {
     arbitraryElement.show(
       <ArbitraryElement
         position={{left: e.clientX, top: e.clientY}}
@@ -116,29 +117,29 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
         />
       </ArbitraryElement>
     )
-  }, [])
-  const editMessage = useCallback((message: Message) => {
+  })
+  const editMessage = useFunction((message: Message) => {
     textInput.onChange(textContent(message))
     setInputState(new EditingMessageState(
       message, setInputState, dispatch, newMessageState(), new MessagesApi(authorizeToken)
     ))
-  }, [textInput, authorizeToken])
-  const replyTo = useCallback((message: Message) => {
+  })
+  const replyTo = useFunction((message: Message) => {
     setReply(message)
-  }, [])
-  const onMessageInput = useCallback(() => {
+  })
+  const onMessageInput = useFunction(() => {
     emitMessageTyping(id)
-  }, [id])
-  const onMessageAddedWrap = useCallback(onMessageAdded, [])
-  const onMessageTypingWrap = useCallback(onMessageTyping, [])
+  })
+  const onMessageAddedWrap = useFunction(onMessageAdded)
+  const onMessageTypingWrap = useFunction(onMessageTyping)
 
-  const onRemoveReplyClick = useCallback(() => setReply(undefined), [])
-  const loadMembers = useCallback(async (chatId: number, pagination: Pagination) => {
+  const onRemoveReplyClick = useFunction(() => setReply(undefined))
+  const loadMembers = useFunction(async (chatId: number, pagination: Pagination) => {
     const members = await new ChatApi(chatId, authorizeToken)
       .members(pagination)
 
     dispatch(addChatMembers({chatId, members}))
-  }, [authorizeToken])
+  })
 
   useEffect(function onChatChange() {
     setLoaded(false)

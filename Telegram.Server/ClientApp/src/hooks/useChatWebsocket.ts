@@ -2,12 +2,12 @@
 import {Message, User} from "../models";
 import {changeChatUpdatedDate, updateChatMember} from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";
-import {useCallback} from "react";
+import {useFunction} from "./useFunction";
 
 export const useChatWebsocket = () => {
   const dispatch = useDispatch()
   
-  const subscribe = useCallback((chatId: number) => {
+  const subscribe = useFunction((chatId: number) => {
     // make unsubscribe
     const updateMessage = (message: Message) => {
       dispatch(changeChatUpdatedDate({
@@ -29,7 +29,7 @@ export const useChatWebsocket = () => {
     )
 
     return () => unsubscribes.forEach(u => u())
-  }, [])
+  })
   
   return subscribe
 }

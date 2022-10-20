@@ -1,8 +1,9 @@
-import React, {FC, ReactElement, useCallback} from 'react'
+import React, {FC, ReactElement} from 'react'
 import {Message, User} from "models";
 import {inRowPositionClass} from "utils/inRowPositionClass";
 import {useAppSelector} from "app/hooks";
 import {classNames} from "../../utils/classNames";
+import {useFunction} from "../../hooks/useFunction";
 
 export type ChatMessageProps = {
   key: string | number
@@ -19,10 +20,10 @@ export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} =
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
   const isCurrentUser = currentUser.id === currentAuthor.id;
 
-  const onContextMenu = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const onContextMenu = useFunction((e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     onRightClick(message, e)
-  }, [onRightClick])
+  })
 
   return (
     <div

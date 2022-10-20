@@ -1,4 +1,5 @@
-﻿import {RefObject, useCallback, useEffect} from "react";
+﻿import {RefObject, useEffect} from "react";
+import {useFunction} from "./useFunction";
 
 export const useFitScrollHeight = <T extends RefObject<HTMLTextAreaElement>>(ref: T) => {
   const element = ref.current
@@ -10,7 +11,7 @@ export const useFitScrollHeight = <T extends RefObject<HTMLTextAreaElement>>(ref
     element.style.height = "0"
     element.style.height = `${element.scrollHeight}px`
   }, [element])
-  const fitScrollHeight = useCallback(() => {
+  const fitScrollHeight = useFunction(() => {
     if (!element) {
       return
     }
@@ -18,7 +19,7 @@ export const useFitScrollHeight = <T extends RefObject<HTMLTextAreaElement>>(ref
 
     style.height = "0"
     style.height = `${element.scrollHeight}px`
-  }, [element])
+  })
   
   return fitScrollHeight
 }

@@ -1,5 +1,5 @@
 import {ImageInput} from "../form/ImageInput";
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from "react";
+import React, {ReactElement, useEffect, useRef, useState} from "react";
 import {useFormFiles} from "../../hooks/useFormFiles";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {changeAvatar} from "../../app/slices/authorizationSlice";
@@ -11,6 +11,7 @@ import {EditProfileForm} from "./EditProfileForm";
 import {classNames} from "../../utils/classNames";
 
 import "styles/forms/settings-form.sass"
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   hide: Nothing
@@ -51,7 +52,7 @@ export const SettingsForm = ({hide}: Props) => {
   const [rightFormHeight, setRightFormHeight] = useState(0)
   const [wrapHeight, setWrapHeight] = useState(0)
 
-  const loadImage = useCallback(async (input: HTMLInputElement) => {
+  const loadImage = useFunction(async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
 
     const newAvatar = urls[0]
@@ -59,8 +60,8 @@ export const SettingsForm = ({hide}: Props) => {
 
     dispatch(changeAvatar(newAvatar))
     new AuthorizedUserApi(token).changeAvatar(newAvatar)
-  }, [token])
-  const menuItem = useCallback((item: MenuItem) => {
+  })
+  const menuItem = useFunction((item: MenuItem) => {
     return (
       <li
         className="form-row small-form-row form-row-hover"
@@ -69,13 +70,13 @@ export const SettingsForm = ({hide}: Props) => {
         {item.name}
       </li>
     )
-  }, [])
-  const onAvatarClick = useCallback(() => {
+  })
+  const onAvatarClick = useFunction(() => {
     const current = avatarRef.current;
     if (current !== null) {
       current.click()
     }
-  }, [])
+  })
   const [settingsObserver] = useState(() => (
     new ResizeObserver(elements => {
       elements.forEach(r => setSettingsHeight(r.target.clientHeight))
@@ -88,20 +89,20 @@ export const SettingsForm = ({hide}: Props) => {
   ))
   const settingsRef = useRef<HTMLDivElement>()
   const rightFormRef = useRef<HTMLDivElement>()
-  const setSettingsRef = useCallback((node: HTMLDivElement) => {
+  const setSettingsRef = useFunction((node: HTMLDivElement) => {
     settingsRef.current && settingsObserver.unobserve(settingsRef.current)
     node && settingsObserver.observe(node)
 
     setSettingsHeight(node?.clientHeight ?? 0)
     settingsRef.current = node
-  }, [])
-  const setRightFormRef = useCallback((node: HTMLDivElement) => {
+  })
+  const setRightFormRef = useFunction((node: HTMLDivElement) => {
     rightFormRef.current && rightFormObserver.unobserve(rightFormRef.current)
     node && rightFormObserver.observe(node)
 
     setRightFormHeight(node?.clientHeight ?? 0)
     rightFormRef.current = node
-  }, [])
+  })
 
   useEffect(() => {
     if (rightFormHeight) {

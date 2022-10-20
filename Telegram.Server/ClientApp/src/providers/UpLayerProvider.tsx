@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useCallback, useContext} from "react";
+import React, {FC, ReactElement, useContext} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
 import {LeftMenuContext} from "../contexts/LeftMenuContext";
 import {UpLayer} from "../components/up-layer/UpLayer";
@@ -7,24 +7,25 @@ import {useArray} from "../hooks/useArray";
 import {useFlag} from "../hooks/useFlag";
 import {ModalsContext} from "../components/Modals";
 import {empty} from "../utils/array/empty";
+import {useFunction} from "../hooks/useFunction";
 
 export const UpLayerProvider: FC = ({children}) => {
   const [leftMenuVisible, showLeftMenu, hideLeftMenu] = useFlag(false)
   const arbitraryElements = useArray<ReactElement>()
   const modalsContext = useContext(ModalsContext)
 
-  const hide = useCallback(() => {
+  const hide = useFunction(() => {
     hideLeftMenu()
-  }, [])
+  })
 
-  const addArbitraryElement = useCallback((element: ReactElement) => {
+  const addArbitraryElement = useFunction((element: ReactElement) => {
     arbitraryElements.add(element)
 
     return () => arbitraryElements.remove(element)
-  }, [])
-  const onClick = useCallback(() => {
+  })
+  const onClick = useFunction(() => {
     hideLeftMenu()
-  }, [])
+  })
   
   return (
     <UpLayerContext.Provider value={{hide, addArbitraryElement}}>

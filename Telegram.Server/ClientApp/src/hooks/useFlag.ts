@@ -1,10 +1,11 @@
-﻿import {useCallback, useState} from "react";
+﻿import {useState} from "react";
 import {Nothing} from "../utils/functions";
+import {useFunction} from "./useFunction";
 
 export const useFlag = (init: boolean): [boolean, Nothing, Nothing] => {
   const [value, setValue] = useState(init)
-  const activate = useCallback(() => setValue(true), [])
-  const disable = useCallback(() => setValue(false), [])
+  const activate = useFunction(() => setValue(true))
+  const disable = useFunction(() => setValue(false))
   
   return [value, activate, disable]
 }

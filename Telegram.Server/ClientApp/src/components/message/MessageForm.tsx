@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useCallback, useEffect, useRef, useState} from 'react'
+import React, {FC, ReactElement, useEffect, useRef, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
@@ -13,6 +13,7 @@ import {useFlag} from "../../hooks/useFlag";
 import {Modal} from "../Modal";
 import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
 import {useWindowListener} from "../../hooks/useWindowListener";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   reply?: Message
@@ -74,15 +75,15 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const fitTextScrollHeight = useFitScrollHeight(inputRef)
   
-  const showDetailMessageForm = useCallback((messageText: string, filePaths: string[]) => {
+  const showDetailMessageForm = useFunction((messageText: string, filePaths: string[]) => {
     setModalData({messageText: textInput.value, filePaths})
     showDetailMessage()
-  }, [textInput])
-  const hasContent = useCallback(() => {
+  })
+  const hasContent = useFunction(() => {
     return textInput.value.trim() !== "" || chatData.currentMessage.files.length !== 0
-  }, [textInput, chatData])
+  })
 
-  const onDetailSubmit = useCallback((text: string, filePaths: string[]) => {
+  const onDetailSubmit = useFunction((text: string, filePaths: string[]) => {
     const content = filePaths.map(path => ({content: {value: path, type: 'Image'} as Content}))
     if (text) {
       content.push({content: {value: text, type: 'Text'}})
@@ -100,16 +101,16 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     onSubmitting(message)
 
     hideDetailMessage()
-  }, [chatData, reply, onSubmitting])
-  const onSubmit = useCallback(() => {
+  })
+  const onSubmit = useFunction(() => {
     if (!hasContent()) {
       return
     }
     onDetailSubmit(textInput.value, chatData.currentMessage.files)
     chatData.currentMessage.text = "";
-  }, [textInput.value, chatData, onDetailSubmit])
+  })
   
-  const loadFiles = useCallback(async (input: HTMLInputElement) => {
+  const loadFiles = useFunction(async (input: HTMLInputElement) => {
     const loadingFiles = input.files
     if (!loadingFiles) {
       return
@@ -117,9 +118,9 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
 
     const loadedFiles = await new FilesApi().upload("files", loadingFiles)
     showDetailMessageForm(input.value, loadedFiles)
-  }, [])
+  })
   
-  const changeText = useCallback((newValue: string) => {
+  const changeText = useFunction((newValue: string) => {
     newValue = newValue.trimLeft();
     const oldValue = textInput.value
     if (!newValue.trim() && !oldValue.length) {
@@ -127,15 +128,15 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     }
     textInput.onChange(newValue)
     chats.changeText(newValue, chatId)
-  }, [chatId, textInput.value])
-  const onTextChange = useCallback((e: React.FormEvent<HTMLTextAreaElement>) => {
+  })
+  const onTextChange = useFunction((e: React.FormEvent<HTMLTextAreaElement>) => {
     const value = e.currentTarget.value;
     if (value.endsWith("\n")) {
       return
     }
     changeText(value)
-  }, [changeText, textInput, chats])
-  const onEnterPress = useCallback((e: KeyboardEvent) => {
+  })
+  const onEnterPress = useFunction((e: KeyboardEvent) => {
     if (e.ctrlKey) {
       return
     }
@@ -145,7 +146,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
     if (e.key === "Enter" && e.altKey) {
       return changeText(textInput.value + "\n")
     }
-  }, [textInput.value, textInput.onChange, onSubmit, form.current])
+  })
   
   useWindowListener(onEnterPress, "keyup")
   useEffect(() => {

@@ -1,9 +1,10 @@
-﻿import React, {createContext, createRef, FC, ReactNode, useCallback, useState} from "react";
+﻿import React, {createContext, createRef, FC, ReactNode, useState} from "react";
 import {useOutsideClick} from "../hooks/useOutsideClick";
 import {nope, Nothing} from "../utils/functions";
 import {lastIn} from "../utils/lastIn";
 import "styles/modal.sass"
 import "styles/up-layer.sass"
+import {useFunction} from "../hooks/useFunction";
 
 type Props = {}
 
@@ -21,7 +22,7 @@ export const Modals: FC<Props> = ({children}) => {
   const [modals, setModals] = useState<Modal[]>([])
   const upperModalRef = createRef<HTMLDivElement>()
 
-  const removeUpper = useCallback(() => {
+  const removeUpper = useFunction(() => {
     const length = modals.length
     if (!length) {
       return []
@@ -32,8 +33,8 @@ export const Modals: FC<Props> = ({children}) => {
     
     newModals.splice(length - 1, 1)
     setModals(newModals)
-  }, [modals])
-  const insert = useCallback((element: ReactNode, name: string, hide) => {
+  })
+  const insert = useFunction((element: ReactNode, name: string, hide) => {
     setModals(modals => {
       const newModals = [...modals]
       const index = newModals.findIndex(m => m.name === name)
@@ -45,8 +46,8 @@ export const Modals: FC<Props> = ({children}) => {
       
       return newModals
     })
-  }, [])
-  const remove = useCallback((name: string) => {
+  })
+  const remove = useFunction((name: string) => {
     setModals(modals => {
       const newModals = [...modals]
       const index = newModals.findIndex(m => m.name === name)
@@ -56,7 +57,7 @@ export const Modals: FC<Props> = ({children}) => {
       
       return newModals
     })
-  }, [])
+  })
 
   useOutsideClick(removeUpper, upperModalRef, modals)
   
