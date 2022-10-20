@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useContext} from 'react'
+import React, {FC, useContext} from 'react'
 import {Search} from "components/search/Search";
 import {ChatList} from "./ChatList";
 import {Chat, User} from "models";
@@ -6,6 +6,7 @@ import {useFormInput} from "hooks/useFormInput";
 import {Burger} from "components/icons/Burger";
 import {compareObjectDate} from "../../utils/compareObjectDate";
 import {LeftMenuContext} from "../../contexts/LeftMenuContext";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   selectedChat: Chat
@@ -18,14 +19,14 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, onMe
   const search = useFormInput('')
   const leftMenu = useContext(LeftMenuContext)
 
-  const onBurgerClick = useCallback(() => {
+  const onBurgerClick = useFunction(() => {
     leftMenu.show()
-  }, [])
-  const filtration = useCallback((chat: Chat) => {
+  })
+  const filtration = useFunction((chat: Chat) => {
     const value = search.value;
 
     return value === '' || chat.name?.includes(value)
-  }, [search.value])
+  })
 
   return (
     <div className="search-block">

@@ -1,7 +1,8 @@
-﻿import React, {CSSProperties, useCallback, useContext, useEffect, useRef} from "react";
+﻿import React, {CSSProperties, useContext, useEffect, useRef} from "react";
 import {ParentResizeContext, ResizeBarsContext} from "./ResizeContext";
 import {useRandomString} from "../../hooks/useRandomString";
 import {useWindowListener} from "../../hooks/useWindowListener";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   style?: Omit<CSSProperties, 'width'>
@@ -14,17 +15,17 @@ export const ResizeBar = ({style, width = 3}: Props) => {
   const parentResizeContext = useContext(ParentResizeContext)
   const key = "resize_bar_" + useRandomString()
   const mouseStateRef = useRef({downed: false, lastDownXPosition: 0})
-  const activateResize = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const activateResize = useFunction((e: React.MouseEvent<HTMLDivElement>) => {
     parentResizeContext.disableUserSelect()
     mouseStateRef.current.downed = true
     mouseStateRef.current.lastDownXPosition = e.clientX
-  }, [])
-  const disableResize = useCallback(() => {
+  })
+  const disableResize = useFunction(() => {
     parentResizeContext.activateUserSelect()
     mouseStateRef.current.downed = false
-  }, [])
+  })
   const resizeRef = useRef<HTMLDivElement>(null)
-  const onMouseMove = useCallback((e: MouseEvent) => {
+  const onMouseMove = useFunction((e: MouseEvent) => {
     const mouseState = mouseStateRef.current
     const resize = resizeRef.current
     if (!mouseState.downed || !resize) {
@@ -49,7 +50,7 @@ export const ResizeBar = ({style, width = 3}: Props) => {
 
     resizeBarsContext.moveLeft(key, moveLeft)
     mouseState.lastDownXPosition = mouseXPosition
-  }, [resizeBarsContext.moveLeft])
+  })
 
   useWindowListener(onMouseMove, "mousemove")
   useWindowListener(disableResize, "mouseup")

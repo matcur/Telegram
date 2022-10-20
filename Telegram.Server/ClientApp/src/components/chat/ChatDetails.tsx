@@ -1,7 +1,8 @@
 ﻿import {Chat, User} from "../../models";
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import {splitByThousands} from "../../utils/splitByThousands";
 import {MessageInputting} from "../message/MessageInputting";
+import {useFunction} from "../../hooks/useFunction";
 
 type DetailProps = {
   chat: Chat
@@ -9,7 +10,7 @@ type DetailProps = {
 }
 export const ChatDetails = ({chat, onMessageTyping}: DetailProps) => {
   const [typingUsers, setTypingUsers] = useState<User[]>([])
-  const onMessageTypingWrap = useCallback(onMessageTyping.bind(null, chat.id), [chat.id])
+  const onMessageTypingWrap = useFunction(onMessageTyping.bind(null, chat.id))
 
   return(
     <div className="chat-details">

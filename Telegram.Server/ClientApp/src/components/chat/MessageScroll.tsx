@@ -1,6 +1,7 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import {Chat, Message} from "../../models";
 import {classNames} from "../../utils/classNames";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   messages: Message[]
@@ -25,7 +26,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPrevio
     const scrollBar = scrollBarRef.current!
     scrollTo(scrollBar.scrollHeight - bottomOffset)
   }
-  const onScroll = useCallback(() => {
+  const onScroll = useFunction(() => {
     const scroll = scrollBarRef.current
     if (!scroll) {
       return
@@ -41,8 +42,8 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPrevio
       loadPreviousMessages()
         .then(() => scrollToBottom(bottom))
     }
-  }, [loadPreviousMessages])
-  const onMessageAddedWrap = useCallback(() => {
+  })
+  const onMessageAddedWrap = useFunction(() => {
     const scroll = scrollBarRef.current!
     const topOffset = scroll.scrollTop
     const scrollHeight = scroll.scrollHeight
@@ -51,7 +52,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPrevio
     if (diff < (lastMessageHeight + 40)) {
       scrollToBottom()
     }
-  }, [])
+  })
 
   useEffect(() => {
     return onMessageAdded(chat.id, onMessageAddedWrap)

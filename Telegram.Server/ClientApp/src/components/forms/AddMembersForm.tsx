@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react'
+import React, {FC} from 'react'
 import {Search} from "components/search/Search";
 import {useFormInput} from "hooks/useFormInput";
 import {ShortUserInfo} from "components/user/ShortUserInfo";
@@ -6,6 +6,7 @@ import {like} from "utils/like";
 import {User} from "models";
 import {BaseForm} from "./BaseForm";
 import {SetType} from "../../utils/type";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   footer: JSX.Element
@@ -21,14 +22,14 @@ export const AddMembersForm: FC<Props> = ({selected, setSelected, footer, potent
   const filtered = potentialMembers.filter(
     f => like(`${f.firstName} ${f.lastName}`, search.value)
   )
-  const remove = useCallback((user: User) => {
+  const remove = useFunction((user: User) => {
     setSelected(selected => [...selected.filter(s => s.id !== user.id)])
-  }, [setSelected])
-  const add = useCallback((user: User) => {
+  })
+  const add = useFunction((user: User) => {
     setSelected(selected => {
       return [...selected, user]
     })
-  }, [setSelected])
+  })
   const friendInfo = (user: User, key: number) => {
     const isSelected = selected.includes(user)
 

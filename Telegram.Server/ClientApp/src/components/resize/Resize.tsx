@@ -1,7 +1,8 @@
-﻿import React, {CSSProperties, FC, useCallback, useState} from "react";
+﻿import React, {CSSProperties, FC, useState} from "react";
 import {ParentResizeContext, ResizeBarsContext, Resizes, ResizesContext, ResizeValue} from "./ResizeContext";
 import "./resize.sass"
 import {nullResizeElement} from "../../nullables";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {}
 
@@ -20,27 +21,27 @@ export const Resize: FC<Props> = ({children}) => {
   const [resizeBars, setResizeBars] = useState<string[]>(() => [])
   const [orderedElements, setOrderedElements] = useState<OrderedElement[]>(() => [])
   const [styles, setStyles] = useState<CSSProperties>(() => ({}))
-  const insertResize = useCallback((key: string, value: ResizeValue) => {
+  const insertResize = useFunction((key: string, value: ResizeValue) => {
     setResizes(resizes => ({
       ...resizes,
       key: value,
     }))
     setOrderedElements(elements => [...elements, {key, type: "resize-element", ...value}])
-  }, [setResizes])
-  const insertResizeBar = useCallback((key: string) => {
+  })
+  const insertResizeBar = useFunction((key: string) => {
     setResizeBars(bars => ({
       ...bars,
       key,
     }))
     setOrderedElements(elements => [...elements, {key, type: "resize-bar"}])
-  }, [setResizeBars])
-  const removeResizeBar = useCallback((key: string) => {
+  })
+  const removeResizeBar = useFunction((key: string) => {
     setResizeBars(bars => bars.filter(b => b !== key))
     setOrderedElements(elements => (
       elements.filter(e => e.key !== key)
     ))
-  }, [])
-  const removeResize = useCallback((key: string) => {
+  })
+  const removeResize = useFunction((key: string) => {
     setResizes(resizes => {
       const result = {...resizes}
       delete resizes[key]
@@ -56,8 +57,8 @@ export const Resize: FC<Props> = ({children}) => {
 
       return withoutDoubleInResizeBars
     })
-  }, [])
-  const barSiblings = useCallback((barKey: string): [OrderedResizeElement, OrderedResizeElement] => {
+  })
+  const barSiblings = useFunction((barKey: string): [OrderedResizeElement, OrderedResizeElement] => {
     const barIndex = orderedElements.findIndex(b => b.key === barKey)
 
     const leftResized = orderedElements[barIndex - 1] ?? nullResizeElement
@@ -73,35 +74,35 @@ export const Resize: FC<Props> = ({children}) => {
     }
 
     return [nullResizeElement, nullResizeElement]
-  }, [orderedElements])
-  const moveLeft = useCallback((barKey: string, value: number) => {
+  })
+  const moveLeft = useFunction((barKey: string, value: number) => {
     const [leftResized, rightResized] = barSiblings(barKey)
 
     leftResized.decreaseWidth(value)
     rightResized.increaseWidth(value)
-  }, [orderedElements, barSiblings])
-  const siblingsMinWidth = useCallback((barKey: string): [number, number] => {
+  })
+  const siblingsMinWidth = useFunction((barKey: string): [number, number] => {
     const [leftResized, rightResized] = barSiblings(barKey)
 
     return [leftResized.minWidth(), rightResized.minWidth()]
-  }, [barSiblings])
-  const siblingsWidth = useCallback((barKey: string): [number, number] => {
+  })
+  const siblingsWidth = useFunction((barKey: string): [number, number] => {
     const [leftResized, rightResized] = barSiblings(barKey)
 
     return [leftResized.width(), rightResized.width()]
-  }, [barSiblings])
-  const disableUserSelect = useCallback(() => {
+  })
+  const disableUserSelect = useFunction(() => {
     setStyles(styles => ({
       ...styles,
       userSelect: "none",
     }))
-  }, [])
-  const activateUserSelect = useCallback(() => {
+  })
+  const activateUserSelect = useFunction(() => {
     setStyles(styles => ({
       ...styles,
       userSelect: "initial",
     }))
-  }, [])
+  })
 
   return (
     <ResizeBarsContext.Provider

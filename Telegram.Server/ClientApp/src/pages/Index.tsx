@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {ChatsBlock} from "components/chat/ChatsBlock";
 import {ChatOfType} from "components/chat/ChatOfType";
 import {nullChat} from "nullables";
@@ -17,6 +17,7 @@ import {ResizeBar} from "../components/resize/ResizeBar";
 import {useReceiveMessage} from "../hooks/useReseiveMessage";
 import {useChatWebsocket} from "../hooks/useChatWebsocket";
 import {initChatWebsocket, onMessageAdded, onMessageTyping} from "../app/chat/chatWebsocket";
+import {useFunction} from "../hooks/useFunction";
 
 type Search = {
   type: "chats"
@@ -36,10 +37,10 @@ export const Index = () => {
   const dispatch = useDispatch()
   const receiveMessage = useReceiveMessage()
   const subscribe = useChatWebsocket()
-  const searchInChat = useCallback(() => {
+  const searchInChat = useFunction(() => {
     setSearch({type: "messages", inChat: selectedChat})
-  }, [selectedChat])
-  const onMessageTypingWrap = useCallback(onMessageTyping, [])
+  })
+  const onMessageTypingWrap = useFunction(onMessageTyping)
   
   useEffect(() => {
     const load = () => {

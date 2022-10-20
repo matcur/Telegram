@@ -1,10 +1,11 @@
 ﻿import {ChatMessage, ChatMessageProps} from "./ChatMessage";
-import React, {useCallback} from "react";
+import React from "react";
 import cat from "../../public/images/index/cat-3.jpg";
 import {useAppSelector} from "../../app/hooks";
 import {fullName} from "../../utils/fullName";
 import {DetailMessageContent} from "../message/DetailMessageContent";
 import {User} from "../../models";
+import {useFunction} from "../../hooks/useFunction";
 
 export type MessageFormProps = ChatMessageProps & {
   onAvatarClick(user: User): void
@@ -15,9 +16,9 @@ export const PublicMessageFork = (props: MessageFormProps) => {
   const author = props.message.author;
   const isCurrentUser = currentUser.id === author.id;
   
-  const onAvatarClick = useCallback(() => {
+  const onAvatarClick = useFunction(() => {
     props.onAvatarClick(author)
-  }, [author])
+  })
   
   return (
     <ChatMessage {...props}>

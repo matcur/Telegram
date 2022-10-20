@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {LeftMenuUserInfo} from "./LeftMenuUserInfo";
 import {LeftMenuItem} from "./LeftMenuItem";
 import {ReactComponent as PeopleIcon} from "public/svgs/people.svg";
@@ -13,6 +13,7 @@ import {SettingsForm} from "../../forms/SettingsForm";
 import {nope, Nothing} from "../../../utils/functions";
 import {ChangeThemeContext} from "../../../contexts/ChangeThemeContext";
 import {useTheme} from "../../../hooks/useTheme";
+import {useFunction} from "../../../hooks/useFunction";
 
 type Props = {
   visible: boolean
@@ -23,14 +24,14 @@ export const LeftMenu = ({visible, onItemClick = nope}: Props) => {
   const changeTheme = useContext(ChangeThemeContext)
   const theme = useTheme()
   const [darkTheme, setDarkTheme] = useState(theme === 'dark')
-  const onThemeChange = useCallback((isDarkTheme: boolean) => {
+  const onThemeChange = useFunction((isDarkTheme: boolean) => {
     setDarkTheme(isDarkTheme)
     if (isDarkTheme) {
       changeTheme('dark')
     } else {
       changeTheme('light')
     }
-  }, [changeTheme])
+  })
 
   return (
     <div className={'left-menu' + (visible? ' show-left-menu': '')}>

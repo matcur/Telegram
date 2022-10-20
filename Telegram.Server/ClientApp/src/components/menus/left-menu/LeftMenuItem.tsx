@@ -1,7 +1,8 @@
 import {Modal} from 'components/Modal';
-import React, {FC, ReactElement, useCallback} from 'react'
+import React, {FC, ReactElement} from 'react'
 import {useFlag} from "../../../hooks/useFlag";
 import {Nothing} from "../../../utils/functions";
+import {useFunction} from "../../../hooks/useFunction";
 
 type Props = {
   name: string
@@ -13,10 +14,10 @@ type Props = {
 
 export const LeftMenuItem: FC<Props> = ({onClick, name, icon, additionalElement, getCentralElement}: Props) => {
   const [modalVisible, showModal, hideModal] = useFlag(false)
-  const onClickInternal = useCallback(() => {
+  const onClickInternal = useFunction(() => {
     onClick()
     showModal()
-  }, [onClick])
+  })
   
   return (
     <div

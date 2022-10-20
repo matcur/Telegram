@@ -1,6 +1,6 @@
 import {BaseForm} from "./BaseForm";
 import {ImageInput} from "../form/ImageInput";
-import React, {ChangeEvent, Ref, useCallback, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, Ref, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {useFormFiles} from "../../hooks/useFormFiles";
 import {changeAvatar, updateAuthorizedUser} from "../../app/slices/authorizationSlice";
@@ -14,6 +14,7 @@ import {NameForm} from "./NameForm";
 import {User} from "../../models";
 import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
 import {rightDiff} from "../../utils/rightDiff";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   hide: Nothing
@@ -37,7 +38,7 @@ export const EditProfileForm = ({formRef, hide}: Props) => {
   const bioValueRef = useRef(bio)
   bioValueRef.current = bio
 
-  const loadImage = useCallback(async (input: HTMLInputElement) => {
+  const loadImage = useFunction(async (input: HTMLInputElement) => {
     const urls = await files.upload(input)
 
     const newAvatar = urls[0]
@@ -45,26 +46,26 @@ export const EditProfileForm = ({formRef, hide}: Props) => {
 
     dispatch(changeAvatar(newAvatar))
     new AuthorizedUserApi(token).changeAvatar(newAvatar)
-  }, [token])
-  const onBioChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+  })
+  const onBioChange = useFunction((e: ChangeEvent<HTMLTextAreaElement>) => {
     setBio(e.currentTarget.value)
     fitBioScrollHeight()
-  }, [bio])
-  const update = useCallback((user: Partial<User>) => {
+  })
+  const update = useFunction((user: Partial<User>) => {
     new AuthorizedUserApi(token)
       .update({...currentUser, ...user})
-  }, [token, currentUser])
-  const saveChanges = useCallback((user: Partial<User>) => {
+  })
+  const saveChanges = useFunction((user: Partial<User>) => {
     const changedUser = rightDiff(currentUser, user)
     if (Object.keys(changedUser).length) {
       update(changedUser)
       dispatch(updateAuthorizedUser(changedUser))
     }
-  }, [update, currentUser])
-  const onHide = useCallback(() => {
+  })
+  const onHide = useFunction(() => {
     saveChanges({bio})
     hide()
-  }, [currentUser.bio, hide, bio])
+  })
 
   const renderNameForm = () => {
     return (

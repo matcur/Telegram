@@ -1,7 +1,8 @@
-﻿import React, {FC, useCallback, useContext, useEffect, useRef} from "react";
+﻿import React, {FC, useContext, useEffect, useRef} from "react";
 import {ResizesContext} from "./ResizeContext";
 import {useRandomString} from "../../hooks/useRandomString";
 import {withoutUnit} from "../../utils/withoutUnit";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   initWidth?: "*" | number
@@ -19,7 +20,7 @@ export const ResizedElement: FC<Props> = ({
   const resizeContext = useContext(ResizesContext)
   const key = "resized_" + useRandomString()
 
-  const increaseWidthInternal = useCallback((width: number) => {
+  const increaseWidthInternal = useFunction((width: number) => {
     const resize = resizedRef.current
     if (!resize) {
       return
@@ -31,7 +32,7 @@ export const ResizedElement: FC<Props> = ({
     }
 
     styles.width = `${newWidth}px`
-  }, [])
+  })
 
   useEffect(function subscribeToResize() {
     resizeContext.insert(key, {

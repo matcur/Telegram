@@ -1,9 +1,10 @@
 ﻿import {SimpleChangeForm} from "./SimpleChangeForm";
 import {TextFields} from "../form/TextFields";
 import {SmallTextField} from "../form/SmallTextField";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import {User} from "../../models";
 import {useKeyup} from "../../hooks/useKeyup";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   user: Partial<User>
@@ -18,7 +19,7 @@ export const NameForm = ({user, save, hide}: Props) => {
   const firstNameRef = useRef<HTMLInputElement>(null)
   const lastNameRef = useRef<HTMLInputElement>(null)
   
-  const onSave = useCallback(() => {
+  const onSave = useFunction(() => {
     if (firstNameInvalid) {
       return
     }
@@ -27,18 +28,18 @@ export const NameForm = ({user, save, hide}: Props) => {
     }
     save({firstName, lastName})
     hide()
-  }, [save, firstName, lastName, firstNameInvalid])
-  const onHide = useCallback(() => {
+  })
+  const onHide = useFunction(() => {
     if (firstNameInvalid) {
       return
     }
     hide()
-  }, [hide, firstNameInvalid])
-  const onFirstNameChange = useCallback(e => {
+  })
+  const onFirstNameChange = useFunction(e => {
     const value = e.currentTarget.value;
     setFirstNameInvalid(!value)
     setFirstName(value)
-  }, [])
+  })
   
   useEffect(function focusFirstName() {
     firstNameRef.current?.focus()

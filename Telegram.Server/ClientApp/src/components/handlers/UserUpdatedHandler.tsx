@@ -1,4 +1,4 @@
-﻿import React, {FC, useCallback, useEffect} from "react";
+﻿import React, {FC, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useToken} from "../../hooks/useToken";
 import {useCurrentUser} from "../../hooks/useCurrentUser";
@@ -6,6 +6,7 @@ import {onAddedInChat, onUserUpdated} from "../../app/chat/userWebsocket";
 import {User} from "../../models";
 import {addChats, updateAuthorizedUser, updateFriend} from "app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {}
 
@@ -14,13 +15,13 @@ export const UserUpdatedHandler: FC<Props> = ({children}) => {
   const currentUser = useCurrentUser()
   const token = useToken()
   
-  const updateUser = useCallback((user: User) => {
+  const updateUser = useFunction((user: User) => {
     if (user.id === currentUser.id) {
       dispatch(updateAuthorizedUser(user))
     } else {
       dispatch(updateFriend(user))
     }
-  }, [currentUser.id])
+  })
   
   const addNewChat = async (chatId: number) => {
     const chat = await new AuthorizedUserApi(token).chat(chatId)
