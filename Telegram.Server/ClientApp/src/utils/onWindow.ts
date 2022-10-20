@@ -1,27 +1,25 @@
 ﻿import {Nothing} from "./functions";
-import {addIfNotExists} from "./array/addInNotExists";
-import {unsubscribe} from "./array/unsubscribe";
 import {callWith} from "./array/callWith";
 
-const focus: Nothing[] = []
-const blur: Nothing[] = []
+const focus: Set<Nothing> = new Set()
+const blur: Set<Nothing> = new Set()
 
 const onWindowFocus = (callback: Nothing) => {
-  addIfNotExists(focus, callback)
-  return unsubscribe(focus, callback)
+  focus.add(callback)
+  return () => focus.delete(callback)
 }
 
 const onWindowBlur = (callback: Nothing) => {
-  addIfNotExists(blur, callback)
-  return unsubscribe(blur, callback)
+  blur.add(callback)
+  return () => blur.delete(callback)
 }
 
 window.onfocus = () => {
-  callWith(focus, undefined)
+  callWith(focus.values())
 }
 
 window.onblur = () => {
-  callWith(blur, undefined)
+  callWith(blur.values())
 }
 
 export {

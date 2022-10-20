@@ -12,15 +12,12 @@ export const ActivityHandler: FC = ({children}) => {
   const currentUser = useCurrentUser()
   const token = useToken()
   const unsubscribe = useRef<Nothing>()
-  const [focused, focus, blur] = useFlag(true)
-  
+
   const onFocus = () => {
     emitOnline(currentUser.id)
-    focus()
   }
   const onBlur = () => {
     emitOffline(currentUser.id)
-    blur()
   }
   
   useEffect(function initActivity() {
@@ -40,7 +37,7 @@ export const ActivityHandler: FC = ({children}) => {
     
     return () => {
       unsubscribe.current && unsubscribe.current()
-      callWith(unsubscribes, undefined)
+      callWith(unsubscribes)
     }
   }, [currentUser.id])
   

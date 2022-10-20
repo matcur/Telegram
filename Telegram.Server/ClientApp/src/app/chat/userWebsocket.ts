@@ -1,31 +1,20 @@
 ﻿import {User} from "../../models";
 import {HubConnectionBuilder} from "@microsoft/signalr";
-import {unsubscribe} from "../../utils/array/unsubscribe";
 
 type UserUpdatedCallback = (user: User) => void
 type AddedInNewChatCallback = (chatId: number) => void
 
-const userUpdatedCallbacks: UserUpdatedCallback[] = []
-const addedInNewChatCallbacks: AddedInNewChatCallback[] = []
+const userUpdatedCallbacks: Set<UserUpdatedCallback> = new Set()
+const addedInNewChatCallbacks: Set<AddedInNewChatCallback> = new Set()
 
 const onUserUpdated = (callback: UserUpdatedCallback) => {
-  if (userUpdatedCallbacks.indexOf(callback) !== -1) {
-    return unsubscribe(userUpdatedCallbacks, callback)
-  }
-  
-  userUpdatedCallbacks.push(callback)
-  
-  return unsubscribe(userUpdatedCallbacks, callback)
+  userUpdatedCallbacks.add(callback)
+  return () => userUpdatedCallbacks.delete(callback)
 }
 
 const onAddedInChat = (callback: AddedInNewChatCallback) => {
-  if (addedInNewChatCallbacks.indexOf(callback) !== -1) {
-    return unsubscribe(addedInNewChatCallbacks, callback)
-  }
-
-  addedInNewChatCallbacks.push(callback)
-  
-  return unsubscribe(addedInNewChatCallbacks, callback)
+  addedInNewChatCallbacks.add(callback)
+  return () => addedInNewChatCallbacks.delete(callback)
 }
 
 const initUserWebhook = async (id: number, token: string) => {
