@@ -5,7 +5,7 @@ import {UpLayer} from "../components/up-layer/UpLayer";
 import {LeftMenu} from "../components/menus/left-menu";
 import {useArray} from "../hooks/useArray";
 import {useFlag} from "../hooks/useFlag";
-import {ModalsContext} from "../components/Modals";
+import {ModalsContext} from "../components/up-layer/Modals";
 import {empty} from "../utils/array/empty";
 import {useFunction} from "../hooks/useFunction";
 

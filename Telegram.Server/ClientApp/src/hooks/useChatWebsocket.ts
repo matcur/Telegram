@@ -1,4 +1,4 @@
-﻿import {onMemberUpdated, onMessageAdded} from "../app/chat/chatWebsocket";
+﻿import {onMemberUpdated, onMessageAdded} from "../app/websockets/chatWebsocket";
 import {Message, User} from "../models";
 import {changeChatUpdatedDate, updateChatMember} from "../app/slices/authorizationSlice";
 import {useDispatch} from "react-redux";

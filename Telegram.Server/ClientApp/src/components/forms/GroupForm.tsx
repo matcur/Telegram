@@ -9,13 +9,13 @@ import {ShortUserInfo} from "../user/ShortUserInfo";
 import {AddMembersForm} from "./AddMembersForm";
 import {FormButton} from "../form/FormButton";
 import {useFlag} from "../../hooks/useFlag";
-import {Modal} from "../Modal";
+import {Modal} from "../up-layer/Modal";
 import "styles/forms/group-form.sass"
 import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
   group: Chat
-  totalMemberCount: number
+  totalMemberCount?: number
   onHideClick: Nothing
   potentialMembers: User[]
   loadMembers(chatId: number, pagination: Pagination): void
@@ -74,7 +74,7 @@ export const GroupForm = ({onHideClick, group, totalMemberCount, loadMembers, ad
         <img className="big-avatar" src={group.iconUrl} alt={`${group.name} avatar`}/>
         <div className="group-details">
           <div className="group-name">{group.name}</div>
-          <div className="members-count">{totalMemberCount} members</div>
+          <div className="members-count">{totalMemberCount ?? 0} members</div>
         </div>
       </div>
       <div className="form-splitter"/>

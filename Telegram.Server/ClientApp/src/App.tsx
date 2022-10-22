@@ -3,7 +3,7 @@ import {BrowserRouter, Switch} from 'react-router-dom';
 import {routes} from "./routes";
 import {AuthenticatedHandler} from "./components/handlers/AuthenticatedHandler";
 import {UpLayerProvider} from "./providers/UpLayerProvider";
-import {Modals} from "./components/Modals";
+import {Modals} from "./components/up-layer/Modals";
 import "styles/index.sass"
 import {UserUpdatedHandler} from "./components/handlers/UserUpdatedHandler";
 import {ThemeProvider} from "./providers/ThemeProvider";

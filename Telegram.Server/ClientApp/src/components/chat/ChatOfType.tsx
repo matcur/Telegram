@@ -16,7 +16,7 @@ import {MessageOptions} from "../message/MessageOptions";
 import {PublicChat} from "../chats/PublicChat";
 import {Pagination} from "../../utils/type";
 import {useFlag} from "../../hooks/useFlag";
-import {emitMessageTyping, onMessageAdded, onMessageTyping, onMessageUpdated} from "../../app/chat/chatWebsocket";
+import {emitMessageTyping, onMessageAdded, onMessageTyping, onMessageUpdated} from "../../app/websockets/chatWebsocket";
 import {useFunction} from "../../hooks/useFunction";
 
 type Props = {
@@ -41,8 +41,6 @@ export type ChatProps = {
   replyTo(message: Message): void
   onRemoveReplyClick(): void
   onSubmit(message: Partial<Message>): void
-  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
-  onMessageAdded(chatId: number, callback: () => void): () => void
 }
 
 export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
@@ -130,8 +128,6 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
   const onMessageInput = useFunction(() => {
     emitMessageTyping(id)
   })
-  const onMessageAddedWrap = useFunction(onMessageAdded)
-  const onMessageTypingWrap = useFunction(onMessageTyping)
 
   const onRemoveReplyClick = useFunction(() => setReply(undefined))
   const loadMembers = useFunction(async (chatId: number, pagination: Pagination) => {
@@ -181,8 +177,6 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
     reply,
     onRemoveReplyClick,
     allMessagesLoaded,
-    onMessageAdded: onMessageAddedWrap,
-    onMessageTyping: onMessageTypingWrap,
   }
 
   return (

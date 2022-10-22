@@ -96,7 +96,8 @@ namespace Telegram.Server.Core.Services.Controllers
                     UnreadMessageCount = c.Messages.Count(m => m.Type == MessageType.UserMessage)
                         - c.Messages
                             .Where(m => m.Type == MessageType.UserMessage)
-                            .Count(m => m.Id <= c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId)
+                            .Count(m => m.Id <= c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId),
+                    MemberCount = c.Members.Count(),
                 })
                 .Where(c => c.Members.Any(m => m.UserId == userId) || c.CreatorId == userId)
                 .Skip(pagination.Offset());
@@ -160,5 +161,7 @@ namespace Telegram.Server.Core.Services.Controllers
         public int? LastReadMessageId { get; set; }
 
         public int UnreadMessageCount { get; set; }
+
+        public int MemberCount { get; set; }
     }
 }

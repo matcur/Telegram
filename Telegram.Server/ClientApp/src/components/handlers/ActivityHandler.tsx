@@ -1,6 +1,6 @@
 ﻿import React, {FC, useEffect, useRef} from "react"
 import {useCurrentUser} from "../../hooks/useCurrentUser";
-import {emitOffline, emitOnline, initActiveWebsocket} from "../../app/chat/activeWebsocket";
+import {emitOffline, emitOnline, initActiveWebsocket} from "../../app/websockets/activeWebsocket";
 import {useToken} from "../../hooks/useToken";
 import {Nothing} from "../../utils/functions";
 import {onWindowBlur, onWindowFocus} from "../../utils/onWindow";

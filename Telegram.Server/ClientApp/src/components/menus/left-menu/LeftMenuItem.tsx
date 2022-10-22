@@ -1,4 +1,4 @@
-import {Modal} from 'components/Modal';
+import {Modal} from 'components/up-layer/Modal';
 import React, {FC, ReactElement} from 'react'
 import {useFlag} from "../../../hooks/useFlag";
 import {Nothing} from "../../../utils/functions";

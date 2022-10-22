@@ -10,7 +10,7 @@ import {FilesApi} from "../../api/FilesApi";
 import {RichMessageForm} from "../forms/RichMessageForm";
 import {Content, Message, NewMessage} from "../../models";
 import {useFlag} from "../../hooks/useFlag";
-import {Modal} from "../Modal";
+import {Modal} from "../up-layer/Modal";
 import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
 import {useWindowListener} from "../../hooks/useWindowListener";
 import {useFunction} from "../../hooks/useFunction";

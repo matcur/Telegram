@@ -16,7 +16,7 @@ import {ResizedElement} from "../components/resize/ResizedElement";
 import {ResizeBar} from "../components/resize/ResizeBar";
 import {useReceiveMessage} from "../hooks/useReseiveMessage";
 import {useChatWebsocket} from "../hooks/useChatWebsocket";
-import {initChatWebsocket, onMessageAdded, onMessageTyping} from "../app/chat/chatWebsocket";
+import {initChatWebsocket, onMessageAdded, onMessageTyping} from "../app/websockets/chatWebsocket";
 import {useFunction} from "../hooks/useFunction";
 
 type Search = {
@@ -40,8 +40,7 @@ export const Index = () => {
   const searchInChat = useFunction(() => {
     setSearch({type: "messages", inChat: selectedChat})
   })
-  const onMessageTypingWrap = useFunction(onMessageTyping)
-  
+
   useEffect(() => {
     const load = () => {
       const chatsPromise = authorizedUser.chats({offset: 0, count: -1})
@@ -80,7 +79,6 @@ export const Index = () => {
               selectedChat={selectedChat}
               onChatSelected={setSelectedChat}
               chats={chats}
-              onMessageTyping={onMessageTypingWrap}
             />
           )}
           {search.type === "messages" && (

@@ -11,15 +11,11 @@ type Props = {
   chat: Chat
   className?: string
   onClick(chat: Chat): void
-  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
 }
 
-export const ChatItem: FC<Props> = ({chat, className = '', onClick, onMessageTyping}: Props) => {
+export const ChatItem: FC<Props> = ({chat, className = '', onClick}: Props) => {
   const [typingUsers, setTypingUsers] = useState<User[]>([])
   const lastMessage = chat.lastMessage?? nullMessage
-  const onMessageTypingWrap = useMemo(() => {
-    return onMessageTyping.bind(null, chat.id)
-  }, [onMessageTyping, chat.id])
   
   return (
     <div
@@ -41,7 +37,7 @@ export const ChatItem: FC<Props> = ({chat, className = '', onClick, onMessageTyp
           <MessageInputting
             setUsers={setTypingUsers}
             users={typingUsers}
-            onMessageTyping={onMessageTypingWrap}
+            chatId={chat.id}
           />
         </div>
       </div>

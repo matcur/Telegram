@@ -4,8 +4,8 @@ import {nullChat, nullUser} from "nullables";
 import {RootState} from "../store";
 import {Theme} from "../../providers/ThemeProvider";
 import {storedTheme} from "../../utils/storedTheme";
-import {chatWebsocketExists, initChatWebsocket} from "../chat/chatWebsocket";
-import {initUserWebhook} from "../chat/userWebsocket";
+import {chatWebsocketExists, initChatWebsocket} from "../websockets/chatWebsocket";
+import {initUserWebhook} from "../websockets/userWebsocket";
 
 type State = {
   currentUser: User

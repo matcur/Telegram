@@ -9,7 +9,7 @@ import {User} from "../../models";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";
 import {BaseForm} from "./BaseForm";
-import {Modal} from "../Modal";
+import {Modal} from "../up-layer/Modal";
 import {useFlag} from "../../hooks/useFlag";
 import {useKeyup} from "../../hooks/useKeyup";
 

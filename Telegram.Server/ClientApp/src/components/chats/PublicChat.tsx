@@ -18,7 +18,7 @@ import {useAwait} from "../../hooks/useAwait";
 import {UsersApi} from "../../api/UsersApi";
 import {ChatApi} from "../../api/ChatApi";
 import {useFlag} from "../../hooks/useFlag";
-import {Modal} from "../Modal";
+import {Modal} from "../up-layer/Modal";
 import {PublicMessageFork} from "../chat/PublicMessageFork";
 import {ChatProps} from "../chat/ChatOfType";
 import {useThemedChatClass} from "../../hooks/useThemedChatClass";
@@ -46,8 +46,6 @@ export const PublicChat = ({
  replyTo,
  textInput,
  loadMembers,
- onMessageAdded,
- onMessageTyping,
 }: Props) => {
   const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
   const [userInfoVisible, userInfoData, showUserInfo, hideUserInfo] = useModalVisible<User>()
@@ -63,26 +61,29 @@ export const PublicChat = ({
     <BaseChat
       loaded={loaded}
     >
-      {groupFormVisible && <Modal hide={hideGroupForm} name="PublicChatGroupForm">
-        <GroupForm
-          onHideClick={hideGroupForm}
-          group={chat}
-          totalMemberCount={1234}
-          loadMembers={loadMembers}
-          potentialMembers={potentialMembers}
-          addMembers={addMembers}
-        />
-      </Modal>}
-      {userInfoVisible && <Modal hide={hideUserInfo} name="PublicChatGroupForm">
-        <UserInfoForm
-          hide={hideUserInfo}
-          user={userInfoData!}
-        />
-      </Modal>}
+      {groupFormVisible && (
+        <Modal hide={hideGroupForm} name="PublicChatGroupForm">
+          <GroupForm
+            onHideClick={hideGroupForm}
+            group={chat}
+            totalMemberCount={chat.memberCount}
+            loadMembers={loadMembers}
+            potentialMembers={potentialMembers}
+            addMembers={addMembers}
+          />
+        </Modal>
+      )}
+      {userInfoVisible && (
+        <Modal hide={hideUserInfo} name="PublicChatUserInfoForm">
+          <UserInfoForm
+            hide={hideUserInfo}
+            user={userInfoData!}
+          />
+        </Modal>
+      )}
       <ChatHeader onClick={showGroupForm}>
         <ChatDetails
           chat={chat}
-          onMessageTyping={onMessageTyping}
         />
         <div className="chat-actions" onClick={preventClickBubble}>
           <button className="clear-btn chat-action-btn" onClick={onMessageSearchClick}>
@@ -99,7 +100,6 @@ export const PublicChat = ({
       <MessageScroll
         messages={messages}
         loadPreviousMessages={loadPreviousMessages}
-        onMessageAdded={onMessageAdded}
         chat={chat}
         chatLoaded={loaded}
         className={themedClass}
@@ -109,7 +109,7 @@ export const PublicChat = ({
           messages={messages}
           onMessageRightClick={onMessageRightClick}
           replyTo={replyTo}
-          makeMessage={props => <PublicMessageFork {...props}/>}
+          makeMessage={useFunction(props => <PublicMessageFork {...props}/>)}
           onAvatarClick={showUserInfo}
         />
       </MessageScroll>

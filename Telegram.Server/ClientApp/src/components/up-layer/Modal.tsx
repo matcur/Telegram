@@ -1,7 +1,7 @@
 ﻿import {FC, ReactElement, useContext, useEffect, useRef} from "react";
 import {ModalsContext} from "./Modals";
-import {Nothing} from "../utils/functions";
-import {circularReplacer} from "../utils/circularReplacer";
+import {Nothing} from "../../utils/functions";
+import {circularReplacer} from "../../utils/circularReplacer";
 
 type Props = {
   name: string

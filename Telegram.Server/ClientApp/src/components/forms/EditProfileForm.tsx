@@ -9,7 +9,7 @@ import {Nothing} from "../../utils/functions";
 import "styles/forms/edit-profile-form.sass"
 import {fullName} from "../../utils/fullName";
 import {useFlag} from "../../hooks/useFlag";
-import {Modal} from "../Modal";
+import {Modal} from "../up-layer/Modal";
 import {NameForm} from "./NameForm";
 import {User} from "../../models";
 import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";

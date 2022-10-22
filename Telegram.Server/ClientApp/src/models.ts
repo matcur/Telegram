@@ -50,6 +50,7 @@ export type Chat = {
   iconUrl?: string
   lastReadMessageId?: number,
   unreadMessageCount?: number,
+  memberCount?: number,
 }
 
 export type Phone = {

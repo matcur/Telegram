@@ -1,10 +1,10 @@
 ﻿import React, {createContext, createRef, FC, ReactNode, useState} from "react";
-import {useOutsideClick} from "../hooks/useOutsideClick";
-import {nope, Nothing} from "../utils/functions";
-import {lastIn} from "../utils/lastIn";
+import {useOutsideClick} from "../../hooks/useOutsideClick";
+import {nope, Nothing} from "../../utils/functions";
+import {lastIn} from "../../utils/lastIn";
 import "styles/modal.sass"
 import "styles/up-layer.sass"
-import {useFunction} from "../hooks/useFunction";
+import {useFunction} from "../../hooks/useFunction";
 
 type Props = {}
 

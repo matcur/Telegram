@@ -1,14 +1,16 @@
 ﻿import {User} from "../../models";
 import React, {useEffect, useState} from "react";
 import {showTypingTime} from "../../typingSettings";
+import {onMessageTyping} from "../../app/websockets/chatWebsocket";
+import {Nothing} from "../../utils/functions";
 
 type Props = {
   users: User[]
-  onMessageTyping(callback: (user: User) => void): () => void
+  chatId: number
   setUsers(value: User[] | ((value: User[]) => User[])): void
 }
 
-export const MessageInputting = ({onMessageTyping, users, setUsers}: Props) => {
+export const MessageInputting = ({chatId, users, setUsers}: Props) => {
   const displayedUsers = users
     .sort((a, b) => a.firstName > b.firstName ? 1 : -1)
     .slice(0, 3)
@@ -33,9 +35,9 @@ export const MessageInputting = ({onMessageTyping, users, setUsers}: Props) => {
       })
     }, showTypingTime)
   }
-  
+
   useEffect(() => {
-    return onMessageTyping(onTyping)
+    return onMessageTyping(chatId, onTyping)
   }, [])
   
   useEffect(() => {

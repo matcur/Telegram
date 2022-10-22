@@ -1,5 +1,5 @@
 ﻿import {useEffect, useRef, useState} from "react";
-import {initActiveWebsocket, onOffline, onOnline} from "../app/chat/activeWebsocket";
+import {initActiveWebsocket, onOffline, onOnline} from "../app/websockets/activeWebsocket";
 import {callWith} from "../utils/array/callWith";
 import {useToken} from "./useToken";
 import {Nothing} from "../utils/functions";

@@ -3,14 +3,13 @@ import React, {useState} from "react";
 import {splitByThousands} from "../../utils/splitByThousands";
 import {MessageInputting} from "../message/MessageInputting";
 import {useFunction} from "../../hooks/useFunction";
+import {onMessageTyping} from "../../app/websockets/chatWebsocket";
 
 type DetailProps = {
   chat: Chat
-  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
 }
-export const ChatDetails = ({chat, onMessageTyping}: DetailProps) => {
+export const ChatDetails = ({chat}: DetailProps) => {
   const [typingUsers, setTypingUsers] = useState<User[]>([])
-  const onMessageTypingWrap = useFunction(onMessageTyping.bind(null, chat.id))
 
   return(
     <div className="chat-details">
@@ -20,7 +19,7 @@ export const ChatDetails = ({chat, onMessageTyping}: DetailProps) => {
         <MessageInputting
           setUsers={setTypingUsers}
           users={typingUsers}
-          onMessageTyping={onMessageTypingWrap}
+          chatId={chat.id}
         />
       </div>
     </div>

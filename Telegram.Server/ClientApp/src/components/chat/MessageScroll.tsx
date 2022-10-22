@@ -2,6 +2,7 @@ import React, {FC, useEffect, useRef, useState} from "react";
 import {Chat, Message} from "../../models";
 import {classNames} from "../../utils/classNames";
 import {useFunction} from "../../hooks/useFunction";
+import {onMessageAdded} from "../../app/websockets/chatWebsocket";
 
 type Props = {
   messages: Message[]
@@ -9,12 +10,11 @@ type Props = {
   chat: Chat
   chatLoaded: boolean
   className?: string
-  onMessageAdded(chatId: number, callback: () => void): () => void
 }
 
 const loadPreviousMessageOffset = 45
 
-export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPreviousMessages, children, className, onMessageAdded}) => {
+export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPreviousMessages, children, className}) => {
   const scrollBarRef = useRef<HTMLDivElement>(null)
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
 

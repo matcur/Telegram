@@ -27,14 +27,19 @@ export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} =
 
   return (
     <div
-      onDoubleClick={() => onDoubleClick(message)}
-      onContextMenu={onContextMenu}
-      className={classNames(
-        "message",
-        inRowPosition,
-        {'current-user-message': isCurrentUser}
-      )}>
-      {children}
+      className="message-indent"
+      onContextMenu={useFunction(e => e.preventDefault())}
+    >
+      <div
+        onDoubleClick={() => onDoubleClick(message)}
+        onContextMenu={onContextMenu}
+        className={classNames(
+          "message",
+          inRowPosition,
+          {'current-user-message': isCurrentUser}
+        )}>
+        {children}
+      </div>
     </div>
   )
 }

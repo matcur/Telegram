@@ -2,7 +2,7 @@
 import {useDispatch} from "react-redux";
 import {useToken} from "../../hooks/useToken";
 import {useCurrentUser} from "../../hooks/useCurrentUser";
-import {onAddedInChat, onUserUpdated} from "../../app/chat/userWebsocket";
+import {onAddedInChat, onUserUpdated} from "../../app/websockets/userWebsocket";
 import {User} from "../../models";
 import {addChats, updateAuthorizedUser, updateFriend} from "app/slices/authorizationSlice";
 import {AuthorizedUserApi} from "../../api/AuthorizedUserApi";

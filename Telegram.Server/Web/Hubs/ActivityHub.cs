@@ -19,7 +19,7 @@ namespace Telegram.Server.Web.Hubs
         
         private readonly UserActivities _userActivities;
         
-        private readonly int _changeTabDelay = 10;
+        private readonly int _changeBrowserTabTime = 10;
 
         public ActivityHub(UserService users, AuthorizedUser authorizedUser)
         {
@@ -51,7 +51,7 @@ namespace Telegram.Server.Web.Hubs
         {
             var userId = EnsureCurrentUser();
             await _userActivities.Offline(userId, Context.ConnectionId);
-            await Task.Delay(_changeTabDelay);
+            await Task.Delay(_changeBrowserTabTime);
             if (_userActivities.IsOffline(userId))
             {
                 Emit(userId, "EmitOffline");

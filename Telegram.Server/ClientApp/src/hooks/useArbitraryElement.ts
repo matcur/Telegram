@@ -12,6 +12,7 @@ class ArbitraryPosition {
   internalHide() {}
 }
 
+// TODO: remove this and add arbitrary elements as Modal
 export const useArbitraryElement = (): Omit<ArbitraryPosition, 'internalHide'> => {
   const upLayer = useContext(UpLayerContext)
   const [element] = useState(() => new ArbitraryPosition())

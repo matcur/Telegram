@@ -12,10 +12,9 @@ type Props = {
   selectedChat: Chat
   chats: Chat[]
   onChatSelected(chat: Chat): void
-  onMessageTyping(chatId: number, callback: (user: User) => void): () => void
 }
 
-export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, onMessageTyping}) => {
+export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats}) => {
   const search = useFormInput('')
   const leftMenu = useContext(LeftMenuContext)
 
@@ -38,7 +37,6 @@ export const ChatsBlock: FC<Props> = ({onChatSelected, selectedChat, chats, onMe
         selectedChat={selectedChat}
         onChatSelected={onChatSelected}
         chats={[...chats].sort(compareObjectDate("updatedDate"))}
-        onMessageTyping={onMessageTyping}
       />
     </div>
   )

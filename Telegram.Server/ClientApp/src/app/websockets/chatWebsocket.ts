@@ -3,6 +3,7 @@ import {Message, User} from "../../models";
 import {callWith} from "../../utils/array/callWith";
 import {throttle} from "../../utils/throttle";
 import {typingThrottleTime} from "../../typingSettings";
+import {Nothing} from "../../utils/functions";
 
 
 type MessageCallback = (message: Message) => void;
@@ -77,8 +78,7 @@ const chatWebsocketExists = (chatId: number) => {
   return findWebsocket(chatId) !== nullWebsocket
 }
 
-// TODO: extract code to separate function 
-const onMessageAdded = (chatId: number, callback: MessageCallback) => {
+const onMessageAdded = (chatId: number, callback: MessageCallback): Nothing => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.messageAdded
   callbacks.add(callback)
@@ -94,7 +94,7 @@ const onMessageUpdated = (chatId: number, callback: MessageCallback) => {
   return () => callbacks.delete(callback)
 }
 
-const onMessageTyping = (chatId: number, callback: UserCallback) => {
+const onMessageTyping = (chatId: number, callback: UserCallback): Nothing => {
   const websocket = findWebsocket(chatId)
   const callbacks = websocket.callbacks.messageTyping
   callbacks.add(callback)
