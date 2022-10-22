@@ -47,7 +47,7 @@ export const ChatItem: FC<Props> = ({chat, className = '', onClick, onMessageTyp
       </div>
       <div className="search-item-right-part">
         <div className="search-message-date">{lastMessage.creationDate && readableDate(lastMessage.creationDate)}</div>
-        <div className="unread-messages-count">2344</div>
+        {chat.unreadMessageCount !== 0 && <div className="unread-messages-count">{chat.unreadMessageCount}</div>}
       </div>
     </div>
   )

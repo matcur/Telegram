@@ -93,6 +93,10 @@ namespace Telegram.Server.Core.Services.Controllers
                     UpdatedDate = c.UpdatedDate,
                     CreatorId = c.CreatorId,
                     LastReadMessageId = c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId,
+                    UnreadMessageCount = c.Messages.Count(m => m.Type == MessageType.UserMessage)
+                        - c.Messages
+                            .Where(m => m.Type == MessageType.UserMessage)
+                            .Count(m => m.Id <= c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId)
                 })
                 .Where(c => c.Members.Any(m => m.UserId == userId) || c.CreatorId == userId)
                 .Skip(pagination.Offset());

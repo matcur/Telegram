@@ -1,5 +1,5 @@
 import {ApiClient} from "api/ApiClient";
-import {Chat, User, UserChat} from "models";
+import {Chat, User} from "models";
 import {Pagination} from "../utils/type";
 import {Omit} from "react-redux";
 import {toFormData} from "../utils/toFormData";
@@ -22,7 +22,7 @@ export class AuthorizedUserApi {
   }
 
   chats(pagination: Pagination) {
-    return this.api.post<UserChat[]>('authorized-user/chats', {pagination})
+    return this.api.post<Chat[]>('authorized-user/chats', {pagination})
   }
   
   chatIds() {

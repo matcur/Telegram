@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Chat, Message, User, UserChat} from "models";
+import {Chat, Message, User} from "models";
 import {nullChat, nullUser} from "nullables";
 import {RootState} from "../store";
 import {Theme} from "../../providers/ThemeProvider";
@@ -54,7 +54,7 @@ const authorizationSlice = createSlice({
         friends.splice(index, 1, payload)
       }
     },
-    addChats(state, {payload}: PayloadAction<UserChat[]>) {
+    addChats(state, {payload}: PayloadAction<Chat[]>) {
       const newChats = payload.filter(c => !state.currentUser.chats.some(addedChat => addedChat.id === c.id))
       newChats.forEach(c => initChatWebsocket(c.id, state.token))
       state.currentUser.chats = [
@@ -62,7 +62,7 @@ const authorizationSlice = createSlice({
         ...newChats,
       ]
     },
-    unshiftChat(state, {payload}: PayloadAction<UserChat>) {
+    unshiftChat(state, {payload}: PayloadAction<Chat>) {
       state.currentUser.chats.unshift(payload)
     },
     changeChatUpdatedDate(state, {payload: {chatId, value}}: PayloadAction<{chatId: number, value: string}>) {
