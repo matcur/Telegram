@@ -1,8 +1,10 @@
+export type UserChat = Chat & { lastReadMessage?: {messageId: number} };
+
 export type User = {
   id: number
   firstName: string
   lastName: string
-  chats: Chat[]
+  chats: UserChat[]
   avatarUrl: string
   bio: string
   phone?: Phone

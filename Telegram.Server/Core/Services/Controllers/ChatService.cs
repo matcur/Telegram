@@ -71,7 +71,7 @@ namespace Telegram.Server.Core.Services.Controllers
             return _chats.AnyAsync(c => c.Id == id);
         }
 
-        public Task<List<Chat>> WithMember(int userId, Pagination pagination)
+        public Task<List<UserChat>> WithMember(int userId, Pagination pagination)
         {
             var query = _chats
                 .Include(c => c.Members)
@@ -79,7 +79,8 @@ namespace Telegram.Server.Core.Services.Controllers
                 .Include(c => c.Messages)
                 .ThenInclude(m => m.ContentMessages)
                 .ThenInclude(c => c.Content)
-                .Select(c => new Chat
+                .Include(c => c.LastReadMessages)
+                .Select(c => new UserChat
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -91,6 +92,7 @@ namespace Telegram.Server.Core.Services.Controllers
                     Members = c.Members,
                     UpdatedDate = c.UpdatedDate,
                     CreatorId = c.CreatorId,
+                    LastReadMessage = c.LastReadMessages.FirstOrDefault(m => m.UserId == userId),
                 })
                 .Where(c => c.Members.Any(m => m.UserId == userId) || c.CreatorId == userId)
                 .Skip(pagination.Offset());
@@ -145,5 +147,12 @@ namespace Telegram.Server.Core.Services.Controllers
                 throw new NotFoundException($"Chat with id = {chatId} not found.");
             }
         }
+    }
+
+    public class UserChat : Chat
+    {
+        public Chat Chat { get; set; }
+
+        public LastReadMessage? LastReadMessage { get; set; }
     }
 }

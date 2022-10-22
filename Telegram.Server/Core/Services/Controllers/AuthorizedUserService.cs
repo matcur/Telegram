@@ -50,7 +50,7 @@ namespace Telegram.Server.Core.Services.Controllers
             return _users.FirstAsync(u => u.Id == _authorizedUser.Id());
         }
 
-        public Task<List<Chat>> Chats(Pagination pagination)
+        public Task<List<UserChat>> Chats(Pagination pagination)
         {
             return _chatService.WithMember(_authorizedUser.Id(), pagination);
         }
