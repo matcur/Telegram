@@ -1,6 +1,6 @@
 import {Theme} from "../providers/ThemeProvider";
 
-export const loadTheme = (theme: Theme) => {
+export const loadTheme = (theme: Theme = "dark") => {
   const resetTransitionStyle = document.createElement("style");
   document.head.appendChild(resetTransitionStyle)
   resetTransitionStyle.innerText =
