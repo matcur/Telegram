@@ -38,6 +38,8 @@ namespace Telegram.Server.Core.Db.Models
 
         public List<Role> Roles { get; set; } = new List<Role>();
 
+        public List<LastReadMessage> LastReadMessages { get; set; } = new List<LastReadMessage>();
+
         public Chat() { }
         
         public Chat(ChatMap map)
