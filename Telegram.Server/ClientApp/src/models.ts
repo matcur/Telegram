@@ -1,4 +1,4 @@
-export type UserChat = Chat & { lastReadMessage?: {messageId: number} };
+export type UserChat = Chat & { lastReadMessageId?: number};
 
 export type User = {
   id: number

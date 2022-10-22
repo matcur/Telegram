@@ -92,7 +92,7 @@ namespace Telegram.Server.Core.Services.Controllers
                     Members = c.Members,
                     UpdatedDate = c.UpdatedDate,
                     CreatorId = c.CreatorId,
-                    LastReadMessage = c.LastReadMessages.FirstOrDefault(m => m.UserId == userId),
+                    LastReadMessageId = c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId,
                 })
                 .Where(c => c.Members.Any(m => m.UserId == userId) || c.CreatorId == userId)
                 .Skip(pagination.Offset());
@@ -153,6 +153,8 @@ namespace Telegram.Server.Core.Services.Controllers
     {
         public Chat Chat { get; set; }
 
-        public LastReadMessage? LastReadMessage { get; set; }
+        public int? LastReadMessageId { get; set; }
+
+        public int UnreadMessageCount { get; set; }
     }
 }
