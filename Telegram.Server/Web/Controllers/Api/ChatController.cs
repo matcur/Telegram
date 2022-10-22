@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Server.Core;
+using Telegram.Server.Core.Auth;
 using Telegram.Server.Core.Services.Controllers;
 
 namespace Telegram.Server.Web.Controllers.Api
 {
+    [Authorize]
     public class ChatController : Controller
     {
         private readonly ChatService _chats;
@@ -13,12 +16,15 @@ namespace Telegram.Server.Web.Controllers.Api
         private readonly MessageService _messages;
         
         private readonly UserService _users;
+        
+        private readonly AuthorizedUser _authorizedUser;
 
-        public ChatController(ChatService chats, MessageService messages, UserService users)
+        public ChatController(ChatService chats, MessageService messages, UserService users, AuthorizedUser authorizedUser)
         {
             _chats = chats;
             _messages = messages;
             _users = users;
+            _authorizedUser = authorizedUser;
         }
         
         [HttpGet]
@@ -55,6 +61,15 @@ namespace Telegram.Server.Web.Controllers.Api
             var members = await _users.ChatMembers(chatId, new Pagination(pagination));
 
             return Json(members);
+        }
+
+        [HttpPut]
+        [Route("api/1.0/members/chats/{chatId:int}/last-read-message/{messageId:int}")]
+        public async Task<IActionResult> ChangeLastReadMessage([FromRoute] int chatId, [FromRoute] int messageId)
+        {
+            await _chats.ChangeLastReadMessage(chatId, messageId, _authorizedUser.Id());
+
+            return Ok();
         }
     }
 }

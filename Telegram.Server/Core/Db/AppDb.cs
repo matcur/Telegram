@@ -20,6 +20,8 @@ namespace Telegram.Server.Core.Db
 
         public DbSet<Bot> Bots { get; set; }
 
+        public DbSet<LastReadMessage> LastReadMessages { get; set; }
+
         public AppDb(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
@@ -43,6 +45,8 @@ namespace Telegram.Server.Core.Db
                 .HasKey(nameof(ContentMessage.ContentId), nameof(ContentMessage.MessageId));
             modelBuilder.Entity<UserMessage>()
                 .HasKey(nameof(UserMessage.UserId), nameof(UserMessage.MessageId));
+            modelBuilder.Entity<LastReadMessage>()
+                .HasKey(nameof(LastReadMessage.UserId), nameof(LastReadMessage.MessageId), nameof(LastReadMessage.ChatId));
 
             modelBuilder.Entity<Message>()
                 .Property(m => m.CreationDate)
@@ -74,7 +78,7 @@ namespace Telegram.Server.Core.Db
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=root;Password=root");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=postgres;Password=1234");
         }
     }
 }

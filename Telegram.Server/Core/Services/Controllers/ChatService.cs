@@ -7,6 +7,7 @@ using Telegram.Server.Core.Db;
 using Telegram.Server.Core.Db.Extensions;
 using Telegram.Server.Core.Db.Models;
 using Telegram.Server.Core.Exceptions;
+using Telegram.Server.Core.Extensions;
 
 namespace Telegram.Server.Core.Services.Controllers
 {
@@ -17,12 +18,18 @@ namespace Telegram.Server.Core.Services.Controllers
         private readonly AppDb _db;
 
         private readonly DbSet<Chat> _chats;
+        
+        private readonly DbSet<Message> _messages;
+        
+        private readonly DbSet<LastReadMessage> _lastReadMessages;
 
         public ChatService(UserService users, AppDb db)
         {
             _users = users;
             _db = db;
             _chats = db.Chats;
+            _messages = db.Messages;
+            _lastReadMessages = db.LastReadMessages;
         }
 
         public async Task<Chat> Get(int id)
@@ -50,7 +57,11 @@ namespace Telegram.Server.Core.Services.Controllers
         {
             var members = await _users.Enumerable(memberIds);
             var chat = await Get(chatId);
+            var lastMessage = await _messages.LastMessage(chatId);
 
+            chat.LastReadMessages.AddRange(
+                members.Select(m => new LastReadMessage(m, chat, lastMessage))
+            );
             chat.Members.AddRange(members.Select(m => new ChatUser {UserId = m.Id}));
             await _db.SaveChangesAsync();
         }
@@ -109,9 +120,27 @@ namespace Telegram.Server.Core.Services.Controllers
             );
         }
 
+        public async Task ChangeLastReadMessage(int chatId, int messageId, int userId)
+        {
+            await EnsureMessageExistsIn(chatId, messageId);
+            var lastReadMessage = new LastReadMessage{ChatId = chatId, MessageId = messageId, UserId = userId};
+            _lastReadMessages.Attach(lastReadMessage);
+            await _db.SaveChangesAsync();
+        }
+
+        private async Task EnsureMessageExistsIn(int chatId, int messageId)
+        {
+            if (!await _chats.AnyAsync(
+                c => c.Id == chatId
+                     && c.Messages.Any(m => m.Id == messageId)))
+            {
+                throw new NotFoundException($"MessageId {messageId} is not found in chat {chatId}");
+            }
+        }
+
         private async Task EnsureChatExists(int chatId)
         {
-            if (await _chats.AnyAsync(c => c.Id == chatId))
+            if (!await _chats.AnyAsync(c => c.Id == chatId))
             {
                 throw new NotFoundException($"Chat with id = {chatId} not found.");
             }
