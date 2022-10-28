@@ -43,6 +43,15 @@ namespace Telegram.Server.Core.Services.Controllers
             return chat;
         }
 
+        public async Task<UserChat> GetForUser(int id, int userId)
+        {
+            await EnsureChatExists(id);
+            
+            return await _chats
+                .DetailChats(userId)
+                .FirstAsync(c => c.Id == id);
+        }
+
         public async Task<Chat> Add(Chat chat)
         {
             await _chats.AddAsync(chat);
@@ -71,35 +80,10 @@ namespace Telegram.Server.Core.Services.Controllers
             return _chats.AnyAsync(c => c.Id == id);
         }
 
-        public Task<List<UserChat>> WithMember(int userId, Pagination pagination)
+        public Task<List<UserChat>> WithMember(int memberId, Pagination pagination)
         {
             var query = _chats
-                .Include(c => c.Members)
-                .ThenInclude(c => c.User)
-                .Include(c => c.Messages)
-                .ThenInclude(m => m.ContentMessages)
-                .ThenInclude(c => c.Content)
-                .Include(c => c.LastReadMessages)
-                .Select(c => new UserChat
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    LastMessage = c.Messages.Where(m => m.Type == MessageType.UserMessage)
-                        .OrderByDescending(m => m.Id)
-                        .FirstOrDefault(),
-                    IconUrl = c.IconUrl,
-                    Members = c.Members,
-                    UpdatedDate = c.UpdatedDate,
-                    CreatorId = c.CreatorId,
-                    LastReadMessageId = c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId,
-                    UnreadMessageCount = c.Messages.Count(m => m.Type == MessageType.UserMessage)
-                        - c.Messages
-                            .Where(m => m.Type == MessageType.UserMessage)
-                            .Count(m => m.Id <= c.LastReadMessages.FirstOrDefault(m => m.UserId == userId).MessageId),
-                    MemberCount = c.Members.Count(),
-                })
-                .Where(c => c.Members.Any(m => m.UserId == userId) || c.CreatorId == userId)
+                .DetailChats(memberId)
                 .Skip(pagination.Offset());
             if (pagination.Count() != -1)
             {

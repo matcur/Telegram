@@ -55,9 +55,9 @@ namespace Telegram.Server.Core.Services.Controllers
             return _chatService.WithMember(_authorizedUser.Id(), pagination);
         }
 
-        public Task<Chat> Chat(int id)
+        public Task<UserChat> Chat(int id)
         {
-            return _chatService.Get(id);
+            return _chatService.GetForUser(id, _authorizedUser.Id());
         }
 
         public Task<List<int>> ChatIds()
