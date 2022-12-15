@@ -139,6 +139,12 @@ const authorizationSlice = createSlice({
         lastMessage.author = {...lastMessage.author, ...member}
       }
     },
+    changeUnreadCount(state, {payload: {chatId, unreadCount}}: PayloadAction<{chatId: number, unreadCount: number}>) {
+      const chat = state.currentUser.chats.find(c => c.id === chatId)
+      if (!chat) return
+      
+      chat.unreadMessageCount = unreadCount
+    }
   }
 })
 
@@ -159,6 +165,7 @@ export const {
   updateFriend,
   choiceTheme,
   updateChatMember,
+  changeUnreadCount,
 } = authorizationSlice.actions
 
 export const authorizationReducer = authorizationSlice.reducer

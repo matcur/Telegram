@@ -1,5 +1,5 @@
 ﻿import {User} from "../../models";
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {MessageForm} from "../message/MessageForm";
 import {ReactComponent as Magnifier} from "../../public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "../../public/svgs/star.svg";
@@ -25,37 +25,105 @@ import {useThemedChatClass} from "../../hooks/useThemedChatClass";
 import {useModalVisible} from "../../hooks/useModalVisible";
 import {UserInfoForm} from "../forms/UserInfoForm";
 import {useFunction} from "../../hooks/useFunction";
+import {debounce} from "../../utils/debounce";
+import {onMessageAdded} from "../../app/websockets/chatWebsocket";
+import {lastIn} from "../../utils/lastIn";
+import {nullMessage} from "../../nullables";
+import {useDispatch} from "react-redux";
+import { changeUnreadCount } from "app/slices/authorizationSlice";
 
 type Props = ChatProps & {
   loadMembers(groupId: number, pagination: Pagination): void
 }
 
 export const PublicChat = ({
- chat,
- onMessageSearchClick,
- loadPreviousMessages,
- loaded,
- reply,
- messages,
- id,
- onRemoveReplyClick,
- onMessageInput,
- tryEditMessage,
- onMessageRightClick,
- onSubmit,
- replyTo,
- textInput,
- loadMembers,
+  chat,
+  onMessageSearchClick,
+  loadPreviousMessages,
+  loaded,
+  reply,
+  messages,
+  id,
+  onRemoveReplyClick,
+  onMessageInput,
+  tryEditMessage,
+  onMessageRightClick,
+  onSubmit,
+  replyTo,
+  textInput,
+  loadMembers,
 }: Props) => {
   const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
   const [userInfoVisible, userInfoData, showUserInfo, hideUserInfo] = useModalVisible<User>()
   const potentialMembers = useAwait(() => new UsersApi().all(), [])
   const authorizeToken = useAppSelector(state => state.authorization.token)
   const themedClass = useThemedChatClass()
+  const messageHeights = useRef<Record<number, number>>({})
+  const scrollBarRef = useRef<HTMLDivElement>(null)
+  const lastReadMessageIdRef = useRef(chat.lastReadMessageId ?? 0)
+  const [unreadMessageCount, setUnreadMessageCount] = useState(chat.unreadMessageCount ?? 0)
+  const dispatch = useDispatch()
 
   const addMembers = useFunction((users: User[]) => {
     return users.length && new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
   })
+  const setMessageHeight = useFunction((messageId: number, height: number) => {
+    messageHeights.current[messageId] = height
+  })
+  const getBottomDisplayingMessageId = useFunction(() => {
+    const scrollBar = scrollBarRef.current
+    if (!scrollBar) {
+      return 0
+    }
+    
+    const ids: number[] = Object.keys(messageHeights.current) as any
+    let passHeight = 0
+    let messageId = ids[0]
+    ids.reverse()
+    for (const id of ids) {
+      passHeight += messageHeights.current[id]
+      messageId = id
+      if (passHeight >= scrollBar.scrollHeight - scrollBar.scrollTop - scrollBar.clientHeight) {
+        break
+      }
+    }
+    
+    return Number(messageId)
+  })
+  const readMessageCount = useFunction((bottomDisplayingMessageId: number) => {
+    let readCount = 0
+    if (lastIn(messages, nullMessage).id <= bottomDisplayingMessageId) {
+      return Infinity
+    }
+    for (const {id} of messages) {
+      if (id > lastReadMessageIdRef.current && id <= bottomDisplayingMessageId) {
+        readCount++
+      }
+    }
+    return readCount;
+  })
+  const calculateUnreadMessageCount = (bottomDisplayingMessageId: number) => {
+    setUnreadMessageCount(state => Math.max(state - readMessageCount(bottomDisplayingMessageId), 0))
+  }
+  const onScroll = useFunction(debounce(() => {
+    const bottomDisplayingMessageId = getBottomDisplayingMessageId()
+    if (bottomDisplayingMessageId > lastReadMessageIdRef.current) {
+      calculateUnreadMessageCount(bottomDisplayingMessageId)
+      lastReadMessageIdRef.current = bottomDisplayingMessageId
+    }
+  }, 50))
+  
+  useEffect(() => {
+    return onMessageAdded(chat.id, () => {
+      if (lastIn(messages, nullMessage).id !== getBottomDisplayingMessageId()) {
+        setUnreadMessageCount(state => state + 1)
+      }
+    })
+  }, [messages.length])
+  
+  useEffect(() => {
+    dispatch(changeUnreadCount({chatId: chat.id, unreadCount: unreadMessageCount}))
+  }, [unreadMessageCount])
   
   return (
     <BaseChat
@@ -98,11 +166,14 @@ export const PublicChat = ({
         </div>
       </ChatHeader>
       <MessageScroll
+        scrollBarRef={scrollBarRef}
         messages={messages}
         loadPreviousMessages={loadPreviousMessages}
         chat={chat}
         chatLoaded={loaded}
         className={themedClass}
+        onScroll={onScroll}
+        unreadMessageCount={unreadMessageCount}
       >
         <ChatMessages
           onMessageDoubleClick={tryEditMessage}
@@ -111,6 +182,7 @@ export const PublicChat = ({
           replyTo={replyTo}
           makeMessage={useFunction(props => <PublicMessageFork {...props}/>)}
           onAvatarClick={showUserInfo}
+          onMessageHeightChange={setMessageHeight}
         />
       </MessageScroll>
       <MessageForm

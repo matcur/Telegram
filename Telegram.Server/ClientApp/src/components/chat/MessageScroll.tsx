@@ -3,30 +3,36 @@ import {Chat, Message} from "../../models";
 import {classNames} from "../../utils/classNames";
 import {useFunction} from "../../hooks/useFunction";
 import {onMessageAdded} from "../../app/websockets/chatWebsocket";
+import {UnreadMessageScroller, UnreadMessageScrollerProps} from "../chats/UnreadMessageScroller";
 
 type Props = {
   messages: Message[]
   loadPreviousMessages: () => Promise<void>
   chat: Chat
   chatLoaded: boolean
+  scrollBarRef: React.RefObject<HTMLDivElement>
   className?: string
+  onScroll(top: number): void
+  unreadMessageCount: number
 }
 
 const loadPreviousMessageOffset = 45
 
-export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPreviousMessages, children, className}) => {
-  const scrollBarRef = useRef<HTMLDivElement>(null)
+export const MessageScroll: FC<Props> = ({scrollBarRef, chatLoaded, chat, messages, loadPreviousMessages, children, className, unreadMessageCount, onScroll}) => {
   const [lastScrollTops, setLastScrollTops] = useState<Record<number, number>>(() => ({}))
+  const scrollHeight = scrollBarRef?.current?.scrollHeight ?? 0
+  const scrollTop = scrollBarRef?.current?.scrollTop ?? 0
+  const bottom = scrollHeight - scrollTop ?? 0
 
-  const scrollTo = (top: number) => {
+  const scrollTo = useFunction((top: number) => {
     const scroll = scrollBarRef.current!
     scroll.scrollTo({top: top})
-  }
-  const scrollToBottom = (bottomOffset = 0) => {
+  })
+  const scrollToBottom = useFunction((bottomOffset = 0) => {
     const scrollBar = scrollBarRef.current!
     scrollTo(scrollBar.scrollHeight - bottomOffset)
-  }
-  const onScroll = useFunction(() => {
+  })
+  const onScrollInternal = useFunction(() => {
     const scroll = scrollBarRef.current
     if (!scroll) {
       return
@@ -38,6 +44,7 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPrevio
       ...lastScrollTops,
       [chat.id]: top
     })
+    onScroll(top)
     if (top < loadPreviousMessageOffset && messages.length) {
       loadPreviousMessages()
         .then(() => scrollToBottom(bottom))
@@ -75,8 +82,14 @@ export const MessageScroll: FC<Props> = ({chatLoaded, chat, messages, loadPrevio
     <div
       ref={scrollBarRef}
       className={classNames("scrollbar chat-messages", className)}
-      onScroll={onScroll}>
+      onScroll={onScrollInternal}
+    >
       {children}
+      <UnreadMessageScroller
+        scrollTo={scrollTo}
+        bottom={bottom}
+        unreadCount={unreadMessageCount}
+      />
     </div>
   )
 }

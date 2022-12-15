@@ -1,6 +1,6 @@
 @import "scrollbar"
 
-@mixin indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround)
+@mixin indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround, $currentUserMessageBackground, $searchItemFocusBackground)
   color: $mainColor
   .index
     background: $mainBackground
@@ -135,6 +135,19 @@
   .form-splitter
     background: $formSplitterBacgkround
 
+  .unread-message-scroller
+    background: $mainBackground
+
+  .unread-message-scroller:hover
+    background: $searchItemHoverBackground
+
+  .unread-message-scroller:active
+    background: $searchItemFocusBackground
+
+  .current-user-message
+    .message-wrapper
+      background: $currentUserMessageBackground
+
 // sass allow pass arguments only in row
-@include indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround)
+@include indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround, $currentUserMessageBackground, $searchItemFocusBackground)
 @include scrollbar($scrollbarBackground, $thumbBackground, $hoverThumbBacground)

@@ -4,6 +4,7 @@ import {inRowPositionClass} from "utils/inRowPositionClass";
 import {useAppSelector} from "app/hooks";
 import {classNames} from "../../utils/classNames";
 import {useFunction} from "../../hooks/useFunction";
+import {trackHeight} from "../../utils/trackHeight";
 
 export type ChatMessageProps = {
   key: string | number
@@ -12,9 +13,10 @@ export type ChatMessageProps = {
   nextAuthor: User
   onDoubleClick(message: Message): void
   onRightClick(message: Message, event: React.MouseEvent<HTMLDivElement>): void
+  onMessageHeightChange(messageId: number, height: number): void
 }
 
-export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick, children}) => {
+export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} = ({previousAuthor, message, nextAuthor, onDoubleClick, onRightClick, children, onMessageHeightChange}) => {
   const currentUser = useAppSelector(state => state.authorization.currentUser)
   const currentAuthor = message.author
   const inRowPosition = inRowPositionClass(previousAuthor, message.author, nextAuthor)
@@ -29,6 +31,7 @@ export const ChatMessage: FC<ChatMessageProps> & {AuthorAvatar?: ReactElement} =
     <div
       className="message-indent"
       onContextMenu={useFunction(e => e.preventDefault())}
+      ref={trackHeight((value) => onMessageHeightChange(message.id, value))}
     >
       <div
         onDoubleClick={() => onDoubleClick(message)}

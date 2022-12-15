@@ -14,11 +14,12 @@ type Props = {
   replyTo(message: Message): void
   makeMessage(props: MessageFormProps): ReactElement
   onAvatarClick(user: User): void
+  onMessageHeightChange(messageId: number, height: number): void
 }
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick, makeMessage, onAvatarClick}: Props) => {
+export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClick, makeMessage, onAvatarClick, onMessageHeightChange}: Props) => {
   const makeMessages = (messages: Message[]) => {
     const result: ReactElement[] = [];
     messages.forEach((current, i) => {
@@ -37,18 +38,27 @@ export const ChatMessages = ({messages, onMessageDoubleClick, onMessageRightClic
           nextAuthor: next.author,
           onRightClick: onMessageRightClick,
           onAvatarClick,
+          onMessageHeightChange,
         }))
       }
       if (type === "NewUserAdded") {
         result.push(
-          <MiddleMessage key={current.id}>
+          <MiddleMessage key={current.id} onMessageHeightChange={onMessageHeightChange} id={current.id}>
             {userNames(current.associatedUsers.map(a => a.user))}
           </MiddleMessage>
         )
       }
       if (showDate) {
         const date = `${months[nextDate.getMonth()]} ${nextDate.getDate()}`
-        result.push(<MiddleMessage key={current.id + "_new_day"}>{date}</MiddleMessage>)
+        result.push(
+          <MiddleMessage
+            id={-1}
+            onMessageHeightChange={() => {}}
+            key={current.id + "_new_day"}
+          >
+            {date}
+          </MiddleMessage>
+        )
       }
     })
 

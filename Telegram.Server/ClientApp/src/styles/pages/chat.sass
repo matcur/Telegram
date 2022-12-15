@@ -223,6 +223,49 @@
   background: #7AA3CA
   color: #2A5394
 
+.unread-message-scroller-position
+  position: absolute
+  bottom: 60px
+  right: 20px
+
+.unread-message-scroller
+  position: relative
+  width: 45px
+  height: 45px
+  border-radius: 50%
+  cursor: pointer
+  transition: background .1s
+  outline: none
+  box-shadow: none
+
+$arrowSize: 12px
+.scroller-arrow
+  position: absolute
+  top: 25%
+  left: 50%
+  height: $arrowSize
+  width: $arrowSize
+  transform: translateX(-50%) rotate(-45deg)
+  border-width: 3px
+  border-style: solid
+  border-color: #9AA0A6
+  border-top-color: transparent
+  border-right-color: transparent
+  
+.unread-message-count
+  position: absolute
+  display: flex
+  align-items: center
+  justify-content: center
+  min-width: 25px
+  height: 25px
+  border-radius: 12px
+  left: 50%
+  top: -18px
+  transform: translateX(-50%)
+  background: green
+  text-align: center
+
 .chats-search
   display: -webkit-box
   display: -ms-flexbox
