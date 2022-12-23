@@ -1,6 +1,6 @@
 import {Chat, Message, User} from "models";
 import {OrderedResizeElement} from "./components/resize/Resize";
-import {nope} from "./utils/functions";
+import {Position} from "./utils/type";
 
 export const nullUser: User = {
   id: -1,
@@ -39,3 +39,5 @@ export const nullResizeElement: OrderedResizeElement = {
   minWidth: () => 0,
   width: () => 0,
 }
+
+export const nullPosition: Position = {top: 0, left: 0}

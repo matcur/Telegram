@@ -5,7 +5,7 @@ type Props = {
   onClick: () => void
   leftElement: ReactElement
   leftElementVisible: boolean
-  arbitraryElements?: ReactElement[]
+  arbitraryElements?: (ReactElement | undefined)[]
   modalOpened: boolean
 }
 

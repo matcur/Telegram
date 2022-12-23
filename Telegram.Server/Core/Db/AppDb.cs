@@ -77,13 +77,8 @@ namespace Telegram.Server.Core.Db
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("your_connection_string", builder =>
-            {
-                builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-            });
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=telegram;Username=postgres;Password=1234");
-            base.OnConfiguring(optionsBuilder);
         }
     }
 }

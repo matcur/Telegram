@@ -1,6 +1,6 @@
 @import "scrollbar"
 
-@mixin indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround, $currentUserMessageBackground, $searchItemFocusBackground)
+@mixin indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround, $currentUserMessageBackground, $searchItemFocusBackground, $arbitraryElementBorderColor)
   color: $mainColor
   .index
     background: $mainBackground
@@ -8,8 +8,12 @@
   .form
     background: $mainBackground
 
-  .message-options
+  .menu
     background: $mainBackground
+    border: 1px solid $arbitraryElementBorderColor
+    
+  .menu-option:hover
+    background: $formRowHoverBacgkround
 
   .page
     background: $mainBackground
@@ -149,5 +153,5 @@
       background: $currentUserMessageBackground
 
 // sass allow pass arguments only in row
-@include indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround, $currentUserMessageBackground, $searchItemFocusBackground)
+@include indexPage($mainBackground, $chatListItemColor, $chatListLastMessageAuthorColor, $leftMenuUserInfo, $mainColor, $unreadMessageCountBackground, $burgerLineBackground, $hoverBurgerLineBackground, $searchItemHoverBackground, $searchBackground, $unreadMessageCountColor, $selectedChatBackground, $selectedChatUnreadMessageCountBackground, $chatMessagesBackground, $betweenElementBorder, $formRowHoverBacgkround, $formSplitterBacgkround, $currentUserMessageBackground, $searchItemFocusBackground, $arbitraryElementBorderColor)
 @include scrollbar($scrollbarBackground, $thumbBackground, $hoverThumbBacground)

@@ -19,7 +19,6 @@ export const useArbitraryElement = (): Omit<ArbitraryPosition, 'internalHide'> =
   const [hide, setHide] = useState<RemoveLastCentralElement>(() => () => {})
 
   element.show = (element: ReactElement) => {
-    setHide(() => upLayer.addArbitraryElement(element))
   }
   element.internalHide = hide
 

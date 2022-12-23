@@ -14,10 +14,12 @@ import {useArbitraryElement} from "../../hooks/useArbitraryElement";
 import {ArbitraryElement} from "../up-layer/ArbitraryElement";
 import {MessageOptions} from "../message/MessageOptions";
 import {PublicChat} from "../chats/PublicChat";
-import {Pagination} from "../../utils/type";
+import {Pagination, Position} from "../../utils/type";
 import {useFlag} from "../../hooks/useFlag";
 import {emitMessageTyping, onMessageAdded, onMessageTyping, onMessageUpdated} from "../../app/websockets/chatWebsocket";
 import {useFunction} from "../../hooks/useFunction";
+import {useModalVisible} from "../../hooks/useModalVisible";
+import {useOutsideClick} from "../../hooks/useOutsideClick";
 
 type Props = {
   chat: ChatModel
@@ -37,7 +39,6 @@ export type ChatProps = {
   loadPreviousMessages(): Promise<void>
   onMessageSearchClick(): void
   tryEditMessage(message: Message): void
-  onMessageRightClick(message: Message, e: React.MouseEvent<HTMLDivElement>): void
   replyTo(message: Message): void
   onRemoveReplyClick(): void
   onSubmit(message: Partial<Message>): void
@@ -50,7 +51,6 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
   const [loaded, setLoaded] = useState(false)
   const messages = useAppSelector(state => chatMessages(state, id))
   const currentUser = useAppSelector(state => state.authorization.currentUser)
-  const arbitraryElement = useArbitraryElement()
   const authorizeToken = useAppSelector(state => state.authorization.token)
   const [allMessagesLoaded, markAllMessagesLoaded, unmarkAllMessagesLoaded] = useFlag(false)
   const loadingMessagesPromise = useRef<Promise<void> | null>(null)
@@ -99,22 +99,6 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
     }
 
     editMessage(message)
-  })
-  const onMessageRightClick = useFunction((message: Message, e: React.MouseEvent<HTMLDivElement>) => {
-    arbitraryElement.show(
-      <ArbitraryElement
-        position={{left: e.clientX, top: e.clientY}}
-        onOutsideClick={arbitraryElement.hide}
-      >
-        <MessageOptions
-          message={message}
-          onReplyClick={message => {
-            arbitraryElement.hide()
-            replyTo(message)
-          }}
-        />
-      </ArbitraryElement>
-    )
   })
   const editMessage = useFunction((message: Message) => {
     textInput.onChange(textContent(message))
@@ -168,7 +152,6 @@ export const ChatOfType: FC<Props> = ({chat, onMessageSearchClick}: Props) => {
     messages,
     loadPreviousMessages,
     tryEditMessage,
-    onMessageRightClick,
     replyTo,
     textInput,
     onMessageInput,

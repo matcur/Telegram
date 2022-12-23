@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useContext} from "react";
+import React, {FC, ReactElement, useContext, useState} from "react";
 import {UpLayerContext} from "../contexts/UpLayerContext";
 import {LeftMenuContext} from "../contexts/LeftMenuContext";
 import {UpLayer} from "../components/up-layer/UpLayer";
@@ -11,29 +11,30 @@ import {useFunction} from "../hooks/useFunction";
 
 export const UpLayerProvider: FC = ({children}) => {
   const [leftMenuVisible, showLeftMenu, hideLeftMenu] = useFlag(false)
-  const arbitraryElements = useArray<ReactElement>()
+  const [arbitraryElements, setArbitraryElements] = useState<Record<string, ReactElement | undefined>>({})
   const modalsContext = useContext(ModalsContext)
 
   const hide = useFunction(() => {
     hideLeftMenu()
   })
 
-  const addArbitraryElement = useFunction((element: ReactElement) => {
-    arbitraryElements.add(element)
-
-    return () => arbitraryElements.remove(element)
+  const insertArbitraryElement = useFunction((element: ReactElement | undefined, key: string) => {
+    setArbitraryElements(state => ({...state, [key]: element}))
+  })
+  const hideArbitraryElement = useFunction((key: string) => {
+    setArbitraryElements(state => ({...state, [key]: undefined}))
   })
   const onClick = useFunction(() => {
     hideLeftMenu()
   })
   
   return (
-    <UpLayerContext.Provider value={{hide, addArbitraryElement}}>
+    <UpLayerContext.Provider value={{hide, insertArbitraryElement, hideArbitraryElement}}>
       <LeftMenuContext.Provider value={{show: showLeftMenu, hide: hideLeftMenu}}>
         <UpLayer
           leftElementVisible={leftMenuVisible}
           leftElement={<LeftMenu onItemClick={hideLeftMenu} visible={leftMenuVisible}/>}
-          arbitraryElements={arbitraryElements.value}
+          arbitraryElements={Object.values(arbitraryElements)}
           onClick={onClick}
           modalOpened={!empty(modalsContext.items)}
         >

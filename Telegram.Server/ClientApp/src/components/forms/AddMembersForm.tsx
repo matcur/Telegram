@@ -33,11 +33,14 @@ export const AddMembersForm: FC<Props> = ({selected, setSelected, footer, potent
   const friendInfo = (user: User, key: number) => {
     const isSelected = selected.includes(user)
 
-    return <ShortUserInfo
-      key={key}
-      user={user}
-      onClick={isSelected ? remove : add}
-      className={`friend-info ${isSelected? 'selected-friend': ''}`}/>
+    return (
+      <ShortUserInfo
+        key={key}
+        user={user}
+        onClick={isSelected ? remove : add}
+        className={`friend-info ${isSelected? 'selected-friend': ''}`}
+      />
+    )
   }
 
   return (

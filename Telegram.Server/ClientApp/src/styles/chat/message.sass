@@ -1,4 +1,5 @@
 ﻿@import "/src/styles/index"
+@import "/src/styles/colors"
 
 $inner-width: 440px
 $inner-horizontal-padding: 13px
@@ -157,18 +158,39 @@ $creation-date-right: 10px
   border-radius: 13px
   font-size: 15px
 
-.message-options
+.menu
   width: 190px
   padding: 5px 0
   border-radius: 5px
 
-.message-option:hover
-  background: #232E3C
+.sub-menu
+  display: none
+  position: absolute
+  left: 100%
+  
+.menu-option:hover
   cursor: pointer
+  .sub-menu
+    display: block
 
-.message-option
-  padding: 5px 15px
+.menu-option
+  display: flex
+  justify-content: space-between
+  align-items: center
+  position: relative
+  padding: 7px 15px
   font-size: 16px
+  transition: background-color .1s
+  
+.disabled-menu-option
+  color: #ccc
+  
+.menu-option-triangle
+  width: 0
+  height: 0
+  border-top: 5px solid transparent
+  border-bottom: 5px solid transparent
+  border-left: 5px solid $small-text-color
 
 .reply-message-content
   display: flex

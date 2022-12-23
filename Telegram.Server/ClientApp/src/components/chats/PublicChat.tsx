@@ -1,6 +1,5 @@
-﻿import {User} from "../../models";
+﻿import {Message, User} from "../../models";
 import React, {useEffect, useRef, useState} from "react";
-import {MessageForm} from "../message/MessageForm";
 import {ReactComponent as Magnifier} from "../../public/svgs/magnifier.svg";
 import {ReactComponent as Star} from "../../public/svgs/star.svg";
 import {ReactComponent as ThreeDot} from "../../public/svgs/three-dots.svg";
@@ -12,7 +11,7 @@ import {MessageReply} from "../chat/MessageReply";
 import {ChatDetails} from "../chat/ChatDetails";
 import {GroupForm} from "../forms/GroupForm";
 import {preventClickBubble} from "../../utils/preventClickBubble";
-import {Pagination} from "../../utils/type";
+import {Pagination, Position} from "../../utils/type";
 import {useAppSelector} from "../../app/hooks";
 import {useAwait} from "../../hooks/useAwait";
 import {UsersApi} from "../../api/UsersApi";
@@ -30,7 +29,9 @@ import {onMessageAdded} from "../../app/websockets/chatWebsocket";
 import {lastIn} from "../../utils/lastIn";
 import {nullMessage} from "../../nullables";
 import {useDispatch} from "react-redux";
-import { changeUnreadCount } from "app/slices/authorizationSlice";
+import {changeUnreadCount} from "app/slices/authorizationSlice";
+import {MessageOptionDrop} from "./drops/MessageOptionDrop";
+import {MessageForm} from "../message/form/MessageForm";
 
 type Props = ChatProps & {
   loadMembers(groupId: number, pagination: Pagination): void
@@ -47,14 +48,13 @@ export const PublicChat = ({
   onRemoveReplyClick,
   onMessageInput,
   tryEditMessage,
-  onMessageRightClick,
   onSubmit,
   replyTo,
   textInput,
   loadMembers,
 }: Props) => {
   const [groupFormVisible, showGroupForm, hideGroupForm] = useFlag(false)
-  const [userInfoVisible, userInfoData, showUserInfo, hideUserInfo] = useModalVisible<User>()
+  const userInfo = useModalVisible<User>()
   const potentialMembers = useAwait(() => new UsersApi().all(), [])
   const authorizeToken = useAppSelector(state => state.authorization.token)
   const themedClass = useThemedChatClass()
@@ -62,10 +62,14 @@ export const PublicChat = ({
   const scrollBarRef = useRef<HTMLDivElement>(null)
   const lastReadMessageIdRef = useRef(chat.lastReadMessageId ?? 0)
   const [unreadMessageCount, setUnreadMessageCount] = useState(chat.unreadMessageCount ?? 0)
+  const messageOptions = useModalVisible<{message: Message, position: Position}>()
   const dispatch = useDispatch()
 
   const addMembers = useFunction((users: User[]) => {
     return users.length && new ChatApi(chat.id, authorizeToken).addMembers(users.map(u => u.id))
+  })
+  const onMessageRightClick = useFunction((message: Message, e: React.MouseEvent<HTMLDivElement>) => {
+    messageOptions.show({message, position: {left: e.clientX, top: e.clientY}})
   })
   const setMessageHeight = useFunction((messageId: number, height: number) => {
     messageHeights.current[messageId] = height
@@ -141,14 +145,15 @@ export const PublicChat = ({
           />
         </Modal>
       )}
-      {userInfoVisible && (
-        <Modal hide={hideUserInfo} name="PublicChatUserInfoForm">
+      {userInfo.visible && (
+        <Modal hide={userInfo.hide} name="PublicChatUserInfoForm">
           <UserInfoForm
-            hide={hideUserInfo}
-            user={userInfoData!}
+            hide={userInfo.hide}
+            user={userInfo.data}
           />
         </Modal>
       )}
+      <MessageOptionDrop messageOptions={messageOptions} onReplyClick={replyTo}/>
       <ChatHeader onClick={showGroupForm}>
         <ChatDetails
           chat={chat}
@@ -181,7 +186,7 @@ export const PublicChat = ({
           onMessageRightClick={onMessageRightClick}
           replyTo={replyTo}
           makeMessage={useFunction(props => <PublicMessageFork {...props}/>)}
-          onAvatarClick={showUserInfo}
+          onAvatarClick={userInfo.show}
           onMessageHeightChange={setMessageHeight}
         />
       </MessageScroll>

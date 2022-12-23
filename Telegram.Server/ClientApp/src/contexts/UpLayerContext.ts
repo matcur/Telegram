@@ -2,5 +2,6 @@ import {createContext, ReactElement} from "react";
 
 export const UpLayerContext = createContext({
   hide: () => {},
-  addArbitraryElement: (value: ReactElement) => {},
+  insertArbitraryElement: (value: ReactElement | undefined, key: string) => {},
+  hideArbitraryElement: (key: string) => {},
 })

@@ -1,19 +1,26 @@
-import React, {FC, ReactElement, useEffect, useRef, useState} from 'react'
+import React, {FC, ReactElement, useEffect, useMemo, useRef, useState} from 'react'
 import {ReactComponent as PaperClip} from 'public/svgs/paperclip.svg'
 import {ReactComponent as Command} from 'public/svgs/command.svg'
 import {ReactComponent as Smile} from 'public/svgs/smile.svg'
 import {ReactComponent as Microphone} from 'public/svgs/microphone.svg'
 import {useForm} from "react-hook-form";
-import {useAppSelector} from "../../app/hooks";
-import {FileInput} from "../form/FileInput";
-import {FilesApi} from "../../api/FilesApi";
-import {RichMessageForm} from "../forms/RichMessageForm";
-import {Content, Message, NewMessage} from "../../models";
-import {useFlag} from "../../hooks/useFlag";
-import {Modal} from "../up-layer/Modal";
-import {useFitScrollHeight} from "../../hooks/useFitScrollHeight";
-import {useWindowListener} from "../../hooks/useWindowListener";
-import {useFunction} from "../../hooks/useFunction";
+import {useAppSelector} from "../../../app/hooks";
+import {FileInput} from "../../form/FileInput";
+import {FilesApi} from "../../../api/FilesApi";
+import {RichMessageForm} from "../../forms/RichMessageForm";
+import {Content, Message, NewMessage} from "../../../models";
+import {useFlag} from "../../../hooks/useFlag";
+import {Modal} from "../../up-layer/Modal";
+import {useFitScrollHeight} from "../../../hooks/useFitScrollHeight";
+import {useWindowListener} from "../../../hooks/useWindowListener";
+import {useFunction} from "../../../hooks/useFunction";
+import {ArbitraryElement} from "../../up-layer/ArbitraryElement";
+import {Menu, Option} from "../../lists/Menu";
+import {nope} from "../../../utils/functions";
+import {useModalVisible} from "../../../hooks/useModalVisible";
+import {initUserWebhook} from "../../../app/websockets/userWebsocket";
+import {InputEditing} from "../../../app/input/InputEditing";
+import {classNames} from "../../../utils/classNames";
 
 type Props = {
   reply?: Message
@@ -74,6 +81,8 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
   ))
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const fitTextScrollHeight = useFitScrollHeight(inputRef)
+  const inputOptions = useModalVisible<{position: {left: number, bottom: number}}>()
+  const inputEditing = useMemo(() => new InputEditing(inputRef), []);
   
   const showDetailMessageForm = useFunction((messageText: string, filePaths: string[]) => {
     setModalData({messageText: textInput.value, filePaths})
@@ -147,6 +156,34 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
       return changeText(textInput.value + "\n")
     }
   })
+  const copy = useFunction(() => inputEditing.copy())
+  const selectAll = useFunction(() => {
+    inputEditing.selectAll()
+  })
+  const cut = useFunction(() => {
+    changeText(inputEditing.withoutSelected())
+  })
+  const inputOptionItems = (): Option[] => {
+    if (!inputRef.current) {
+      return []
+    }
+    const hasSelection = inputEditing.selection().length > 0
+    
+    const formatting: Option[] = [
+      {content: "Bold", onClick: nope, contentClassName: classNames(!hasSelection && "disabled-menu-option")}
+    ]
+    
+    return [
+      {content: "Copy", onClick: copy, contentClassName: classNames(!hasSelection && "disabled-menu-option")},
+      {content: "Cut", onClick: cut, contentClassName: classNames(!hasSelection && "disabled-menu-option")},
+      {content: "Select All", onClick: selectAll},
+      {content: "Formatting", children: formatting},
+    ]
+  }
+  const onInputRightClick = useFunction((e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) => {
+    e.preventDefault()
+    inputOptions.show({position: {left: e.clientX, bottom: document.body.clientHeight - e.clientY}})
+  })
   
   useWindowListener(onEnterPress, "keyup")
   useEffect(() => {
@@ -166,13 +203,22 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
       onSubmit={handleSubmit(onSubmit)}
       ref={form}
     >
-      {detailMessageVisible && <Modal hide={hideDetailMessage} name="MessageInputRichMessageForm">
-        <RichMessageForm
-          filePaths={modalData.filePaths}
-          messageText={modalData.messageText}
-          onSend={onDetailSubmit}
-        />
-      </Modal>}
+      {detailMessageVisible && (
+        <Modal hide={hideDetailMessage} name="MessageInputRichMessageForm">
+          <RichMessageForm
+            filePaths={modalData.filePaths}
+            messageText={modalData.messageText}
+            onSend={onDetailSubmit}
+          />
+        </Modal>
+      )}
+      <ArbitraryElement
+        position={inputOptions.data.position}
+        visible={inputOptions.visible}
+        hide={inputOptions.hide}
+      >
+        <Menu options={inputOptionItems()} afterClick={inputOptions.hide}/>
+      </ArbitraryElement>
       <div className="message-form__reply">
         {replyElement}
       </div>
@@ -190,6 +236,7 @@ export const MessageForm: FC<Props> = ({reply, replyElement, onSubmitting, textI
           value={textInput.value}
           onChange={onTextChange}
           onInput={onInput}
+          onContextMenu={onInputRightClick}
           ref={inputRef}
         />
         <Command/>
